@@ -6,5 +6,5 @@ package com.luissoares
 class ByTestId(value: String, valueIsString: Boolean = true) : ByTestingLibrary(
     by = "TestId",
     textMatch = value,
-    isString = valueIsString,
+    textMatchIsString = valueIsString,
 )

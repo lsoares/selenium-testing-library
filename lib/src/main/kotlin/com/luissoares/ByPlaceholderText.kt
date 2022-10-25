@@ -10,6 +10,6 @@ class ByPlaceholderText(
 ) : ByTestingLibrary(
     by = "PlaceholderText",
     textMatch = text,
-    isString = textIsString,
+    textMatchIsString = textIsString,
     options = mapOf("exact" to exact),
 )

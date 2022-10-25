@@ -10,6 +10,6 @@ class ByTitle(
 ) : ByTestingLibrary(
     by = "Title",
     textMatch = title,
-    isString = titleIsString,
+    textMatchIsString = titleIsString,
     options = mapOf("exact" to exact),
 )

@@ -11,7 +11,7 @@ class ByLabelText(
 ) : ByTestingLibrary(
     by = "LabelText",
     textMatch = text,
-    isString = textIsString,
+    textMatchIsString = textIsString,
     options = mapOf(
         "selector" to selector,
         "exact" to exact,

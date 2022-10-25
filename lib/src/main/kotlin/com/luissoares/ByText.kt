@@ -12,7 +12,7 @@ class ByText(
 ) : ByTestingLibrary(
     by = "Text",
     textMatch = text,
-    isString = textIsString,
+    textMatchIsString = textIsString,
     options = mapOf(
         "exact" to exact,
         "selector" to selector,

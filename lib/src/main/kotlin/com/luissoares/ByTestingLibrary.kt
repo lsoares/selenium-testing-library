@@ -9,7 +9,7 @@ import org.openqa.selenium.json.Json
 abstract class ByTestingLibrary(
     private val by: String,
     private val textMatch: String,
-    private val isString: Boolean = true,
+    private val textMatchIsString: Boolean = true,
     private val options: Map<String, Any?> = emptyMap(),
 ) : By() {
     override fun findElements(context: SearchContext) =
@@ -25,7 +25,7 @@ abstract class ByTestingLibrary(
 
     private val asString: String
         get() {
-            val mainArg = when (isString) {
+            val mainArg = when (textMatchIsString) {
                 true  -> "'$textMatch'"
                 false -> textMatch
             }

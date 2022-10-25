@@ -10,6 +10,6 @@ class ByDisplayValue(
 ) : ByTestingLibrary(
     by = "DisplayValue",
     textMatch = value,
-    isString = valueIsString,
+    textMatchIsString = valueIsString,
     options = mapOf("exact" to exact),
 )

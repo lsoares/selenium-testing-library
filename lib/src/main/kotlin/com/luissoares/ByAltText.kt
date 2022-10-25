@@ -10,6 +10,6 @@ class ByAltText(
 ) : ByTestingLibrary(
     by = "AltText",
     textMatch = text,
-    isString = textIsString,
+    textMatchIsString = textIsString,
     options = mapOf("exact" to exact),
 )

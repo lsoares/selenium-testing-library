@@ -20,7 +20,7 @@ class ByRole(
 ) : ByTestingLibrary(
     by = "Role",
     textMatch = role,
-    isString = roleIsString,
+    textMatchIsString = roleIsString,
     options = mapOf(
         "exact" to exact,
         "name" to name,
