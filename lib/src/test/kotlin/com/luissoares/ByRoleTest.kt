@@ -225,7 +225,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals("👍", result.single().text)
     }
 
-    @Disabled
+    @Disabled("https://github.com/testing-library/dom-testing-library/issues/1181")
     @ParameterizedTest
     @MethodSource("test cases current")
     fun current(current: Boolean?, expectedFound: List<String>) {
@@ -246,4 +246,20 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         of(false, listOf("👍", "👎")),
         of(null, listOf("👎")),
     )
+
+    @Test
+    @Disabled("https://stackoverflow.com/questions/74162350/dom-testing-library-current-expanded-and-description-filter-dont-filte")
+    fun expanded() {
+        driver.getFromHtml(
+        """
+            <a href="x"></a>
+            <a aria-expanded="false" href="x"></a>
+            <a href="x"></a>
+        """
+        )
+
+        val result = driver.findElements(ByRole("link", expanded = false))
+
+        assertEquals(1, result.size)
+    }
 }
