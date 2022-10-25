@@ -31,13 +31,13 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.luissoares"
             artifactId = "selenium-testing-library"
-            version = "1.0"
+            version = "1.0.1"
             from(components["kotlin"])
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
             pom {
                 name.set(project.name)
-                description.set("Selenium Testing Library")
+                description.set("Selenium locators that resemble the Testing Library (testing-library.com).")
                 url.set("https://github.com/lsoares/selenium-testing-library")
                 licenses {
                     license {
