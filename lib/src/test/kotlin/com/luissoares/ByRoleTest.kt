@@ -108,4 +108,24 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         assertEquals("banner", result.ariaRole)
     }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            """<<span role="checkbox"
+                      aria-checked="false"
+                      tabindex="0"
+                      aria-labelledby="chk1-label"></span>
+                    <label id="chk1-label">Remember my preferences</label>""",
+            """<input type="checkbox" id="chk1-label" />
+               <label for="chk1-label">Remember my preferences</label>""",
+        ]
+    )
+    fun checkbox(content: String) {
+        driver.getFromHtml(content)
+
+        val result = driver.findElement(ByRole("checkbox"))
+
+        assertEquals("checkbox", result.ariaRole)
+    }
 }
