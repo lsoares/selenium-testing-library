@@ -5,7 +5,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
+import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class ByRoleTest(private val driver: RemoteWebDriver) {
@@ -97,6 +99,24 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                         </div>"""
         ),
         of("form", """<div role="form"></div>"""),
-        of("form","""<form aria-label="xyz">test</form>"""),
+        of("form", """<form aria-label="xyz">test</form>"""),
     )
+
+    @Test
+    fun `aria-selected`() {
+        driver.getFromHtml("""
+            <body>
+              <div role="tablist">
+                <button role="tab" aria-selected="false">React</button>
+                <button role="tab" aria-selected="true">Native</button>
+                <button role="tab" aria-selected="false">Cypress</button>
+              </div>
+            </body>
+        """)
+
+        val result = driver.findElements(ByRole("tab", selected=true))
+
+        assertEquals("Native", result.single().text)
+        assertTrue(result.single().isSelected)
+    }
 }
