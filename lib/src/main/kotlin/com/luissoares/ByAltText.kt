@@ -11,7 +11,7 @@ data class ByAltText(
     private val text: String,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
-        getWebDriver(context).waitFor {
+        getWebDriver(context).waitUntil {
             it.findElements(ByCssSelector("[alt='$text']"))
                 .filter(::canHaveAlt)
         }

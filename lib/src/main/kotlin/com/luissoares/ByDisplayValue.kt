@@ -12,7 +12,7 @@ data class ByDisplayValue(
     private val value: String,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
-        getWebDriver(context).waitFor {
+        getWebDriver(context).waitUntil {
             it.findElements(cssSelector("*")).filter { element ->
                 when (element.tagName) {
                     "input", "textarea" -> element.getAttribute("value") == value

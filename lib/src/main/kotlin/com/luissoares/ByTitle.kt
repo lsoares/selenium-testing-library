@@ -12,7 +12,7 @@ data class ByTitle(
     private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
-        getWebDriver(context).waitFor {
+        getWebDriver(context).waitUntil {
             it.findElements(cssSelector("*")).filter { element ->
                 when {
                     exact -> title == element.getAttribute("title") ||

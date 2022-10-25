@@ -17,7 +17,7 @@ data class ByPlaceholderText(
             when {
                 exact  -> context.findElements(cssSelector("[placeholder='$text']"))
                 else -> {
-                    getWebDriver(context).waitFor {
+                    getWebDriver(context).waitUntil {
                         it.findElements(cssSelector("*")).filter { element ->
                             element.getAttribute("placeholder")
                                 ?.contains(text, ignoreCase = true)
@@ -27,7 +27,7 @@ data class ByPlaceholderText(
                 }
             }
         } ?: regexText?.let {
-            getWebDriver(context).waitFor {
+            getWebDriver(context).waitUntil {
                 it.findElements(cssSelector("*")).filter { element ->
                     element.getAttribute("placeholder")
                         ?.let(regexText::find) != null
