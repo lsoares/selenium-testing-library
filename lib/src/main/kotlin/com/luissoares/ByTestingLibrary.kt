@@ -16,12 +16,8 @@ abstract class ByTestingLibrary(
         getJavascriptExecutor(context).run {
             ensureTLScript()
             @Suppress("UNCHECKED_CAST")
-            executeScript(
-                "return $testingLibraryCall"
-            ) as List<WebElement>
+            executeScript("return $testingLibraryCall") as List<WebElement>
         }
-
-    override fun toString() = testingLibraryCall
 
     private val testingLibraryCall: String
         get() {
@@ -31,16 +27,24 @@ abstract class ByTestingLibrary(
             }
             val optionsAsJson = options
                 .filterValues { it != null }
-                .let(Json()::toJson)
-                .let {
+                .takeIf(Map<String, Any?>::isNotEmpty)
+                ?.let(Json()::toJson)
+                ?.let {
                     it.replace(Regex(""""normalizer": "(.*)"""")) { match ->
                         """"normalizer": ${match.groups[1]?.value} """
                     }
                 }
 
-            return """screen.queryAllBy$by(${mainArg}, $optionsAsJson)"""
-                .replace(", {\n})", ", {})")
+            return """screen.queryAllBy$by${
+                listOfNotNull(mainArg, optionsAsJson).joinToString(
+                    separator = ", ",
+                    prefix = "(",
+                    postfix = ")"
+                )
+            }"""
         }
+
+    override fun toString() = testingLibraryCall
 }
 
 private fun JavascriptExecutor.ensureTLScript() {
