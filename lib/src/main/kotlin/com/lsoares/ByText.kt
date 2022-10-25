@@ -1,4 +1,4 @@
-package com.lsoares
+package com.luissoares
 
 import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext

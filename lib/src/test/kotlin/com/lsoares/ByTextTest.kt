@@ -1,4 +1,4 @@
-package com.lsoares
+package com.luissoares
 
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Test
