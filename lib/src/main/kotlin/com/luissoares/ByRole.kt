@@ -17,8 +17,7 @@ data class ByRole(
     private val pressed: Boolean? = null,
     private val current: Boolean? = null,
     private val expanded: Boolean? = null,
-    // TODO
-    // queryFallbacks?: boolean,
+    private val queryFallbacks: Boolean? = null,
     private val level: Int? = null,
 ) : By() {
     override fun findElements(context: SearchContext) =
@@ -35,6 +34,7 @@ data class ByRole(
                 "pressed" to pressed,
                 "current" to current,
                 "expanded" to expanded,
+                "queryFallbacks" to queryFallbacks,
                 "level" to level,
             ).filterValues { it != null },
         )

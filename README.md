@@ -57,7 +57,6 @@ library.
 - Regex
 - Normalizer function
 - Search function
-- Most arguments of ByRole
 
 ## Other
 

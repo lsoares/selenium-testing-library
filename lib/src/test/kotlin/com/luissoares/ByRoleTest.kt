@@ -251,7 +251,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     @Disabled("https://stackoverflow.com/questions/74162350/dom-testing-library-current-expanded-and-description-filter-dont-filte")
     fun expanded() {
         driver.getFromHtml(
-        """
+            """
             <a href="x"></a>
             <a aria-expanded="false" href="x"></a>
             <a href="x"></a>
@@ -262,4 +262,22 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         assertEquals(1, result.size)
     }
+
+    @ParameterizedTest
+    @MethodSource("test cases query fallbacks")
+    fun `query fallbacks`(queryFallbacks: Boolean?, expectedCount: Int) {
+        driver.getFromHtml(
+            """ <div role="switch checkbox" /> """
+        )
+
+        val result = driver.findElements(ByRole("checkbox", queryFallbacks = queryFallbacks))
+
+        assertEquals(expectedCount, result.size)
+    }
+
+    private fun `test cases query fallbacks`() = setOf(
+        of(false, 0),
+        of(null, 0),
+        of(true, 1),
+    )
 }
