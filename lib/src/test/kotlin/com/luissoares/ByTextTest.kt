@@ -23,6 +23,15 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun `ensure quotes are escaped`() {
+        driver.getFromHtml(""""<article><span>with quotes"'`</span><div></div></article>""")
+
+        val result = driver.findElement(ByText("""with quotes"'`"""))
+
+        assertEquals("span", result.tagName)
+    }
+
+    @Test
     fun `with a selector`() {
         driver.getFromHtml("<article><span>Username</span><div>Username</div></article>")
 

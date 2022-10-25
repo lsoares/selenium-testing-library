@@ -61,7 +61,6 @@ There are some CDKs that serve the Testing Library, but I needed the self-contai
 ## Limitations
 
 - Normalizer function
-- Search function
 
 ---
 There's a [Python version](https://github.com/anze3db/selenium-testing-library).

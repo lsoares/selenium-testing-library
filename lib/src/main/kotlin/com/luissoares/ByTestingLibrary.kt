@@ -26,7 +26,7 @@ abstract class ByTestingLibrary(
     private val asString: String
         get() {
             val mainArg = when (textMatchIsString) {
-                true  -> "'$textMatch'"
+                true  -> "'${textMatch.replace("'", "\\'")}'"
                 false -> textMatch
             }
             val optionsAsJson = Json().toJson(options.filterValues { it != null })
