@@ -5,6 +5,7 @@ package com.luissoares
  */
 class ByRole(
     role: String,
+    roleIsString: Boolean = true,
     exact: Boolean? = null,
     hidden: Boolean? = null,
     name: String? = null,
@@ -17,19 +18,20 @@ class ByRole(
     queryFallbacks: Boolean? = null,
     level: Int? = null,
 ) : ByTestingLibrary(
-        by = "Role",
-        textMatch = role,
-        options = mapOf(
-            "exact" to exact,
-            "name" to name,
-            "hidden" to hidden,
-            "description" to description,
-            "selected" to selected,
-            "checked" to checked,
-            "pressed" to pressed,
-            "current" to current,
-            "expanded" to expanded,
-            "queryFallbacks" to queryFallbacks,
-            "level" to level,
-        ),
-    )
+    by = "Role",
+    textMatch = role,
+    isString = roleIsString,
+    options = mapOf(
+        "exact" to exact,
+        "name" to name,
+        "hidden" to hidden,
+        "description" to description,
+        "selected" to selected,
+        "checked" to checked,
+        "pressed" to pressed,
+        "current" to current,
+        "expanded" to expanded,
+        "queryFallbacks" to queryFallbacks,
+        "level" to level,
+    ),
+)

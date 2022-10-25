@@ -31,6 +31,16 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun regex() {
+        driver.getFromHtml("<input placeholder='username' />")
+        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
+
+        val result = driver.findElement(ByDisplayValue("/selen/i", valueIsString = false))
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
     fun textarea() {
         driver.getFromHtml("<textarea id='x'></textarea>")
         driver.findElement(By.tagName("textarea")).sendKeys("selenium")

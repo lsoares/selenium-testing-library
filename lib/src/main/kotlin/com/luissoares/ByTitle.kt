@@ -5,9 +5,11 @@ package com.luissoares
  */
 class ByTitle(
     title: String,
+    titleIsString: Boolean = true,
     exact: Boolean? = null,
 ) : ByTestingLibrary(
     by = "Title",
     textMatch = title,
+    isString = titleIsString,
     options = mapOf("exact" to exact),
 )

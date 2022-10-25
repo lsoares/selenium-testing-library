@@ -5,11 +5,13 @@ package com.luissoares
  */
 class ByLabelText(
     text: String,
+    textIsString: Boolean = true,
     exact: Boolean? = null,
     selector: String? = null,
 ) : ByTestingLibrary(
     by = "LabelText",
     textMatch = text,
+    isString = textIsString,
     options = mapOf(
         "selector" to selector,
         "exact" to exact,

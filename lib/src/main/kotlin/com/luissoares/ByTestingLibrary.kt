@@ -9,7 +9,7 @@ import org.openqa.selenium.json.Json
 abstract class ByTestingLibrary(
     private val by: String,
     private val textMatch: String,
-    private val textMatchType: TextType = TextType.STRING,
+    private val isString: Boolean = true,
     private val options: Map<String, Any?> = emptyMap(),
 ) : By() {
     override fun findElements(context: SearchContext) =
@@ -25,9 +25,9 @@ abstract class ByTestingLibrary(
 
     private val asString: String
         get() {
-            val mainArg = when (textMatchType) {
-                TextType.STRING -> "'$textMatch'"
-                else            -> textMatch
+            val mainArg = when (isString) {
+                true  -> "'$textMatch'"
+                false -> textMatch
             }
             val optionsAsJson = Json().toJson(options.filterValues { it != null })
             return """By$by(${mainArg}, $optionsAsJson)"""
@@ -45,8 +45,4 @@ abstract class ByTestingLibrary(
         {}.javaClass.getResource("/testing-library.js")?.readText()
             ?: error("script not found")
     }
-}
-
-enum class TextType {
-    STRING, REGEX
 }

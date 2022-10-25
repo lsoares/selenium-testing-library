@@ -60,7 +60,6 @@ There are some CDKs that serve the Testing Library, but I needed the self-contai
 
 ## Limitations
 
-- Regex
 - Normalizer function
 - Search function
 

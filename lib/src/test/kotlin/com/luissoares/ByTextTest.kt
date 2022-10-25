@@ -71,6 +71,15 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun regex() {
+        driver.getFromHtml("<p>I accept</p>")
+
+        val result = driver.findElement(ByText("/ACCEPT/i", textIsString = false))
+
+        assertEquals("p", result.tagName)
+    }
+
+    @Test
     fun `case insensitive`() {
         driver.getFromHtml("<p>I accept</p>")
 

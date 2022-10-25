@@ -12,6 +12,15 @@ import kotlin.test.assertTrue
 @ExtendWith(DriverLifeCycle::class)
 class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
 
+    @Test
+    fun exact() {
+        driver.getFromHtml("<input placeholder='Username' />")
+
+        val result = driver.findElement(ByPlaceholderText("Username", exact = true))
+
+        assertEquals("input", result.tagName)
+    }
+
     @ParameterizedTest
     @ValueSource(strings = ["Username", "USERNAME", "user"])
     fun `not exact`(text: String) {
@@ -23,10 +32,10 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
-    fun `exact found`() {
+    fun regex() {
         driver.getFromHtml("<input placeholder='Username' />")
 
-        val result = driver.findElement(ByPlaceholderText("Username", exact = true))
+        val result = driver.findElement(ByPlaceholderText("/user/i", textIsString = false))
 
         assertEquals("input", result.tagName)
     }

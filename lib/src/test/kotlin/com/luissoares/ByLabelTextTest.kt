@@ -74,4 +74,13 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
 
         assertEquals("input", result.tagName)
     }
+
+    @Test
+    fun regex() {
+        driver.getFromHtml("<input aria-label='Username' />")
+
+        val result = driver.findElement(ByLabelText("/user/i", textIsString = false))
+
+        assertEquals("input", result.tagName)
+    }
 }

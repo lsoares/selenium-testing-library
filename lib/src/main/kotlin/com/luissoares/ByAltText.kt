@@ -5,11 +5,11 @@ package com.luissoares
  */
 class ByAltText(
     text: String,
-    textMatchType: TextType = TextType.STRING,
+    textIsString: Boolean = true,
     exact: Boolean? = null,
 ) : ByTestingLibrary(
     by = "AltText",
     textMatch = text,
-    textMatchType = textMatchType,
+    isString = textIsString,
     options = mapOf("exact" to exact),
 )

@@ -100,6 +100,21 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun regex() {
+        driver.getFromHtml(
+            """
+            <div role="tablist">
+                <button role="tab" aria-selected="true">Native</button>
+            </div>
+        """
+        )
+
+        val result = driver.findElement(ByRole("/TABL/i", roleIsString = false))
+
+        assertEquals("div", result.tagName)
+    }
+
+    @Test
     fun `aria-selected`() {
         driver.getFromHtml(
             """
