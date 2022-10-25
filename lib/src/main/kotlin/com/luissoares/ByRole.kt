@@ -11,9 +11,9 @@ data class ByRole(
     private val exact: Boolean = true,
     private val hidden: Boolean = false,
     private val name: String? = null,
+    private val description: String? = null,
     private val selected: Boolean? = null,
     // TODO
-    // description?: TextMatch,
     // checked?: boolean,
     // pressed?: boolean,
     // current?: boolean | string,
@@ -28,8 +28,9 @@ data class ByRole(
             options = mapOf(
                 "exact" to exact,
                 "name" to name,
-                "selected" to selected,
                 "hidden" to hidden,
+                "description" to description,
+                "selected" to selected,
             ).filterValues { it != null },
         )
 }

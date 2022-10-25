@@ -1,5 +1,6 @@
 package com.luissoares
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
@@ -166,13 +167,34 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
               </div>"""
         )
 
-        val result = driver.findElements(ByRole("button", hidden=hidden))
+        val result = driver.findElements(ByRole("button", hidden = hidden))
 
         assertEquals(expectedButtonsFound, result.map { it.text })
     }
 
     private fun `hidden values`() = setOf(
-        of( false, listOf("Close dialog")),
+        of(false, listOf("Close dialog")),
         of(true, listOf("Open dialog", "Close dialog")),
     )
+
+    @Test
+    @Disabled("https://github.com/testing-library/dom-testing-library/issues/1181")
+    fun description() {
+        driver.getFromHtml(
+            """<ul>
+                    <li role="alertdialog" aria-describedby="notification-id-1">
+                      <div><button>Close</button></div>
+                      <div id="notification-id-1">You have unread emails</div>
+                    </li>
+                    <li role="alertdialog" aria-describedby="notification-id-2">
+                      <div><button>Close</button></div>
+                      <div id="notification-id-2">Your session is about to expire</div>
+                    </li>
+                  </ul>"""
+        )
+
+        val result = driver.findElements(ByRole("alertdialog", description = "Your session is about to expire"))
+
+        assertEquals(1, result.size)
+    }
 }
