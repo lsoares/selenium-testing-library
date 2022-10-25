@@ -61,17 +61,6 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                   <img src="images/w3c.png" alt="W3C Logo" />
                </header>"""
         ),
-        of(
-            "checkbox", """<<span role="checkbox"
-                      aria-checked="false"
-                      tabindex="0"
-                      aria-labelledby="chk1-label"></span>
-                    <label id="chk1-label">Remember my preferences</label>"""
-        ),
-        of(
-            "checkbox", """<input type="checkbox" id="chk1-label" />
-               <label for="chk1-label">Remember my preferences</label>"""
-        ),
         of("link", """<a href="https://mozilla.org">Link 123</a>"""),
         of(
             "link", """<span data-href="https://mozilla.org" tabindex="0" role="link">
@@ -195,12 +184,10 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     @MethodSource("heading level values")
     fun `heading level`(level: Int?, expectedResults: List<String>) {
         driver.getFromHtml(
-            """<section>
-                <h1>Heading Level One</h1>
+            """<h1>Heading Level One</h1>
                 <h2>First Heading Level Two</h2>
                 <h3>Heading Level Three</h3>
-                <div role="heading" aria-level="2">Second Heading Level Two</div>
-              </section>"""
+                <div role="heading" aria-level="2">Second Heading Level Two</div>"""
         )
 
         val result = driver.findElements(ByRole("heading", level = level))
@@ -216,15 +203,25 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     @Test
     fun checked() {
         driver.getFromHtml(
-            """<section>
-                        <button role="checkbox" aria-checked="false">Gummy bears</button>
-                        <button role="checkbox" aria-checked="true">Sugar</button>
-                        <button role="checkbox" aria-checked="false">Whipped cream</button>
-                    </section>"""
+            """<button role="checkbox" aria-checked="false">Gummy bears</button>
+                    <button role="checkbox" aria-checked="true">Sugar</button>
+                    <button role="checkbox" aria-checked="false">Whipped cream</button>"""
         )
 
         val result = driver.findElements(ByRole("checkbox", checked = true))
 
         assertEquals("Sugar", result.single().text)
+    }
+
+    @Test
+    fun pressed() {
+        driver.getFromHtml(
+            """<button aria-pressed="true">👍</button>
+                     <button aria-pressed="false">👎</button>"""
+        )
+
+        val result = driver.findElements(ByRole("button", pressed = true))
+
+        assertEquals("👍", result.single().text)
     }
 }
