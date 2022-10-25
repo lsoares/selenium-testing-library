@@ -89,6 +89,20 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun function() {
+        driver.getFromHtml("<p>Hello World</p>")
+
+        val result = driver.findElement(
+            ByText(
+                "(content, element) => content.startsWith('Hello') && element.tagName == 'P'",
+                textIsString = false
+            )
+        )
+
+        assertEquals("p", result.tagName)
+    }
+
+    @Test
     fun `case insensitive`() {
         driver.getFromHtml("<p>I accept</p>")
 
