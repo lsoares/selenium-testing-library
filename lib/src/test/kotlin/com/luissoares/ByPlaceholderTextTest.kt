@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.text.RegexOption.IGNORE_CASE
 
 class ByPlaceholderTextTest {
     init {
@@ -45,5 +46,16 @@ class ByPlaceholderTextTest {
         }
 
         assertTrue(result.exceptionOrNull() is NoSuchElementException)
+    }
+
+    @Test
+    fun `regex search`() {
+        driver.getFromHtml("<input placeholder='Username' />")
+
+        val result = driver.findElement(
+            ByPlaceholderText(regexText = Regex(".*user.*", IGNORE_CASE))
+        )
+
+        assertEquals("input", result.tagName)
     }
 }
