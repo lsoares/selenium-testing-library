@@ -19,3 +19,8 @@ driver.findElements(ByPlaceholderText("first name", exact = false))
 ```kotlin
 driver.findElements(ByTitle("first name"))
 ```
+
+## ByDisplayValue
+```kotlin
+driver.findElements(ByDisplayValue("first name"))
+```

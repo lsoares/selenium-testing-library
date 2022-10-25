@@ -8,7 +8,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExtendWith(DriverLifeCycle::class)
-
 class ByDisplayValueTest(private val driver: RemoteWebDriver) {
 
     @Test

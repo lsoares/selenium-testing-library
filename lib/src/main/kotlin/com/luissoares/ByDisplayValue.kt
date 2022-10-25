@@ -11,7 +11,9 @@ data class ByDisplayValue(
     private val value: String,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
-        getWebDriver(context).filterAll {
-            it.getAttribute("value") == value
+        getWebDriver(context).waitFor {
+            it.findElements(cssSelector("*")).filter { element ->
+                element.getAttribute("value") == value
+            }
         }
 }

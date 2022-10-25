@@ -14,18 +14,24 @@ data class ByPlaceholderText(
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
         text?.let {
-            when (exact) {
-                true  -> context.findElements(cssSelector("[placeholder='$text']"))
-                false -> getWebDriver(context).filterAll { element ->
-                    element.getAttribute("placeholder")
-                        ?.contains(text, ignoreCase = true)
-                        ?: false
+            when {
+                exact  -> context.findElements(cssSelector("[placeholder='$text']"))
+                else -> {
+                    getWebDriver(context).waitFor {
+                        it.findElements(cssSelector("*")).filter { element ->
+                            element.getAttribute("placeholder")
+                                ?.contains(text, ignoreCase = true)
+                                ?: false
+                        }
+                    }
                 }
             }
         } ?: regexText?.let {
-            getWebDriver(context).filterAll {
-                it.getAttribute("placeholder")
-                    ?.let(regexText::find) != null
+            getWebDriver(context).waitFor {
+                it.findElements(cssSelector("*")).filter { element ->
+                    element.getAttribute("placeholder")
+                        ?.let(regexText::find) != null
+                }
             }
         }
         ?: error("You nee to provide text or regexText")

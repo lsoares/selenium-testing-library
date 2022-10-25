@@ -12,12 +12,15 @@ data class ByTitle(
     private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
-        getWebDriver(context).filterAll {
-            when {
-                exact -> title == it.getAttribute("title") ||
-                    it.tagName == "title" && it.text == it.text
-                else  -> it.getAttribute("title").orEmpty().contains(title, ignoreCase = true) ||
-                    it.tagName == "title" && it.text.contains(title, ignoreCase = true)
+        getWebDriver(context).waitFor {
+            it.findElements(cssSelector("*")).filter { element ->
+                when {
+                    exact -> title == element.getAttribute("title") ||
+                        element.tagName == "title" && element.text == element.text
+
+                    else  -> element.getAttribute("title").orEmpty().contains(title, ignoreCase = true) ||
+                        element.tagName == "title" && element.text.contains(title, ignoreCase = true)
+                }
             }
         }
 }
