@@ -17,20 +17,25 @@ abstract class ByTestingLibrary(
             ensureTLScript()
             @Suppress("UNCHECKED_CAST")
             executeScript(
-                "return screen.queryAll${asString}"
+                "return $testingLibraryCall"
             ) as List<WebElement>
         }
 
-    override fun toString() = asString
+    override fun toString() = testingLibraryCall
 
-    private val asString: String
+    private val testingLibraryCall: String
         get() {
             val mainArg = when (textMatchIsString) {
                 true  -> "'${textMatch.replace("'", "\\'")}'"
                 false -> textMatch
             }
-            val optionsAsJson = Json().toJson(options.filterValues { it != null })
-            return """By$by(${mainArg}, $optionsAsJson)"""
+            val optionsWithoutNullValues = options.filterValues { it != null }
+            return if (optionsWithoutNullValues.isEmpty())
+                """screen.queryAllBy$by(${mainArg})"""
+            else {
+                val optionsAsJson = Json().toJson(optionsWithoutNullValues)
+                """screen.queryAllBy$by(${mainArg}, $optionsAsJson)"""
+            }
         }
 }
 

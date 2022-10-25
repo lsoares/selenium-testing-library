@@ -6,7 +6,7 @@ A few examples:
 
 ```kotlin
 driver.findElements(ByAltText("first name"))
-driver.findElements(ByDisplayValue("John Doe"))
+driver.findElements(ByDisplayValue("/john/i"))
 driver.findElements(ByLabelText("first name"))
 driver.findElements(ByPlaceholderText("first name", exact = false))
 driver.findElements(ByRole("heading"))
