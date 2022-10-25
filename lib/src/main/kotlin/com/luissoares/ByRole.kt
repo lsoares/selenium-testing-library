@@ -11,12 +11,15 @@ data class ByRole(
         context.findElements(
             cssSelector(
                 (when (role) {
-                    "textbox"           -> setOf("input, textarea")
-                    "heading"           -> setOf("h1", "h2", "h3", "h4", "h5", "h6")
-                    "banner"            -> setOf("header")
-                    "checkbox"          -> setOf("input[type=checkbox]")
-                    "button", "article" -> setOf(role)
-                    else                -> emptySet()
+                    "textbox" -> setOf("input, textarea")
+                    "heading" -> (1..6).map { "h$it" }
+                    "banner" -> setOf("header")
+                    "checkbox" -> setOf("input[type=checkbox]")
+                    "link" -> setOf("a")
+                    "button", "article", "figure",
+                    -> setOf(role)
+
+                    else -> emptySet()
                 } + "[role=$role]").joinToString(",")
             )
         )

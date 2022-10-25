@@ -77,5 +77,24 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
             "checkbox", """<input type="checkbox" id="chk1-label" />
                <label for="chk1-label">Remember my preferences</label>"""
         ),
+        of("link", """<a href="https://mozilla.org">Link 123</a>"""),
+        of(
+            "link", """<span data-href="https://mozilla.org" tabindex="0" role="link">
+              Fake accessible link created using a span
+            </span>"""
+        ),
+        of("toolbar", """""<div role="toolbar"></div>"""),
+        of(
+            "figure", """<figure>
+                          <img src="image.png" alt="put image description here" />
+                          <figcaption>Figure 1: The caption</figcaption>
+                        </figure>"""
+        ),
+        of(
+            "figure", """<div role="figure" aria-labelledby="figure-1">
+                          …
+                          <p id="figure-1">Text that describes the figure.</p>
+                        </div>"""
+        )
     )
 }
