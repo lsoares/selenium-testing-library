@@ -23,6 +23,15 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun `not exact`() {
+        driver.getFromHtml("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+
+        val result = driver.findElement(ByAltText("incredibles 2", exact = false))
+
+        assertEquals("img", result.tagName)
+    }
+
+    @Test
     fun `by alt text not-valid type`() {
         driver.getFromHtml("<div alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 

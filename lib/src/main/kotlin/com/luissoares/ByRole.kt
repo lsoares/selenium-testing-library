@@ -5,7 +5,7 @@ import org.openqa.selenium.SearchContext
 
 data class ByRole(
     private val role: String,
-    private val exact: Boolean? = true,
+    private val exact: Boolean = true,
     private val name: String? = null,
     private val selected: Boolean? = null,
     // TODO

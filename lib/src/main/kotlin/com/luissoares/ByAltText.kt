@@ -8,14 +8,14 @@ import org.openqa.selenium.SearchContext
  */
 data class ByAltText(
     private val text: String,
-    // TODO
-    // exact?: boolean = true,
+    private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
             getWebDriver(context).findAllBy(
                 by = "AltText",
                 mainArgument = text,
+                options = mapOf("exact" to exact),
             )
         }
 }

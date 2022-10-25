@@ -1,6 +1,7 @@
 # Selenium Testing Library
 
-A set of Selenium locators using the [Testing Library](http://testing-library.com/).
+A set of Selenium locators using the [Testing Library](http://testing-library.com/); for Kotlin/Java.
+
 A few examples:
 
 ```kotlin
@@ -57,3 +58,7 @@ library.
 - Normalizer function
 - Search function
 - Most arguments of ByRole
+
+## Other
+
+There's a [Python version](https://github.com/anze3db/selenium-testing-library).
