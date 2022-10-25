@@ -5,7 +5,7 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 
 /**
-ByPlaceholderText: https://testing-library.com/docs/queries/byplaceholdertext
+ * https://testing-library.com/docs/queries/byplaceholdertext
  */
 data class ByPlaceholderText(
     private val text: String? = null,

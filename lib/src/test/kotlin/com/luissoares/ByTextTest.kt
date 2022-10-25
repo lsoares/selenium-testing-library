@@ -1,5 +1,6 @@
 package com.luissoares
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.NoSuchElementException
@@ -63,6 +64,16 @@ class ByTextTest(private val driver: RemoteWebDriver) {
         )
 
         val result = driver.findElement(ByText("accept", exact = false, selector = "div p"))
+
+        assertEquals("p", result.tagName)
+    }
+
+    @Test
+    @Disabled("not supported by browsers yet")
+    fun `case insensitive`() {
+        driver.getFromHtml("<p>I accept</p>")
+
+        val result = driver.findElement(ByText("ACCEPT", exact = false))
 
         assertEquals("p", result.tagName)
     }

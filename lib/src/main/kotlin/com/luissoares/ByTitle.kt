@@ -5,7 +5,7 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 
 /**
-ByTitle: https://testing-library.com/docs/queries/bytitle
+ * https://testing-library.com/docs/queries/bytitle
  */
 data class ByTitle(
     private val title: String,

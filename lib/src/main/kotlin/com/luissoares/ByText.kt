@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement
 import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath
 
 /**
- * ByText: https://testing-library.com/docs/queries/bytext
+ * https://testing-library.com/docs/queries/bytext
  */
 data class ByText(
     private val text: String,
