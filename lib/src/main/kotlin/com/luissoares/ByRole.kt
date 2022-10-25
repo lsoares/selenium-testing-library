@@ -24,7 +24,7 @@ data class ByRole(
     override fun findElements(context: SearchContext) =
         getJavascriptExecutor(context).queryAll(
             by = "Role",
-            mainArgument = role,
+            arg0 = role,
             options = mapOf(
                 "exact" to exact,
                 "name" to name,

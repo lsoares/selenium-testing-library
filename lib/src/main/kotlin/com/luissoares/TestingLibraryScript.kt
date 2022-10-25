@@ -7,11 +7,11 @@ import org.openqa.selenium.json.Json
 @Suppress("UNCHECKED_CAST")
 fun JavascriptExecutor.queryAll(
     by: String,
-    mainArgument: String,
+    arg0: String,
     options: Map<String, Any?> = emptyMap(),
 ): List<WebElement> = addScriptIfMissing()
     .executeScript(
-        """return screen.queryAllBy${by}("$mainArgument", ${Json().toJson(options)})"""
+        """return screen.queryAllBy${by}("$arg0", ${Json().toJson(options)})"""
     ) as List<WebElement>
 
 private fun JavascriptExecutor.addScriptIfMissing(): JavascriptExecutor {

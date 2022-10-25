@@ -13,7 +13,7 @@ data class ByPlaceholderText(
     override fun findElements(context: SearchContext) =
         getJavascriptExecutor(context).queryAll(
             by = "PlaceholderText",
-            mainArgument = text,
+            arg0 = text,
             options = mapOf("exact" to exact),
         )
 }

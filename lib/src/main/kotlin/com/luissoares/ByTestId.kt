@@ -12,6 +12,6 @@ data class ByTestId(
     override fun findElements(context: SearchContext) =
         getJavascriptExecutor(context).queryAll(
             by = "TestId",
-            mainArgument = value,
+            arg0 = value,
         )
 }

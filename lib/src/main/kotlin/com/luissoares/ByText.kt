@@ -16,7 +16,7 @@ data class ByText(
     override fun findElements(context: SearchContext) =
         getJavascriptExecutor(context).queryAll(
             by = "Text",
-            mainArgument = text,
+            arg0 = text,
             options = mapOf(
                 "exact" to exact,
                 "selector" to selector,

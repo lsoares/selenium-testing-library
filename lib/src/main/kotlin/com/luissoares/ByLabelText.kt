@@ -14,7 +14,7 @@ data class ByLabelText(
     override fun findElements(context: SearchContext) =
         getJavascriptExecutor(context).queryAll(
             by = "LabelText",
-            mainArgument = text,
+            arg0 = text,
             options = mapOf(
                 "selector" to selector,
                 "exact" to exact,

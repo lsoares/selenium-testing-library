@@ -13,7 +13,7 @@ data class ByTitle(
     override fun findElements(context: SearchContext) =
         getJavascriptExecutor(context).queryAll(
             by = "Title",
-            mainArgument = title,
+            arg0 = title,
             options = mapOf("exact" to exact),
         )
 }

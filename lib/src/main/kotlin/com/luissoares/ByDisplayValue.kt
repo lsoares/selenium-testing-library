@@ -13,7 +13,7 @@ data class ByDisplayValue(
     override fun findElements(context: SearchContext) =
         getJavascriptExecutor(context).queryAll(
             by = "DisplayValue",
-            mainArgument = value,
+            arg0 = value,
             options = mapOf("exact" to exact),
         )
 }
