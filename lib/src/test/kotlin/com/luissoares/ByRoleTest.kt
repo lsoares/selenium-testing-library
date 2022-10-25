@@ -153,4 +153,26 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         assertEquals("input", result.single().tagName)
     }
+
+    @ParameterizedTest
+    @MethodSource("hidden values")
+    fun hidden(hidden: Boolean, expectedButtonsFound: List<String>) {
+        driver.getFromHtml(
+            """<main aria-hidden="true">
+                <button>Open dialog</button>
+              </main>
+              <div role="dialog">
+                <button>Close dialog</button>
+              </div>"""
+        )
+
+        val result = driver.findElements(ByRole("button", hidden=hidden))
+
+        assertEquals(expectedButtonsFound, result.map { it.text })
+    }
+
+    private fun `hidden values`() = setOf(
+        of( false, listOf("Close dialog")),
+        of(true, listOf("Open dialog", "Close dialog")),
+    )
 }

@@ -3,13 +3,16 @@ package com.luissoares
 import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
 
+/**
+ * https://testing-library.com/docs/queries/byrole
+ */
 data class ByRole(
     private val role: String,
     private val exact: Boolean = true,
+    private val hidden: Boolean = false,
     private val name: String? = null,
     private val selected: Boolean? = null,
     // TODO
-    // hidden?: boolean = false,
     // description?: TextMatch,
     // checked?: boolean,
     // pressed?: boolean,
@@ -26,6 +29,7 @@ data class ByRole(
                 "exact" to exact,
                 "name" to name,
                 "selected" to selected,
+                "hidden" to hidden,
             ).filterValues { it != null },
         )
 }
