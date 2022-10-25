@@ -1,0 +1,21 @@
+{
+  "name": "testing-library-window-monkey-patch",
+  "version": "1.0.0",
+  "description": "Monkey patches the Testing Library to be available at browser console",
+  "main": "index.js",
+  "scripts": {
+    "compile": "webpack --mode production",
+    "precopy": "npm run compile",
+    "copy": "cp dist/main.js ../lib/src/main/resources/testing-library.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@testing-library/dom": "^8.19.0",
+    "webpack": "^5.74.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.10.0"
+  }
+}
