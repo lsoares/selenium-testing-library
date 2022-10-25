@@ -3,6 +3,7 @@ package com.luissoares
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
+import org.openqa.selenium.support.ui.Select
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -31,30 +32,37 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun select() {
-        driver.getFromHtml("""
+        driver.getFromHtml(
+            """
             <select>
               <option value="">State</option>
               <option value="AL">Alabama</option>
-              <option selected value="AK">Alaska</option>
+              <option value="AK">Alaska</option>
               <option value="AZ">Arizona</option>
             </select> 
-        """)
+        """
+        )
+        driver.findElement(By.tagName("select")).let(::Select).selectByVisibleText("Alaska")
 
         val result = driver.findElement(ByDisplayValue("Alaska"))
 
         assertEquals("select", result.tagName)
     }
 
-     @Test
+    @Test
     fun `select multiple`() {
-        driver.getFromHtml("""
+        driver.getFromHtml(
+            """
             <select multiple>
               <option value="">State</option>
-              <option selected value="AL">Alabama</option>
+              <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
-              <option selected value="AZ">Arizona</option>
+              <option value="AZ">Arizona</option>
             </select> 
-        """)
+        """
+        )
+        driver.findElement(By.tagName("select")).let(::Select).selectByVisibleText("Alabama")
+        driver.findElement(By.tagName("select")).let(::Select).selectByVisibleText("Arizona")
 
         val result = driver.findElement(ByDisplayValue("Arizona"))
 
