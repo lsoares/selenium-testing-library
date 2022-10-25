@@ -1,6 +1,5 @@
 package com.luissoares
 
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -31,7 +30,6 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
-    @Disabled("TODO")
     fun select() {
         driver.getFromHtml("""
             <select>
@@ -43,6 +41,22 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
         """)
 
         val result = driver.findElement(ByDisplayValue("Alaska"))
+
+        assertEquals("select", result.tagName)
+    }
+
+     @Test
+    fun `select multiple`() {
+        driver.getFromHtml("""
+            <select multiple>
+              <option value="">State</option>
+              <option selected value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option selected value="AZ">Arizona</option>
+            </select> 
+        """)
+
+        val result = driver.findElement(ByDisplayValue("Arizona"))
 
         assertEquals("select", result.tagName)
     }
