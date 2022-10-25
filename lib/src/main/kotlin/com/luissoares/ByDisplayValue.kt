@@ -8,14 +8,16 @@ import org.openqa.selenium.SearchContext
  */
 data class ByDisplayValue(
     private val value: String,
-    // TODO
-    // exact?: boolean = true,
+    private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
             getWebDriver(context).findAllBy(
                 by = "DisplayValue",
                 mainArgument = value,
+                options = mapOf(
+                    "exact" to exact,
+                ),
             )
         }
 }
