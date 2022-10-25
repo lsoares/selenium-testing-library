@@ -8,11 +8,9 @@ data class ByLabelText(
     private val text: String,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
-        getWebDriver(context).waitUntil {
-            it.findElements(cssSelector("label"))
-                .firstOrNull { element -> element.text == text }
-                ?.let { labelElement ->
-                    listOfNotNull(
+        getWebDriver(context).findElements(cssSelector("label")).flatMap { labelElement ->
+            getWebDriver(context).waitUntil {
+                listOfNotNull(
                         labelElement.getAttribute("for")?.let { forAttribute ->
                             it.findElements(id(forAttribute))
                         },
@@ -20,6 +18,8 @@ data class ByLabelText(
                             it.findElements(cssSelector("[aria-labelledby='${idAttribute}']"))
                         },
                     ).flatten()
-                }
-        } ?: emptyList()
+            } + getWebDriver(context).findElements(
+                xpath("//label//*[text()='$text']/ancestor::label[1]//input")
+            )
+        }
 }

@@ -1,6 +1,5 @@
 package com.luissoares
 
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -38,7 +37,6 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
-    @Disabled("TODO")
     fun `by wrapping label`() {
         driver.getFromHtml(
             """
