@@ -1,6 +1,5 @@
 package com.luissoares
 
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
@@ -8,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class ByRoleTest(private val driver: RemoteWebDriver) {
@@ -189,9 +189,9 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                     </ul>"""
         )
 
-        assertThrows<IllegalArgumentException> {
-            driver.findElements(ByRole("alertdialog", description = "Your session is about to expire!"))
-        }
+        val result = driver.findElements(ByRole("alertdialog", description = "Your session is about to expire!"))
+
+        assertTrue(result.single().text.contains("Your session is about to expire"))
     }
 
     @ParameterizedTest
@@ -248,9 +248,9 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                       </nav>"""
         )
 
-        assertThrows<IllegalArgumentException> {
-            driver.findElements(ByRole("link", current = true))
-        }
+        val result = driver.findElements(ByRole("link", current = true))
+
+        assertEquals("👍", result.single().text)
     }
 
     @Test
@@ -258,14 +258,14 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         driver.getFromHtml(
             """
             <a href="x"></a>
-            <a aria-expanded="false" href="x"></a>
+            <a aria-expanded="false" href="x">expanded</a>
             <a href="x"></a>
         """
         )
 
-        assertThrows<IllegalArgumentException> {
-            driver.findElements(ByRole("link", expanded = false))
-        }
+        val result = driver.findElements(ByRole("link", expanded = false))
+
+        assertEquals("expanded", result.single().text)
     }
 
     @ParameterizedTest
