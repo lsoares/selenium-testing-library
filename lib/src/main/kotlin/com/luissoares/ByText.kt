@@ -10,8 +10,7 @@ data class ByText(
     private val text: String,
     private val selector: String = "*",
     private val exact: Boolean = true,
-    // TODO:
-    // ignore?: string|boolean = 'script, style',
+    private val ignore: String = "script, style",
 ) : By() {
 
     override fun findElements(context: SearchContext) =
@@ -21,6 +20,7 @@ data class ByText(
             options = mapOf(
                 "exact" to exact,
                 "selector" to selector,
+                "ignore" to (ignore.takeIf(String::isNotBlank) ?: false),
             ),
         )
 }

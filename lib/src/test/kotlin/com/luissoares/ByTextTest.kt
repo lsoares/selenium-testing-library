@@ -2,6 +2,9 @@ package com.luissoares
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.assertEquals
@@ -75,4 +78,27 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
         assertEquals("p", result.tagName)
     }
+
+    @ParameterizedTest
+    @MethodSource("ignore values")
+    fun `disable ignore`(ignore: String, expectedFound: Int) {
+        driver.getFromHtml(
+            """
+            <p>I accept</p>
+            <script>I accept</script>
+            <style>I accept</style>
+            """
+        )
+
+        val result = driver.findElements(ByText("I accept", ignore = ignore))
+
+        assertEquals(expectedFound, result.size)
+    }
+
+    private fun `ignore values`() = setOf(
+        Arguments.of("", 3),
+        Arguments.of("style", 2),
+        Arguments.of("style,script", 1),
+        Arguments.of("style,script,p", 0),
+    )
 }
