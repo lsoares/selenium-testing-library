@@ -32,17 +32,17 @@ abstract class ByTestingLibrary(
             val optionsAsJson = Json().toJson(options.filterValues { it != null })
             return """By$by(${mainArg}, $optionsAsJson)"""
         }
+}
 
-    private fun JavascriptExecutor.ensureTLScript() {
-        if (!hasTLScript)
-            executeScript(tlScript)
-    }
+private fun JavascriptExecutor.ensureTLScript() {
+    if (!hasTLScript)
+        executeScript(tlScript)
+}
 
-    private val JavascriptExecutor.hasTLScript
-        get() = executeScript("return typeof screen?.getAllByAltText == 'function'") as Boolean
+private val JavascriptExecutor.hasTLScript
+    get() = executeScript("return typeof screen?.getAllByAltText == 'function'") as Boolean
 
-    private val tlScript by lazy {
-        {}.javaClass.getResource("/testing-library.js")?.readText()
-            ?: error("script not found")
-    }
+private val tlScript by lazy {
+    {}.javaClass.getResource("/testing-library.js")?.readText()
+        ?: error("script not found")
 }
