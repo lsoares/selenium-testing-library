@@ -31,7 +31,7 @@ class ByPlaceholderTextTest {
     fun `exact found`() {
         driver.getFromHtml("<input placeholder='Username' />")
 
-        val result =   driver.findElement(ByPlaceholderText("Username", exact = true))
+        val result = driver.findElement(ByPlaceholderText("Username", exact = true))
 
         assertEquals("input", result.tagName)
     }
