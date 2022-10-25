@@ -13,11 +13,10 @@ data class ByTitle(
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
         getWebDriver(context).filterAll {
-            when (exact) {
-                true  -> title == it.getAttribute("title") ||
+            when {
+                exact -> title == it.getAttribute("title") ||
                     it.tagName == "title" && it.text == it.text
-
-                false -> it.getAttribute("title").orEmpty().contains(title, ignoreCase = true) ||
+                else  -> it.getAttribute("title").orEmpty().contains(title, ignoreCase = true) ||
                     it.tagName == "title" && it.text.contains(title, ignoreCase = true)
             }
         }

@@ -1,19 +1,14 @@
 package com.luissoares
 
-import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.NoSuchElementException
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class ByTextTest {
-    init {
-        WebDriverManager.chromedriver().setup()
-    }
-
-    private val driver = ChromeDriver(ChromeOptions().addArguments("--headless"))
+@ExtendWith(DriverLifeCycle::class)
+class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by text`() {
@@ -53,15 +48,6 @@ class ByTextTest {
         }
 
         assertTrue(result.exceptionOrNull() is NoSuchElementException)
-    }
-
-    @Test
-    fun `not exact`() {
-        driver.getFromHtml("<span> Username </span><div>Username</div>")
-
-        val result = driver.findElement(ByText("User", exact = false))
-
-        assertEquals("span", result.tagName)
     }
 
     @Test

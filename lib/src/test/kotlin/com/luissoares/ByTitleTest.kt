@@ -1,17 +1,12 @@
 package com.luissoares
 
-import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Test
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
+import org.junit.jupiter.api.extension.ExtendWith
+import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.assertEquals
 
-class ByTitleTest {
-    init {
-        WebDriverManager.chromedriver().setup()
-    }
-
-    private val driver = ChromeDriver(ChromeOptions().addArguments("--headless"))
+@ExtendWith(DriverLifeCycle::class)
+class ByTitleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by title`() {

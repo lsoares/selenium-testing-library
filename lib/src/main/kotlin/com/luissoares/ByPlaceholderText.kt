@@ -23,11 +23,9 @@ data class ByPlaceholderText(
                 }
             }
         } ?: regexText?.let {
-            val regexContains = Regex(".*${regexText.pattern}.*", regexText.options)
-            getWebDriver(context).filterAll { element ->
-                element.getAttribute("placeholder")
-                    ?.let(regexContains::matches)
-                    ?: false
+            getWebDriver(context).filterAll {
+                it.getAttribute("placeholder")
+                    ?.let(regexText::find) != null
             }
         }
         ?: error("You nee to provide text or regexText")

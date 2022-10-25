@@ -13,8 +13,12 @@ data class ByText(
     private val selector: String = "*",
     private val exact: Boolean = true,
 ) : By() {
+    companion object {
+        private val cssToXPath = CssElementCombinatorPairsToXpath()::convertCssSelectorStringToXpathString
+    }
+
     override fun findElements(context: SearchContext): List<WebElement> {
-        val xPathSelector = CssElementCombinatorPairsToXpath().convertCssSelectorStringToXpathString(selector)
+        val xPathSelector = cssToXPath(selector)
         val xPathFunction = when {
             exact -> "text()='$text'"
             else  -> "contains(text(),'$text')"

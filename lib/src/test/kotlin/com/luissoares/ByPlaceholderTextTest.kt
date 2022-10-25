@@ -1,22 +1,17 @@
 package com.luissoares
 
-import io.github.bonigarcia.wdm.WebDriverManager
+import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.text.RegexOption.IGNORE_CASE
 
-class ByPlaceholderTextTest {
-    init {
-        WebDriverManager.chromedriver().setup()
-    }
-
-    private val driver = ChromeDriver(ChromeOptions().addArguments("--headless"))
+@ExtendWith(DriverLifeCycle::class)
+class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
 
     @ParameterizedTest
     @ValueSource(strings = ["Username", "USERNAME", "user"])

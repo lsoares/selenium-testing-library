@@ -5,14 +5,14 @@ A set of Selenium locators inspired by the [Testing Library](http://testing-libr
 ## ByText
 ```kotlin
 driver.findElements(ByText("first name"))
-driver.findElements(ByText("first name", exact = true, selector="span"))
+driver.findElements(ByText("first name", exact = false, selector="span"))
 ```
 
 
 ## ByPlaceholderText
 ```kotlin
 driver.findElements(ByPlaceholderText("first name"))
-driver.findElements(ByPlaceholderText("first name", exact = true))
+driver.findElements(ByPlaceholderText("first name", exact = false))
 ```
 
 ## ByTitle
