@@ -224,4 +224,26 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         assertEquals("👍", result.single().text)
     }
+
+    @Disabled
+    @ParameterizedTest
+    @MethodSource("test cases current")
+    fun current(current: Boolean?, expectedFound: List<String>) {
+        driver.getFromHtml(
+            """<nav>
+                        <a href="current/page" aria-current="true">👍</a>
+                        <a href="another/page">👎</a>
+                      </nav>"""
+        )
+
+        val result = driver.findElements(ByRole("link", current = true))
+
+        assertEquals(expectedFound, result.map { it.text })
+    }
+
+    private fun `test cases current`() = setOf(
+        of(true, listOf("👍")),
+        of(false, listOf("👍", "👎")),
+        of(null, listOf("👎")),
+    )
 }

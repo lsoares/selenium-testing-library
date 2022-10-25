@@ -15,8 +15,8 @@ data class ByRole(
     private val selected: Boolean? = null,
     private val checked: Boolean? = null,
     private val pressed: Boolean? = null,
+    private val current: Boolean? = null,
     // TODO
-    // current?: boolean | string,
     // expanded?: boolean,
     // queryFallbacks?: boolean,
     private val level: Int? = null,
@@ -33,6 +33,7 @@ data class ByRole(
                 "selected" to selected,
                 "checked" to checked,
                 "pressed" to pressed,
+                "current" to current,
                 "level" to level,
             ).filterValues { it != null },
         )
