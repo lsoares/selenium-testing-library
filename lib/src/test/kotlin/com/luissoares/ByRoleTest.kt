@@ -1,6 +1,6 @@
 package com.luissoares
 
-import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
@@ -175,24 +175,23 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     )
 
     @Test
-    @Disabled("https://github.com/testing-library/dom-testing-library/issues/1181")
     fun description() {
         driver.getFromHtml(
             """<ul>
-                    <li role="alertdialog" aria-describedby="notification-id-1">
-                      <div><button>Close</button></div>
-                      <div id="notification-id-1">You have unread emails</div>
-                    </li>
-                    <li role="alertdialog" aria-describedby="notification-id-2">
-                      <div><button>Close</button></div>
-                      <div id="notification-id-2">Your session is about to expire</div>
-                    </li>
-                  </ul>"""
+                      <li role="alertdialog" aria-describedby="notification-id-1">
+                        <div><button>Close</button></div>
+                        <div id="notification-id-1">You have unread emails</div>
+                      </li>
+                      <li role="alertdialog" aria-describedby="notification-id-2">
+                        <div><button>Close</button></div>
+                        <div id="notification-id-2">Your session is about to expire!</div>
+                      </li>
+                    </ul>"""
         )
 
-        val result = driver.findElements(ByRole("alertdialog", description = "Your session is about to expire"))
-
-        assertEquals(1, result.size)
+        assertThrows<IllegalArgumentException> {
+            driver.findElements(ByRole("alertdialog", description = "Your session is about to expire!"))
+        }
     }
 
     @ParameterizedTest
@@ -240,10 +239,8 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals("👍", result.single().text)
     }
 
-    @Disabled("https://github.com/testing-library/dom-testing-library/issues/1181")
-    @ParameterizedTest
-    @MethodSource("test cases current")
-    fun current(current: Boolean?, expectedFound: List<String>) {
+    @Test
+    fun current() {
         driver.getFromHtml(
             """<nav>
                         <a href="current/page" aria-current="true">👍</a>
@@ -251,19 +248,12 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                       </nav>"""
         )
 
-        val result = driver.findElements(ByRole("link", current = current))
-
-        assertEquals(expectedFound, result.map { it.text })
+        assertThrows<IllegalArgumentException> {
+            driver.findElements(ByRole("link", current = true))
+        }
     }
 
-    private fun `test cases current`() = setOf(
-        of(true, listOf("👍")),
-        of(false, listOf("👍", "👎")),
-        of(null, listOf("👎")),
-    )
-
     @Test
-    @Disabled("https://stackoverflow.com/questions/74162350/dom-testing-library-current-expanded-and-description-filter-dont-filte")
     fun expanded() {
         driver.getFromHtml(
             """
@@ -273,9 +263,9 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElements(ByRole("link", expanded = false))
-
-        assertEquals(1, result.size)
+        assertThrows<IllegalArgumentException> {
+            driver.findElements(ByRole("link", expanded = false))
+        }
     }
 
     @ParameterizedTest

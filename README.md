@@ -1,6 +1,6 @@
 # Selenium Testing Library
 
-A set of Selenium locators using the [Testing Library](http://testing-library.com/); for Kotlin/Java.
+The [Testing Library](http://testing-library.com/) for Selenium Kotlin/Java.
 
 A few examples:
 
@@ -39,9 +39,8 @@ My approach was to create an [adapter](https://en.wikipedia.org/wiki/Adapter_pat
 a set of custom Selenium locators that wrap the Testing Library JavaScript functions.
 
 How do I have the Testing Library in Selenium? By dynamically injecting it through JavaScript.
-The injected JavaScript was copied from
-the [Testing Playground Chrome extension](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano)
-.
+The injected JavaScript was copied from the
+[Chrome extension](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano).
 There are some CDKs that serve the Testing Library, but I needed the self-contained single-file browser-ready version.
 
 ---

@@ -36,4 +36,10 @@ class ByRole(
         "queryFallbacks" to queryFallbacks,
         "level" to level,
     ),
-)
+) {
+    init {
+        require(description == null) { "description is not supported yet" }
+        require(current == null) { "current is not supported yet" }
+        require(expanded == null) { "expanded is not supported yet" }
+    }
+}
