@@ -28,4 +28,24 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         assertNotNull(result)
     }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            """<h1>h1</h1""",
+            """<h1>h2</h1""",
+            """<h1>h3</h1""",
+            """<h1>h4</h1""",
+            """<h1>h5</h1""",
+            """<h1>h6</h1""",
+            """<div role="heading" aria-level="1">This is a main page heading</div>""",
+        ]
+    )
+    fun heading(content: String) {
+        driver.getFromHtml(content)
+
+        val result = driver.findElement(ByRole("heading"))
+
+        assertNotNull(result)
+    }
 }

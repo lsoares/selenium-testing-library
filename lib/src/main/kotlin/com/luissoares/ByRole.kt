@@ -9,6 +9,12 @@ data class ByRole(
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
         context.findElements(
-            cssSelector("input, textarea, [role=textbox]")
-        )
+            cssSelector(
+                when (role) {
+                    "textbox" -> setOf("input, textarea, [role=textbox]")
+                    "heading" -> setOf("h1", "h2", "h3", "h4", "h5", "h6")
+                    else      -> emptySet()
+                }.joinToString(",")
+            )
+        ) + context.findElements(cssSelector("[role=$role]"))
 }
