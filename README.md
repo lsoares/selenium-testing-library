@@ -18,6 +18,28 @@ driver.findElements(ByTitle("title 1"))
 There are unit tests that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb)
 all the usages.
 
+## Setup
+
+I'm temporarily using JitPack while I learn how to publish to Maven Central.
+
+Add JitPack repository:
+
+```kotlin
+repositories {
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
+```
+
+Add dependency:
+
+````kotlin
+testImplementation("com.github.lsoares:selenium-testing-library:63c3355a76")
+````
+
+You can check the latest hash at the [corresponding JitPack page](https://jitpack.io/#lsoares/selenium-testing-library)
+→ commits
+
 ## Why?
 
 I'm a fan of the [Testing Library](http://testing-library.com/).
@@ -34,8 +56,7 @@ How do I have the Testing Library in Selenium? By dynamically injecting it throu
 The injected JavaScript was copied from
 the [Testing Playground Chrome extension](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano)
 .
-(There are some CDKs that serve the Testing Library,
-but I needed the self-contained single-file browser-ready version.)
+There are some CDKs that serve the Testing Library, but I needed the self-contained single-file browser-ready version.
 
 ### Port or Adapt?
 
@@ -47,7 +68,7 @@ It turned out this was a limited approach because:
 - I'd likely introduce bugs
 - I wouldn't get library updates easily
 
-(check git history to view the old approach)
+Check git history to view the old approach.
 
 With the new approach (an adapter/wrapper), I learned a lot about Selenium, the Testing Library, and publishing a Kotlin
 library.
@@ -58,6 +79,5 @@ library.
 - Normalizer function
 - Search function
 
-## Other
-
+---
 There's a [Python version](https://github.com/anze3db/selenium-testing-library).
