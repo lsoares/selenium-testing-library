@@ -12,7 +12,7 @@ data class ByPlaceholderText(
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy(
+            getJavascriptExecutor(context).queryAllBy(
                 by = "PlaceholderText",
                 mainArgument = text,
                 options = mapOf("exact" to exact),

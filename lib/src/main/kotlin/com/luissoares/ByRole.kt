@@ -20,7 +20,7 @@ data class ByRole(
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy(
+            getJavascriptExecutor(context).queryAllBy(
                 by = "Role",
                 mainArgument = role,
                 options = mapOf(

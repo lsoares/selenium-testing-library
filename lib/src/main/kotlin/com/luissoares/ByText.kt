@@ -16,10 +16,13 @@ data class ByText(
 
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy(
+            getJavascriptExecutor(context).queryAllBy(
                 by = "Text",
                 mainArgument = text,
-                options = mapOf("exact" to exact, "selector" to selector),
+                options = mapOf(
+                    "exact" to exact,
+                    "selector" to selector,
+                ),
             )
         }
 }

@@ -13,7 +13,7 @@ data class ByLabelText(
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy(
+            getJavascriptExecutor(context).queryAllBy(
                 by = "LabelText",
                 mainArgument = text,
                 options = mapOf(

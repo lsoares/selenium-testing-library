@@ -12,12 +12,10 @@ data class ByDisplayValue(
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy(
+            getJavascriptExecutor(context).queryAllBy(
                 by = "DisplayValue",
                 mainArgument = value,
-                options = mapOf(
-                    "exact" to exact,
-                ),
+                options = mapOf("exact" to exact),
             )
         }
 }

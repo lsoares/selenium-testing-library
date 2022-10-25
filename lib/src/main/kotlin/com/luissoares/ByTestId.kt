@@ -11,7 +11,7 @@ data class ByTestId(
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy(
+            getJavascriptExecutor(context).queryAllBy(
                 by = "TestId",
                 mainArgument = value,
             )

@@ -12,7 +12,7 @@ data class ByAltText(
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy(
+            getJavascriptExecutor(context).queryAllBy(
                 by = "AltText",
                 mainArgument = text,
                 options = mapOf("exact" to exact),
