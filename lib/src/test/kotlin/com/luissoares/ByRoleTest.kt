@@ -236,7 +236,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                       </nav>"""
         )
 
-        val result = driver.findElements(ByRole("link", current = true))
+        val result = driver.findElements(ByRole("link", current = current))
 
         assertEquals(expectedFound, result.map { it.text })
     }
