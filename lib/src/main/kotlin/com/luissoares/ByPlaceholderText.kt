@@ -12,27 +12,14 @@ data class ByPlaceholderText(
     private val regexText: Regex? = null,
     private val exact: Boolean = true,
 ) : By() {
-    override fun findElements(context: SearchContext): List<WebElement> =
-        text?.let {
-            when {
-                exact  -> context.findElements(cssSelector("[placeholder='$text']"))
-                else -> {
-                    getWebDriver(context).waitUntil {
-                        it.findElements(cssSelector("*")).filter { element ->
-                            element.getAttribute("placeholder")
-                                ?.contains(text, ignoreCase = true)
-                                ?: false
-                        }
-                    }
-                }
-            }
-        } ?: regexText?.let {
-            getWebDriver(context).waitUntil {
-                it.findElements(cssSelector("*")).filter { element ->
-                    element.getAttribute("placeholder")
-                        ?.let(regexText::find) != null
-                }
-            }
+    override fun findElements(context: SearchContext): List<WebElement> {
+        text ?: regexText ?: error("missing")
+        return with(TestingLibraryScript) {
+            getWebDriver(context).findAllBy(
+                "PlaceholderText",
+                text ?: regexText.toString(),
+                mapOf("exact" to exact),
+            )
         }
-        ?: error("You nee to provide text or regexText")
+    }
 }

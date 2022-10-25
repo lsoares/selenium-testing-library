@@ -2,8 +2,6 @@ package com.luissoares
 
 import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
-import org.openqa.selenium.WebElement
-import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsToXpath
 
 /**
  * https://testing-library.com/docs/queries/bytext
@@ -13,16 +11,12 @@ data class ByText(
     private val selector: String = "*",
     private val exact: Boolean = true,
 ) : By() {
-    companion object {
-        private val cssToXPath = CssElementCombinatorPairsToXpath()::convertCssSelectorStringToXpathString
-    }
 
-    override fun findElements(context: SearchContext): List<WebElement> {
-        val xPathSelector = cssToXPath(selector)
-        val xPathFunction = when {
-            exact -> "text()='$text'"
-            else  -> "contains(text(),'$text')"
+    override fun findElements(context: SearchContext) =
+        with(TestingLibraryScript) {
+            getWebDriver(context).findAllBy(
+                "Text", text,
+                mapOf("exact" to exact, "selector" to selector)
+            )
         }
-        return context.findElements(xpath("$xPathSelector[$xPathFunction]"))
-    }
 }

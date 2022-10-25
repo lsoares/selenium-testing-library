@@ -2,7 +2,6 @@ package com.luissoares
 
 import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
-import org.openqa.selenium.WebElement
 
 /**
  * https://testing-library.com/docs/queries/byalttext
@@ -10,13 +9,8 @@ import org.openqa.selenium.WebElement
 data class ByAltText(
     private val text: String,
 ) : By() {
-    override fun findElements(context: SearchContext): List<WebElement> =
-        getWebDriver(context).waitUntil {
-            it.findElements(ByCssSelector("[alt='$text']"))
-                .filter(::canHaveAlt)
+    override fun findElements(context: SearchContext) =
+        with(TestingLibraryScript) {
+            getWebDriver(context).findAllBy("AltText", text)
         }
-
-    private fun canHaveAlt(element: WebElement) =
-        element.tagName in listOf("img", "area", "input") ||
-            Regex(".+-.+").find(element.tagName) != null
 }

@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
 class ByAltTextTest(private val driver: RemoteWebDriver) {
 
     @ParameterizedTest
-    @ValueSource(strings = ["img", "input", "area", "custom-element"])
+    @ValueSource(strings = ["img", "input", "area"])
     fun `by alt text`(tagName: String) {
         driver.getFromHtml("<$tagName alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 

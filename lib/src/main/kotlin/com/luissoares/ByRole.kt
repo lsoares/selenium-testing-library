@@ -2,34 +2,18 @@ package com.luissoares
 
 import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
-import org.openqa.selenium.WebElement
 
 data class ByRole(
     private val role: String,
     private val selected: Boolean? = null,
 ) : By() {
-    override fun findElements(context: SearchContext): List<WebElement> =
-        context.findElements(
-            cssSelector(
-                setOf(
-                    when (role) {
-                        "textbox" -> setOf("input, textarea")
-                        "heading" -> (1..6).map { "h$it" }.toList()
-                        "banner" -> setOf("header")
-                        "checkbox" -> setOf("input[type=checkbox]")
-                        "form" -> setOf("form[aria-label]", "form[aria-labelledby]")
-                        "link" -> setOf("a")
-                        "button", "article", "figure",
-                        -> setOf(role)
-
-                        else -> emptySet()
-                    },
-                    setOf("[role=$role]"),
-                )
-                    .flatten()
-                    .joinToString(",") {
-                        it + selected?.let { "[aria-selected=$selected]" }.orEmpty()
-                    }
+    override fun findElements(context: SearchContext) =
+        with(TestingLibraryScript) {
+            getWebDriver(context).findAllBy(
+                "Role",
+                role,
+                mapOf("selected" to selected)
+                    .filterValues { it != null },
             )
-        )
+        }
 }

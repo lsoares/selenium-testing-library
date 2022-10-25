@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class ByRoleTest(private val driver: RemoteWebDriver) {
@@ -117,6 +116,5 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         val result = driver.findElements(ByRole("tab", selected=true))
 
         assertEquals("Native", result.single().text)
-        assertTrue(result.single().isSelected)
     }
 }

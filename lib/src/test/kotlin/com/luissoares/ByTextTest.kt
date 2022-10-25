@@ -1,6 +1,5 @@
 package com.luissoares
 
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.NoSuchElementException
@@ -69,7 +68,6 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
-    @Disabled("not supported by browsers yet")
     fun `case insensitive`() {
         driver.getFromHtml("<p>I accept</p>")
 
