@@ -103,11 +103,13 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not exact`() {
-        driver.getFromHtml("""
+        driver.getFromHtml(
+            """
             <div role="tablist">
                 <button role="tab" aria-selected="true">Native</button>
             </div>
-        """)
+        """
+        )
 
         val result = driver.findElement(ByRole("tabli", exact = false))
 
@@ -118,18 +120,37 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     fun `aria-selected`() {
         driver.getFromHtml(
             """
-            <body>
               <div role="tablist">
                 <button role="tab" aria-selected="false">React</button>
                 <button role="tab" aria-selected="true">Native</button>
                 <button role="tab" aria-selected="false">Cypress</button>
               </div>
-            </body>
         """
         )
 
         val result = driver.findElements(ByRole("tab", selected = true))
 
         assertEquals("Native", result.single().text)
+    }
+
+    @Test
+    fun `with name`() {
+        driver.getFromHtml(
+            """
+                <label for="email">Email address</label>
+                <input />
+                <input
+                  type="email"
+                  id="email"
+                  aria-describedby="email-help"
+                  placeholder="Enter email"
+                />
+                <input />
+        """
+        )
+
+        val result = driver.findElements(ByRole("textbox", name = "Email address"))
+
+        assertEquals("input", result.single().tagName)
     }
 }

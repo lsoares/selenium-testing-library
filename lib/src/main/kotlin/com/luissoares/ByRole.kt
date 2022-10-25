@@ -6,10 +6,10 @@ import org.openqa.selenium.SearchContext
 data class ByRole(
     private val role: String,
     private val exact: Boolean? = true,
+    private val name: String? = null,
     private val selected: Boolean? = null,
     // TODO
     // hidden?: boolean = false,
-    // name?: TextMatch,
     // description?: TextMatch,
     // checked?: boolean,
     // pressed?: boolean,
@@ -25,6 +25,7 @@ data class ByRole(
                 mainArgument = role,
                 options = mapOf(
                     "exact" to exact,
+                    "name" to name,
                     "selected" to selected,
                 ).filterValues { it != null },
             )
