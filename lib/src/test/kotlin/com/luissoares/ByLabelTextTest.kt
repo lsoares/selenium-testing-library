@@ -1,8 +1,8 @@
 package com.luissoares
 
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExtendWith(DriverLifeCycle::class)
@@ -46,6 +46,15 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
                 </label>
             """
         )
+
+        val result = driver.findElement(ByLabelText("Username"))
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
+    fun `aria label`() {
+        driver.getFromHtml("<input aria-label='Username' />")
 
         val result = driver.findElement(ByLabelText("Username"))
 
