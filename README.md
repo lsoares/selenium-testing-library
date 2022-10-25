@@ -58,21 +58,6 @@ the [Testing Playground Chrome extension](https://chrome.google.com/webstore/det
 .
 There are some CDKs that serve the Testing Library, but I needed the self-contained single-file browser-ready version.
 
-### Port or Adapt?
-
-My first approach was to use Selenium locators (e.g. `xpath`, `cssSelector`) to port the Testing Library behavior.
-It turned out this was a limited approach because:
-
-- Selenium locators can't compete with Selenium locators due to [WebdriverIO](https://webdriver.io/) limitations
-- I'd have to port all functionality, which is a lot of work
-- I'd likely introduce bugs
-- I wouldn't get library updates easily
-
-Check git history to view the old approach.
-
-With the new approach (an adapter/wrapper), I learned a lot about Selenium, the Testing Library, and publishing a Kotlin
-library.
-
 ## Limitations
 
 - Regex

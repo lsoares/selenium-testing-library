@@ -4,23 +4,24 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.json.Json
 
-
 @Suppress("UNCHECKED_CAST")
 fun JavascriptExecutor.queryAll(
     by: String,
     arg0: String,
     options: Map<String, Any?> = emptyMap(),
-) = ensureTLScript()
-    .executeScript(
-        """By${by}("$arg0", ${Json().toJson(options)})""".let {
-            "return screen.queryAll$it"
-        }
-    ) as List<WebElement>
+): List<WebElement> {
+    ensureTLScript()
+    val optionsAsJson = Json().toJson(options)
+    val arg0AsJavaScript = if (arg0.isJavaScriptRegex()) arg0 else """'$arg0'"""
+    val args = """By$by($arg0AsJavaScript, $optionsAsJson)"""
+    return executeScript("return screen.queryAll$args") as List<WebElement>
+}
 
-private fun JavascriptExecutor.ensureTLScript(): JavascriptExecutor {
+private fun String.isJavaScriptRegex() = Regex("/.+/[dgimsuy]?").find(this) != null
+
+private fun JavascriptExecutor.ensureTLScript() {
     if (!hasTLScript)
         executeScript(tlScript)
-    return this
 }
 
 private val tlScript by lazy {
