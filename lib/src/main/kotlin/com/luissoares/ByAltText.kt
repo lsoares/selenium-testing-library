@@ -13,9 +13,10 @@ data class ByAltText(
     override fun findElements(context: SearchContext): List<WebElement> =
         getWebDriver(context).waitFor {
             it.findElements(ByCssSelector("[alt='$text']"))
-                .filter { element ->
-                    element.tagName in listOf("img", "area", "input") ||
-                        element.tagName.contains("-")
-                }
+                .filter(::canHaveAlt)
         }
+
+    private fun canHaveAlt(element: WebElement) =
+        element.tagName in listOf("img", "area", "input") ||
+            Regex(".+-.+").find(element.tagName) != null
 }
