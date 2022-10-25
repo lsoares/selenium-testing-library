@@ -133,4 +133,15 @@ class ByTextTest(private val driver: RemoteWebDriver) {
         Arguments.of("style,script", 1),
         Arguments.of("style,script,p", 0),
     )
+
+    @Test
+    fun normalizer() {
+        driver.getFromHtml("<p>I accept</p>")
+
+        val result = driver.findElement(
+            ByText("I accept123", normalizer = "str => str + '123'")
+        )
+
+        assertEquals("p", result.tagName)
+    }
 }

@@ -16,7 +16,7 @@ driver.findElements(ByTitle("title 1"))
 ```
 
 There are unit tests that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb)
-all the usages.
+all the usages. Currently, all the Testing Library functionality is available.
 
 ## Setup
 
@@ -57,10 +57,6 @@ The injected JavaScript was copied from
 the [Testing Playground Chrome extension](https://chrome.google.com/webstore/detail/testing-playground/hejbmebodbijjdhflfknehhcgaklhano)
 .
 There are some CDKs that serve the Testing Library, but I needed the self-contained single-file browser-ready version.
-
-## Limitations
-
-- Normalizer function
 
 ---
 There's a [Python version](https://github.com/anze3db/selenium-testing-library).

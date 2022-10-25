@@ -29,13 +29,17 @@ abstract class ByTestingLibrary(
                 true  -> "'${textMatch.replace("'", "\\'")}'"
                 false -> textMatch
             }
-            val optionsWithoutNullValues = options.filterValues { it != null }
-            return if (optionsWithoutNullValues.isEmpty())
-                """screen.queryAllBy$by(${mainArg})"""
-            else {
-                val optionsAsJson = Json().toJson(optionsWithoutNullValues)
-                """screen.queryAllBy$by(${mainArg}, $optionsAsJson)"""
-            }
+            val optionsAsJson = options
+                .filterValues { it != null }
+                .let(Json()::toJson)
+                .let {
+                    it.replace(Regex(""""normalizer": "(.*)"""")) { match ->
+                        """"normalizer": ${match.groups[1]?.value} """
+                    }
+                }
+
+            return """screen.queryAllBy$by(${mainArg}, $optionsAsJson)"""
+                .replace(", {\n})", ", {})")
         }
 }
 

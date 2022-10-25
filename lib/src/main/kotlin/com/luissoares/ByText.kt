@@ -9,6 +9,7 @@ class ByText(
     selector: String? = null,
     exact: Boolean? = null,
     ignore: String? = null,
+    normalizer: String? = null
 ) : ByTestingLibrary(
     by = "Text",
     textMatch = text,
@@ -17,5 +18,6 @@ class ByText(
         "exact" to exact,
         "selector" to selector,
         "ignore" to ignore,
+        "normalizer" to normalizer,
     ),
 )

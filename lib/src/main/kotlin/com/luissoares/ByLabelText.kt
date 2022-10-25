@@ -8,6 +8,7 @@ class ByLabelText(
     textIsString: Boolean = true,
     exact: Boolean? = null,
     selector: String? = null,
+    normalizer: String? = null,
 ) : ByTestingLibrary(
     by = "LabelText",
     textMatch = text,
@@ -15,5 +16,6 @@ class ByLabelText(
     options = mapOf(
         "selector" to selector,
         "exact" to exact,
+        "normalizer" to normalizer,
     ),
 )
