@@ -12,8 +12,22 @@ object TestingLibraryScript {
     private val tlScript = {}.javaClass.getResource("/testing-library.js")?.readText()
         ?: error("script not found")
 
+    fun WebDriver.findAllBy(
+        by: String,
+        mainArgument: String,
+        options: Map<String, Any?> = emptyMap(),
+    ): List<WebElement> {
+        val implicitWaitTimeout = manage().timeouts().implicitWaitTimeout
+        val timeout = implicitWaitTimeout.seconds.takeIf { it > 0 } ?: 5
+        return WebDriverWait(this, ofSeconds(timeout))
+            .pollingEvery(ofMillis(100))
+            .until {
+                (this as JavascriptExecutor).queryAllBy(by, mainArgument, options)
+            }
+    }
+
     @Suppress("UNCHECKED_CAST")
-    fun JavascriptExecutor.queryAllBy(
+    private fun JavascriptExecutor.queryAllBy(
         by: String,
         mainArgument: String,
         options: Map<String, Any?> = emptyMap(),
@@ -29,15 +43,6 @@ object TestingLibraryScript {
             executeScript(tlScript)
     }
 
-    private val JavascriptExecutor.hasTLScript get() = executeScript("return typeof screen?.getAllByAltText == 'function'") as Boolean
-
-    fun WebDriver.findAllBy(by: String, mainArgument: String, options: Map<String, Any?> = emptyMap()): List<WebElement> {
-        val implicitWaitTimeout = manage().timeouts().implicitWaitTimeout
-        val timeout = implicitWaitTimeout.seconds.takeIf { it > 0 } ?: 5
-        return WebDriverWait(this, ofSeconds(timeout))
-                .pollingEvery(ofMillis(100))
-                .until {
-                    (this as JavascriptExecutor).queryAllBy(by, mainArgument, options)
-                }
-    }
+    private val JavascriptExecutor.hasTLScript
+        get() = executeScript("return typeof screen?.getAllByAltText == 'function'") as Boolean
 }

@@ -1,6 +1,5 @@
 package com.luissoares
 
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -9,7 +8,6 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
@@ -42,17 +40,5 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
         }
 
         assertTrue(result.exceptionOrNull() is NoSuchElementException)
-    }
-
-    @Test
-    @Disabled("fix me")
-    fun `regex search`() {
-        driver.getFromHtml("<input placeholder='Username' />")
-
-        val result = driver.findElement(
-            ByPlaceholderText(regexText = Regex("user", IGNORE_CASE))
-        )
-
-        assertEquals("input", result.tagName)
     }
 }
