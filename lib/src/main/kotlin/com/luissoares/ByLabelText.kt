@@ -9,7 +9,7 @@ class ByLabelText(
     selector: String? = null,
 ) : ByTestingLibrary(
     by = "LabelText",
-    arg0 = text,
+    textMatch = text,
     options = mapOf(
         "selector" to selector,
         "exact" to exact,

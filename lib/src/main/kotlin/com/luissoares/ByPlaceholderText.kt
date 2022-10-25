@@ -8,6 +8,6 @@ class ByPlaceholderText(
     exact: Boolean? = null,
 ) : ByTestingLibrary(
     by = "PlaceholderText",
-    arg0 = text,
+    textMatch = text,
     options = mapOf("exact" to exact),
 )

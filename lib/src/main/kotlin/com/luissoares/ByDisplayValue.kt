@@ -8,6 +8,6 @@ class ByDisplayValue(
     exact: Boolean? = null,
 ) : ByTestingLibrary(
     by = "DisplayValue",
-    arg0 = value,
+    textMatch = value,
     options = mapOf("exact" to exact),
 )

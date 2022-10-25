@@ -5,5 +5,5 @@ package com.luissoares
  */
 class ByTestId(value: String) : ByTestingLibrary(
     by = "TestId",
-    arg0 = value,
+    textMatch = value,
 )

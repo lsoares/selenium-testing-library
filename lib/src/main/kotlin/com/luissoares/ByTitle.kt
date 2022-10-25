@@ -8,6 +8,6 @@ class ByTitle(
     exact: Boolean? = null,
 ) : ByTestingLibrary(
     by = "Title",
-    arg0 = title,
+    textMatch = title,
     options = mapOf("exact" to exact),
 )

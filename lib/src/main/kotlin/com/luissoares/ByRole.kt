@@ -18,7 +18,7 @@ class ByRole(
     level: Int? = null,
 ) : ByTestingLibrary(
         by = "Role",
-        arg0 = role,
+        textMatch = role,
         options = mapOf(
             "exact" to exact,
             "name" to name,

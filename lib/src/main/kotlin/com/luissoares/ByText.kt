@@ -10,7 +10,7 @@ class ByText(
     ignore: String? = null,
 ) : ByTestingLibrary(
     by = "Text",
-    arg0 = text,
+    textMatch = text,
     options = mapOf(
         "exact" to exact,
         "selector" to selector,

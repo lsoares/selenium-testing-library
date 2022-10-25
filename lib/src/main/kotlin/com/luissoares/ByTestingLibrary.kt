@@ -8,7 +8,8 @@ import org.openqa.selenium.json.Json
 
 abstract class ByTestingLibrary(
     private val by: String,
-    private val arg0: String,
+    private val textMatch: String,
+    private val textMatchType: TextType = TextType.STRING,
     private val options: Map<String, Any?> = emptyMap(),
 ) : By() {
     override fun findElements(context: SearchContext) =
@@ -24,12 +25,13 @@ abstract class ByTestingLibrary(
 
     private val asString: String
         get() {
+            val mainArg = when (textMatchType) {
+                TextType.STRING -> "'$textMatch'"
+                else            -> textMatch
+            }
             val optionsAsJson = Json().toJson(options.filterValues { it != null })
-            val arg0AsJavaScript = if (arg0.isJavaScriptRegex) arg0 else """'$arg0'"""
-            return """By$by($arg0AsJavaScript, $optionsAsJson)"""
+            return """By$by(${mainArg}, $optionsAsJson)"""
         }
-
-    private val String.isJavaScriptRegex get() = Regex("/.+/[dgimsuy]?").find(this) != null
 
     private fun JavascriptExecutor.ensureTLScript() {
         if (!hasTLScript)
@@ -43,4 +45,8 @@ abstract class ByTestingLibrary(
         {}.javaClass.getResource("/testing-library.js")?.readText()
             ?: error("script not found")
     }
+}
+
+enum class TextType {
+    STRING, REGEX
 }

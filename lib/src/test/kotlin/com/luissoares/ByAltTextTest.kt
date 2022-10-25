@@ -1,5 +1,6 @@
 package com.luissoares
 
+import com.luissoares.TextType.REGEX
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -35,7 +36,7 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.getFromHtml("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
-        val result = driver.findElement(ByAltText("/incredi/i"))
+        val result = driver.findElement(ByAltText("/incred/i", textMatchType = REGEX))
 
         assertEquals("img", result.tagName)
     }
