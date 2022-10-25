@@ -18,6 +18,10 @@ dependencies {
     testImplementation("io.github.bonigarcia:webdrivermanager:5.3.0")
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -29,6 +33,6 @@ publishing {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
+java {
+    withSourcesJar()
 }
