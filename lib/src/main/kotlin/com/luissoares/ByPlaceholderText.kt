@@ -4,8 +4,8 @@ import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 
-/*
-    ByPlaceholderText: https://testing-library.com/docs/queries/byplaceholdertext
+/**
+ByPlaceholderText: https://testing-library.com/docs/queries/byplaceholdertext
  */
 data class ByPlaceholderText(
     private val text: String? = null,
@@ -17,17 +17,17 @@ data class ByPlaceholderText(
             when (exact) {
                 true  -> context.findElements(cssSelector("[placeholder='$text']"))
                 false -> getWebDriver(context).filterAll { element ->
-                    element.getAttribute("placeholder")?.let {
-                        it.contains(text, ignoreCase = true)
-                    } ?: false
+                    element.getAttribute("placeholder")
+                        ?.contains(text, ignoreCase = true)
+                        ?: false
                 }
             }
         } ?: regexText?.let {
             getWebDriver(context).filterAll { element ->
-                element.getAttribute("placeholder")?.let {
-                    regexText.matches(it)
-                } ?: false
+                element.getAttribute("placeholder")
+                    ?.let(regexText::matches)
+                    ?: false
             }
         }
-        ?: error("needs text or regexText")
+        ?: error("You nee to provide text or regexText")
 }

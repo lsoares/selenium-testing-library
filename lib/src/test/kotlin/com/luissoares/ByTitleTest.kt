@@ -35,4 +35,13 @@ class ByTitleTest {
 
         assertEquals("foobar", result.text)
     }
+
+    @Test
+    fun `not exact`() {
+        driver.getFromHtml("<div title='foobar'>Hello World!</div>")
+
+        val result = driver.findElement(ByTitle("FOO", exact = false))
+
+        assertEquals("Hello World!", result.text)
+    }
 }
