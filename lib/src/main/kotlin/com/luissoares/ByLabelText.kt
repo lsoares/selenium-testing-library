@@ -8,9 +8,18 @@ import org.openqa.selenium.SearchContext
  */
 data class ByLabelText(
     private val text: String,
+    private val exact: Boolean? = true,
+    private val selector: String? = "*",
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy("LabelText", text)
+            getWebDriver(context).findAllBy(
+                "LabelText",
+                text,
+                mapOf(
+                    "selector" to selector,
+                    "exact" to exact,
+                ),
+            )
         }
 }

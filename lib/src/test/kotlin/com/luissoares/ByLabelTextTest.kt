@@ -60,4 +60,18 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
 
         assertEquals("input", result.tagName)
     }
+
+    @Test
+    fun `not exact with selector`() {
+        driver.getFromHtml(
+            """
+            <input aria-label='Username' />
+            <span><div class="x"><input aria-label='Username' /></div></span>
+            """
+        )
+
+        val result = driver.findElement(ByLabelText("user", exact = false, selector = "span .x input"))
+
+        assertEquals("input", result.tagName)
+    }
 }
