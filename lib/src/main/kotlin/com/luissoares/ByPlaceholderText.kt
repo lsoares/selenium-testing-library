@@ -23,9 +23,10 @@ data class ByPlaceholderText(
                 }
             }
         } ?: regexText?.let {
+            val regexContains = Regex(".*${regexText.pattern}.*", regexText.options)
             getWebDriver(context).filterAll { element ->
                 element.getAttribute("placeholder")
-                    ?.let(regexText::matches)
+                    ?.let(regexContains::matches)
                     ?: false
             }
         }

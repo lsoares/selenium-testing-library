@@ -53,7 +53,7 @@ class ByPlaceholderTextTest {
         driver.getFromHtml("<input placeholder='Username' />")
 
         val result = driver.findElement(
-            ByPlaceholderText(regexText = Regex(".*user.*", IGNORE_CASE))
+            ByPlaceholderText(regexText = Regex("user", IGNORE_CASE))
         )
 
         assertEquals("input", result.tagName)
