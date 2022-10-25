@@ -19,7 +19,7 @@ data class ByRole(
     // current?: boolean | string,
     // expanded?: boolean,
     // queryFallbacks?: boolean,
-    // level?: number,
+    private val level: Int? = null,
 ) : By() {
     override fun findElements(context: SearchContext) =
         getJavascriptExecutor(context).queryAll(
@@ -31,6 +31,7 @@ data class ByRole(
                 "hidden" to hidden,
                 "description" to description,
                 "selected" to selected,
+                "level" to level,
             ).filterValues { it != null },
         )
 }

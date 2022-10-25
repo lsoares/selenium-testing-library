@@ -32,13 +32,6 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         ),
         of("textbox", """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),
         of("textbox", """<textarea id="txtboxMultiline" required></textarea>"""),
-        of("heading", """<h1>h1</h1>"""),
-        of("heading", """<h1>h2</h1>"""),
-        of("heading", """<h1>h3</h1>"""),
-        of("heading", """<h1>h4</h1>"""),
-        of("heading", """<h1>h5</h1>"""),
-        of("heading", """<h1>h6</h1>"""),
-        of("heading", """<div role="heading" aria-level="1">This is a main page heading</div>"""),
         of("button", """"<div id="saveChanges" tabindex="0" role="button" aria-pressed="false">Save</div>"""),
         of("button", """<button type="button" id="saveChanges">Save</button>"""),
         of(
@@ -196,5 +189,21 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         val result = driver.findElements(ByRole("alertdialog", description = "Your session is about to expire"))
 
         assertEquals(1, result.size)
+    }
+
+    @Test
+    fun `heading level`() {
+        driver.getFromHtml(
+            """<section>
+                <h1>Heading Level One</h1>
+                <h2>First Heading Level Two</h2>
+                <h3>Heading Level Three</h3>
+                <div role="heading" aria-level="2">Second Heading Level Two</div>
+              </section>"""
+        )
+
+        val result = driver.findElements(ByRole("heading", level = 2))
+
+        assertEquals(listOf("h2", "div"), result.map { it.tagName })
     }
 }
