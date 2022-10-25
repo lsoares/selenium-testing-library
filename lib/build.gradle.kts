@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.7.20"
     `java-library`
+    signing
     `maven-publish`
 }
 
@@ -20,17 +21,60 @@ tasks.test {
     useJUnitPlatform()
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.luissoares"
-            artifactId = "library"
-            version = "1.1"
-            from(components["java"])
+            artifactId = "selenium-testing-library"
+            version = "0.9"
+            from(components["kotlin"])
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
+            pom {
+                name.set(project.name)
+                description.set("Selenium Testing Library")
+                url.set("https://github.com/lsoares/selenium-testing-library")
+                licenses {
+                    license {
+                        name.set("MIT")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("lsoares")
+                        name.set("Luís Soares")
+                        url.set("http://luissoares.com")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/lsoares/selenium-testing-library.git")
+                    connection.set("scm:git:git://github.com/lsoares/selenium-testing-library.git")
+                    developerConnection.set("scm:git:git://github.com/#lsoares/selenium-testing-library.git")
+                }
+                issueManagement {
+                    url.set("https://github.com/lsoares/selenium-testing-library/issues")
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = project.property("ossrhUsername") as String
+                password = project.property("ossrhPassword") as String
+            }
         }
     }
 }
 
-java {
-    withSourcesJar()
+signing {
+    sign(publishing.publications["maven"])
 }

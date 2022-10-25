@@ -20,25 +20,11 @@ all the usages. Currently, all the Testing Library functionality is available.
 
 ## Setup
 
-I'm temporarily using JitPack while I learn how to publish to Maven Central.
-
-Add JitPack repository:
-
-```kotlin
-repositories {
-    mavenCentral()
-    maven { url = uri("https://jitpack.io") }
-}
-```
-
-Add dependency:
-
 ````kotlin
-testImplementation("com.github.lsoares:selenium-testing-library:63c3355a76")
+testImplementation("com.luissoares:selenium-testing-library:0.9")
 ````
 
-You can check the latest hash at the [corresponding JitPack page](https://jitpack.io/#lsoares/selenium-testing-library)
-→ commits
+Check the latest version at [Maven Repository](https://mvnrepository.com/).
 
 ## Why?
 
