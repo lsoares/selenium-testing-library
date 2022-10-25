@@ -5,7 +5,7 @@ package com.luissoares
  */
 class ByRole(
     role: String,
-    roleIsString: Boolean = true,
+    matchTextBy: TextMatchType = TextMatchType.STRING,
     exact: Boolean? = null,
     hidden: Boolean? = null,
     name: String? = null,
@@ -21,7 +21,7 @@ class ByRole(
 ) : ByTestingLibrary(
     by = "Role",
     textMatch = role,
-    textMatchIsString = roleIsString,
+    matchTextBy = matchTextBy,
     options = mapOf(
         "exact" to exact,
         "name" to name,

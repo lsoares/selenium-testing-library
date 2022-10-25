@@ -21,7 +21,7 @@ class ByTestIdTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.getFromHtml(""" <div data-testid="custom-element" /> """)
 
-        val result = driver.findElement(ByTestId("/Custom/i", valueIsString = false))
+        val result = driver.findElement(ByTestId("/Custom/i", matchTextBy = TextMatchType.REGEX))
 
         assertEquals("div", result.tagName)
     }

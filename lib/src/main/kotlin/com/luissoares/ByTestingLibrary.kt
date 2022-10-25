@@ -9,7 +9,7 @@ import org.openqa.selenium.json.Json
 abstract class ByTestingLibrary(
     private val by: String,
     private val textMatch: String,
-    private val textMatchIsString: Boolean = true,
+    private val matchTextBy: TextMatchType = TextMatchType.STRING,
     private val options: Map<String, Any?> = emptyMap(),
 ) : By() {
     override fun findElements(context: SearchContext) =
@@ -21,9 +21,9 @@ abstract class ByTestingLibrary(
 
     private val testingLibraryCall: String
         get() {
-            val mainArg = when (textMatchIsString) {
-                true  -> "'${textMatch.replace("'", "\\'")}'"
-                false -> textMatch
+            val mainArg = when (matchTextBy) {
+                TextMatchType.STRING  -> "'${textMatch.replace("'", "\\'")}'"
+                else -> textMatch
             }
             val optionsAsJson = options
                 .filterValues { it != null }
@@ -58,4 +58,8 @@ private val JavascriptExecutor.hasTLScript
 private val tlScript by lazy {
     {}.javaClass.getResource("/testing-library.js")?.readText()
         ?: error("script not found")
+}
+
+enum class TextMatchType {
+    STRING, REGEX, FUNCTION
 }

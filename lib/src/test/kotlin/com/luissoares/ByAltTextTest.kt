@@ -35,7 +35,7 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.getFromHtml("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
-        val result = driver.findElement(ByAltText("/incred/i", textIsString = false))
+        val result = driver.findElement(ByAltText("/incred/i", matchTextBy = TextMatchType.REGEX))
 
         assertEquals("img", result.tagName)
     }

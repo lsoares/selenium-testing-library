@@ -5,7 +5,7 @@ package com.luissoares
  */
 class ByText(
     text: String,
-    textIsString: Boolean = true,
+    matchTextBy: TextMatchType = TextMatchType.STRING,
     selector: String? = null,
     exact: Boolean? = null,
     ignore: String? = null,
@@ -13,7 +13,7 @@ class ByText(
 ) : ByTestingLibrary(
     by = "Text",
     textMatch = text,
-    textMatchIsString = textIsString,
+    matchTextBy = matchTextBy,
     options = mapOf(
         "exact" to exact,
         "selector" to selector,

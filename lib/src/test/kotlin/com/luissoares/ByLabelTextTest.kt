@@ -79,7 +79,7 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.getFromHtml("<input aria-label='Username' />")
 
-        val result = driver.findElement(ByLabelText("/user/i", textIsString = false))
+        val result = driver.findElement(ByLabelText("/user/i", matchTextBy = TextMatchType.REGEX))
 
         assertEquals("input", result.tagName)
     }

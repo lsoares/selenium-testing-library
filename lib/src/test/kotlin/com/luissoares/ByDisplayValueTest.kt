@@ -35,7 +35,7 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
         driver.getFromHtml("<input placeholder='username' />")
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
 
-        val result = driver.findElement(ByDisplayValue("/selen/i", valueIsString = false))
+        val result = driver.findElement(ByDisplayValue("/selen/i", matchTextBy = TextMatchType.REGEX))
 
         assertEquals("input", result.tagName)
     }

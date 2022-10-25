@@ -83,7 +83,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.getFromHtml("<p>I accept</p>")
 
-        val result = driver.findElement(ByText("/ACCEPT/i", textIsString = false))
+        val result = driver.findElement(ByText("/ACCEPT/i", matchTextBy = TextMatchType.REGEX))
 
         assertEquals("p", result.tagName)
     }
@@ -95,7 +95,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
         val result = driver.findElement(
             ByText(
                 "(content, element) => content.startsWith('Hello') && element.tagName == 'P'",
-                textIsString = false
+                matchTextBy = TextMatchType.FUNCTION
             )
         )
 

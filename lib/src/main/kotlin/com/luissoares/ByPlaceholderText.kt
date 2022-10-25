@@ -5,12 +5,12 @@ package com.luissoares
  */
 class ByPlaceholderText(
     text: String,
-    textIsString: Boolean = true,
+    matchTextBy: TextMatchType = TextMatchType.STRING,
     exact: Boolean? = null,
     normalizer: String? = null,
 ) : ByTestingLibrary(
     by = "PlaceholderText",
     textMatch = text,
-    textMatchIsString = textIsString,
+    matchTextBy = matchTextBy,
     options = mapOf("exact" to exact, "normalizer" to normalizer),
 )

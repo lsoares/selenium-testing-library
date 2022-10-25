@@ -5,11 +5,11 @@ package com.luissoares
  */
 class ByTestId(
     value: String,
-    valueIsString: Boolean = true,
+    matchTextBy: TextMatchType = TextMatchType.STRING,
     normalizer: String? = null,
 ) : ByTestingLibrary(
     by = "TestId",
     textMatch = value,
-    textMatchIsString = valueIsString,
+    matchTextBy = matchTextBy,
     options = mapOf("normalizer" to normalizer),
 )

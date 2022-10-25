@@ -5,12 +5,12 @@ package com.luissoares
  */
 class ByTitle(
     title: String,
-    titleIsString: Boolean = true,
+    matchTextBy: TextMatchType = TextMatchType.STRING,
     exact: Boolean? = null,
     normalizer: String? = null,
 ) : ByTestingLibrary(
     by = "Title",
     textMatch = title,
-    textMatchIsString = titleIsString,
+    matchTextBy = matchTextBy,
     options = mapOf("exact" to exact, "normalizer" to normalizer),
 )

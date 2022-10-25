@@ -35,7 +35,7 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.getFromHtml("<input placeholder='Username' />")
 
-        val result = driver.findElement(ByPlaceholderText("/user/i", textIsString = false))
+        val result = driver.findElement(ByPlaceholderText("/user/i", matchTextBy = TextMatchType.REGEX))
 
         assertEquals("input", result.tagName)
     }

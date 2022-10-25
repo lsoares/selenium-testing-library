@@ -44,7 +44,7 @@ class ByTitleTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.getFromHtml("<div title='foobar'>Hello World!</div>")
 
-        val result = driver.findElement(ByTitle("/FOO/i", titleIsString = false))
+        val result = driver.findElement(ByTitle("/FOO/i", matchTextBy = TextMatchType.REGEX))
 
         assertEquals("Hello World!", result.text)
     }

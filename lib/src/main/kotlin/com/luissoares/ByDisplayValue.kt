@@ -5,12 +5,12 @@ package com.luissoares
  */
 class ByDisplayValue(
     value: String,
-    valueIsString: Boolean = true,
+    matchTextBy: TextMatchType = TextMatchType.STRING,
     exact: Boolean? = null,
     normalizer: String? = null,
 ) : ByTestingLibrary(
     by = "DisplayValue",
     textMatch = value,
-    textMatchIsString = valueIsString,
+    matchTextBy = matchTextBy,
     options = mapOf("exact" to exact, "normalizer" to normalizer),
 )

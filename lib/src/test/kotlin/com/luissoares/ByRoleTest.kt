@@ -109,7 +109,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElement(ByRole("/TABL/i", roleIsString = false))
+        val result = driver.findElement(ByRole("/TABL/i", matchTextBy = TextMatchType.REGEX))
 
         assertEquals("div", result.tagName)
     }
