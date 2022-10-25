@@ -15,8 +15,9 @@ data class ByRole(
                     "heading" -> (1..6).map { "h$it" }
                     "banner" -> setOf("header")
                     "checkbox" -> setOf("input[type=checkbox]")
+                    "form" -> setOf("form[aria-label]", "form[aria-labelledby]")
                     "link" -> setOf("a")
-                    "button", "article", "figure",
+                    "button", "article", "figure"
                     -> setOf(role)
 
                     else -> emptySet()

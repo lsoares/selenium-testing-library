@@ -95,6 +95,8 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                           …
                           <p id="figure-1">Text that describes the figure.</p>
                         </div>"""
-        )
+        ),
+        of("form", """<div role="form"></div>"""),
+        of("form","""<form aria-label="xyz">test</form>"""),
     )
 }
