@@ -3,7 +3,6 @@ package com.luissoares
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.junit.jupiter.api.Test
 import org.openqa.selenium.NoSuchElementException
-import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import kotlin.test.assertEquals
@@ -81,8 +80,4 @@ class ByTextTest {
 
         assertEquals("p", result.tagName)
     }
-}
-
-fun WebDriver.getFromHtml(html: String) {
-    get("data:text/html;charset=utf-8,$html")
 }
