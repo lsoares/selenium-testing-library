@@ -102,8 +102,22 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     )
 
     @Test
-    fun `aria-selected`() {
+    fun `not exact`() {
         driver.getFromHtml("""
+            <div role="tablist">
+                <button role="tab" aria-selected="true">Native</button>
+            </div>
+        """)
+
+        val result = driver.findElement(ByRole("tabli", exact = false))
+
+        assertEquals("div", result.tagName)
+    }
+
+    @Test
+    fun `aria-selected`() {
+        driver.getFromHtml(
+            """
             <body>
               <div role="tablist">
                 <button role="tab" aria-selected="false">React</button>
@@ -111,9 +125,10 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                 <button role="tab" aria-selected="false">Cypress</button>
               </div>
             </body>
-        """)
+        """
+        )
 
-        val result = driver.findElements(ByRole("tab", selected=true))
+        val result = driver.findElements(ByRole("tab", selected = true))
 
         assertEquals("Native", result.single().text)
     }

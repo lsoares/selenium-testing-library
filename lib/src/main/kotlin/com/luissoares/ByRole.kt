@@ -5,6 +5,7 @@ import org.openqa.selenium.SearchContext
 
 data class ByRole(
     private val role: String,
+    private val exact: Boolean? = true,
     private val selected: Boolean? = null,
 ) : By() {
     override fun findElements(context: SearchContext) =
@@ -12,8 +13,10 @@ data class ByRole(
             getWebDriver(context).findAllBy(
                 "Role",
                 role,
-                mapOf("selected" to selected)
-                    .filterValues { it != null },
+                mapOf(
+                    "exact" to exact,
+                    "selected" to selected,
+                ).filterValues { it != null },
             )
         }
 }
