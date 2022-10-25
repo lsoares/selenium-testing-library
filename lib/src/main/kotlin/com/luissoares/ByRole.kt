@@ -19,15 +19,13 @@ data class ByRole(
     // level?: number,
 ) : By() {
     override fun findElements(context: SearchContext) =
-        with(TestingLibraryScript) {
-            getJavascriptExecutor(context).queryAllBy(
-                by = "Role",
-                mainArgument = role,
-                options = mapOf(
-                    "exact" to exact,
-                    "name" to name,
-                    "selected" to selected,
-                ).filterValues { it != null },
-            )
-        }
+        getJavascriptExecutor(context).queryAll(
+            by = "Role",
+            mainArgument = role,
+            options = mapOf(
+                "exact" to exact,
+                "name" to name,
+                "selected" to selected,
+            ).filterValues { it != null },
+        )
 }

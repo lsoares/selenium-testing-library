@@ -15,14 +15,12 @@ data class ByText(
 ) : By() {
 
     override fun findElements(context: SearchContext) =
-        with(TestingLibraryScript) {
-            getJavascriptExecutor(context).queryAllBy(
-                by = "Text",
-                mainArgument = text,
-                options = mapOf(
-                    "exact" to exact,
-                    "selector" to selector,
-                ),
-            )
-        }
+        getJavascriptExecutor(context).queryAll(
+            by = "Text",
+            mainArgument = text,
+            options = mapOf(
+                "exact" to exact,
+                "selector" to selector,
+            ),
+        )
 }

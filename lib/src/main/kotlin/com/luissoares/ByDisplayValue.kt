@@ -11,11 +11,9 @@ data class ByDisplayValue(
     private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext) =
-        with(TestingLibraryScript) {
-            getJavascriptExecutor(context).queryAllBy(
-                by = "DisplayValue",
-                mainArgument = value,
-                options = mapOf("exact" to exact),
-            )
-        }
+        getJavascriptExecutor(context).queryAll(
+            by = "DisplayValue",
+            mainArgument = value,
+            options = mapOf("exact" to exact),
+        )
 }

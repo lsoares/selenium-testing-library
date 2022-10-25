@@ -10,10 +10,8 @@ data class ByTestId(
     private val value: String,
 ) : By() {
     override fun findElements(context: SearchContext) =
-        with(TestingLibraryScript) {
-            getJavascriptExecutor(context).queryAllBy(
-                by = "TestId",
-                mainArgument = value,
-            )
-        }
+        getJavascriptExecutor(context).queryAll(
+            by = "TestId",
+            mainArgument = value,
+        )
 }

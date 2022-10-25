@@ -11,11 +11,9 @@ data class ByTitle(
     private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext) =
-        with(TestingLibraryScript) {
-            getJavascriptExecutor(context).queryAllBy(
-                by = "Title",
-                mainArgument = title,
-                options = mapOf("exact" to exact),
-            )
-        }
+        getJavascriptExecutor(context).queryAll(
+            by = "Title",
+            mainArgument = title,
+            options = mapOf("exact" to exact),
+        )
 }

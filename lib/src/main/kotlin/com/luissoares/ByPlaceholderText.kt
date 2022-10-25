@@ -11,11 +11,9 @@ data class ByPlaceholderText(
     private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext) =
-        with(TestingLibraryScript) {
-            getJavascriptExecutor(context).queryAllBy(
-                by = "PlaceholderText",
-                mainArgument = text,
-                options = mapOf("exact" to exact),
-            )
-        }
+        getJavascriptExecutor(context).queryAll(
+            by = "PlaceholderText",
+            mainArgument = text,
+            options = mapOf("exact" to exact),
+        )
 }

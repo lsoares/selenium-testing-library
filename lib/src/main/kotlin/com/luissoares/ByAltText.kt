@@ -11,11 +11,9 @@ data class ByAltText(
     private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext) =
-        with(TestingLibraryScript) {
-            getJavascriptExecutor(context).queryAllBy(
-                by = "AltText",
-                mainArgument = text,
-                options = mapOf("exact" to exact),
-            )
-        }
+        getJavascriptExecutor(context).queryAll(
+            by = "AltText",
+            mainArgument = text,
+            options = mapOf("exact" to exact),
+        )
 }

@@ -12,14 +12,12 @@ data class ByLabelText(
     private val selector: String = "*",
 ) : By() {
     override fun findElements(context: SearchContext) =
-        with(TestingLibraryScript) {
-            getJavascriptExecutor(context).queryAllBy(
-                by = "LabelText",
-                mainArgument = text,
-                options = mapOf(
-                    "selector" to selector,
-                    "exact" to exact,
-                ),
-            )
-        }
+        getJavascriptExecutor(context).queryAll(
+            by = "LabelText",
+            mainArgument = text,
+            options = mapOf(
+                "selector" to selector,
+                "exact" to exact,
+            ),
+        )
 }
