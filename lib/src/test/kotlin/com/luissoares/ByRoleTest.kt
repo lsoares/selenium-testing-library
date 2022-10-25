@@ -191,8 +191,9 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals(1, result.size)
     }
 
-    @Test
-    fun `heading level`() {
+    @ParameterizedTest
+    @MethodSource("heading level values")
+    fun `heading level`(level: Int?, expectedResults: List<String>) {
         driver.getFromHtml(
             """<section>
                 <h1>Heading Level One</h1>
@@ -202,8 +203,28 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
               </section>"""
         )
 
-        val result = driver.findElements(ByRole("heading", level = 2))
+        val result = driver.findElements(ByRole("heading", level = level))
 
-        assertEquals(listOf("h2", "div"), result.map { it.tagName })
+        assertEquals(expected = expectedResults, result.map { it.tagName })
+    }
+
+    private fun `heading level values`() = setOf(
+        of(2, listOf("h2", "div")),
+        of(null, listOf("h1", "h2", "h3", "div"))
+    )
+
+    @Test
+    fun checked() {
+        driver.getFromHtml(
+            """<section>
+                        <button role="checkbox" aria-checked="false">Gummy bears</button>
+                        <button role="checkbox" aria-checked="true">Sugar</button>
+                        <button role="checkbox" aria-checked="false">Whipped cream</button>
+                    </section>"""
+        )
+
+        val result = driver.findElements(ByRole("checkbox", checked = true))
+
+        assertEquals("Sugar", result.single().text)
     }
 }

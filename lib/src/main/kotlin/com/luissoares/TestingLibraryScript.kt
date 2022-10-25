@@ -9,12 +9,12 @@ fun JavascriptExecutor.queryAll(
     by: String,
     arg0: String,
     options: Map<String, Any?> = emptyMap(),
-): List<WebElement> = addScriptIfMissing()
+) = ensureTLScript()
     .executeScript(
         """return screen.queryAllBy${by}("$arg0", ${Json().toJson(options)})"""
     ) as List<WebElement>
 
-private fun JavascriptExecutor.addScriptIfMissing(): JavascriptExecutor {
+private fun JavascriptExecutor.ensureTLScript(): JavascriptExecutor {
     if (!hasTLScript)
         executeScript(tlScript)
     return this

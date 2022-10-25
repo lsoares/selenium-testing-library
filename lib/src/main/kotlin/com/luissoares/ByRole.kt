@@ -13,8 +13,8 @@ data class ByRole(
     private val name: String? = null,
     private val description: String? = null,
     private val selected: Boolean? = null,
+    private val checked: Boolean? = null,
     // TODO
-    // checked?: boolean,
     // pressed?: boolean,
     // current?: boolean | string,
     // expanded?: boolean,
@@ -31,6 +31,7 @@ data class ByRole(
                 "hidden" to hidden,
                 "description" to description,
                 "selected" to selected,
+                "checked" to checked,
                 "level" to level,
             ).filterValues { it != null },
         )
