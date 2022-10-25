@@ -13,7 +13,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by text`() {
-        driver.getFromHtml("<span>I accept</span><div></div>")
+        driver.getFromHtml("<article><span>I accept</span><div></div></article>")
 
         val result = driver.findElement(ByText("I accept"))
 
@@ -22,7 +22,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `with a selector`() {
-        driver.getFromHtml("<span>Username</span><div>Username</div>")
+        driver.getFromHtml("<article><span>Username</span><div>Username</div></article>")
 
         val result = driver.findElement(ByText("Username", selector = "div"))
 
