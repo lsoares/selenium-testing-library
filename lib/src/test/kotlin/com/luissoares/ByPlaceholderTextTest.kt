@@ -18,7 +18,7 @@ class ByPlaceholderTextTest {
     private val driver = ChromeDriver(ChromeOptions().addArguments("--headless"))
 
     @ParameterizedTest
-    @ValueSource(strings = ["Username", "USERNAME"])
+    @ValueSource(strings = ["Username", "USERNAME", "user"])
     fun `not exact`(text: String) {
         driver.getFromHtml("<input placeholder='Username' />")
 

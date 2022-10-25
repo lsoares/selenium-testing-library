@@ -8,11 +8,10 @@ data class ByPlaceholderText(
     private val text: String,
     private val exact: Boolean = true,
 ) : By() {
-    override fun findElements(context: SearchContext): List<WebElement> {
-        val selector = when (exact) {
-            false -> "[placeholder~='$text' i]"
-            true  -> "[placeholder='$text']"
+    override fun findElements(context: SearchContext): List<WebElement> = when (exact) {
+        true  -> context.findElements(cssSelector("[placeholder='$text']"))
+        false -> getWebDriver(context).filterAll(getWebDriver(context)) {
+            it.getAttribute("placeholder")?.contains(text, ignoreCase = true) ?: false
         }
-        return context.findElements(cssSelector(selector))
     }
 }
