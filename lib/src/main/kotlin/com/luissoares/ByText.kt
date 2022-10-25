@@ -8,7 +8,7 @@ import org.sam.rosenthal.cssselectortoxpath.utilities.CssElementCombinatorPairsT
 data class ByText(
     private val text: String,
     private val selector: String = "*",
-    private val exact: Boolean = false,
+    private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> {
         val xPathSelector = CssElementCombinatorPairsToXpath().convertCssSelectorStringToXpathString(selector)

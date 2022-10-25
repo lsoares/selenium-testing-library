@@ -35,7 +35,7 @@ class ByTextTest {
 
     @Test
     fun `not found`() {
-        driver.getFromHtml("<span>Username</span><div>Username</div>")
+        driver.getFromHtml("<span></span>")
 
         val result = runCatching {
             driver.findElement(ByText("abc"))

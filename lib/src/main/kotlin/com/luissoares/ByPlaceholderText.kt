@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement
 
 data class ByPlaceholderText(
     private val text: String,
-    private val exact: Boolean = false,
+    private val exact: Boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> {
         val selector = when (exact) {
