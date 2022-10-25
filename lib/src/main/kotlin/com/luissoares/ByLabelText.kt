@@ -11,7 +11,7 @@ data class ByLabelText(
     private val text: String,
 ) : By() {
     override fun findElements(context: SearchContext): List<WebElement> =
-        getWebDriver(context).findElements(cssSelector("label")).flatMap { labelElement ->
+        context.findElements(cssSelector("label")).flatMap { labelElement ->
             getWebDriver(context).waitUntil {
                 listOfNotNull(
                     labelElement.getAttribute("for")?.let { forAttribute ->
