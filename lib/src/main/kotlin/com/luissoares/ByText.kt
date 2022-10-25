@@ -10,13 +10,16 @@ data class ByText(
     private val text: String,
     private val selector: String = "*",
     private val exact: Boolean = true,
+    // TODO:
+    // ignore?: string|boolean = 'script, style',
 ) : By() {
 
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
             getWebDriver(context).findAllBy(
-                "Text", text,
-                mapOf("exact" to exact, "selector" to selector)
+                by = "Text",
+                mainArgument = text,
+                options = mapOf("exact" to exact, "selector" to selector),
             )
         }
 }

@@ -12,6 +12,10 @@ data class ByTitle(
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy("Title", title, mapOf("exact" to exact))
+            getWebDriver(context).findAllBy(
+                by = "Title",
+                mainArgument = title,
+                options = mapOf("exact" to exact),
+            )
         }
 }

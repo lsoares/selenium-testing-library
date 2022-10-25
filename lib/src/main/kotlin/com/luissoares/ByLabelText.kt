@@ -14,9 +14,9 @@ data class ByLabelText(
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
             getWebDriver(context).findAllBy(
-                "LabelText",
-                text,
-                mapOf(
+                by = "LabelText",
+                mainArgument = text,
+                options = mapOf(
                     "selector" to selector,
                     "exact" to exact,
                 ),

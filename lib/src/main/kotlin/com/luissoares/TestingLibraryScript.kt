@@ -9,8 +9,10 @@ import java.time.Duration.ofMillis
 import java.time.Duration.ofSeconds
 
 object TestingLibraryScript {
-    private val tlScript = {}.javaClass.getResource("/testing-library.js")?.readText()
-        ?: error("script not found")
+    private val tlScript by lazy {
+        {}.javaClass.getResource("/testing-library.js")?.readText()
+            ?: error("script not found")
+    }
 
     fun WebDriver.findAllBy(
         by: String,

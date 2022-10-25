@@ -13,9 +13,9 @@ data class ByPlaceholderText(
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
             getWebDriver(context).findAllBy(
-                "PlaceholderText",
-                text,
-                mapOf("exact" to exact),
+                by = "PlaceholderText",
+                mainArgument = text,
+                options = mapOf("exact" to exact),
             )
         }
 }

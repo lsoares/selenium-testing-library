@@ -8,9 +8,14 @@ import org.openqa.selenium.SearchContext
  */
 data class ByDisplayValue(
     private val value: String,
+    // TODO
+    // exact?: boolean = true,
 ) : By() {
     override fun findElements(context: SearchContext) =
         with(TestingLibraryScript) {
-            getWebDriver(context).findAllBy("DisplayValue", value)
+            getWebDriver(context).findAllBy(
+                by = "DisplayValue",
+                mainArgument = value,
+            )
         }
 }
