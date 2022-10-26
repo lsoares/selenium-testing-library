@@ -25,7 +25,7 @@ testImplementation("com.luissoares:selenium-testing-library:1.2")
 ````
 
 Check the latest version
-at [Maven Repository](https://mvnrepository.com/artifact/com.luissoares/selenium-testing-library).
+at [Maven Central](https://search.maven.org/artifact/com.luissoares/selenium-testing-library).
 
 ## Why?
 
