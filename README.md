@@ -21,7 +21,7 @@ all the usages. All the Testing Library functionality is available.
 ## Setup
 
 ````kotlin
-testImplementation("com.luissoares:selenium-testing-library:1.0")
+testImplementation("com.luissoares:selenium-testing-library:1.2")
 ````
 
 Check the latest version

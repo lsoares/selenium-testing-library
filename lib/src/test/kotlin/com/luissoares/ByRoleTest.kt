@@ -155,7 +155,39 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                     </ul>"""
         )
 
-        val result = driver.findElements(ByRole("alertdialog", description = "/your session/i", matchDescriptionBy = TextMatchType.REGEX))
+        val result = driver.findElements(
+            ByRole(
+                role = "alertdialog",
+                description = "/your session/i",
+                matchDescriptionBy = TextMatchType.REGEX
+            )
+        )
+
+        assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
+    }
+
+    @Test
+    fun `description with function`() {
+        driver.getFromHtml(
+            """<ul>
+                      <li role="alertdialog" aria-describedby="notification-id-1">
+                        <div><button>Close</button></div>
+                        <div id="notification-id-1">You have unread emails</div>
+                      </li>
+                      <li role="alertdialog" aria-describedby="notification-id-2">
+                        <div><button>Close</button></div>
+                        <div id="notification-id-2">Your session is about to expire!</div>
+                      </li>
+                    </ul>"""
+        )
+
+        val result = driver.findElements(
+            ByRole(
+                role = "alertdialog",
+                description = "content => content.endsWith('!')",
+                matchDescriptionBy = TextMatchType.FUNCTION
+            )
+        )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
