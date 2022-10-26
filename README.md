@@ -29,18 +29,16 @@ at [Maven Central](https://search.maven.org/artifact/com.luissoares/selenium-tes
 
 ## Why?
 
+When I use Selenium, I don't want to depend on ids, classes, and similar.
 I'm a fan of the [Testing Library](http://testing-library.com/) because it encourages "testing as a user":
 
 > The more your tests resemble the way your software is used,
 > the more confidence they can give you.
 
-The Testing Library has ports for many JavaScript frameworks but I realized it was possible to have it Java/Kotlin as
-well.
-When I use Selenium, I don't want to depend on ids, classes, and similar.
-Happily, Selenium can easily be expandable with new Locators.
-
 ## How?
 
+The Testing Library has ports for many JavaScript frameworks. I realized it was possible to have it Java/Kotlin as
+well as Selenium can easily be expandable with new Locators.
 My approach was to create an [adapter](https://en.wikipedia.org/wiki/Adapter_pattern):
 a set of custom Selenium locators that wrap the Testing Library JavaScript functions.
 

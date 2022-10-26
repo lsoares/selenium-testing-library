@@ -21,30 +21,31 @@ abstract class ByTestingLibrary(
 
     private val testingLibraryCall: String
         get() {
-            val mainArg = textMatch.escapeIfString(matchTextBy)
-            val optionsAsJson = options
+            val mainArg = when (matchTextBy) {
+                TextMatchType.STRING -> textMatch.escapeString()
+                else                 -> textMatch
+            }
+            val escapedOptions = options
                 .filterValues { it != null }
                 .takeIf(Map<String, Any?>::isNotEmpty)
                 ?.entries
-                ?.joinToString(", ", prefix = "{ ", postfix = " }") { (key, value) ->
-                    """$key: ${
-                        (value as? String)?.let {
-                            when (key) {
-                                "normalizer"  -> value
-                                "description" -> value.escapeIfString(matchDescriptionBy)
-                                else          -> value.escapeIfString()
-                            }
-                        } ?: value
-                    }"""
+                ?.joinToString(", ", prefix = "{ ", postfix = " }") {
+                    "${it.key}: ${it.escapedValue}"
                 }
 
-            return """screen.queryAllBy$by(${mainArg}${optionsAsJson?.let { ", $it" } ?: ""})"""
+            return """screen.queryAllBy$by(${mainArg}${escapedOptions?.let { ", $it" } ?: ""})"""
         }
 
-    private fun String.escapeIfString(matchBy: TextMatchType = TextMatchType.STRING) = when (matchBy) {
-        TextMatchType.STRING -> "'${replace("'", "\\'")}'"
-        else                 -> this
-    }
+    private val Map.Entry<String, Any?>.escapedValue
+        get() =
+            value.takeIf {
+                it !is String
+                    || key == "normalizer"
+                    || key == "description" && matchDescriptionBy != TextMatchType.STRING
+            }
+                ?: value.toString().escapeString()
+
+    private fun String.escapeString() = "'${replace("'", "\\'")}'"
 
     override fun toString() = testingLibraryCall
 }
