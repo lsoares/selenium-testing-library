@@ -4,12 +4,12 @@ import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.json.Json
 
 abstract class ByTestingLibrary(
     private val by: String,
     private val textMatch: String,
     private val matchTextBy: TextMatchType = TextMatchType.STRING,
+    private val matchDescriptionBy: TextMatchType = TextMatchType.STRING,
     private val options: Map<String, Any?> = emptyMap(),
 ) : By() {
     override fun findElements(context: SearchContext) =
@@ -21,28 +21,30 @@ abstract class ByTestingLibrary(
 
     private val testingLibraryCall: String
         get() {
-            val mainArg = when (matchTextBy) {
-                TextMatchType.STRING  -> "'${textMatch.replace("'", "\\'")}'"
-                else -> textMatch
-            }
+            val mainArg = textMatch.escapeIfString(matchTextBy)
             val optionsAsJson = options
                 .filterValues { it != null }
                 .takeIf(Map<String, Any?>::isNotEmpty)
-                ?.let(Json()::toJson)
-                ?.let {
-                    it.replace(Regex(""""normalizer": "(.*)"""")) { match ->
-                        """"normalizer": ${match.groups[1]?.value} """
-                    }
+                ?.entries
+                ?.joinToString(", ", prefix = "{ ", postfix = " }") { (key, value) ->
+                    """$key: ${
+                        (value as? String)?.let {
+                            when (key) {
+                                "normalizer"  -> value
+                                "description" -> value.escapeIfString(matchDescriptionBy)
+                                else          -> value.escapeIfString()
+                            }
+                        } ?: value
+                    }"""
                 }
 
-            return """screen.queryAllBy$by${
-                listOfNotNull(mainArg, optionsAsJson).joinToString(
-                    separator = ", ",
-                    prefix = "(",
-                    postfix = ")"
-                )
-            }"""
+            return """screen.queryAllBy$by(${mainArg}${optionsAsJson?.let { ", $it" } ?: ""})"""
         }
+
+    private fun String.escapeIfString(matchBy: TextMatchType = TextMatchType.STRING) = when (matchBy) {
+        TextMatchType.STRING -> "'${replace("'", "\\'")}'"
+        else                 -> this
+    }
 
     override fun toString() = testingLibraryCall
 }

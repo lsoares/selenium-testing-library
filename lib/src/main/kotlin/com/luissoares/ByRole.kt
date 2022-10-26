@@ -10,6 +10,7 @@ class ByRole(
     hidden: Boolean? = null,
     name: String? = null,
     description: String? = null,
+    matchDescriptionBy: TextMatchType = TextMatchType.STRING,
     normalizer: String? = null,
     selected: Boolean? = null,
     checked: Boolean? = null,
@@ -22,6 +23,7 @@ class ByRole(
     by = "Role",
     textMatch = role,
     matchTextBy = matchTextBy,
+    matchDescriptionBy = matchDescriptionBy,
     options = mapOf(
         "exact" to exact,
         "name" to name,

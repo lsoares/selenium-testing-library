@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class ByRoleTest(private val driver: RemoteWebDriver) {
@@ -23,63 +22,10 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     }
 
     private fun examples() = setOf(
-        of(
-            "textbox", """<div role="textbox"
-                    contenteditable="true"
-                    aria-placeholder="5-digit zipcode"
-                    aria-labelledby="txtboxLabel">
-               </div>"""
-        ),
         of("textbox", """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),
         of("textbox", """<textarea id="txtboxMultiline" required></textarea>"""),
         of("button", """"<div id="saveChanges" tabindex="0" role="button" aria-pressed="false">Save</div>"""),
         of("button", """<button type="button" id="saveChanges">Save</button>"""),
-        of(
-            "article", """<div role="article">
-                  <h2>Heading of the segment</h2>
-                  <p>Paragraph for the segment.</p>
-                  Controls to interact with the article, share it, etc.
-               </div>"""
-        ),
-        of(
-            "article", """<article>
-                  <h2>Heading of the segment</h2>
-                  <p>Paragraph for the segment.</p>
-                  Controls to interact with the article, share it, etc.
-                </article>
-            """
-        ),
-        of(
-            "banner", """<div role="banner">
-                  <h2>Heading of the segment</h2>
-                  Controls to interact with the article, share it, etc.
-               </div>"""
-        ),
-        of(
-            "banner", """<header>
-                  <a href="#main" id="skipToMain" class="skiptocontent">Skip To main content</a>
-                  <img src="images/w3c.png" alt="W3C Logo" />
-               </header>"""
-        ),
-        of("link", """<a href="https://mozilla.org">Link 123</a>"""),
-        of(
-            "link", """<span data-href="https://mozilla.org" tabindex="0" role="link">
-              Fake accessible link created using a span
-            </span>"""
-        ),
-        of("toolbar", """""<div role="toolbar"></div>"""),
-        of(
-            "figure", """<figure>
-                          <img src="image.png" alt="put image description here" />
-                          <figcaption>Figure 1: The caption</figcaption>
-                        </figure>"""
-        ),
-        of(
-            "figure", """<div role="figure" aria-labelledby="figure-1">
-                          …
-                          <p id="figure-1">Text that describes the figure.</p>
-                        </div>"""
-        ),
         of("form", """<div role="form"></div>"""),
         of("form", """<form aria-label="xyz">test</form>"""),
     )
@@ -191,7 +137,27 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         val result = driver.findElements(ByRole("alertdialog", description = "Your session is about to expire!"))
 
-        assertTrue(result.single().text.contains("Your session is about to expire"))
+        assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
+    }
+
+    @Test
+    fun `description with regex`() {
+        driver.getFromHtml(
+            """<ul>
+                      <li role="alertdialog" aria-describedby="notification-id-1">
+                        <div><button>Close</button></div>
+                        <div id="notification-id-1">You have unread emails</div>
+                      </li>
+                      <li role="alertdialog" aria-describedby="notification-id-2">
+                        <div><button>Close</button></div>
+                        <div id="notification-id-2">Your session is about to expire!</div>
+                      </li>
+                    </ul>"""
+        )
+
+        val result = driver.findElements(ByRole("alertdialog", description = "/your session/i", matchDescriptionBy = TextMatchType.REGEX))
+
+        assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
 
     @ParameterizedTest
