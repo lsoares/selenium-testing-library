@@ -37,10 +37,9 @@ I'm a fan of the [Testing Library](http://testing-library.com/) because it encou
 
 ## How?
 
-The Testing Library has ports for many JavaScript frameworks. I realized it was possible to have it Java/Kotlin as
-well as Selenium can easily be expandable with new Locators.
-My approach was to create an [adapter](https://en.wikipedia.org/wiki/Adapter_pattern):
-a set of custom Selenium locators that wrap the Testing Library JavaScript functions.
+The Testing Library has ports for many JavaScript frameworks. I realized it was possible to have it in Selenium for Java/Kotlin as well.
+I created an [adapter](https://en.wikipedia.org/wiki/Adapter_pattern):
+a set of custom Selenium locators that wrap the corresponding Testing Library JavaScript functions.
 
 How can I use Testing Library in Selenium? By dynamically injecting it through JavaScript; then, I can make Testing
 Library calls and map the results back to Java/Kotlin objects.
