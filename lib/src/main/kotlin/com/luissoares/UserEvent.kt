@@ -6,9 +6,17 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
 
-    fun click(checkbox: WebElement) {
+    fun click(element: WebElement) {
+        executeUserEventCall(element, "click")
+    }
+
+    fun dblClick(element: WebElement) {
+        executeUserEventCall(element, "dblClick")
+    }
+
+    private fun executeUserEventCall(element: WebElement, userEventFunction: String) {
         javascriptExecutor.ensureScript("user-event.js", "window.userEvent?.click")
-        javascriptExecutor.executeScript("await userEvent.click(arguments[0])", checkbox)
+        javascriptExecutor.executeScript("await userEvent.$userEventFunction(arguments[0])", element)
     }
 }
 

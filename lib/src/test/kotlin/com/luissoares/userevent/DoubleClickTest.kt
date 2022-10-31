@@ -1,0 +1,26 @@
+package com.luissoares.userevent
+
+import com.luissoares.DriverLifeCycle
+import com.luissoares.locators.ByRole
+import com.luissoares.render
+import com.luissoares.userEvent
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.openqa.selenium.remote.RemoteWebDriver
+import kotlin.test.assertFalse
+
+@ExtendWith(DriverLifeCycle::class)
+class DoubleClickTest(private val driver: RemoteWebDriver) {
+
+    @Test
+    fun click() {
+        driver.render(
+            """ <input type="checkbox" /> """
+        )
+        val checkbox = driver.findElement(ByRole("checkbox"))
+
+        driver.userEvent.dblClick(checkbox)
+
+        assertFalse(checkbox.isSelected)
+    }
+}
