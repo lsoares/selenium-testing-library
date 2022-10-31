@@ -1,4 +1,7 @@
-package com.luissoares
+package com.luissoares.locators
+
+import com.luissoares.ByTestingLibrary
+import com.luissoares.TextMatchType
 
 /**
  * https://testing-library.com/docs/queries/byrole

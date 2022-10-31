@@ -1,5 +1,8 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.DriverLifeCycle
+import com.luissoares.TextMatchType
+import com.luissoares.render
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
@@ -14,7 +17,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @MethodSource("examples")
     fun `by role`(role: String, content: String) {
-        driver.getFromHtml(content)
+        driver.render(content)
 
         val result = driver.findElement(ByRole(role))
 
@@ -32,7 +35,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not exact`() {
-        driver.getFromHtml(
+        driver.render(
             """
             <div role="tablist">
                 <button role="tab" aria-selected="true">Native</button>
@@ -47,7 +50,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun regex() {
-        driver.getFromHtml(
+        driver.render(
             """
             <div role="tablist">
                 <button role="tab" aria-selected="true">Native</button>
@@ -62,7 +65,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `aria-selected`() {
-        driver.getFromHtml(
+        driver.render(
             """
               <div role="tablist">
                 <button role="tab" aria-selected="false">React</button>
@@ -79,7 +82,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `with name`() {
-        driver.getFromHtml(
+        driver.render(
             """
                 <label for="email">Email address</label>
                 <input />
@@ -101,7 +104,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @MethodSource("hidden values")
     fun hidden(hidden: Boolean, expectedButtonsFound: List<String>) {
-        driver.getFromHtml(
+        driver.render(
             """<main aria-hidden="true">
                 <button>Open dialog</button>
               </main>
@@ -122,7 +125,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun description() {
-        driver.getFromHtml(
+        driver.render(
             """<ul>
                       <li role="alertdialog" aria-describedby="notification-id-1">
                         <div><button>Close</button></div>
@@ -142,7 +145,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `description with regex`() {
-        driver.getFromHtml(
+        driver.render(
             """<ul>
                       <li role="alertdialog" aria-describedby="notification-id-1">
                         <div><button>Close</button></div>
@@ -168,7 +171,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `description with function`() {
-        driver.getFromHtml(
+        driver.render(
             """<ul>
                       <li role="alertdialog" aria-describedby="notification-id-1">
                         <div><button>Close</button></div>
@@ -195,7 +198,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @MethodSource("heading level values")
     fun `heading level`(level: Int?, expectedResults: List<String>) {
-        driver.getFromHtml(
+        driver.render(
             """<h1>Heading Level One</h1>
                 <h2>First Heading Level Two</h2>
                 <h3>Heading Level Three</h3>
@@ -214,7 +217,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun checked() {
-        driver.getFromHtml(
+        driver.render(
             """<button role="checkbox" aria-checked="false">Gummy bears</button>
                     <button role="checkbox" aria-checked="true">Sugar</button>
                     <button role="checkbox" aria-checked="false">Whipped cream</button>"""
@@ -227,7 +230,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun pressed() {
-        driver.getFromHtml(
+        driver.render(
             """<button aria-pressed="true">👍</button>
                      <button aria-pressed="false">👎</button>"""
         )
@@ -239,7 +242,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun current() {
-        driver.getFromHtml(
+        driver.render(
             """<nav>
                         <a href="current/page" aria-current="true">👍</a>
                         <a href="another/page">👎</a>
@@ -253,7 +256,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun expanded() {
-        driver.getFromHtml(
+        driver.render(
             """
             <a href="x"></a>
             <a aria-expanded="false" href="x">expanded</a>
@@ -269,7 +272,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @MethodSource("test cases query fallbacks")
     fun `query fallbacks`(queryFallbacks: Boolean?, expectedCount: Int) {
-        driver.getFromHtml(
+        driver.render(
             """ <div role="switch checkbox" /> """
         )
 

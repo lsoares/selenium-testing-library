@@ -1,5 +1,8 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.DriverLifeCycle
+import com.luissoares.TextMatchType
+import com.luissoares.render
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
@@ -10,7 +13,7 @@ class ByTestIdTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by test id`() {
-        driver.getFromHtml(""" <div data-testid="custom-element" /> """)
+        driver.render(""" <div data-testid="custom-element" /> """)
 
         val result = driver.findElement(ByTestId("custom-element"))
 
@@ -19,7 +22,7 @@ class ByTestIdTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun regex() {
-        driver.getFromHtml(""" <div data-testid="custom-element" /> """)
+        driver.render(""" <div data-testid="custom-element" /> """)
 
         val result = driver.findElement(ByTestId("/Custom/i", matchTextBy = TextMatchType.REGEX))
 

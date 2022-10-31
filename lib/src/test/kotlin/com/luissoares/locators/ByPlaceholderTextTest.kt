@@ -1,5 +1,8 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.DriverLifeCycle
+import com.luissoares.TextMatchType
+import com.luissoares.render
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -14,7 +17,7 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun exact() {
-        driver.getFromHtml("<input placeholder='Username' />")
+        driver.render("<input placeholder='Username' />")
 
         val result = driver.findElement(ByPlaceholderText("Username", exact = true))
 
@@ -24,7 +27,7 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @ValueSource(strings = ["Username", "USERNAME", "user"])
     fun `not exact`(text: String) {
-        driver.getFromHtml("<input placeholder='Username' />")
+        driver.render("<input placeholder='Username' />")
 
         val result = driver.findElement(ByPlaceholderText(text, exact = false))
 
@@ -33,7 +36,7 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun regex() {
-        driver.getFromHtml("<input placeholder='Username' />")
+        driver.render("<input placeholder='Username' />")
 
         val result = driver.findElement(ByPlaceholderText("/user/i", matchTextBy = TextMatchType.REGEX))
 
@@ -42,7 +45,7 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `exact not found`() {
-        driver.getFromHtml("<input placeholder='Username' />")
+        driver.render("<input placeholder='Username' />")
 
         val result = runCatching {
             driver.findElement(ByPlaceholderText("username", exact = true))

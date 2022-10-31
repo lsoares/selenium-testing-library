@@ -1,5 +1,8 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.DriverLifeCycle
+import com.luissoares.TextMatchType
+import com.luissoares.render
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
@@ -10,7 +13,7 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by for`() {
-        driver.getFromHtml(
+        driver.render(
             """
                <label for="username-input">Username</label>
                <input id="username-input" /> 
@@ -24,7 +27,7 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by aria-labeled-by`() {
-        driver.getFromHtml(
+        driver.render(
             """
                <label id="username-label">Username</label>
                <input aria-labelledby="username-label" />
@@ -38,7 +41,7 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by wrapping label`() {
-        driver.getFromHtml(
+        driver.render(
             """
                 <label>
                   <span>Username</span>
@@ -54,7 +57,7 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `aria label`() {
-        driver.getFromHtml("<input aria-label='Username' />")
+        driver.render("<input aria-label='Username' />")
 
         val result = driver.findElement(ByLabelText("Username"))
 
@@ -63,7 +66,7 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not exact with selector`() {
-        driver.getFromHtml(
+        driver.render(
             """
             <input aria-label='Username' />
             <span><div class="x"><input aria-label='Username' /></div></span>
@@ -77,7 +80,7 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun regex() {
-        driver.getFromHtml("<input aria-label='Username' />")
+        driver.render("<input aria-label='Username' />")
 
         val result = driver.findElement(ByLabelText("/user/i", matchTextBy = TextMatchType.REGEX))
 

@@ -1,5 +1,8 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.DriverLifeCycle
+import com.luissoares.TextMatchType
+import com.luissoares.render
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -10,7 +13,7 @@ class ByTitleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by title`() {
-        driver.getFromHtml("<div title='foobar'>Hello World!</div>")
+        driver.render("<div title='foobar'>Hello World!</div>")
 
         val result = driver.findElement(ByTitle("foobar"))
 
@@ -19,7 +22,7 @@ class ByTitleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by title on svg`() {
-        driver.getFromHtml(
+        driver.render(
             """<svg>
               <title>foobar</title>
               <g><path /></g>
@@ -33,7 +36,7 @@ class ByTitleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not exact`() {
-        driver.getFromHtml("<div title='foobar'>Hello World!</div>")
+        driver.render("<div title='foobar'>Hello World!</div>")
 
         val result = driver.findElement(ByTitle("FOO", exact = false))
 
@@ -42,7 +45,7 @@ class ByTitleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun regex() {
-        driver.getFromHtml("<div title='foobar'>Hello World!</div>")
+        driver.render("<div title='foobar'>Hello World!</div>")
 
         val result = driver.findElement(ByTitle("/FOO/i", matchTextBy = TextMatchType.REGEX))
 

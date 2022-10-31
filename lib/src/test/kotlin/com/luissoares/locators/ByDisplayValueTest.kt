@@ -1,5 +1,8 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.DriverLifeCycle
+import com.luissoares.TextMatchType
+import com.luissoares.render
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -12,7 +15,7 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun input() {
-        driver.getFromHtml("<input placeholder='username' />")
+        driver.render("<input placeholder='username' />")
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
 
         val result = driver.findElement(ByDisplayValue("selenium"))
@@ -22,7 +25,7 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not exact`() {
-        driver.getFromHtml("<input placeholder='username' />")
+        driver.render("<input placeholder='username' />")
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
 
         val result = driver.findElement(ByDisplayValue("SELEN", exact = false))
@@ -32,7 +35,7 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun regex() {
-        driver.getFromHtml("<input placeholder='username' />")
+        driver.render("<input placeholder='username' />")
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
 
         val result = driver.findElement(ByDisplayValue("/selen/i", matchTextBy = TextMatchType.REGEX))
@@ -42,7 +45,7 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun textarea() {
-        driver.getFromHtml("<textarea id='x'></textarea>")
+        driver.render("<textarea id='x'></textarea>")
         driver.findElement(By.tagName("textarea")).sendKeys("selenium")
 
         val result = driver.findElement(ByDisplayValue("selenium"))
@@ -52,7 +55,7 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun select() {
-        driver.getFromHtml(
+        driver.render(
             """
             <select>
               <option value="">State</option>
@@ -71,7 +74,7 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `select multiple`() {
-        driver.getFromHtml(
+        driver.render(
             """
             <select multiple>
               <option value="">State</option>

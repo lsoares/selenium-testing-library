@@ -1,5 +1,8 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.DriverLifeCycle
+import com.luissoares.TextMatchType
+import com.luissoares.render
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -15,7 +18,7 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @ValueSource(strings = ["img", "input", "area"])
     fun `by alt text`(tagName: String) {
-        driver.getFromHtml("<$tagName alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+        driver.render("<$tagName alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
         val result = driver.findElement(ByAltText("Incredibles 2 Poster"))
 
@@ -24,7 +27,7 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not exact`() {
-        driver.getFromHtml("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+        driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
         val result = driver.findElement(ByAltText("incredibles 2", exact = false))
 
@@ -33,7 +36,7 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun regex() {
-        driver.getFromHtml("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+        driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
         val result = driver.findElement(ByAltText("/incred/i", matchTextBy = TextMatchType.REGEX))
 
@@ -42,7 +45,7 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by alt text not-valid type`() {
-        driver.getFromHtml("<div alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+        driver.render("<div alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
         val result = runCatching {
             driver.findElement(ByAltText("Incredibles 2 Poster"))

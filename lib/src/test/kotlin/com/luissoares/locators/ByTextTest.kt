@@ -1,5 +1,8 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.DriverLifeCycle
+import com.luissoares.TextMatchType
+import com.luissoares.render
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
@@ -15,7 +18,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `by text`() {
-        driver.getFromHtml("<article><span>I accept</span><div></div></article>")
+        driver.render("<article><span>I accept</span><div></div></article>")
 
         val result = driver.findElement(ByText("I accept"))
 
@@ -24,7 +27,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `ensure quotes are escaped`() {
-        driver.getFromHtml(""""<article><span>with quotes"'`</span><div></div></article>""")
+        driver.render(""""<article><span>with quotes"'`</span><div></div></article>""")
 
         val result = driver.findElement(ByText("""with quotes"'`"""))
 
@@ -33,7 +36,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `with a selector`() {
-        driver.getFromHtml("<article><span>Username</span><div>Username</div></article>")
+        driver.render("<article><span>Username</span><div>Username</div></article>")
 
         val result = driver.findElement(ByText("Username", selector = "div"))
 
@@ -42,7 +45,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not found`() {
-        driver.getFromHtml("<span></span>")
+        driver.render("<span></span>")
 
         val result = runCatching {
             driver.findElement(ByText("abc"))
@@ -53,7 +56,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not found with selector`() {
-        driver.getFromHtml("<span>Username</span><div>Username</div>")
+        driver.render("<span>Username</span><div>Username</div>")
 
         val result = runCatching {
             driver.findElement(ByText("Username", selector = "x"))
@@ -64,7 +67,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `not exact with selector`() {
-        driver.getFromHtml(
+        driver.render(
             """
             <div>
                 <span>I accept</span>
@@ -81,7 +84,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun regex() {
-        driver.getFromHtml("<p>I accept</p>")
+        driver.render("<p>I accept</p>")
 
         val result = driver.findElement(ByText("/ACCEPT/i", matchTextBy = TextMatchType.REGEX))
 
@@ -90,7 +93,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun function() {
-        driver.getFromHtml("<p>Hello World</p>")
+        driver.render("<p>Hello World</p>")
 
         val result = driver.findElement(
             ByText(
@@ -104,7 +107,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `case insensitive`() {
-        driver.getFromHtml("<p>I accept</p>")
+        driver.render("<p>I accept</p>")
 
         val result = driver.findElement(ByText("ACCEPT", exact = false))
 
@@ -114,7 +117,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @MethodSource("ignore values")
     fun `disable ignore`(ignore: String, expectedFound: Int) {
-        driver.getFromHtml(
+        driver.render(
             """
             <p>I accept</p>
             <script>I accept</script>
@@ -136,7 +139,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun normalizer() {
-        driver.getFromHtml("<p>I accept</p>")
+        driver.render("<p>I accept</p>")
 
         val result = driver.findElement(
             ByText("I accept123", normalizer = "str => str + '123'")
