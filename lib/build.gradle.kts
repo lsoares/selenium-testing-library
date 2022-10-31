@@ -31,7 +31,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.luissoares"
             artifactId = "selenium-testing-library"
-            version = "1.2"
+            version = "2.0"
             from(components["kotlin"])
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
