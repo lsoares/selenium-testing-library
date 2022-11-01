@@ -11,3 +11,7 @@ val WebElement.isChecked: Boolean
 
 fun WebElement.isFocused(driver: RemoteWebDriver): Boolean =
     equals(driver.switchTo().activeElement())
+
+@Suppress("UNCHECKED_CAST")
+fun WebElement.files(driver: RemoteWebDriver): List<Map<String, Any>> =
+    driver.executeScript("return arguments[0].files", this) as List<Map<String, Any>>

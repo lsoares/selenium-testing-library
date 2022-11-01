@@ -7,12 +7,20 @@ A few examples:
 ```kotlin
 driver.findElements(ByAltText("first name"))
 driver.findElements(ByDisplayValue("/john/i", matchTextBy = REGEX))
-driver.findElements(ByLabelText("first name"))
-driver.findElements(ByPlaceholderText("first name", exact = false))
+val active = driver.findElements(ByLabelText("active"))
+val input = driver.findElements(ByPlaceholderText("first name", exact = false))
 driver.findElements(ByRole("heading", name = "/as a user/i", matchTextBy = REGEX))
-driver.findElements(ByTestId("test-id"))
+val panel = driver.findElements(ByTestId("test-id"))
 driver.findElements(ByText("present", exact = false, selector = "span"))
 driver.findElements(ByTitle("title 1"))
+// use solely with Selenium:
+panel.click()
+val firstName = input.text
+
+// ... or use TL's userEvent:
+driver.userEvent.click(active)
+driver.userEvent.dblClick(panel)
+driver.userEvent.type(input, "foobar")
 ```
 
 There are unit tests that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb)
