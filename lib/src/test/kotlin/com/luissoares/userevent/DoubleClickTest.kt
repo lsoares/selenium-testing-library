@@ -13,7 +13,7 @@ import kotlin.test.assertFalse
 class DoubleClickTest(private val driver: RemoteWebDriver) {
 
     @Test
-    fun click() {
+    fun `double click`() {
         driver.render(
             """ <input type="checkbox" /> """
         )
