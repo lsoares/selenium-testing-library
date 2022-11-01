@@ -7,25 +7,32 @@ import org.openqa.selenium.remote.RemoteWebDriver
 class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
 
     fun click(element: WebElement) {
-        executeUserEventCall(element, "click")
+        javascriptExecutor.executeScript(
+            "await userEvent.click(arguments[0])", element
+        )
     }
 
     fun dblClick(element: WebElement) {
-        executeUserEventCall(element, "dblClick")
+        javascriptExecutor.executeScript(
+            "await userEvent.dblClick(arguments[0])", element
+        )
     }
 
-    fun type(element: WebElement, text: String, options: Map<String, Any> = emptyMap()) {
-        executeUserEventCall(element, "type", text, options)
+    fun type(element: WebElement, text: String) {
+        javascriptExecutor.executeScript(
+            "await userEvent.type(arguments[0], arguments[1])",
+            element,
+            text,
+        )
     }
 
-    fun  selectOptions(element: WebElement, values: List<SelectValue>) {
+    fun selectOptions(element: WebElement, values: List<SelectValue>) {
         javascriptExecutor.executeScript(
             "await userEvent.selectOptions(arguments[0], arguments[1])",
             element,
             values.map(SelectValue::value),
         )
     }
-
 
     fun deselectOptions(element: WebElement, values: List<String>) {
         javascriptExecutor.executeScript(
@@ -35,20 +42,9 @@ class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
         )
     }
 
-    private fun executeUserEventCall(
-        element: WebElement,
-        userEventFunction: String,
-        arg0: String? = null,
-        options: Map<String, Any> = emptyMap(),
-    ) {
+    fun clear(element: WebElement) {
         javascriptExecutor.executeScript(
-            "await userEvent.$userEventFunction(arguments[0], arguments[1], arguments[2])",
-            element,
-            arg0,
-            options.entries
-                .joinToString(", ", prefix = "{ ", postfix = " }") {
-                    "${it.key}: ${it.value}"
-                },
+            "await userEvent.clear(arguments[0])", element,
         )
     }
 }

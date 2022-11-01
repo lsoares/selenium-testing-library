@@ -1,6 +1,7 @@
 package com.luissoares.userevent
 
 import com.luissoares.DriverLifeCycle
+import com.luissoares.isChecked
 import com.luissoares.locators.ByRole
 import com.luissoares.render
 import com.luissoares.userEvent
@@ -21,6 +22,6 @@ class DoubleClickTest(private val driver: RemoteWebDriver) {
 
         driver.userEvent.dblClick(checkbox)
 
-        assertFalse(checkbox.isSelected)
+        assertFalse(checkbox.isChecked)
     }
 }

@@ -1,6 +1,7 @@
 package com.luissoares.userevent
 
 import com.luissoares.DriverLifeCycle
+import com.luissoares.isChecked
 import com.luissoares.locators.ByLabelText
 import com.luissoares.render
 import com.luissoares.userEvent
@@ -25,6 +26,6 @@ class ClickTest(private val driver: RemoteWebDriver) {
 
         driver.userEvent.click(checkbox)
 
-        assertTrue(checkbox.isSelected)
+        assertTrue(checkbox.isChecked)
     }
 }
