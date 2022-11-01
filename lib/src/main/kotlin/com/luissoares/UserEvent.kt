@@ -14,9 +14,17 @@ class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
         executeUserEventCall(element, "dblClick")
     }
 
-    private fun executeUserEventCall(element: WebElement, userEventFunction: String) {
+    fun type(element: WebElement, text: String) {
+        executeUserEventCall(element, "type", text)
+    }
+
+    private fun executeUserEventCall(element: WebElement, userEventFunction: String, arg1: String? = null) {
         javascriptExecutor.ensureScript("user-event.js", "window.userEvent?.click")
-        javascriptExecutor.executeScript("await userEvent.$userEventFunction(arguments[0])", element)
+        javascriptExecutor.executeScript(
+            "await userEvent.$userEventFunction(arguments[0], arguments[1])",
+            element,
+            arg1
+        )
     }
 }
 

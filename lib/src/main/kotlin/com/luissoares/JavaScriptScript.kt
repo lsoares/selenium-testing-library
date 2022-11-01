@@ -7,6 +7,8 @@ internal fun JavascriptExecutor.ensureScript(fileName: String, isPresentFunction
         executeScript(loadScript(fileName))
 }
 
+internal fun String.escapeString() = "'${replace("'", "\\'")}'"
+
 private fun JavascriptExecutor.isLoaded(isPresentFunction: String) =
     executeScript("return typeof $isPresentFunction == 'function'") as Boolean
 

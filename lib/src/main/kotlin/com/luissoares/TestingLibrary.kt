@@ -44,8 +44,6 @@ abstract class ByTestingLibrary(
             }
                 ?: value.toString().escapeString()
 
-    private fun String.escapeString() = "'${replace("'", "\\'")}'"
-
     override fun toString() = testingLibraryCall
 }
 
