@@ -4,6 +4,7 @@ import com.luissoares.DriverLifeCycle
 import com.luissoares.locators.ByRole
 import com.luissoares.render
 import com.luissoares.userEvent
+import com.luissoares.value
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
@@ -19,6 +20,6 @@ class TypeTest(private val driver: RemoteWebDriver) {
 
         driver.userEvent.type(textArea, "Hello,{enter}World!")
 
-        assertEquals("Hello,\nWorld!", textArea.getAttribute("value"))
+        assertEquals("Hello,\nWorld!", textArea.value)
     }
 }
