@@ -5,7 +5,7 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 
-class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
+class User(private val javascriptExecutor: JavascriptExecutor) {
 
     private fun awaitUserEventScript(functionCall: String, vararg args: Any?) =
         javascriptExecutor.executeScript("await user.$functionCall", *args)
@@ -59,8 +59,11 @@ class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
     data class File(val bits: List<String>, val name: String, val options: Map<String, String> = emptyMap())
 }
 
-val RemoteWebDriver.user: UserEvent
-    get() {
-        ensureScript("user-event.js", "window.user?.click")
-        return UserEvent(this as JavascriptExecutor)
-    }
+fun RemoteWebDriver.user(options: Map<String, Any?> = emptyMap()): User {
+    ensureScript("user-event.js", "window.userEvent?.setup")
+    executeScript("user = userEvent.setup(arguments[0])", options)
+    return User(this as JavascriptExecutor)
+}
+
+val RemoteWebDriver.user: User
+    get() = user()
