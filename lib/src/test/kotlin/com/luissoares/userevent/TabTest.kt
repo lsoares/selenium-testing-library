@@ -30,4 +30,25 @@ class TabTest(private val driver: RemoteWebDriver) {
         val radio = driver.findElement(ByRole("radio"))
         assertTrue(radio.isFocused(driver))
     }
+
+    @Test
+    fun `tab with shift`() {
+        driver.render(
+            """
+            <div>
+              <input type="checkbox" />
+              <input type="radio" />
+              <input type="number" />
+            </div> 
+        """
+        )
+        repeat(3) {
+            driver.userEvent.tab()
+        }
+
+        driver.userEvent.tab(true)
+
+        val radio = driver.findElement(ByRole("radio"))
+        assertTrue(radio.isFocused(driver))
+    }
 }

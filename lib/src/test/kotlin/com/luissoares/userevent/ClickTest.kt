@@ -9,7 +9,6 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-
 @ExtendWith(DriverLifeCycle::class)
 class ClickTest(private val driver: RemoteWebDriver) {
 

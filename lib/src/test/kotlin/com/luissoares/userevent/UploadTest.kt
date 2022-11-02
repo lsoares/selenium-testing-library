@@ -1,13 +1,12 @@
 package com.luissoares.userevent
 
 import com.luissoares.*
-import com.luissoares.locators.TextMatchType.REGEX
 import com.luissoares.locators.ByLabelText
+import com.luissoares.locators.TextMatchType.REGEX
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
 import kotlin.test.assertEquals
-
 
 @ExtendWith(DriverLifeCycle::class)
 class UploadTest(private val driver: RemoteWebDriver) {

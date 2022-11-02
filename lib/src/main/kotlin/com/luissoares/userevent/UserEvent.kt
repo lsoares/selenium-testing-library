@@ -4,15 +4,14 @@ import com.luissoares.ensureScript
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
-import org.w3c.dom.events.MouseEvent
 
 class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
 
     private fun awaitUserEventScript(functionCall: String, vararg args: Any?) =
         javascriptExecutor.executeScript("await userEvent.$functionCall", *args)
 
-    fun click(element: WebElement, eventInit: MouseEvent? = null) {
-        awaitUserEventScript("click(arguments[0], arguments[1])", element, eventInit)
+    fun click(element: WebElement) {
+        awaitUserEventScript("click(arguments[0])", element)
     }
 
     fun dblClick(element: WebElement) {
@@ -43,8 +42,8 @@ class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
         awaitUserEventScript("clear(arguments[0])", element)
     }
 
-    fun tab() {
-        awaitUserEventScript("tab()")
+    fun tab(shift: Boolean = false) {
+        awaitUserEventScript("tab(arguments[0])", mapOf("shift" to shift))
     }
 
     fun upload(input: WebElement, file: File) {
@@ -65,3 +64,23 @@ val RemoteWebDriver.userEvent: UserEvent
         ensureScript("user-event.js", "window.userEvent?.click")
         return UserEvent(this as JavascriptExecutor)
     }
+
+private fun MouseEvent.asMap() = mapOf(
+    "type" to type,
+    "target" to target,
+    "currentTarget" to currentTarget,
+    "eventPhase" to eventPhase,
+    "bubbles" to bubbles,
+    "cancelable" to cancelable,
+    "timeStamp" to timeStamp,
+    "detail" to detail,
+    "screenX" to screenX,
+    "screenY" to screenY,
+    "clientX" to clientX,
+    "clientY" to clientY,
+    "ctrlKey" to ctrlKey,
+    "shiftKey" to shiftKey,
+    "altKey" to altKey,
+    "metaKey" to metaKey,
+    "button" to button,
+).filterValues { it != null }
