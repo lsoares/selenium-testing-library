@@ -15,7 +15,7 @@ class TypeTest(private val driver: RemoteWebDriver) {
         driver.render("<textarea></textarea>")
         val textArea = driver.findElement(ByRole("textbox"))
 
-        driver.userEvent.type(textArea, "Hello,{enter}World!")
+        driver.user.type(textArea, "Hello,{enter}World!")
 
         assertEquals("Hello,\nWorld!", textArea.value)
     }

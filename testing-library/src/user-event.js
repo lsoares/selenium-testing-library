@@ -1,3 +1,3 @@
 import userEvent from '@testing-library/user-event'
 
-window.userEvent = userEvent.setup()
+window.user = userEvent.setup()

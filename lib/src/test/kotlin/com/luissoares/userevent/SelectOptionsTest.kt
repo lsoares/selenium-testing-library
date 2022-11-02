@@ -25,7 +25,7 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
         )
         val select = driver.findElement(ByRole("listbox"))
 
-        driver.userEvent.selectOptions(
+        driver.user.selectOptions(
             select,
             listOf(ByValue("1"), ByValue("3")),
         )
@@ -46,7 +46,7 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
         )
         val select = driver.findElement(ByRole("listbox"))
 
-        driver.userEvent.selectOptions(
+        driver.user.selectOptions(
             select,
             listOf(
                 ByWebElement(driver.findElement(ByRole("option", name = "A"))),

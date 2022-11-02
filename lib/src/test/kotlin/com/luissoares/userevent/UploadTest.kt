@@ -23,7 +23,7 @@ class UploadTest(private val driver: RemoteWebDriver) {
         )
         val input = driver.findElement(ByLabelText("/upload file/i", matchTextBy = REGEX))
 
-        driver.userEvent.upload(
+        driver.user.upload(
             input,
             UserEvent.File(listOf("hello"), "hello.png", mapOf("type" to "image/png")),
         )

@@ -8,7 +8,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
 
     private fun awaitUserEventScript(functionCall: String, vararg args: Any?) =
-        javascriptExecutor.executeScript("await userEvent.$functionCall", *args)
+        javascriptExecutor.executeScript("await user.$functionCall", *args)
 
     fun click(element: WebElement) {
         awaitUserEventScript("click(arguments[0])", element)
@@ -59,28 +59,8 @@ class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
     data class File(val bits: List<String>, val name: String, val options: Map<String, String> = emptyMap())
 }
 
-val RemoteWebDriver.userEvent: UserEvent
+val RemoteWebDriver.user: UserEvent
     get() {
-        ensureScript("user-event.js", "window.userEvent?.click")
+        ensureScript("user-event.js", "window.user?.click")
         return UserEvent(this as JavascriptExecutor)
     }
-
-private fun MouseEvent.asMap() = mapOf(
-    "type" to type,
-    "target" to target,
-    "currentTarget" to currentTarget,
-    "eventPhase" to eventPhase,
-    "bubbles" to bubbles,
-    "cancelable" to cancelable,
-    "timeStamp" to timeStamp,
-    "detail" to detail,
-    "screenX" to screenX,
-    "screenY" to screenY,
-    "clientX" to clientX,
-    "clientY" to clientY,
-    "ctrlKey" to ctrlKey,
-    "shiftKey" to shiftKey,
-    "altKey" to altKey,
-    "metaKey" to metaKey,
-    "button" to button,
-).filterValues { it != null }

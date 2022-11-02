@@ -22,7 +22,7 @@ class ClickTest(private val driver: RemoteWebDriver) {
         )
         val checkbox = driver.findElement(ByLabelText("Check"))
 
-        driver.userEvent.click(checkbox)
+        driver.user.click(checkbox)
 
         assertTrue(checkbox.isChecked)
     }
