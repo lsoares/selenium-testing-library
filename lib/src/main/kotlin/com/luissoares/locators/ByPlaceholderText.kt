@@ -1,8 +1,5 @@
 package com.luissoares.locators
 
-import com.luissoares.ByTestingLibrary
-import com.luissoares.TextMatchType
-
 /**
  * https://testing-library.com/docs/queries/byplaceholdertext
  */

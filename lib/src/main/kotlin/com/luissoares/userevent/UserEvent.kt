@@ -1,15 +1,18 @@
-package com.luissoares
+package com.luissoares.userevent
 
+import com.luissoares.ensureScript
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
+import org.w3c.dom.events.MouseEvent
 
 class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
-    private fun awaitUserEventScript(functionCall: String, vararg args: Any) =
+
+    private fun awaitUserEventScript(functionCall: String, vararg args: Any?) =
         javascriptExecutor.executeScript("await userEvent.$functionCall", *args)
 
-    fun click(element: WebElement) {
-        awaitUserEventScript("click(arguments[0])", element)
+    fun click(element: WebElement, eventInit: MouseEvent? = null) {
+        awaitUserEventScript("click(arguments[0], arguments[1])", element, eventInit)
     }
 
     fun dblClick(element: WebElement) {
@@ -55,11 +58,6 @@ class UserEvent(private val javascriptExecutor: JavascriptExecutor) {
     }
 
     data class File(val bits: List<String>, val name: String, val options: Map<String, String> = emptyMap())
-}
-
-sealed class SelectValue(open val value: Any) {
-    class ByValue(override val value: String) : SelectValue(value)
-    class ByWebElement(override val value: WebElement) : SelectValue(value)
 }
 
 val RemoteWebDriver.userEvent: UserEvent

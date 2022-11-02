@@ -1,7 +1,7 @@
 package com.luissoares.userevent
 
 import com.luissoares.*
-import com.luissoares.TextMatchType.REGEX
+import com.luissoares.locators.TextMatchType.REGEX
 import com.luissoares.locators.ByLabelText
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver

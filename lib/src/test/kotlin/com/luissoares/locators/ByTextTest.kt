@@ -1,7 +1,6 @@
 package com.luissoares.locators
 
 import com.luissoares.DriverLifeCycle
-import com.luissoares.TextMatchType
 import com.luissoares.render
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

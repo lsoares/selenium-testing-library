@@ -4,7 +4,6 @@ import com.luissoares.DriverLifeCycle
 import com.luissoares.isChecked
 import com.luissoares.locators.ByLabelText
 import com.luissoares.render
-import com.luissoares.userEvent
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test

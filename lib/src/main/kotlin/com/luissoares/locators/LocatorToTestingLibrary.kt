@@ -1,5 +1,7 @@
-package com.luissoares
+package com.luissoares.locators
 
+import com.luissoares.ensureScript
+import com.luissoares.escapeString
 import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
@@ -45,8 +47,4 @@ abstract class ByTestingLibrary(
                 ?: value.toString().escapeString()
 
     override fun toString() = testingLibraryCall
-}
-
-enum class TextMatchType {
-    STRING, REGEX, FUNCTION
 }

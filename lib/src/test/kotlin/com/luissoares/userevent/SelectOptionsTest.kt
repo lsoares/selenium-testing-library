@@ -1,11 +1,10 @@
 package com.luissoares.userevent
 
 import com.luissoares.DriverLifeCycle
-import com.luissoares.SelectValue.ByValue
-import com.luissoares.SelectValue.ByWebElement
+import com.luissoares.userevent.SelectValue.ByValue
+import com.luissoares.userevent.SelectValue.ByWebElement
 import com.luissoares.locators.ByRole
 import com.luissoares.render
-import com.luissoares.userEvent
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver

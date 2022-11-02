@@ -3,7 +3,6 @@ package com.luissoares.userevent
 import com.luissoares.DriverLifeCycle
 import com.luissoares.locators.ByRole
 import com.luissoares.render
-import com.luissoares.userEvent
 import com.luissoares.value
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
