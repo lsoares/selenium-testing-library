@@ -20,7 +20,7 @@ class PasteTest(private val driver: RemoteWebDriver) {
         val input = driver.findElement(ByRole("textbox"))
         assertEquals("Hello, World!", input.value)
 
-        driver.user.clear(input)
+        driver.user().clear(input)
 
         assertEquals("", input.value)
     }

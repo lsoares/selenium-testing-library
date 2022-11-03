@@ -25,9 +25,9 @@ class TabTest(private val driver: RemoteWebDriver) {
             </div> 
         """
         )
-        driver.user.tab()
+        driver.user().tab()
 
-        driver.user.tab()
+        driver.user().tab()
 
         val radio = driver.findElement(ByRole("radio"))
         assertTrue(radio.isFocused(driver))
@@ -45,10 +45,10 @@ class TabTest(private val driver: RemoteWebDriver) {
         """
         )
         repeat(3) {
-            driver.user.tab()
+            driver.user().tab()
         }
 
-        driver.user.tab(true)
+        driver.user().tab(true)
 
         val radio = driver.findElement(ByRole("radio"))
         assertTrue(radio.isFocused(driver))

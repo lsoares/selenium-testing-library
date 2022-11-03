@@ -25,7 +25,7 @@ class DeselectOptionsTest(private val driver: RemoteWebDriver) {
         )
         assertTrue(driver.findElement(ByRole("option", name = "C")).isSelected)
 
-        driver.user.deselectOptions(driver.findElement(ByRole("listbox")), listOf("3"))
+        driver.user().deselectOptions(driver.findElement(ByRole("listbox")), listOf("3"))
 
         assertFalse(driver.findElement(ByRole("option", name = "C")).isSelected)
     }
