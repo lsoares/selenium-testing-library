@@ -8,7 +8,7 @@ class ByAltText(
     matchTextBy: TextMatchType = TextMatchType.STRING,
     exact: Boolean? = null,
     normalizer: String? = null,
-) : ByTestingLibrary(
+) : CoreApi(
     by = "AltText",
     textMatch = text,
     matchTextBy = matchTextBy,

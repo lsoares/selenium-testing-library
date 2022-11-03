@@ -8,7 +8,7 @@ class ByTitle(
     matchTextBy: TextMatchType = TextMatchType.STRING,
     exact: Boolean? = null,
     normalizer: String? = null,
-) : ByTestingLibrary(
+) : CoreApi(
     by = "Title",
     textMatch = title,
     matchTextBy = matchTextBy,

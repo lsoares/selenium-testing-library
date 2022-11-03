@@ -18,9 +18,9 @@ panel.click()
 val firstName = input.text
 
 // ... or use TL's userEvent:
-driver.userEvent.click(active)
-driver.userEvent.dblClick(panel)
-driver.userEvent.type(input, "foobar")
+driver.user.click(active)
+driver.user.dblClick(panel)
+driver.user.type(input, "foobar")
 ```
 
 There are unit tests that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb)

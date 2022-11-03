@@ -1,6 +1,8 @@
-package com.luissoares.userevent
+package com.luissoares.userinteractions
 
 import com.luissoares.DriverLifeCycle
+import com.luissoares.interactions.click
+import com.luissoares.interactions.user
 import com.luissoares.isChecked
 import com.luissoares.locators.ByLabelText
 import com.luissoares.render

@@ -1,6 +1,8 @@
-package com.luissoares.userevent
+package com.luissoares.userinteractions
 
 import com.luissoares.DriverLifeCycle
+import com.luissoares.interactions.clear
+import com.luissoares.interactions.user
 import com.luissoares.locators.ByRole
 import com.luissoares.render
 import com.luissoares.value

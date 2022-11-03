@@ -1,6 +1,9 @@
-package com.luissoares.userevent
+package com.luissoares.userinteractions
 
 import com.luissoares.*
+import com.luissoares.interactions.File
+import com.luissoares.interactions.upload
+import com.luissoares.interactions.user
 import com.luissoares.locators.ByLabelText
 import com.luissoares.locators.TextMatchType.REGEX
 import org.junit.jupiter.api.extension.ExtendWith

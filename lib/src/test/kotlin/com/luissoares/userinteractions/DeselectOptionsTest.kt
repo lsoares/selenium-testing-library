@@ -1,6 +1,8 @@
-package com.luissoares.userevent
+package com.luissoares.userinteractions
 
 import com.luissoares.DriverLifeCycle
+import com.luissoares.interactions.deselectOptions
+import com.luissoares.interactions.user
 import com.luissoares.locators.ByRole
 import com.luissoares.render
 import org.junit.jupiter.api.Test

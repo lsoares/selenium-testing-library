@@ -1,6 +1,8 @@
-package com.luissoares.userevent
+package com.luissoares.userinteractions
 
 import com.luissoares.*
+import com.luissoares.interactions.type
+import com.luissoares.interactions.user
 import com.luissoares.locators.ByRole
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver

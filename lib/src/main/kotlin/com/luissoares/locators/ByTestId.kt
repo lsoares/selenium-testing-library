@@ -7,7 +7,7 @@ class ByTestId(
     value: String,
     matchTextBy: TextMatchType = TextMatchType.STRING,
     normalizer: String? = null,
-) : ByTestingLibrary(
+) : CoreApi(
     by = "TestId",
     textMatch = value,
     matchTextBy = matchTextBy,

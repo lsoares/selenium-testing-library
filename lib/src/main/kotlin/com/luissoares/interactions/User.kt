@@ -1,4 +1,4 @@
-package com.luissoares.userevent
+package com.luissoares.interactions
 
 import com.luissoares.ensureScript
 import org.openqa.selenium.JavascriptExecutor

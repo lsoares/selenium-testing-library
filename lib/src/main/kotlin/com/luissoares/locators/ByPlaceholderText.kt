@@ -8,7 +8,7 @@ class ByPlaceholderText(
     matchTextBy: TextMatchType = TextMatchType.STRING,
     exact: Boolean? = null,
     normalizer: String? = null,
-) : ByTestingLibrary(
+) : CoreApi(
     by = "PlaceholderText",
     textMatch = text,
     matchTextBy = matchTextBy,

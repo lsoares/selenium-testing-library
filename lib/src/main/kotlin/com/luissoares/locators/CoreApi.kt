@@ -6,7 +6,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 
-abstract class ByTestingLibrary(
+abstract class CoreApi(
     private val by: String,
     private val textMatch: String,
     private val matchTextBy: TextMatchType = TextMatchType.STRING,

@@ -1,4 +1,4 @@
-package com.luissoares.userevent
+package com.luissoares.interactions
 
 /**
  * https://testing-library.com/docs/user-event/keyboard

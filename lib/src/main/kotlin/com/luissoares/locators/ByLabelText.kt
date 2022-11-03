@@ -9,7 +9,7 @@ class ByLabelText(
     exact: Boolean? = null,
     selector: String? = null,
     normalizer: String? = null,
-) : ByTestingLibrary(
+) : CoreApi(
     by = "LabelText",
     textMatch = text,
     matchTextBy = matchTextBy,

@@ -8,7 +8,7 @@ class ByDisplayValue(
     matchTextBy: TextMatchType = TextMatchType.STRING,
     exact: Boolean? = null,
     normalizer: String? = null,
-) : ByTestingLibrary(
+) : CoreApi(
     by = "DisplayValue",
     textMatch = value,
     matchTextBy = matchTextBy,

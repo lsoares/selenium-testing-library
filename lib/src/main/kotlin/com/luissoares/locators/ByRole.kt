@@ -19,7 +19,7 @@ class ByRole(
     expanded: Boolean? = null,
     queryFallbacks: Boolean? = null,
     level: Int? = null,
-) : ByTestingLibrary(
+) : CoreApi(
     by = "Role",
     textMatch = role,
     matchTextBy = matchTextBy,

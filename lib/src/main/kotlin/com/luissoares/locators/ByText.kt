@@ -10,7 +10,7 @@ class ByText(
     exact: Boolean? = null,
     ignore: String? = null,
     normalizer: String? = null
-) : ByTestingLibrary(
+) : CoreApi(
     by = "Text",
     textMatch = text,
     matchTextBy = matchTextBy,
