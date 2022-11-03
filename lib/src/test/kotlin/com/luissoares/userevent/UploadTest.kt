@@ -25,7 +25,7 @@ class UploadTest(private val driver: RemoteWebDriver) {
 
         driver.user.upload(
             input,
-            User.File(listOf("hello"), "hello.png", mapOf("type" to "image/png")),
+            File(listOf("hello"), "hello.png", mapOf("type" to "image/png")),
         )
 
         val upload = input.files(driver).single()
