@@ -7,9 +7,9 @@ import com.luissoares.interactions.deselectOptions
 import com.luissoares.interactions.user
 import com.luissoares.locators.ByRole
 import com.luissoares.render
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
+import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

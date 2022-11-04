@@ -5,12 +5,12 @@ import org.openqa.selenium.WebElement
 /**
  * https://testing-library.com/docs/user-event/pointer
  */
-fun User.pointer(vararg input: String) {
-    javascriptExecutor.executeScript("await user.pointer(arguments[0])", input)
+fun User.pointer(vararg element: String) {
+    javascriptExecutor.executeScript("await user.pointer(arguments[0])", element)
 }
 
-fun User.pointer(vararg input: Map<String, Any>) {
-    javascriptExecutor.executeScript("await user.pointer(arguments[0])", input)
+fun User.pointer(vararg element: Map<String, Any>) {
+    javascriptExecutor.executeScript("await user.pointer(arguments[0])", element)
 }
 
 /**
@@ -37,13 +37,13 @@ fun User.tripleClick(element: WebElement) {
 /**
  * https://testing-library.com/docs/user-event/convenience#hover
  */
-fun User.hover() {
-    TODO()
+fun User.hover(element: WebElement) {
+    javascriptExecutor.executeScript("await user.hover(arguments[0])", element)
 }
 
 /**
  * https://testing-library.com/docs/user-event/convenience#unhover
  */
-fun User.unhover() {
-    TODO()
+fun User.unhover(element: WebElement) {
+    javascriptExecutor.executeScript("await user.unhover(arguments[0])", element)
 }

@@ -2,7 +2,7 @@ package com.luissoares.locators
 
 import com.luissoares.DriverLifeCycle
 import com.luissoares.render
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.assertEquals
