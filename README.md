@@ -29,10 +29,10 @@ all the usages. All the Testing Library functionality is available.
 ## Setup
 
 ````kotlin
-testImplementation("com.luissoares:selenium-testing-library:1.2")
+testImplementation("com.luissoares:selenium-testing-library:VERSION")
 ````
 
-Check the latest version
+Check the latest `VERSION`
 at [Maven Central](https://search.maven.org/artifact/com.luissoares/selenium-testing-library).
 
 ## Why?

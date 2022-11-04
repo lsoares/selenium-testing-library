@@ -37,8 +37,24 @@ sealed class SelectOption(open val value: Any) {
 /**
  * https://testing-library.com/docs/user-event/utility#type
  */
-fun User.type(element: WebElement, text: String) {
-    javascriptExecutor.executeScript("await user.type(arguments[0], arguments[1])", element, text)
+fun User.type(
+    element: WebElement, text: String,
+    skipClick: Boolean? = null,
+    skipAutoClose: Boolean? = null,
+    initialSelectionStart: Int? = null,
+    initialSelectionEnd: Int? = null,
+) {
+    javascriptExecutor.executeScript(
+        "await user.type(arguments[0], arguments[1], arguments[2])",
+        element,
+        text,
+        mapOf(
+            "skipClick" to skipClick,
+            "skipAutoClose" to skipAutoClose,
+            "initialSelectionStart" to initialSelectionStart,
+            "initialSelectionEnd" to initialSelectionEnd,
+        ).filterValues { it != null }
+    )
 }
 
 /**
