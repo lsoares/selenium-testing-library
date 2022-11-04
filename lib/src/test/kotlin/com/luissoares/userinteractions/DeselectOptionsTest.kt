@@ -1,6 +1,8 @@
 package com.luissoares.userinteractions
 
 import com.luissoares.DriverLifeCycle
+import com.luissoares.interactions.SelectOption.ByValue
+import com.luissoares.interactions.SelectOption.ByWebElement
 import com.luissoares.interactions.deselectOptions
 import com.luissoares.interactions.user
 import com.luissoares.locators.ByRole
@@ -25,7 +27,29 @@ class DeselectOptionsTest(private val driver: RemoteWebDriver) {
         )
         assertTrue(driver.findElement(ByRole("option", name = "C")).isSelected)
 
-        driver.user.deselectOptions(driver.findElement(ByRole("listbox")), listOf("3"))
+        driver.user.deselectOptions(
+            driver.findElement(ByRole("listbox")),
+            listOf(ByValue("3")),
+        )
+
+        assertFalse(driver.findElement(ByRole("option", name = "C")).isSelected)
+    }
+
+    @Test
+    fun `deselect options by element`() {
+        driver.render(
+            """<select multiple>
+                      <option value="1" selected>A</option>
+                      <option value="2" selected>B</option>
+                      <option value="3" selected>C</option>
+                    </select>"""
+        )
+        val select = driver.findElement(ByRole("listbox"))
+
+        driver.user.deselectOptions(
+            select,
+            listOf(ByWebElement(driver.findElement(ByRole("option", name = "C")))),
+        )
 
         assertFalse(driver.findElement(ByRole("option", name = "C")).isSelected)
     }

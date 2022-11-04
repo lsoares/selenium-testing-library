@@ -12,26 +12,26 @@ fun User.clear(element: WebElement) {
 /**
  * https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions
  */
-fun User.selectOptions(element: WebElement, values: List<SelectValue>) {
+fun User.selectOptions(element: WebElement, values: List<SelectOption>) {
     javascriptExecutor.executeScript(
         "await user.selectOptions(arguments[0], arguments[1])", element,
-        values.map(SelectValue::value)
+        values.map(SelectOption::value)
     )
 }
 
 /**
  * https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions
  */
-fun User.deselectOptions(element: WebElement, values: List<String>) {
+fun User.deselectOptions(element: WebElement, values: List<SelectOption>) {
     javascriptExecutor.executeScript(
         "await user.deselectOptions(arguments[0], arguments[1])", element,
-        values
+        values.map(SelectOption::value)
     )
 }
 
-sealed class SelectValue(open val value: Any) {
-    class ByValue(override val value: String) : SelectValue(value)
-    class ByWebElement(override val value: WebElement) : SelectValue(value)
+sealed class SelectOption(open val value: Any) {
+    class ByValue(override val value: String) : SelectOption(value)
+    class ByWebElement(override val value: WebElement) : SelectOption(value)
 }
 
 /**
