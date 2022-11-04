@@ -10,6 +10,7 @@ fun User.pointer(vararg inputs: String) {
 }
 
 fun User.pointer(vararg element: Map<String, Any>) {
+    // TODO: assert valid props
     javascriptExecutor.executeScript("await user.pointer(arguments[0])", element)
 }
 

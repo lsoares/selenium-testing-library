@@ -68,6 +68,18 @@ class PointerTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun selection() {
+        driver.render("<div><span>foo</span><span>bar</span></div>")
+
+        driver.user.pointer(
+            mapOf("target" to driver.findElement(By.tagName("div")), "offset" to 2, "keys" to "[MouseLeft>]"),
+            mapOf("offset" to 5)
+        )
+
+        assertEquals("oba", driver.executeScript("return window.getSelection().toString()"))
+    }
+
+    @Test
     fun `select with touch`() {
         driver.render(
             """
