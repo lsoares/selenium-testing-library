@@ -5,8 +5,8 @@ import org.openqa.selenium.WebElement
 /**
  * https://testing-library.com/docs/user-event/pointer
  */
-fun User.pointer(vararg element: String) {
-    javascriptExecutor.executeScript("await user.pointer(arguments[0])", element)
+fun User.pointer(vararg inputs: String) {
+    javascriptExecutor.executeScript("await user.pointer(arguments[0])", inputs)
 }
 
 fun User.pointer(vararg element: Map<String, Any>) {

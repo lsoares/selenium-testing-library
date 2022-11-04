@@ -2,6 +2,7 @@ package com.luissoares.userinteractions
 
 import com.luissoares.DriverLifeCycle
 import com.luissoares.interactions.click
+import com.luissoares.interactions.pointer
 import com.luissoares.interactions.user
 import com.luissoares.isChecked
 import com.luissoares.locators.ByLabelText
@@ -25,6 +26,24 @@ class ClickTest(private val driver: RemoteWebDriver) {
         val checkbox = driver.findElement(ByLabelText("Check"))
 
         driver.user.click(checkbox)
+
+        assertTrue(checkbox.isChecked)
+    }
+
+    @Test
+    fun `equivalent to click`() {
+        driver.render(
+            """ <div>
+                        <label for="checkbox">Check</label>
+                        <input id="checkbox" type="checkbox" />
+                      </div> """
+        )
+        val checkbox = driver.findElement(ByLabelText("Check"))
+
+        driver.user.pointer(
+            mapOf("target" to checkbox),
+            mapOf("keys" to "[MouseLeft]", "target" to checkbox),
+        )
 
         assertTrue(checkbox.isChecked)
     }
