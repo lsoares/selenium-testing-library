@@ -12,10 +12,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExtendWith(DriverLifeCycle::class)
-class PasteTest(private val driver: RemoteWebDriver) {
+class ClearTest(private val driver: RemoteWebDriver) {
 
     @Test
-    fun paste() {
+    fun clear() {
         driver.render("<textarea>Hello, World!</textarea>")
         val input = driver.findElement(ByRole("textbox"))
         assertEquals("Hello, World!", input.value)

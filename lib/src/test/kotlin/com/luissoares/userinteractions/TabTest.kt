@@ -48,7 +48,7 @@ class TabTest(private val driver: RemoteWebDriver) {
             driver.user.tab()
         }
 
-        driver.user.tab(true)
+        driver.user.tab(shift = true)
 
         val radio = driver.findElement(ByRole("radio"))
         assertTrue(radio.isFocused(driver))
