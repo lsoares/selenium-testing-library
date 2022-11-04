@@ -29,7 +29,7 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user(mapOf()).selectOptions(
             select,
-            listOf(ByValue("1"), ByValue("3")),
+            ByValue("1"), ByValue("3"),
         )
 
         assertTrue(driver.findElement(ByRole("option", name = "A")).isSelected)
@@ -50,10 +50,8 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.selectOptions(
             select,
-            listOf(
-                ByWebElement(driver.findElement(ByRole("option", name = "A"))),
-                ByWebElement(driver.findElement(ByRole("option", name = "C"))),
-            ),
+            ByWebElement(driver.findElement(ByRole("option", name = "A"))),
+            ByWebElement(driver.findElement(ByRole("option", name = "C"))),
         )
 
         assertTrue(driver.findElement(ByRole("option", name = "A")).isSelected)

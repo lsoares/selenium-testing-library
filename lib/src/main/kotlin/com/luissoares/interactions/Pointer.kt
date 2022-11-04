@@ -9,9 +9,14 @@ fun User.pointer(vararg inputs: String) {
     javascriptExecutor.executeScript("await user.pointer(arguments[0])", inputs)
 }
 
-fun User.pointer(vararg element: Map<String, Any>) {
-    // TODO: assert valid props
-    javascriptExecutor.executeScript("await user.pointer(arguments[0])", element)
+private val pointerValidOptions = setOf("target", "keys", "offset", "pointerName", "node")
+fun User.pointer(vararg inputs: Map<String, Any>) {
+    inputs.forEach { input ->
+        input.forEach {
+            require(it.key in pointerValidOptions) { "${it.key} is not valid (valid keys are $pointerValidOptions)" }
+        }
+    }
+    javascriptExecutor.executeScript("await user.pointer(arguments[0])", inputs)
 }
 
 /**

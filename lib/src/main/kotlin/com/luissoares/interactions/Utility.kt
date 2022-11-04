@@ -12,7 +12,7 @@ fun User.clear(element: WebElement) {
 /**
  * https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions
  */
-fun User.selectOptions(element: WebElement, values: List<SelectOption>) {
+fun User.selectOptions(element: WebElement, vararg values: SelectOption) {
     javascriptExecutor.executeScript(
         "await user.selectOptions(arguments[0], arguments[1])", element,
         values.map(SelectOption::value)
@@ -22,7 +22,7 @@ fun User.selectOptions(element: WebElement, values: List<SelectOption>) {
 /**
  * https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions
  */
-fun User.deselectOptions(element: WebElement, values: List<SelectOption>) {
+fun User.deselectOptions(element: WebElement, vararg values: SelectOption) {
     javascriptExecutor.executeScript(
         "await user.deselectOptions(arguments[0], arguments[1])", element,
         values.map(SelectOption::value)

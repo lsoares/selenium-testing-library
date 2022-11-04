@@ -2,29 +2,43 @@
 
 [Testing Library](http://testing-library.com/) selectors available as Selenium locators for Kotlin/Java.
 
-A few examples:
+## Usage
+
+These are just a few examples. There are unit tests
+that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb)
+all the usages.
+
+### Core API
+
+The [core API](https://testing-library.com/docs) contains the selectors which are mapped into Selenium locators:
 
 ```kotlin
 driver.findElements(ByAltText("first name"))
 driver.findElements(ByDisplayValue("/john/i", matchTextBy = REGEX))
 val active = driver.findElements(ByLabelText("active"))
 val input = driver.findElements(ByPlaceholderText("first name", exact = false))
+val firstName = input.text
 driver.findElements(ByRole("heading", name = "/as a user/i", matchTextBy = REGEX))
 val panel = driver.findElements(ByTestId("test-id"))
+panel.click()
 driver.findElements(ByText("present", exact = false, selector = "span"))
 driver.findElements(ByTitle("title 1"))
-// use solely with Selenium:
-panel.click()
-val firstName = input.text
+```
 
-// ... or use TL's userEvent:
+ℹ️ All the Testing Library core functionality is available.
+
+### User Interactions
+
+The Testing Library's [user-event](https://testing-library.com/docs/user-event/intro) is also mapped:
+
+```kotlin
 driver.user.click(active)
 driver.user.dblClick(panel)
 driver.user.type(input, "foobar")
+driver.user.selectOptions(driver.findElement(ByRole("listbox")), "C")
 ```
 
-There are unit tests that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb)
-all the usages. All the Testing Library functionality is available.
+ℹ️ user-event's JavaScript only loads if it's used.
 
 ## Setup
 
@@ -45,7 +59,8 @@ I'm a fan of the [Testing Library](http://testing-library.com/) because it encou
 
 ## How?
 
-The Testing Library has ports for many JavaScript frameworks. I realized it was possible to have it in Selenium for Java/Kotlin as well.
+The Testing Library has ports for many JavaScript frameworks. I realized it was possible to have it in Selenium for
+Java/Kotlin as well.
 I created an [adapter](https://en.wikipedia.org/wiki/Adapter_pattern):
 a set of custom Selenium locators that wrap the corresponding Testing Library JavaScript functions.
 
