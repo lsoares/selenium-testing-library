@@ -30,8 +30,8 @@ fun User.dblClick(element: WebElement) {
 /**
  * https://testing-library.com/docs/user-event/convenience#tripleclick
  */
-fun User.tripleClick() {
-    TODO()
+fun User.tripleClick(element: WebElement) {
+    javascriptExecutor.executeScript("await user.tripleClick(arguments[0])", element)
 }
 
 /**
