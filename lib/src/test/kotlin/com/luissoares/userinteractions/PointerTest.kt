@@ -68,29 +68,33 @@ class PointerTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
-    fun another() {
+    fun `select with touch`() {
         driver.render(
             """
               <header>header</header>
               <footer>footer</footer>
+              <span id='spy'></span>
         """
         )
-        val user = driver.user()
-        driver.executeScript("""
-           const userPointer = user.pointer
-           calls = []
-           user.pointer = (a) => {
-              calls.push(a)
-              userPointer(a)
+        driver.user()
+        driver.executeScript(
+            """
+           userPointer = user.pointer
+           user.pointer = (args) => {
+              document.getElementById('spy').innerText = JSON.stringify(args)
            }
-        """)
+        """
+        )
 
-        user.pointer(
+        driver.user.pointer(
             mapOf("keys" to "[TouchA>]", "target" to driver.findElement(ByRole("banner"))),
             mapOf("pointerName" to "TouchA", "target" to driver.findElement(ByRole("contentinfo"))),
             mapOf("keys" to "[/TouchA]"),
         )
 
-        println(driver.executeScript("return calls"))
+        assertEquals(
+            """[{"keys":"[TouchA>]","target":{}},{"pointerName":"TouchA","target":{}},{"keys":"[/TouchA]"}]""",
+            driver.findElement(By.id("spy")).text,
+        )
     }
 }

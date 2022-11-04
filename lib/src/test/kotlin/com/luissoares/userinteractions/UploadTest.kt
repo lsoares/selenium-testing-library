@@ -36,4 +36,6 @@ class UploadTest(private val driver: RemoteWebDriver) {
         assertEquals("image/png", upload["type"])
         assertEquals("hello".length.toLong(), upload["size"])
     }
+
+    // TODO: multiple files
 }
