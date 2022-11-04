@@ -11,3 +11,12 @@ fun RemoteWebDriver.user(options: Map<String, Any> = emptyMap()): User {
     executeScript("user = userEvent.setup(arguments[0])", options)
     return User(this as JavascriptExecutor)
 }
+
+val RemoteWebDriver.user: User
+    get() {
+        val thereIsUser = executeScript("return typeof user != 'undefined'") as Boolean
+        return when {
+            thereIsUser -> User(this as JavascriptExecutor)
+            else        -> user()
+        }
+    }

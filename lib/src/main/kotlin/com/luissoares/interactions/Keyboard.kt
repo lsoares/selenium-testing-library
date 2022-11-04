@@ -3,8 +3,8 @@ package com.luissoares.interactions
 /**
  * https://testing-library.com/docs/user-event/keyboard
  */
-fun User.keyboard() {
-    TODO()
+fun User.keyboard(input: String) {
+    javascriptExecutor.executeScript("await user.keyboard(arguments[0])", input)
 }
 
 /**

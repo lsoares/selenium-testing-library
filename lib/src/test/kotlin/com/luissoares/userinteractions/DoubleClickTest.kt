@@ -21,7 +21,7 @@ class DoubleClickTest(private val driver: RemoteWebDriver) {
         )
         val checkbox = driver.findElement(ByRole("checkbox"))
 
-        driver.user().dblClick(checkbox)
+        driver.user.dblClick(checkbox)
 
         assertFalse(checkbox.isChecked)
     }

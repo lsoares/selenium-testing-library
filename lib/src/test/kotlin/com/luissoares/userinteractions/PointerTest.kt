@@ -27,7 +27,7 @@ class PointerTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        driver.user().pointer("[MouseLeft]")
+        driver.user.pointer("[MouseLeft]")
 
         assertEquals("click", driver.findElement(By.cssSelector("h1")).text)
     }
@@ -48,7 +48,7 @@ class PointerTest(private val driver: RemoteWebDriver) {
                      """
         )
 
-        driver.user().pointer("[MouseLeft]", "[MouseRight]")
+        driver.user.pointer("[MouseLeft]", "[MouseRight]")
 
         assertEquals("click", driver.findElement(By.id("left")).text)
         assertEquals("contextmenu", driver.findElement(By.id("right")).text)
@@ -62,7 +62,7 @@ class PointerTest(private val driver: RemoteWebDriver) {
             driver.findElement(By.cssSelector("h1")),
         )
 
-        driver.user().pointer("[MouseLeft]")
+        driver.user.pointer("[MouseLeft]")
 
         assertEquals("click", driver.findElement(By.cssSelector("h1")).text)
     }
