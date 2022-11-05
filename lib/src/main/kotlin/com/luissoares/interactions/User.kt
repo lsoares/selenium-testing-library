@@ -6,9 +6,11 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 class User(val javascriptExecutor: JavascriptExecutor)
 
-fun RemoteWebDriver.user(options: Map<String, Any> = emptyMap()): User {
+// TODO: test receiving options
+// TODO: limit valid options
+fun RemoteWebDriver.user(vararg options: Pair<String, Any?>): User {
     ensureScript("user-event.js", "window.userEvent?.setup")
-    executeScript("user = userEvent.setup(arguments[0])", options)
+    executeScript("user = userEvent.setup(arguments[0])", options.toMap())
     return User(this as JavascriptExecutor)
 }
 

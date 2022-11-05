@@ -5,6 +5,7 @@ import com.luissoares.interactions.pointer
 import com.luissoares.interactions.user
 import com.luissoares.locators.ByRole
 import com.luissoares.render
+import com.luissoares.selection
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -76,7 +77,7 @@ class PointerTest(private val driver: RemoteWebDriver) {
             mapOf("offset" to 5)
         )
 
-        assertEquals("oba", driver.executeScript("return window.getSelection().toString()"))
+        assertEquals("oba", driver.selection)
     }
 
     @Test
