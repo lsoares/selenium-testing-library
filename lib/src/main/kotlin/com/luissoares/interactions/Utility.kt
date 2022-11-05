@@ -38,7 +38,8 @@ sealed class SelectOption(open val value: Any) {
  * https://testing-library.com/docs/user-event/utility#type
  */
 fun User.type(
-    element: WebElement, text: String,
+    element: WebElement,
+    text: String,
     skipClick: Boolean? = null,
     skipAutoClose: Boolean? = null,
     initialSelectionStart: Int? = null,

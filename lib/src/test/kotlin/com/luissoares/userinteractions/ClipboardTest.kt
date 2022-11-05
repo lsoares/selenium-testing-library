@@ -1,17 +1,16 @@
 package com.luissoares.userinteractions
 
-import com.luissoares.DriverLifeCycle
+import com.luissoares.*
 import com.luissoares.interactions.*
 import com.luissoares.locators.ByRole
-import com.luissoares.render
-import com.luissoares.selection
-import com.luissoares.value
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class ClipboardTest(private val driver: RemoteWebDriver) {
@@ -24,6 +23,22 @@ class ClipboardTest(private val driver: RemoteWebDriver) {
         driver.user.paste("pasted value")
 
         assertEquals("pasted value", driver.findElement(ByRole("textbox")).value)
+    }
+
+    @Test
+    fun cut() {
+        driver.render("""<input id="a" />""")
+        val inputA = driver.findElement(By.id("a"))
+        driver.user.type(inputA, "text")
+        driver.user.pointer(
+            mapOf("target" to driver.findElement(ByRole("textbox")), "offset" to 0, "keys" to "[MouseLeft>]"),
+            mapOf("offset" to 5)
+        )
+        assertFalse(inputA.value?.isEmpty() ?: true)
+
+        driver.user.cut()
+
+        assertTrue(inputA.value?.isEmpty()?: false)
     }
 
     @Disabled

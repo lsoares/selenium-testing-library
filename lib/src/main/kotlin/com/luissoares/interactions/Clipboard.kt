@@ -3,11 +3,10 @@ package com.luissoares.interactions
 /**
  * https://testing-library.com/docs/user-event/clipboard
  */
-@Suppress("UNCHECKED_CAST")
-fun User.copy(): Map<String, Any?> =
-    javascriptExecutor.executeScript("return await user.copy()") as Map<String, Any?>
+fun User.copy() {
+    javascriptExecutor.executeScript("await user.copy()")
+}
 
-// TODO return DataTransfer
 fun User.cut() {
     javascriptExecutor.executeScript("await user.cut()")
 }
