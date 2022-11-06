@@ -3,8 +3,6 @@ package seleniumtestinglib.userinteractions
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.interactions.SelectOption
-import seleniumtestinglib.interactions.SelectOption.ByValue
 import seleniumtestinglib.interactions.selectOptions
 import seleniumtestinglib.interactions.user
 import seleniumtestinglib.locators.ByRole
@@ -27,10 +25,7 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
         )
         val select = driver.findElement(ByRole("listbox"))
 
-        driver.user.selectOptions(
-            select,
-            ByValue("1"), ByValue("3"),
-        )
+        driver.user.selectOptions(select, "1", "3")
 
         assertTrue(driver.findElement(ByRole("option", name = "A")).isSelected)
         assertFalse(driver.findElement(ByRole("option", name = "B")).isSelected)
@@ -50,8 +45,8 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.selectOptions(
             select,
-            SelectOption.ByWebElement(driver.findElement(ByRole("option", name = "A"))),
-            SelectOption.ByWebElement(driver.findElement(ByRole("option", name = "C"))),
+            driver.findElement(ByRole("option", name = "A")),
+            driver.findElement(ByRole("option", name = "C")),
         )
 
         assertTrue(driver.findElement(ByRole("option", name = "A")).isSelected)

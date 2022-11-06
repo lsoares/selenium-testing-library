@@ -10,13 +10,16 @@ fun User.clear(element: WebElement): User {
     return this
 }
 
-/**
- * https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions
- */
-fun User.selectOptions(element: WebElement, vararg values: SelectOption): User {
+fun User.selectOptions(element: WebElement, vararg values: String): User {
     javascriptExecutor.executeScript(
-        "await user.selectOptions(arguments[0], arguments[1])", element,
-        values.map(SelectOption::value)
+        "await user.selectOptions(arguments[0], arguments[1])", element, values
+    )
+    return this
+}
+
+fun User.selectOptions(element: WebElement, vararg values: WebElement): User {
+    javascriptExecutor.executeScript(
+        "await user.selectOptions(arguments[0], arguments[1])", element, values
     )
     return this
 }
@@ -24,17 +27,18 @@ fun User.selectOptions(element: WebElement, vararg values: SelectOption): User {
 /**
  * https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions
  */
-fun User.deselectOptions(element: WebElement, vararg values: SelectOption): User {
+fun User.deselectOptions(element: WebElement, vararg values: String): User {
     javascriptExecutor.executeScript(
-        "await user.deselectOptions(arguments[0], arguments[1])", element,
-        values.map(SelectOption::value)
+        "await user.deselectOptions(arguments[0], arguments[1])", element, values
     )
     return this
 }
 
-sealed class SelectOption(open val value: Any) {
-    class ByValue(override val value: String) : SelectOption(value)
-    class ByWebElement(override val value: WebElement) : SelectOption(value)
+fun User.deselectOptions(element: WebElement, vararg values: WebElement): User {
+    javascriptExecutor.executeScript(
+        "await user.deselectOptions(arguments[0], arguments[1])", element, values
+    )
+    return this
 }
 
 /**

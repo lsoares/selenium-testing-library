@@ -1,6 +1,6 @@
 # Selenium Testing Library
 
-_[Testing Library](http://testing-library.com/) selectors available as Selenium locators for Kotlin/Java._
+**_[Testing Library](http://testing-library.com/) selectors available as Selenium locators for Kotlin/Java._**
 
 Why? When I use Selenium, I don't want to depend on ids, classes, and similar.
 I'm a fan of the Testing Library because it encourages "testing as a user":
@@ -8,9 +8,9 @@ I'm a fan of the Testing Library because it encourages "testing as a user":
 > The more your tests resemble the way your software is used,
 > the more confidence they can give you.
 
-ℹ️ To set it up, pick the [library's latest version at **Maven
+ℹ️ _To set it up, pick the [library's latest version at **Maven
 Central**](https://search.maven.org/artifact/com.luissoares/selenium-testing-library). Then, copy the declaration for
-your build tool.
+your build tool._
 
 ---
 
@@ -35,7 +35,7 @@ driver.findElements(ByText("present", exact = false, selector = "span"))
 driver.findElements(ByTitle("title 1"))
 ```
 
-ℹ️ All the Testing Library core functionality is available.
+ℹ️ _All the Testing Library core functionality is available._
 
 ## User Interactions
 
@@ -48,4 +48,4 @@ driver.user.type(input, "foobar")
 driver.user.selectOptions(driver.findElement(ByRole("listbox")), "C")
 ```
 
-ℹ️ user-event's JavaScript only loads if it's used.
+ℹ️ _user-event's JavaScript only loads if it's used._

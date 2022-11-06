@@ -3,7 +3,6 @@ package seleniumtestinglib.userinteractions
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.interactions.SelectOption
 import seleniumtestinglib.interactions.deselectOptions
 import seleniumtestinglib.interactions.user
 import seleniumtestinglib.locators.ByRole
@@ -27,8 +26,7 @@ class DeselectOptionsTest(private val driver: RemoteWebDriver) {
         assertTrue(driver.findElement(ByRole("option", name = "C")).isSelected)
 
         driver.user.deselectOptions(
-            driver.findElement(ByRole("listbox")),
-            SelectOption.ByValue("3"),
+            driver.findElement(ByRole("listbox")), "3",
         )
 
         assertFalse(driver.findElement(ByRole("option", name = "C")).isSelected)
@@ -47,7 +45,7 @@ class DeselectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.deselectOptions(
             select,
-            SelectOption.ByWebElement(driver.findElement(ByRole("option", name = "C"))),
+            driver.findElement(ByRole("option", name = "C")),
         )
 
         assertFalse(driver.findElement(ByRole("option", name = "C")).isSelected)
