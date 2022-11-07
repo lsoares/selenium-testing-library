@@ -3,6 +3,7 @@ package seleniumtestinglib.locators
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.coreapi.MatchType.REGEX
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,7 +24,7 @@ class ByTestIdTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render(""" <div data-testid="custom-element" /> """)
 
-        val result = driver.findElement(ByTestId("/Custom/i", matchTextBy = TextMatchType.REGEX))
+        val result = driver.findElement(ByTestId("/Custom/i", matchTextBy = REGEX))
 
         assertEquals("div", result.tagName)
     }

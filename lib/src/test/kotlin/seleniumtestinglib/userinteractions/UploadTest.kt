@@ -3,12 +3,12 @@ package seleniumtestinglib.userinteractions
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.coreapi.MatchType
 import seleniumtestinglib.files
 import seleniumtestinglib.interactions.File
 import seleniumtestinglib.interactions.upload
 import seleniumtestinglib.interactions.user
 import seleniumtestinglib.locators.ByLabelText
-import seleniumtestinglib.locators.TextMatchType
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -26,7 +26,7 @@ class UploadTest(private val driver: RemoteWebDriver) {
             </div> 
         """
         )
-        val input = driver.findElement(ByLabelText("/upload file/i", matchTextBy = TextMatchType.REGEX))
+        val input = driver.findElement(ByLabelText("/upload file/i", matchTextBy = MatchType.REGEX))
 
         driver.user.upload(
             input,

@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.coreapi.MatchType.REGEX
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -37,7 +38,7 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render("<input placeholder='Username' />")
 
-        val result = driver.findElement(ByPlaceholderText("/user/i", matchTextBy = TextMatchType.REGEX))
+        val result = driver.findElement(ByPlaceholderText("/user/i", matchTextBy = REGEX))
 
         assertEquals("input", result.tagName)
     }

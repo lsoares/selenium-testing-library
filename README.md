@@ -8,6 +8,7 @@ I'm a fan of the Testing Library because it encourages "testing as a user":
 > The more your tests resemble the way your software is used,
 > the more confidence they can give you.
 
+
 ℹ️ _To set it up, pick the [library's latest version at **Maven
 Central**](https://search.maven.org/artifact/com.luissoares/selenium-testing-library). Then, copy the declaration for
 your build tool._
@@ -49,3 +50,8 @@ driver.user.selectOptions(driver.findElement(ByRole("listbox")), "C")
 ```
 
 ℹ️ _user-event's JavaScript only loads if it's used._
+
+---
+
+ℹ️ _Want to know about the creation process? Read more about it
+at [The Testing Library meets Selenium](https://medium.com/codex/the-testing-library-meets-selenium-5f74cc712114)._

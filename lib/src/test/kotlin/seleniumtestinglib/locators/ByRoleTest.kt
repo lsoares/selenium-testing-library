@@ -6,6 +6,8 @@ import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.coreapi.MatchType
+import seleniumtestinglib.coreapi.MatchType.REGEX
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -57,7 +59,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElement(ByRole("/TABL/i", matchTextBy = TextMatchType.REGEX))
+        val result = driver.findElement(ByRole("/TABL/i", matchTextBy = REGEX))
 
         assertEquals("div", result.tagName)
     }
@@ -161,7 +163,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
             ByRole(
                 role = "alertdialog",
                 description = "/your session/i",
-                matchDescriptionBy = TextMatchType.REGEX
+                matchDescriptionBy = REGEX
             )
         )
 
@@ -187,7 +189,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
             ByRole(
                 role = "alertdialog",
                 description = "content => content.endsWith('!')",
-                matchDescriptionBy = TextMatchType.FUNCTION
+                matchDescriptionBy = MatchType.FUNCTION
             )
         )
 
