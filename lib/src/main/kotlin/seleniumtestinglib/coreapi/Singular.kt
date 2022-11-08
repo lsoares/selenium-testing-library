@@ -6,9 +6,9 @@ import org.openqa.selenium.remote.RemoteWebDriver
 fun RemoteWebDriver.getBy(
     by: ByType,
     textMatch: String,
+    options: Map<String, Any?> = emptyMap(),
     matchTextBy: MatchType = MatchType.STRING,
     matchDescriptionBy: MatchType = MatchType.STRING,
-    options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Get,
     plural = false,
@@ -17,14 +17,14 @@ fun RemoteWebDriver.getBy(
     matchTextBy = matchTextBy,
     matchDescriptionBy = matchDescriptionBy,
     options = options,
-) as WebElement?
+) as WebElement
 
 fun RemoteWebDriver.queryBy(
     by: ByType,
     textMatch: String,
+    options: Map<String, Any?> = emptyMap(),
     matchTextBy: MatchType = MatchType.STRING,
     matchDescriptionBy: MatchType = MatchType.STRING,
-    options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Query,
     plural = false,
@@ -38,9 +38,9 @@ fun RemoteWebDriver.queryBy(
 fun RemoteWebDriver.findBy(
     by: ByType,
     textMatch: String,
+    options: Map<String, Any?> = emptyMap(),
     matchTextBy: MatchType = MatchType.STRING,
     matchDescriptionBy: MatchType = MatchType.STRING,
-    options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Find,
     plural = false,
@@ -49,4 +49,4 @@ fun RemoteWebDriver.findBy(
     matchTextBy = matchTextBy,
     matchDescriptionBy = matchDescriptionBy,
     options = options,
-) as WebElement?
+) as WebElement

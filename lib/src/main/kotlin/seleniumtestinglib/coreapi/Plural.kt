@@ -7,9 +7,9 @@ import org.openqa.selenium.remote.RemoteWebDriver
 fun RemoteWebDriver.getAllBy(
     by: ByType,
     textMatch: String,
+    options: Map<String, Any?> = emptyMap(),
     matchTextBy: MatchType = MatchType.STRING,
     matchDescriptionBy: MatchType = MatchType.STRING,
-    options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Get,
     plural = true,
@@ -24,9 +24,9 @@ fun RemoteWebDriver.getAllBy(
 fun RemoteWebDriver.queryAllBy(
     by: ByType,
     textMatch: String,
+    options: Map<String, Any?> = emptyMap(),
     matchTextBy: MatchType = MatchType.STRING,
     matchDescriptionBy: MatchType = MatchType.STRING,
-    options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Query,
     plural = true,
@@ -41,9 +41,9 @@ fun RemoteWebDriver.queryAllBy(
 fun RemoteWebDriver.findAllBy(
     by: ByType,
     textMatch: String,
+    options: Map<String, Any?> = emptyMap(),
     matchTextBy: MatchType = MatchType.STRING,
     matchDescriptionBy: MatchType = MatchType.STRING,
-    options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Find,
     plural = true,

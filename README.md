@@ -36,6 +36,16 @@ driver.findElements(ByText("present", exact = false, selector = "span"))
 driver.findElements(ByTitle("title 1"))
 ```
 
+An alternative API that does not use Selenium locators:
+
+```kotlin
+val result = driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
+val result = driver.getBy(DisplayValue, "incredibles")
+val result = driver.queryAllAllBy(LabelText, "label x")
+val result = driver.getAllAllBy(Role, "listbox")
+
+```
+
 ℹ️ _All the Testing Library core functionality is available._
 
 ## User Interactions

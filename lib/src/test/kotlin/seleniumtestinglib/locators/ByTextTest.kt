@@ -8,7 +8,6 @@ import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.coreapi.MatchType
-import seleniumtestinglib.coreapi.MatchType.REGEX
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -87,7 +86,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render("<p>I accept</p>")
 
-        val result = driver.findElement(ByText("/ACCEPT/i", matchTextBy = REGEX))
+        val result = driver.findElement(ByText("/ACCEPT/i", matchTextBy = MatchType.REGEX))
 
         assertEquals("p", result.tagName)
     }

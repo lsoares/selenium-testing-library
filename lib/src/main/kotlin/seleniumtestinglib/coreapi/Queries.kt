@@ -26,10 +26,10 @@ internal fun RemoteWebDriver.executeTLQuery(
         }
     return executeTLScript(
         "return "
-            + queryType.takeIf { it == QueryType.Find }?.let { "await " }.orEmpty()
-            + "screen."
+            + "await".takeIf { queryType == QueryType.Find }.orEmpty()
+            + " screen."
             + queryType.name.lowercase()
-            + plural.takeIf { true }?.let { "All" }.orEmpty()
+            + "All".takeIf { plural }.orEmpty()
             + "By"
             + by.name
             + """(${mainArg}${escapedOptions?.let { ", $it" } ?: ""})"""
