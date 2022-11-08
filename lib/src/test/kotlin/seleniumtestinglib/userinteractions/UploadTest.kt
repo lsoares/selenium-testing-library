@@ -33,7 +33,7 @@ class UploadTest(private val driver: RemoteWebDriver) {
             File(listOf("hello"), "hello.png", mapOf("type" to "image/png")),
         )
 
-        val upload = input.files(driver).single()
+        val upload = input.files.single()
         assertEquals("hello.png", upload["name"])
         assertEquals("image/png", upload["type"])
         assertEquals("hello".length.toLong(), upload["size"])

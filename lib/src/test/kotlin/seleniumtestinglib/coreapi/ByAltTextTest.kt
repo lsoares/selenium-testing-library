@@ -26,6 +26,8 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
 
         val result = driver.queryBy(AltText, "incredibles", mapOf("exact" to false))
 
+        driver.executeScript("console.log(arguments[0])", "() => throw new Exception()")
+
         assertEquals("input", result?.tagName)
     }
 }

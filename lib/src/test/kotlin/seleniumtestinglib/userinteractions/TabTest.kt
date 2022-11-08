@@ -30,7 +30,7 @@ class TabTest(private val driver: RemoteWebDriver) {
 
         driver.user.tab()
 
-        assertTrue(driver.findElement(ByRole("radio")).isFocused(driver))
+        assertTrue(driver.findElement(ByRole("radio")).isFocused)
     }
 
     @Test
@@ -50,7 +50,7 @@ class TabTest(private val driver: RemoteWebDriver) {
 
         driver.user.tab(shift = true)
 
-        assertTrue(driver.findElement(ByRole("radio")).isFocused(driver))
+        assertTrue(driver.findElement(ByRole("radio")).isFocused)
     }
 
     @Test
@@ -68,7 +68,7 @@ class TabTest(private val driver: RemoteWebDriver) {
             .tab()
             .keyboard("{Tab}")
 
-        assertTrue(driver.findElement(ByRole("radio")).isFocused(driver))
+        assertTrue(driver.findElement(ByRole("radio")).isFocused)
     }
 
     @Test
@@ -86,7 +86,7 @@ class TabTest(private val driver: RemoteWebDriver) {
 
         driver.user.keyboard("[/ShiftLeft][/ShiftRight]{Tab}")
 
-        assertTrue(driver.findElement(ByRole("radio")).isFocused(driver))
+        assertTrue(driver.findElement(ByRole("radio")).isFocused)
     }
 
     @Test
@@ -106,6 +106,6 @@ class TabTest(private val driver: RemoteWebDriver) {
 
         driver.user.keyboard("{Shift>}{Tab}{/Shift}")
 
-        assertTrue(driver.findElement(ByRole("radio")).isFocused(driver))
+        assertTrue(driver.findElement(ByRole("radio")).isFocused)
     }
 }

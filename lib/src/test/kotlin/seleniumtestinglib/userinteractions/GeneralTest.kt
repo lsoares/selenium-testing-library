@@ -1,6 +1,7 @@
 package seleniumtestinglib.userinteractions
 
 import com.google.common.io.Files
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
 import org.openqa.selenium.OutputType
@@ -20,6 +21,7 @@ import kotlin.test.Test
 class GeneralTest(private val driver: RemoteWebDriver) {
 
     @Test
+    @Disabled
     fun chaining() {
         driver
             .render(

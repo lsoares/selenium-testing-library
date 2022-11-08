@@ -1,7 +1,8 @@
 package seleniumtestinglib
 
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.remote.RemoteWebDriver
+import org.openqa.selenium.remote.RemoteWebElement
 
 val WebElement.value: String?
     get() = getAttribute("value")
@@ -9,9 +10,10 @@ val WebElement.value: String?
 val WebElement.isChecked: Boolean
     get() = isSelected
 
-fun WebElement.isFocused(driver: RemoteWebDriver): Boolean =
-    equals(driver.switchTo().activeElement())
+val WebElement.isFocused: Boolean
+    get() = equals((this as RemoteWebElement).wrappedDriver.switchTo().activeElement())
 
 @Suppress("UNCHECKED_CAST")
-fun WebElement.files(driver: RemoteWebDriver): List<Map<String, Any>> =
-    driver.executeScript("return arguments[0].files", this) as List<Map<String, Any>>
+val WebElement.files: List<Map<String, Any>>
+    get() = ((this as RemoteWebElement).wrappedDriver as JavascriptExecutor)
+        .executeScript("return arguments[0].files", this) as List<Map<String, Any>>
