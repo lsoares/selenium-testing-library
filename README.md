@@ -39,10 +39,10 @@ driver.findElements(ByTitle("title 1"))
 An alternative API that does not use Selenium locators:
 
 ```kotlin
-val result = driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
-val result = driver.getBy(DisplayValue, "incredibles")
-val result = driver.queryAllAllBy(LabelText, "label x")
-val result = driver.getAllAllBy(Role, "listbox")
+val result1 = driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
+val result2 = driver.getBy(DisplayValue, "incredibles")
+val result3 = driver.queryAllBy(LabelText, "label x")
+val result4 = driver.getAllBy(Role, "listbox")
 
 ```
 

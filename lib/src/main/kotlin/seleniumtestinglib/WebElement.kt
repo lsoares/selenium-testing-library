@@ -15,5 +15,7 @@ val WebElement.isFocused: Boolean
 
 @Suppress("UNCHECKED_CAST")
 val WebElement.files: List<Map<String, Any>>
-    get() = ((this as RemoteWebElement).wrappedDriver as JavascriptExecutor)
-        .executeScript("return arguments[0].files", this) as List<Map<String, Any>>
+    get() = ((this as RemoteWebElement).wrappedDriver as JavascriptExecutor).executeScript(
+        "return arguments[0].files",
+        this
+    ) as? List<Map<String, Any>> ?: emptyList()

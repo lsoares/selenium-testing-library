@@ -7,6 +7,7 @@ import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.coreapi.ByType.AltText
 import seleniumtestinglib.render
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -14,7 +15,29 @@ import kotlin.test.assertTrue
 class NotFoundTest(private val driver: RemoteWebDriver) {
 
     @Test
-    fun `query does not exist`() {
+    fun `get but none found`() {
+        driver.render("<input alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+
+        val result = kotlin.runCatching {
+            driver.getBy(AltText, "will not work")
+        }
+
+        assertTrue(result.exceptionOrNull() is JavascriptException)
+    }
+
+    @Test
+    fun `get all but none found`() {
+        driver.render("<input alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+
+        val result = kotlin.runCatching {
+            driver.getAllBy(AltText, "will not work")
+        }
+
+        assertTrue(result.exceptionOrNull() is JavascriptException)
+    }
+
+    @Test
+    fun `query  does not exist`() {
         driver.render("<input alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
         val result = driver.queryBy(AltText, "will not work")
@@ -23,13 +46,16 @@ class NotFoundTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
-    fun `get does not exist`() {
-        driver.render("<input alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+    fun `query all but none found`() {
+        driver.render(
+            """
+            <input alt='Incredibles 1' src='/incredibles-2.png' />
+            <input alt='Incredibles 2' src='/incredibles-2.png' />
+        """
+        )
 
-        val result = kotlin.runCatching {
-            driver.getBy(AltText, "will not work")
-        }
+        val result = driver.queryAllBy(AltText, "incredibles", mapOf("exact" to true))
 
-        assertTrue(result.exceptionOrNull() is JavascriptException)
+        assertEquals(emptyList(), result)
     }
 }
