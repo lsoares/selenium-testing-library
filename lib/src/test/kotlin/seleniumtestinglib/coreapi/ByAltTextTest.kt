@@ -24,7 +24,7 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
     fun `get all by alt text`() {
         driver.render(
             """
-            <input alt='Incredibles 1' src='/incredibles-2.png' />
+            <input alt='Incredibles 1' src='/incredibles-1.png' />
             <input alt='Incredibles 2' src='/incredibles-2.png' />
         """
         )

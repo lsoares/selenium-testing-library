@@ -1,10 +1,9 @@
 package seleniumtestinglib.interactions
 
-import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.ensureScript
 
-class User(val javascriptExecutor: JavascriptExecutor)
+class User(val driver: RemoteWebDriver)
 
 // TODO: test receiving options
 /**
@@ -15,7 +14,7 @@ fun RemoteWebDriver.user(vararg options: Pair<String, Any?>): User {
     require(options.all { it.first in validUserOptions })
     ensureScript("user-event.js", "window.userEvent?.setup")
     executeScript("user = userEvent.setup(arguments[0])", options.toMap())
-    return User(this as JavascriptExecutor)
+    return User(this)
 }
 
 /**
@@ -24,7 +23,7 @@ fun RemoteWebDriver.user(vararg options: Pair<String, Any?>): User {
  */
 val RemoteWebDriver.user: User
     get() = if (executeScript("return typeof user != 'undefined'") as Boolean)
-        User(this as JavascriptExecutor)
+        User(this)
     else user()
 
 private val validUserOptions = setOf(

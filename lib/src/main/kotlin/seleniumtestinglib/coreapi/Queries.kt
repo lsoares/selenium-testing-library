@@ -58,8 +58,11 @@ private fun RemoteWebDriver.executeTLScript(script: String, vararg args: Any?): 
 
 private fun Map.Entry<String, Any?>.getEscapedValue(matchDescriptionBy: MatchType) =
     value.takeIf {
-        it !is String
-            || key == "normalizer"
-            || key == "description" && matchDescriptionBy != MatchType.STRING
+        (it !is String)
+            .or(key == "normalizer")
+            .or(
+                (key == "description")
+                    .and(matchDescriptionBy != MatchType.STRING)
+            )
     }
         ?: value.toString().escapeString()

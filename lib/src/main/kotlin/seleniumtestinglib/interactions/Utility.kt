@@ -6,19 +6,19 @@ import org.openqa.selenium.WebElement
  * https://testing-library.com/docs/user-event/utility#clear
  */
 fun User.clear(element: WebElement): User {
-    javascriptExecutor.executeScript("await user.clear(arguments[0])", element)
+    driver.executeScript("await user.clear(arguments[0])", element)
     return this
 }
 
 fun User.selectOptions(element: WebElement, vararg values: String): User {
-    javascriptExecutor.executeScript(
+    driver.executeScript(
         "await user.selectOptions(arguments[0], arguments[1])", element, values
     )
     return this
 }
 
 fun User.selectOptions(element: WebElement, vararg values: WebElement): User {
-    javascriptExecutor.executeScript(
+    driver.executeScript(
         "await user.selectOptions(arguments[0], arguments[1])", element, values
     )
     return this
@@ -28,14 +28,14 @@ fun User.selectOptions(element: WebElement, vararg values: WebElement): User {
  * https://testing-library.com/docs/user-event/utility#-selectoptions-deselectoptions
  */
 fun User.deselectOptions(element: WebElement, vararg values: String): User {
-    javascriptExecutor.executeScript(
+    driver.executeScript(
         "await user.deselectOptions(arguments[0], arguments[1])", element, values
     )
     return this
 }
 
 fun User.deselectOptions(element: WebElement, vararg values: WebElement): User {
-    javascriptExecutor.executeScript(
+    driver.executeScript(
         "await user.deselectOptions(arguments[0], arguments[1])", element, values
     )
     return this
@@ -52,7 +52,7 @@ fun User.type(
     initialSelectionStart: Int? = null,
     initialSelectionEnd: Int? = null,
 ): User {
-    javascriptExecutor.executeScript(
+    driver.executeScript(
         "await user.type(arguments[0], arguments[1], arguments[2])",
         element,
         text,
@@ -70,7 +70,7 @@ fun User.type(
  * https://testing-library.com/docs/user-event/utility#upload
  */
 fun User.upload(input: WebElement, file: File): User {
-    javascriptExecutor.executeScript(
+    driver.executeScript(
         "await user.upload(arguments[0], new File(arguments[1], arguments[2], arguments[3]))",
         input,
         file.bits,
