@@ -2,7 +2,6 @@ package seleniumtestinglib.coreapi
 
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.ensureScript
-import seleniumtestinglib.escapeString
 
 internal fun RemoteWebDriver.executeTLQuery(
     queryType: QueryType = QueryType.Query,
@@ -66,3 +65,5 @@ private fun Map.Entry<String, Any?>.getEscapedValue(matchDescriptionBy: MatchTyp
             )
     }
         ?: value.toString().escapeString()
+
+private fun String.escapeString() = "'${replace("'", "\\'")}'"

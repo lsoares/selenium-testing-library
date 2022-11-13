@@ -8,6 +8,7 @@ class User(val driver: RemoteWebDriver)
 // TODO: test receiving options
 /**
  * Obtains a custom instance of user by calling `userEvent.setup()` with the supplied arguments.
+ *
  * https://testing-library.com/docs/user-event/options
  */
 fun RemoteWebDriver.user(vararg options: Pair<String, Any?>): User {

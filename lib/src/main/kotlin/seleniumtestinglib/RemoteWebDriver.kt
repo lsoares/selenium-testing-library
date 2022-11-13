@@ -7,8 +7,6 @@ internal fun RemoteWebDriver.ensureScript(fileName: String, isPresentFunction: S
         executeScript(loadScript(fileName))
 }
 
-internal fun String.escapeString() = "'${replace("'", "\\'")}'"
-
 private fun RemoteWebDriver.isLoaded(isPresentFunction: String) =
     executeScript("return typeof $isPresentFunction == 'function'") as Boolean
 
