@@ -18,5 +18,6 @@ class JestDomTest(private val driver: RemoteWebDriver) {
 
         val input = driver.getBy(Role, "textbox")
         assertTrue(input.isDisabled)
+        expect(input).toBeDisabled()
     }
 }

@@ -5,8 +5,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.remote.RemoteWebElement
 import seleniumtestinglib.ensureScript
 
-val WebElement.isDisabled: Boolean
-    get() = executeJestDomQuery("toBeDisabled")
+val WebElement.isDisabled get() = executeJestDomQuery("toBeDisabled")
 
 private fun WebElement.executeJestDomQuery(domFunction: String): Boolean {
     val driver = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver
