@@ -2,7 +2,7 @@ package seleniumtestinglib.jestdom
 
 import org.openqa.selenium.WebElement
 
-fun expect(webElement: WebElement) = JestDomExpect(webElement)
+fun expect(webElement: WebElement?) = JestDomExpect(webElement)
 
 /**
  * https://testing-library.com/docs/ecosystem-jest-dom/
@@ -28,5 +28,9 @@ class JestDomExpect(
 
     fun toBeEmptyDomElement() {
         assert(webElement?.isEmptyDomElement)
+    }
+
+    fun toBeInTheDocument() {
+        assert(webElement?.isInTheDocument)
     }
 }
