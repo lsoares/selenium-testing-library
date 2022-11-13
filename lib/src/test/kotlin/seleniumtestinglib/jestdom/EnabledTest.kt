@@ -11,7 +11,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
-class JestDomTest(private val driver: RemoteWebDriver) {
+class EnabledTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun disabled() {
@@ -38,5 +38,13 @@ class JestDomTest(private val driver: RemoteWebDriver) {
         val input = driver.getBy(Role, "textbox")
         assertTrue(input.isEnabled)
         expect(input).toBeEnabled()
+    }
+
+    @Test
+    fun `not enabled`() {
+        driver.render("<div><input type='text' disabled /></div>")
+
+        val input = driver.getBy(Role, "textbox")
+        expect(input).not.toBeEnabled()
     }
 }

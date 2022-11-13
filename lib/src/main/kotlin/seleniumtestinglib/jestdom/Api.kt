@@ -25,4 +25,8 @@ class JestDomExpect(
     fun toBeEnabled() {
         assert(webElement?.isDisabled?.not())
     }
+
+    fun toBeEmptyDomElement() {
+        assert(webElement?.isEmptyDomElement)
+    }
 }
