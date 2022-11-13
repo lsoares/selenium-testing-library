@@ -21,6 +21,8 @@ fun RemoteWebDriver.user(vararg options: Pair<String, Any?>): User {
 /**
  * If there's one Testing Library `user` already, it returns it.
  * Else, it creates a default one (obtained with `userEvent.setup()`).
+ *
+ * https://testing-library.com/docs/user-event/intro
  */
 val RemoteWebDriver.user: User
     get() = if (executeScript("return typeof user != 'undefined'") as Boolean)
