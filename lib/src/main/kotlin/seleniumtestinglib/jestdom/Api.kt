@@ -2,11 +2,11 @@ package seleniumtestinglib.jestdom
 
 import org.openqa.selenium.WebElement
 
-fun expect(webElement: WebElement?) = JestDomExpect(webElement)
-
 /**
  * https://testing-library.com/docs/ecosystem-jest-dom/
  */
+fun expect(webElement: WebElement?) = JestDomExpect(webElement)
+
 class JestDomExpect(
     private val webElement: WebElement?,
     private val positiveAssert: Boolean = true,
@@ -32,5 +32,9 @@ class JestDomExpect(
 
     fun toBeInTheDocument() {
         assert(webElement?.isInTheDocument)
+    }
+
+    fun toBeInvalid() {
+        assert(webElement?.isInvalid)
     }
 }
