@@ -48,7 +48,7 @@ enum class MatchType {
 }
 
 /**
- * https://testing-library.com/docs/queries/about
+ * https://testing-library.com/docs/dom-testing-library/intro
  */
 private fun RemoteWebDriver.executeTLScript(script: String, vararg args: Any?): Any? {
     ensureScript("testing-library.js", "screen?.getAllByAltText")

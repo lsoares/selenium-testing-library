@@ -37,4 +37,8 @@ class JestDomExpect(
     fun toBeInvalid() {
         assert(webElement?.isInvalid)
     }
+
+    fun toBeRequired() {
+        assert(webElement?.isRequired)
+    }
 }
