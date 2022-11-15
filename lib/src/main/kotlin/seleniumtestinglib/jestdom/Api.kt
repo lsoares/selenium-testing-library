@@ -45,4 +45,8 @@ class JestDomExpect(
     fun toBeValid() {
         assert(webElement?.isValid)
     }
+
+    fun toBeVisible() {
+        assert(webElement?.isVisible)
+    }
 }
