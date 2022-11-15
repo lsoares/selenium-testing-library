@@ -6,8 +6,7 @@ import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.MatchType
-import seleniumtestinglib.coreapi.MatchType.REGEX
+import seleniumtestinglib.coreapi.TextMatch.*
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -59,9 +58,20 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElement(ByRole("/TABL/i", matchTextBy = REGEX))
+        val result = driver.findElement(ByRole(Regex("/TABL/i")))
 
         assertEquals("div", result.tagName)
+    }
+
+    @Test
+    fun `role with regex in name parameter`() {
+        driver.render(
+            """<h1>something as a user something</h1>"""
+        )
+
+        val result = driver.findElements(ByRole("heading", name = Regex("/as a user/i")))
+
+        assertEquals(expected = "something as a user something", result.single().accessibleName)
     }
 
     @Test
@@ -97,7 +107,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElements(ByRole("textbox", name = "Email address"))
+        val result = driver.findElements(ByRole("textbox", name = String("Email address")))
 
         assertEquals("input", result.single().tagName)
     }
@@ -139,7 +149,8 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                     </ul>"""
         )
 
-        val result = driver.findElements(ByRole("alertdialog", description = "Your session is about to expire!"))
+        val result =
+            driver.findElements(ByRole("alertdialog", description = String("Your session is about to expire!")))
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
@@ -162,8 +173,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         val result = driver.findElements(
             ByRole(
                 role = "alertdialog",
-                description = "/your session/i",
-                matchDescriptionBy = REGEX
+                description = Regex("/your session/i"),
             )
         )
 
@@ -188,8 +198,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         val result = driver.findElements(
             ByRole(
                 role = "alertdialog",
-                description = "content => content.endsWith('!')",
-                matchDescriptionBy = MatchType.FUNCTION
+                description = Function("content => content.endsWith('!')"),
             )
         )
 

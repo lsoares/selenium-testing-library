@@ -5,29 +5,40 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.coreapi.ByType
-import seleniumtestinglib.coreapi.MatchType
+import seleniumtestinglib.coreapi.TextMatch
 import seleniumtestinglib.coreapi.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/bylabeltext
  */
 data class ByLabelText(
-    private val text: String,
-    private val matchTextBy: MatchType = MatchType.STRING,
+    private val text: TextMatch,
     private val exact: Boolean? = null,
     private val selector: String? = null,
     private val normalizer: String? = null,
 ) : By() {
+
+    constructor(
+        text: String,
+        exact: Boolean? = null,
+        selector: String? = null,
+        normalizer: String? = null,
+    ) : this(
+        text = TextMatch.String(text),
+        exact = exact,
+        selector = selector,
+        normalizer = normalizer,
+    )
+
     @Suppress("UNCHECKED_CAST")
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.LabelText,
             textMatch = text,
-            matchTextBy = matchTextBy,
             options = mapOf(
                 "selector" to selector,
                 "exact" to exact,
-                "normalizer" to normalizer,
+                "normalizer" to normalizer?.let { TextMatch.Function(normalizer) },
             )
         ) as List<WebElement>
 }

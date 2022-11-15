@@ -7,7 +7,8 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.MatchType
+import seleniumtestinglib.coreapi.TextMatch.Function
+import seleniumtestinglib.coreapi.TextMatch.Regex
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -86,7 +87,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render("<p>I accept</p>")
 
-        val result = driver.findElement(ByText("/ACCEPT/i", matchTextBy = MatchType.REGEX))
+        val result = driver.findElement(ByText(Regex("/ACCEPT/i")))
 
         assertEquals("p", result.tagName)
     }
@@ -96,10 +97,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
         driver.render("<p>Hello World</p>")
 
         val result = driver.findElement(
-            ByText(
-                "(content, element) => content.startsWith('Hello') && element.tagName == 'P'",
-                matchTextBy = MatchType.FUNCTION
-            )
+            ByText(Function("(content, element) => content.startsWith('Hello') && element.tagName == 'P'"))
         )
 
         assertEquals("p", result.tagName)

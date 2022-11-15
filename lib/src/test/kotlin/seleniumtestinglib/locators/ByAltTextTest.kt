@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.MatchType
+import seleniumtestinglib.coreapi.TextMatch
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -38,7 +38,7 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
-        val result = driver.findElement(ByAltText("/incred/i", matchTextBy = MatchType.REGEX))
+        val result = driver.findElement(ByAltText(TextMatch.Regex("/incred/i")))
 
         assertEquals("img", result.tagName)
     }
