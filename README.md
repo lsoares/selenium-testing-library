@@ -25,11 +25,11 @@ The [core API](https://testing-library.com/docs) contains the selectors which ar
 
 ```kotlin
 driver.findElements(ByAltText("first name"))
-driver.findElements(ByDisplayValue("/john/i", matchTextBy = REGEX))
+driver.findElements(ByDisplayValue(Regex("/john/i")))
 val active = driver.findElements(ByLabelText("active"))
 val input = driver.findElements(ByPlaceholderText("first name", exact = false))
 val firstName = input.text
-driver.findElements(ByRole("heading", name = "/as a user/i", matchTextBy = REGEX))
+driver.findElements(ByRole("heading", name = Regex("/as a user/i")))
 val panel = driver.findElements(ByTestId("test-id"))
 panel.click()
 driver.findElements(ByText("present", exact = false, selector = "span"))
