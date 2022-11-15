@@ -53,4 +53,8 @@ class JestDomExpect(
     fun toContainElement(element: WebElement?) {
         assert(webElement?.toContainElement(element))
     }
+
+    fun toContainHtml(htmlText: String) {
+        assert(webElement?.toContainHtml(htmlText))
+    }
 }

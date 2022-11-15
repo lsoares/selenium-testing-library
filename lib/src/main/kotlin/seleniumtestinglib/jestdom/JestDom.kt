@@ -13,6 +13,7 @@ val WebElement.isRequired get() = executeJestDomQuery("toBeRequired")
 val WebElement.isValid get() = executeJestDomQuery("toBeValid")
 val WebElement.isVisible get() = executeJestDomQuery("toBeVisible")
 fun WebElement.toContainElement(element: WebElement?) = executeJestDomQuery("toContainElement", element)
+fun WebElement.toContainHtml(htmlText: String) = executeJestDomQuery("toContainHTML", htmlText)
 
 private fun WebElement.executeJestDomQuery(domFunction: String): Boolean {
     val driver = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver
@@ -20,12 +21,12 @@ private fun WebElement.executeJestDomQuery(domFunction: String): Boolean {
     return driver.executeScript("return matchers.$domFunction(arguments[0]).pass", this) as Boolean
 }
 
-private fun WebElement.executeJestDomQuery(domFunction: String, webElement: WebElement?): Boolean {
+private fun WebElement.executeJestDomQuery(domFunction: String, arg: Any?): Boolean {
     val driver = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver
     driver.ensureScript("jest-dom.js", "window.matchers?.toBeInTheDocument")
     return driver.executeScript(
         "return matchers.$domFunction(arguments[0], arguments[1]).pass",
         this,
-        webElement
+        arg
     ) as Boolean
 }
