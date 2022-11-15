@@ -3,7 +3,7 @@ package seleniumtestinglib.locators
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsRegex
+import seleniumtestinglib.coreapi.JsType.Companion.asJsRegex
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals

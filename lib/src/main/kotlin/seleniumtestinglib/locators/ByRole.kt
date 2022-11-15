@@ -5,20 +5,20 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.coreapi.ByType
-import seleniumtestinglib.coreapi.TextMatch
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsFunction
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
+import seleniumtestinglib.coreapi.JsType
+import seleniumtestinglib.coreapi.JsType.Companion.asJsFunction
+import seleniumtestinglib.coreapi.JsType.Companion.asJsString
 import seleniumtestinglib.coreapi.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/byrole
  */
 data class ByRole(
-    private val role: TextMatch,
+    private val role: JsType,
     private val exact: Boolean? = null,
     private val hidden: Boolean? = null,
-    private val name: TextMatch? = null,
-    private val description: TextMatch? = null,
+    private val name: JsType? = null,
+    private val description: JsType? = null,
     private val normalizer: String? = null,
     private val selected: Boolean? = null,
     private val checked: Boolean? = null,
@@ -33,8 +33,8 @@ data class ByRole(
         role: String,
         exact: Boolean? = null,
         hidden: Boolean? = null,
-        name: TextMatch? = null,
-        description: TextMatch? = null,
+        name: JsType? = null,
+        description: JsType? = null,
         normalizer: String? = null,
         selected: Boolean? = null,
         checked: Boolean? = null,

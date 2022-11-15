@@ -3,7 +3,7 @@ package seleniumtestinglib.userinteractions
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
+import seleniumtestinglib.coreapi.JsType.Companion.asJsString
 import seleniumtestinglib.interactions.deselectOptions
 import seleniumtestinglib.interactions.user
 import seleniumtestinglib.locators.ByRole

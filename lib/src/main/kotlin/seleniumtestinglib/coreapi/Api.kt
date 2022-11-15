@@ -1,7 +1,7 @@
 package seleniumtestinglib.coreapi
 
 import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
+import seleniumtestinglib.coreapi.JsType.Companion.asJsString
 import seleniumtestinglib.ensureScript
 
 /**
@@ -11,7 +11,7 @@ internal fun RemoteWebDriver.executeTLQuery(
     queryType: QueryType = QueryType.Query,
     all: Boolean = true,
     by: ByType,
-    textMatch: TextMatch,
+    textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ): Any? {
     val escapedOptions = options
@@ -37,11 +37,11 @@ enum class ByType {
     AltText, DisplayValue, LabelText, PlaceholderText, Role, TestId, Text, Title
 }
 
-class TextMatch private constructor(val value: String) {
+class JsType private constructor(val value: String) {
     companion object {
-        fun String.asJsFunction() = TextMatch(this)
-        fun String.asJsRegex() = TextMatch(this)
-        fun String.asJsString() = TextMatch("'${replace("'", "\\'")}'")
+        fun String.asJsFunction() = JsType(this)
+        fun String.asJsRegex() = JsType(this)
+        fun String.asJsString() = JsType("'${replace("'", "\\'")}'")
     }
 }
 
@@ -60,7 +60,7 @@ private fun RemoteWebDriver.executeTLScript(script: String): Any? {
 
 private val Any?.escaped: Any?
     get() = when (this) {
-        is TextMatch -> value
-        is String    -> asJsString().value
-        else         -> this
+        is JsType -> value
+        is String -> asJsString().value
+        else      -> this
     }

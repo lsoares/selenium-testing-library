@@ -5,16 +5,16 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.coreapi.ByType
-import seleniumtestinglib.coreapi.TextMatch
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsFunction
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
+import seleniumtestinglib.coreapi.JsType
+import seleniumtestinglib.coreapi.JsType.Companion.asJsFunction
+import seleniumtestinglib.coreapi.JsType.Companion.asJsString
 import seleniumtestinglib.coreapi.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/byplaceholdertext
  */
 data class ByPlaceholderText(
-    private val text: TextMatch,
+    private val text: JsType,
     private val exact: Boolean? = null,
     private val normalizer: String? = null,
 ) : By() {

@@ -1,6 +1,7 @@
 package seleniumtestinglib.jestdom
 
 import org.openqa.selenium.WebElement
+import seleniumtestinglib.coreapi.JsType
 
 /**
  * https://testing-library.com/docs/ecosystem-jest-dom/
@@ -58,7 +59,13 @@ class JestDomExpect(
         assert(webElement?.containsHtml(htmlText))
     }
 
-    fun toHaveAccessibleDescription() {
-        assert(webElement?.hasAccessibleDescription)
+    // FIXME
+    fun toHaveAccessibleDescription(expectedAccessibleDescription: JsType? = null) {
+        assert(webElement?.hasAccessibleDescription(expectedAccessibleDescription))
+    }
+
+    // FIXME
+    fun toHaveAccessibleName(expectedAccessibleName: JsType? = null) {
+        assert(webElement?.hasAccessibleName(expectedAccessibleName))
     }
 }

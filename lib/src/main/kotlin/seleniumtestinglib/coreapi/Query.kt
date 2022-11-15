@@ -2,11 +2,11 @@ package seleniumtestinglib.coreapi
 
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
+import seleniumtestinglib.coreapi.JsType.Companion.asJsString
 
 fun RemoteWebDriver.queryBy(
     by: ByType,
-    textMatch: TextMatch,
+    textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Query,
@@ -25,7 +25,7 @@ fun RemoteWebDriver.queryBy(
 @Suppress("UNCHECKED_CAST")
 fun RemoteWebDriver.queryAllBy(
     by: ByType,
-    textMatch: TextMatch,
+    textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Query,

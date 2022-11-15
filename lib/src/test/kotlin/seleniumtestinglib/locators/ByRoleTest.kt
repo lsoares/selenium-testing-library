@@ -6,10 +6,10 @@ import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.TextMatch.*
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsFunction
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsRegex
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
+import seleniumtestinglib.coreapi.JsType.*
+import seleniumtestinglib.coreapi.JsType.Companion.asJsFunction
+import seleniumtestinglib.coreapi.JsType.Companion.asJsRegex
+import seleniumtestinglib.coreapi.JsType.Companion.asJsString
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals

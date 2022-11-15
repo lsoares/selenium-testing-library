@@ -3,7 +3,7 @@ package seleniumtestinglib.userinteractions
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsRegex
+import seleniumtestinglib.coreapi.JsType.Companion.asJsRegex
 import seleniumtestinglib.files
 import seleniumtestinglib.interactions.File
 import seleniumtestinglib.interactions.upload

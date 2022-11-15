@@ -5,7 +5,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 
 fun RemoteWebDriver.findBy(
     by: ByType,
-    textMatch: TextMatch,
+    textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Find,
@@ -18,7 +18,7 @@ fun RemoteWebDriver.findBy(
 @Suppress("UNCHECKED_CAST")
 fun RemoteWebDriver.findAllBy(
     by: ByType,
-    textMatch: TextMatch,
+    textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Find,

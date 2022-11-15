@@ -7,8 +7,8 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsFunction
-import seleniumtestinglib.coreapi.TextMatch.Companion.asJsRegex
+import seleniumtestinglib.coreapi.JsType.Companion.asJsFunction
+import seleniumtestinglib.coreapi.JsType.Companion.asJsRegex
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
