@@ -3,6 +3,9 @@ package seleniumtestinglib.coreapi
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.ensureScript
 
+/**
+ * https://testing-library.com/docs/dom-testing-library/intro
+ */
 internal fun RemoteWebDriver.executeTLQuery(
     queryType: QueryType = QueryType.Query,
     plural: Boolean = true,
@@ -43,16 +46,12 @@ sealed class TextMatch(open val value: kotlin.String) {
     class Regex(override val value: kotlin.String) : TextMatch(value)
 }
 
-/**
- * https://testing-library.com/docs/dom-testing-library/intro
- */
 private fun RemoteWebDriver.executeTLScript(script: String): Any? {
     ensureScript("testing-library.js", "screen?.getAllByAltText")
     return runCatching {
         executeScript(script)
     }.onFailure {
         System.err.println("JavaScript error running Testing Library script:\n$script")
-
     }.getOrThrow()
 }
 

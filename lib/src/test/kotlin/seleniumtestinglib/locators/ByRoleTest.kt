@@ -71,7 +71,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         val result = driver.findElements(ByRole("heading", name = Regex("/as a user/i")))
 
-        assertEquals(expected = "something as a user something", result.single().accessibleName)
+        assertEquals("something as a user something", result.single().accessibleName)
     }
 
     @Test
