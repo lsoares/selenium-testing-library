@@ -3,7 +3,7 @@ package seleniumtestinglib.locators
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.TextMatch
+import seleniumtestinglib.coreapi.TextMatch.Companion.asJsRegex
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -82,7 +82,7 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render("<input aria-label='Username' />")
 
-        val result = driver.findElement(ByLabelText(TextMatch.Regex("/user/i")))
+        val result = driver.findElement(ByLabelText("/user/i".asJsRegex()))
 
         assertEquals("input", result.tagName)
     }

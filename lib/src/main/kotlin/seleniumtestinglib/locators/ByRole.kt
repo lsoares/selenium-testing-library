@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.coreapi.ByType
 import seleniumtestinglib.coreapi.TextMatch
+import seleniumtestinglib.coreapi.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
 import seleniumtestinglib.coreapi.executeTLQuery
 
 /**
@@ -42,7 +44,7 @@ data class ByRole(
         queryFallbacks: Boolean? = null,
         level: Int? = null,
     ) : this(
-        role = TextMatch.String(role),
+        role = role.asJsString(),
         exact = exact,
         hidden = hidden,
         name = name,
@@ -67,7 +69,7 @@ data class ByRole(
                 "name" to name,
                 "hidden" to hidden,
                 "description" to description,
-                "normalizer" to normalizer?.let { TextMatch.Function(normalizer) },
+                "normalizer" to normalizer?.asJsFunction(),
                 "selected" to selected,
                 "checked" to checked,
                 "pressed" to pressed,

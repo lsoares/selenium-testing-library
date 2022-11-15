@@ -2,6 +2,7 @@ package seleniumtestinglib.coreapi
 
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
+import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
 
 fun RemoteWebDriver.getBy(
     by: ByType,
@@ -19,7 +20,7 @@ fun RemoteWebDriver.getBy(
     by: ByType,
     text: String,
     options: Map<String, Any?> = emptyMap(),
-) = getBy(by, TextMatch.String(text), options)
+) = getBy(by, text.asJsString(), options)
 
 @Suppress("UNCHECKED_CAST")
 fun RemoteWebDriver.getAllBy(
@@ -38,4 +39,4 @@ fun RemoteWebDriver.getAllBy(
     by: ByType,
     text: String,
     options: Map<String, Any?> = emptyMap(),
-) = getAllBy(by, TextMatch.String(text), options)
+) = getAllBy(by, text.asJsString(), options)

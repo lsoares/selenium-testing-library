@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.coreapi.ByType
 import seleniumtestinglib.coreapi.TextMatch
+import seleniumtestinglib.coreapi.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
 import seleniumtestinglib.coreapi.executeTLQuery
 
 /**
@@ -22,7 +24,7 @@ class ByTitle(
         exact: Boolean? = null,
         normalizer: String? = null,
     ) : this(
-        title = TextMatch.String(title),
+        title = title.asJsString(),
         exact = exact,
         normalizer = normalizer,
     )
@@ -34,7 +36,7 @@ class ByTitle(
             textMatch = title,
             options = mapOf(
                 "exact" to exact,
-                "normalizer" to normalizer?.let { TextMatch.Function(normalizer) },
+                "normalizer" to normalizer?.asJsFunction(),
             ),
         ) as List<WebElement>
 }

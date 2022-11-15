@@ -1,6 +1,7 @@
 package seleniumtestinglib.coreapi
 
 import org.openqa.selenium.remote.RemoteWebDriver
+import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
 import seleniumtestinglib.ensureScript
 
 /**
@@ -36,10 +37,12 @@ enum class ByType {
     AltText, DisplayValue, LabelText, PlaceholderText, Role, TestId, Text, Title
 }
 
-sealed class TextMatch(open val value: kotlin.String) {
-    class String(override val value: kotlin.String) : TextMatch(value)
-    class Function(override val value: kotlin.String) : TextMatch(value)
-    class Regex(override val value: kotlin.String) : TextMatch(value)
+class TextMatch private constructor(val value: String) {
+    companion object {
+        fun String.asJsFunction() = TextMatch(this)
+        fun String.asJsRegex() = TextMatch(this)
+        fun String.asJsString() = TextMatch("'${replace("'", "\\'")}'")
+    }
 }
 
 internal enum class QueryType {
@@ -57,7 +60,7 @@ private fun RemoteWebDriver.executeTLScript(script: String): Any? {
 
 private val Any?.escaped: Any?
     get() = when (this) {
-        is TextMatch -> if (this is TextMatch.String) value.escaped else value
-        is String    -> "'${replace("'", "\\'")}'"
+        is TextMatch -> value
+        is String    -> asJsString().value
         else         -> this
     }

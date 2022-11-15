@@ -3,7 +3,7 @@ package seleniumtestinglib.userinteractions
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.TextMatch.String
+import seleniumtestinglib.coreapi.TextMatch.Companion.asJsString
 import seleniumtestinglib.interactions.selectOptions
 import seleniumtestinglib.interactions.user
 import seleniumtestinglib.locators.ByRole
@@ -28,9 +28,9 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.selectOptions(select, "1", "3")
 
-        assertTrue(driver.findElement(ByRole("option", name = String("A"))).isSelected)
-        assertFalse(driver.findElement(ByRole("option", name = String("B"))).isSelected)
-        assertTrue(driver.findElement(ByRole("option", name = String("C"))).isSelected)
+        assertTrue(driver.findElement(ByRole("option", name = "A".asJsString())).isSelected)
+        assertFalse(driver.findElement(ByRole("option", name = "B".asJsString())).isSelected)
+        assertTrue(driver.findElement(ByRole("option", name = "C".asJsString())).isSelected)
     }
 
     @Test
@@ -46,12 +46,12 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.selectOptions(
             select,
-            driver.findElement(ByRole("option", name = String("A"))),
-            driver.findElement(ByRole("option", name = String("C"))),
+            driver.findElement(ByRole("option", name = "A".asJsString())),
+            driver.findElement(ByRole("option", name = "C".asJsString())),
         )
 
-        assertTrue(driver.findElement(ByRole("option", name = String("A"))).isSelected)
-        assertFalse(driver.findElement(ByRole("option", name = String("B"))).isSelected)
-        assertTrue(driver.findElement(ByRole("option", name = String("C"))).isSelected)
+        assertTrue(driver.findElement(ByRole("option", name = "A".asJsString())).isSelected)
+        assertFalse(driver.findElement(ByRole("option", name = "B".asJsString())).isSelected)
+        assertTrue(driver.findElement(ByRole("option", name = "C".asJsString())).isSelected)
     }
 }
