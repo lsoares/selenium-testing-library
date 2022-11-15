@@ -10,8 +10,9 @@ I'm a fan of the Testing Library because it encourages "testing as a user":
 
 
 ℹ️ _To set it up, pick the [library's latest version at **Maven
-Central**](https://search.maven.org/artifact/com.luissoares/selenium-testing-library). Then, copy the declaration for
-your build tool._
+Central** <img src="https://search.maven.org/favicon.ico" width="16" height="16" />](https://search.maven.org/artifact/com.luissoares/selenium-testing-library)
+.
+Then, copy the declaration for your build tool._
 
 ---
 
@@ -34,11 +35,8 @@ val panel = driver.findElements(ByTestId("test-id"))
 panel.click()
 driver.findElements(ByText("present", exact = false, selector = "span"))
 driver.findElements(ByTitle("title 1"))
-```
 
-An alternative API that does not use Selenium locators:
-
-```kotlin
+// an alternative API that does not use Selenium locators:
 val result1 = driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
 val result2 = driver.getBy(DisplayValue, "incredibles")
 val result3 = driver.queryAllBy(LabelText, "label x")
@@ -70,10 +68,9 @@ val input = driver.findElements(ByTestId("test1"))
 assertTrue(input.isInTheDocument)
 assertFalse(input.isEmptyDomElement)
 
-// alternative API:
+// alternative API, closer to the original version:
 expect(input).not.toBeInvalid()
 expect(input).toBeInTheDocument()
-
 ```
 
 ---
