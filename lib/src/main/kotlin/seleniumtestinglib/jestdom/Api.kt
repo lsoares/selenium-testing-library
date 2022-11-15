@@ -49,4 +49,8 @@ class JestDomExpect(
     fun toBeVisible() {
         assert(webElement?.isVisible)
     }
+
+    fun toContainElement(element: WebElement?) {
+        assert(webElement?.toContainElement(element))
+    }
 }
