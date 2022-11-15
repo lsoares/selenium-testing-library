@@ -9,7 +9,7 @@ fun RemoteWebDriver.queryBy(
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Query,
-    plural = false,
+    all = false,
     by = by,
     textMatch = textMatch,
     options = options,
@@ -28,7 +28,7 @@ fun RemoteWebDriver.queryAllBy(
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
     queryType = QueryType.Query,
-    plural = true,
+    all = true,
     by = by,
     textMatch = textMatch,
     options = options,

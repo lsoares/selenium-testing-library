@@ -12,8 +12,9 @@ val WebElement.isInvalid get() = executeJestDomQuery("toBeInvalid")
 val WebElement.isRequired get() = executeJestDomQuery("toBeRequired")
 val WebElement.isValid get() = executeJestDomQuery("toBeValid")
 val WebElement.isVisible get() = executeJestDomQuery("toBeVisible")
-fun WebElement.toContainElement(element: WebElement?) = executeJestDomQuery("toContainElement", element)
-fun WebElement.toContainHtml(htmlText: String) = executeJestDomQuery("toContainHTML", htmlText)
+fun WebElement.containsElement(element: WebElement? = null) = executeJestDomQuery("toContainElement", element)
+fun WebElement.containsHtml(htmlText: String) = executeJestDomQuery("toContainHTML", htmlText)
+val WebElement.hasAccessibleDescription get() = executeJestDomQuery("toHaveAccessibleDescription")
 
 private fun WebElement.executeJestDomQuery(domFunction: String): Boolean {
     val driver = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver

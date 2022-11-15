@@ -8,7 +8,7 @@ import seleniumtestinglib.ensureScript
  */
 internal fun RemoteWebDriver.executeTLQuery(
     queryType: QueryType = QueryType.Query,
-    plural: Boolean = true,
+    all: Boolean = true,
     by: ByType,
     textMatch: TextMatch,
     options: Map<String, Any?> = emptyMap(),
@@ -25,15 +25,11 @@ internal fun RemoteWebDriver.executeTLQuery(
             + " await".takeIf { queryType == QueryType.Find }.orEmpty()
             + " screen."
             + queryType.name.lowercase()
-            + "All".takeIf { plural }.orEmpty()
+            + "All".takeIf { all }.orEmpty()
             + "By"
             + by.name
             + """(${textMatch.escaped}${escapedOptions?.let { ", $it" } ?: ""})"""
     )
-}
-
-enum class QueryType {
-    Find, Query, Get
 }
 
 enum class ByType {
@@ -44,6 +40,10 @@ sealed class TextMatch(open val value: kotlin.String) {
     class String(override val value: kotlin.String) : TextMatch(value)
     class Function(override val value: kotlin.String) : TextMatch(value)
     class Regex(override val value: kotlin.String) : TextMatch(value)
+}
+
+internal enum class QueryType {
+    Find, Query, Get
 }
 
 private fun RemoteWebDriver.executeTLScript(script: String): Any? {

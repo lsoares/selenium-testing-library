@@ -50,11 +50,15 @@ class JestDomExpect(
         assert(webElement?.isVisible)
     }
 
-    fun toContainElement(element: WebElement?) {
-        assert(webElement?.toContainElement(element))
+    fun toContainElement(element: WebElement? = null) {
+        assert(webElement?.containsElement(element))
     }
 
     fun toContainHtml(htmlText: String) {
-        assert(webElement?.toContainHtml(htmlText))
+        assert(webElement?.containsHtml(htmlText))
+    }
+
+    fun toHaveAccessibleDescription() {
+        assert(webElement?.hasAccessibleDescription)
     }
 }
