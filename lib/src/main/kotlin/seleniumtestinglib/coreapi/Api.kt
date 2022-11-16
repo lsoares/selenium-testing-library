@@ -1,7 +1,6 @@
 package seleniumtestinglib.coreapi
 
 import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.coreapi.JsType.Companion.asJsString
 import seleniumtestinglib.ensureScript
 
 /**
@@ -37,11 +36,15 @@ enum class ByType {
     AltText, DisplayValue, LabelText, PlaceholderText, Role, TestId, Text, Title
 }
 
-class JsType private constructor(val value: String) {
+sealed class JsType constructor(open val value: String) {
+    class JsString(override val value: String) : JsType(value)
+    class JsFunction(override val value: String) : JsType(value)
+    class JsRegex(override val value: String) : JsType(value)
+
     companion object {
-        fun String.asJsFunction() = JsType(this)
-        fun String.asJsRegex() = JsType(this)
-        fun String.asJsString() = JsType("'${replace("'", "\\'")}'")
+        fun String.asJsFunction() = JsFunction(this)
+        fun String.asJsRegex() = JsRegex(this)
+        fun String.asJsString() = JsString(this)
     }
 }
 
@@ -60,7 +63,8 @@ private fun RemoteWebDriver.executeTLScript(script: String): Any? {
 
 private val Any?.escaped: Any?
     get() = when (this) {
-        is JsType -> value
-        is String -> asJsString().value
-        else      -> this
+        is JsType.JsString -> value.escaped
+        is JsType          -> value
+        is String          -> "'${replace("'", "\\'")}'"
+        else               -> this
     }
