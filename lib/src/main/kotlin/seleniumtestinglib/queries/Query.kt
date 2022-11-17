@@ -1,42 +1,42 @@
-package seleniumtestinglib.coreapi
+package seleniumtestinglib.queries
 
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.coreapi.JsType.Companion.asJsString
+import seleniumtestinglib.queries.JsType.Companion.asJsString
 
-fun RemoteWebDriver.getBy(
+fun RemoteWebDriver.queryBy(
     by: ByType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
-    queryType = QueryType.Get,
+    queryType = QueryType.Query,
     all = false,
     by = by,
     textMatch = textMatch,
     options = options,
-) as WebElement
+) as WebElement?
 
-fun RemoteWebDriver.getBy(
+fun RemoteWebDriver.queryBy(
     by: ByType,
     text: String,
     options: Map<String, Any?> = emptyMap(),
-) = getBy(by, text.asJsString(), options)
+) = queryBy(by, text.asJsString(), options)
 
 @Suppress("UNCHECKED_CAST")
-fun RemoteWebDriver.getAllBy(
+fun RemoteWebDriver.queryAllBy(
     by: ByType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery(
-    queryType = QueryType.Get,
+    queryType = QueryType.Query,
     all = true,
     by = by,
     textMatch = textMatch,
     options = options,
 ) as List<WebElement>
 
-fun RemoteWebDriver.getAllBy(
+fun RemoteWebDriver.queryAllBy(
     by: ByType,
     text: String,
     options: Map<String, Any?> = emptyMap(),
-) = getAllBy(by, text.asJsString(), options)
+) = queryAllBy(by, text.asJsString(), options)

@@ -1,7 +1,7 @@
 package seleniumtestinglib.jestdom
 
 import org.openqa.selenium.WebElement
-import seleniumtestinglib.coreapi.JsType
+import seleniumtestinglib.queries.JsType
 
 /**
  * https://testing-library.com/docs/ecosystem-jest-dom/

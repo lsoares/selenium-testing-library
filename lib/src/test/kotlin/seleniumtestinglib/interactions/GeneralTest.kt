@@ -1,4 +1,4 @@
-package seleniumtestinglib.userinteractions
+package seleniumtestinglib.interactions
 
 import com.google.common.io.Files
 import org.junit.jupiter.api.Disabled
@@ -7,10 +7,6 @@ import org.openqa.selenium.By
 import org.openqa.selenium.OutputType
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.interactions.click
-import seleniumtestinglib.interactions.keyboard
-import seleniumtestinglib.interactions.pointer
-import seleniumtestinglib.interactions.tab
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.render
 import java.awt.Desktop

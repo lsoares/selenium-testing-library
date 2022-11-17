@@ -3,8 +3,8 @@ package seleniumtestinglib.jestdom
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.remote.RemoteWebElement
-import seleniumtestinglib.coreapi.JsType
 import seleniumtestinglib.ensureScript
+import seleniumtestinglib.queries.JsType
 
 val WebElement.isDisabled get() = executeJestDomQuery("toBeDisabled")
 val WebElement.isEmptyDomElement get() = executeJestDomQuery("toBeEmptyDOMElement")

@@ -1,10 +1,10 @@
-package seleniumtestinglib.coreapi
+package seleniumtestinglib.queries
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.ByType.AltText
+import seleniumtestinglib.queries.ByType.AltText
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -4,11 +4,11 @@ import org.openqa.selenium.By
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.coreapi.ByType
-import seleniumtestinglib.coreapi.JsType
-import seleniumtestinglib.coreapi.JsType.Companion.asJsFunction
-import seleniumtestinglib.coreapi.JsType.Companion.asJsString
-import seleniumtestinglib.coreapi.executeTLQuery
+import seleniumtestinglib.queries.ByType
+import seleniumtestinglib.queries.JsType
+import seleniumtestinglib.queries.JsType.Companion.asJsFunction
+import seleniumtestinglib.queries.JsType.Companion.asJsString
+import seleniumtestinglib.queries.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/bytitle

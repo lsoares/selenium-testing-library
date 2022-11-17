@@ -1,12 +1,10 @@
-package seleniumtestinglib.userinteractions
+package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.JsType.Companion.asJsString
-import seleniumtestinglib.interactions.selectOptions
-import seleniumtestinglib.interactions.user
 import seleniumtestinglib.locators.ByRole
+import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertFalse

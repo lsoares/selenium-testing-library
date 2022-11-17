@@ -3,8 +3,8 @@ package seleniumtestinglib.jestdom
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.ByType.TestId
-import seleniumtestinglib.coreapi.getBy
+import seleniumtestinglib.queries.ByType.TestId
+import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.Test
 
@@ -24,7 +24,7 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
         expect(driver.getBy(TestId, "link")).toHaveAccessibleDescription()
         expect(driver.getBy(TestId, "extra-link")).not.toHaveAccessibleDescription()
         // TODO:
-        // expect(driver.getBy(TestId, "link")).toHaveAccessibleDescription("A link to start over")
+//         expect(driver.getBy(TestId, "link")).toHaveAccessibleDescription("A link to start over".asJsString())
         // expect(driver.getBy(TestId, "link")).toHaveAccessibleDescription(Regex("/start over/i"))
         // expect(driver.getBy(TestId, "link")).not.toHaveAccessibleDescription("Home page")
     }

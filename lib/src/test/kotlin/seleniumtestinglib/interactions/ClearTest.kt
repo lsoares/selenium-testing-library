@@ -1,10 +1,8 @@
-package seleniumtestinglib.userinteractions
+package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.interactions.clear
-import seleniumtestinglib.interactions.user
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.render
 import seleniumtestinglib.value

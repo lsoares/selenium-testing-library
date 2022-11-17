@@ -1,11 +1,8 @@
-package seleniumtestinglib.userinteractions
+package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.interactions.keyboard
-import seleniumtestinglib.interactions.tab
-import seleniumtestinglib.interactions.user
 import seleniumtestinglib.isFocused
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.render

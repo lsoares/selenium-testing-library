@@ -3,8 +3,8 @@ package seleniumtestinglib.jestdom
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.ByType.TestId
-import seleniumtestinglib.coreapi.queryBy
+import seleniumtestinglib.queries.ByType.TestId
+import seleniumtestinglib.queries.queryBy
 import seleniumtestinglib.render
 import kotlin.test.Test
 

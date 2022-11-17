@@ -1,14 +1,11 @@
-package seleniumtestinglib.userinteractions
+package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.coreapi.JsType.Companion.asJsRegex
 import seleniumtestinglib.files
-import seleniumtestinglib.interactions.File
-import seleniumtestinglib.interactions.upload
-import seleniumtestinglib.interactions.user
 import seleniumtestinglib.locators.ByLabelText
+import seleniumtestinglib.queries.JsType.Companion.asJsRegex
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals

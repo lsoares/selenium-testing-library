@@ -1,11 +1,8 @@
-package seleniumtestinglib.userinteractions
+package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.interactions.click
-import seleniumtestinglib.interactions.pointer
-import seleniumtestinglib.interactions.user
 import seleniumtestinglib.isChecked
 import seleniumtestinglib.locators.ByLabelText
 import seleniumtestinglib.render

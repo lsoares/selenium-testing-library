@@ -1,4 +1,4 @@
-package seleniumtestinglib.userinteractions
+package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.extension.ExtendWith

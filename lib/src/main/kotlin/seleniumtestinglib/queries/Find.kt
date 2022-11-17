@@ -1,4 +1,4 @@
-package seleniumtestinglib.coreapi
+package seleniumtestinglib.queries
 
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
