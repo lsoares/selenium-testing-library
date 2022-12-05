@@ -36,6 +36,10 @@ enum class ByType {
     AltText, DisplayValue, LabelText, PlaceholderText, Role, TestId, Text, Title
 }
 
+internal enum class QueryType {
+    Find, Query, Get
+}
+
 sealed class JsType constructor(open val value: String) {
     class JsString(override val value: String) : JsType(value)
     class JsFunction(override val value: String) : JsType(value)
@@ -46,10 +50,6 @@ sealed class JsType constructor(open val value: String) {
         fun String.asJsRegex() = JsRegex(this)
         fun String.asJsString() = JsString(this)
     }
-}
-
-internal enum class QueryType {
-    Find, Query, Get
 }
 
 private fun RemoteWebDriver.executeTLScript(script: String): Any? {

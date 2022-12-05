@@ -4,7 +4,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -26,9 +25,9 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.selectOptions(select, "1", "3")
 
-        assertTrue(driver.findElement(ByRole("option", name = "A".asJsString())).isSelected)
-        assertFalse(driver.findElement(ByRole("option", name = "B".asJsString())).isSelected)
-        assertTrue(driver.findElement(ByRole("option", name = "C".asJsString())).isSelected)
+        assertTrue(driver.findElement(ByRole("option", name = "A")).isSelected)
+        assertFalse(driver.findElement(ByRole("option", name = "B")).isSelected)
+        assertTrue(driver.findElement(ByRole("option", name = "C")).isSelected)
     }
 
     @Test
@@ -44,12 +43,12 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.selectOptions(
             select,
-            driver.findElement(ByRole("option", name = "A".asJsString())),
-            driver.findElement(ByRole("option", name = "C".asJsString())),
+            driver.findElement(ByRole("option", name = "A")),
+            driver.findElement(ByRole("option", name = "C")),
         )
 
-        assertTrue(driver.findElement(ByRole("option", name = "A".asJsString())).isSelected)
-        assertFalse(driver.findElement(ByRole("option", name = "B".asJsString())).isSelected)
-        assertTrue(driver.findElement(ByRole("option", name = "C".asJsString())).isSelected)
+        assertTrue(driver.findElement(ByRole("option", name = "A")).isSelected)
+        assertFalse(driver.findElement(ByRole("option", name = "B")).isSelected)
+        assertTrue(driver.findElement(ByRole("option", name = "C")).isSelected)
     }
 }
