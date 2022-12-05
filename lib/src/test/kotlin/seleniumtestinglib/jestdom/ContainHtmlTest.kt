@@ -19,7 +19,7 @@ class ContainHtmlTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        expect(driver.queryBy(TestId, "parent")).toContainHtml("<span data-testid='child' />")
+        expect(driver.queryBy(TestId, "parent")).toContainHtml("""<span data-testid="child"></span>""")
         expect(driver.queryBy(TestId, "parent")).not.toContainHtml("<br />")
     }
 }

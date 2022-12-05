@@ -15,11 +15,14 @@ class RequiredTest(private val driver: RemoteWebDriver) {
         driver.render(
             """
             <input required />
+            <input aria-required />
+            <input aria-required="true" />
             <input />
         """
         )
 
-        expect(driver.findElements(By.tagName("input")).first()).toBeRequired()
-        expect(driver.findElements(By.tagName("input")).last()).not.toBeRequired()
+        expect(driver.findElements(By.tagName("input"))[0]).toBeRequired()
+        expect(driver.findElements(By.tagName("input"))[1]).toBeRequired()
+        expect(driver.findElements(By.tagName("input"))[2]).toBeRequired()
     }
 }

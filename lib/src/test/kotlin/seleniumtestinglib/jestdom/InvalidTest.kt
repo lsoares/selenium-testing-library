@@ -17,10 +17,11 @@ class InvalidTest(private val driver: RemoteWebDriver) {
             """
             <input data-testid="no-aria-invalid" />
             <input data-testid="aria-invalid" aria-invalid /> 
+            <input data-testid="aria-invalid2" aria-invalid="true" /> 
         """
         )
 
         expect(driver.getBy(TestId, "aria-invalid")).toBeInvalid()
-        expect(driver.getBy(TestId, "no-aria-invalid")).not.toBeInvalid()
+        expect(driver.getBy(TestId, "aria-invalid2")).toBeInvalid()
     }
 }
