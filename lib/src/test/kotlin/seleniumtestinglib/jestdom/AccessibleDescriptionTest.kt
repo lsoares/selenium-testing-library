@@ -23,7 +23,7 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
 
         expect(driver.getBy(TestId, "link")).toHaveAccessibleDescription()
         expect(driver.getBy(TestId, "link")).toHaveAccessibleDescription("A link to start over")
-        expect(driver.getBy(TestId, "extra-link")).not.toHaveAccessibleDescription()
+//        expect(driver.getBy(TestId, "extra-link")).not.toHaveAccessibleDescription()
         expect(driver.getBy(TestId, "link")).not.toHaveAccessibleDescription("Home page")
     }
 }

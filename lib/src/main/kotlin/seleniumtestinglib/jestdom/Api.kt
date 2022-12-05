@@ -8,22 +8,31 @@ import org.openqa.selenium.WebElement
  */
 fun expect(element: WebElement?) = JestDomMatcher(element)
 
-class JestDomMatcher(private val webElement: WebElement?) {
+class JestDomMatcher(
+    private val webElement: WebElement?,
+    private val requireTrue: Boolean = true,
+) {
+
+    val not get() = JestDomMatcher(webElement, requireTrue.not())
+
+    private fun assertTrue(condition: Boolean) {
+        require(condition xor requireTrue.not())
+    }
 
     fun toBeDisabled() {
-        require(webElement?.isEnabled == false)
+        assertTrue(webElement?.isEnabled == false)
     }
 
     fun toBeEnabled() {
-        require(webElement?.isEnabled == true)
+        assertTrue(webElement?.isEnabled == true)
     }
 
     fun toBeEmptyDomElement() {
-        require(webElement?.text?.isEmpty() == true)
+        assertTrue(webElement?.text?.isEmpty() == true)
     }
 
     fun toBeInvalid() {
-        require(
+        assertTrue(
             webElement?.getAttribute("aria-invalid") in setOf("", "true")
         )
     }
@@ -33,80 +42,86 @@ class JestDomMatcher(private val webElement: WebElement?) {
     }
 
     fun toBeRequired() {
-        require(
+        assertTrue(
             webElement?.getAttribute("required") in setOf("", "true") ||
                 webElement?.getAttribute("aria-required") in setOf("", "true")
         )
     }
 
     fun toBeValid() {
-        require(webElement?.getAttribute("aria-invalid") == "false")
+        val ariaInvalid = webElement?.getAttribute("aria-invalid")
+        assertTrue(ariaInvalid == null || ariaInvalid == "false")
     }
 
     fun toBeVisible() {
-        require(webElement?.isDisplayed == true)
+        assertTrue(webElement?.isDisplayed == true)
     }
 
     fun toContainElement(ancestor: WebElement?) {
-        require(webElement?.findElements(By.xpath(".//*"))?.contains(ancestor) == true)
+        assertTrue(webElement?.findElements(By.xpath(".//*"))?.contains(ancestor) == true)
     }
 
     fun toContainHtml(htmlText: String) {
-        require(webElement?.getAttribute("innerHTML")?.contains(htmlText) == true)
+        assertTrue(webElement?.getAttribute("innerHTML")?.contains(htmlText) == true)
     }
 
     fun toHaveAccessibleDescription(description: String? = null) {
         val accessibleDescription = webElement?.getAttribute("aria-describedby") ?: webElement?.getAttribute("title")
         if (description == null)
-            require(accessibleDescription != null)
+            assertTrue(accessibleDescription != null)
         else
-            require(description == accessibleDescription)
+            assertTrue(description == accessibleDescription)
     }
 
     fun toHaveAccessibleName() {
-        requireNotNull(webElement?.getAttribute("aria-label"))
+        assertTrue(webElement?.accessibleName?.isNotBlank() == true)
     }
 
     fun toHaveAttribute(attribute: String, value: String) {
-        require(value == webElement?.getAttribute(attribute))
+        assertTrue(value == webElement?.getAttribute(attribute))
     }
 
     fun toHaveClass(className: String) {
-        require(webElement?.getAttribute("class")?.contains(className) == null)
+        assertTrue(webElement?.getAttribute("class")?.contains(className) == null)
     }
 
     fun toHaveFocus() {
     }
 
     fun toHaveFormValues(values: Map<String, String>) {
-        require(values.all { webElement?.getAttribute(it.key) == it.value })
+        assertTrue(values.all { webElement?.getAttribute(it.key) == it.value })
     }
 
     fun toHaveStyle(styles: Map<String, String>) {
-        require(styles.all { webElement?.getCssValue(it.key) == it.value })
+        assertTrue(styles.all { webElement?.getCssValue(it.key) == it.value })
     }
 
     fun toHaveTextContent(text: String, normalizeWhitespace: Boolean = false) {
-        require(text == if (normalizeWhitespace) webElement?.text?.replace("\\s+".toRegex(), " ") else webElement?.text)
+        assertTrue(
+            text == if (normalizeWhitespace) webElement?.text?.replace(
+                "\\s+".toRegex(),
+                " "
+            ) else webElement?.text
+        )
     }
 
     fun toHaveValue(value: String) {
-        require(value == webElement?.getAttribute("value"))
+        assertTrue(value == webElement?.getAttribute("value"))
     }
 
     fun toHaveDisplayValue(value: String) {
-        require(value == webElement?.getAttribute("value"))
+        assertTrue(value == webElement?.getAttribute("value"))
     }
 
     fun toBeChecked() {
-        require(webElement?.getAttribute("checked") == "true")
+        assertTrue(webElement?.getAttribute("checked") == "true")
     }
 
     fun toBePartiallyChecked() {
-        require("true" == webElement?.getAttribute("indeterminate"))
+        assertTrue("true" == webElement?.getAttribute("indeterminate"))
     }
 
     fun toHaveErrorMessage(message: String) {
-        require(message == webElement?.getAttribute("aria-errormessage"))
+        assertTrue(message == webElement?.getAttribute("aria-errormessage"))
     }
 }

@@ -15,10 +15,14 @@ class AccessibleNameTest(private val driver: RemoteWebDriver) {
     fun `accessible name`() {
         driver.render(
             """
-                  <img data-testid="img-alt" src="" alt="Test alt" />
+                  <img data-testid="test1" src="" alt="Test alt" />
+                  <input data-testid="test2" title="test" />
+                  <input data-testid="test3" />
         """
         )
 
-        expect(driver.getBy(TestId, "img-alt")).toHaveAccessibleName()
+        expect(driver.getBy(TestId, "test1")).toHaveAccessibleName()
+        expect(driver.getBy(TestId, "test2")).toHaveAccessibleName()
+        expect(driver.getBy(TestId, "test3")).not.toHaveAccessibleName()
     }
 }
