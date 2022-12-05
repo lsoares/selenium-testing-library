@@ -7,8 +7,6 @@ import seleniumtestinglib.queries.ByType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class EmptyTest(private val driver: RemoteWebDriver) {
@@ -17,11 +15,7 @@ class EmptyTest(private val driver: RemoteWebDriver) {
     fun empty() {
         driver.render("<span data-testid=\"not-empty\"><span data-testid=\"empty\"></span></span>")
 
-        val empty = driver.getBy(TestId, "empty")
-        assertTrue(empty.isEmptyDomElement)
-        expect(empty).toBeEmptyDomElement()
-        val notEmpty = driver.getBy(TestId, "not-empty")
-        assertFalse(notEmpty.isEmptyDomElement)
-        expect(notEmpty).not.toBeEmptyDomElement()
+        expect(driver.getBy(TestId, "empty")).toBeEmptyDomElement()
+        expect(driver.getBy(TestId, "not-empty")).not.toBeEmptyDomElement()
     }
 }

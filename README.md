@@ -59,23 +59,6 @@ driver.user.selectOptions(driver.findElement(ByRole("listbox")), "C")
 
 ℹ️ _user-event's JavaScript only loads if it's used._
 
-## jest-dom matchers
-
-[jest-dom](https://testing-library.com/docs/ecosystem-jest-dom) matchers are mapped:
-
-```kotlin
-val input = driver.findElements(ByTestId("test1"))
-assertTrue(input.isInTheDocument)
-assertFalse(input.isEmptyDomElement)
-
-// alternative API, closer to the original version:
-expect(input).not.toBeInvalid()
-expect(input).toBeInTheDocument()
-```
-
-🚧 _This is still being mapped_
-
 ---
 
-ℹ️ _Want to know about the creation process? Read more about it
-at [The Testing Library meets Selenium](https://medium.com/codex/the-testing-library-meets-selenium-5f74cc712114)._
+ℹ️ _[Read more](https://medium.com/codex/the-testing-library-meets-selenium-5f74cc712114)._

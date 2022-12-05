@@ -6,8 +6,6 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.render
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class RequiredTest(private val driver: RemoteWebDriver) {
@@ -21,11 +19,7 @@ class RequiredTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val required = driver.findElements(By.tagName("input")).first()
-        assertTrue(required.isRequired)
-        expect(required).toBeRequired()
-        val notRequired = driver.findElements(By.tagName("input")).last()
-        assertFalse(notRequired.isRequired)
-        expect(notRequired).not.toBeRequired()
+        expect(driver.findElements(By.tagName("input")).first()).toBeRequired()
+        expect(driver.findElements(By.tagName("input")).last()).not.toBeRequired()
     }
 }

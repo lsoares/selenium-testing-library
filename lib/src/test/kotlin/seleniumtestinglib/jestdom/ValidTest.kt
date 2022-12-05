@@ -7,8 +7,6 @@ import seleniumtestinglib.queries.ByType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class ValidTest(private val driver: RemoteWebDriver) {
@@ -22,11 +20,7 @@ class ValidTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val invalid = driver.getBy(TestId, "aria-invalid")
-        assertFalse(invalid.isValid)
-        expect(invalid).not.toBeValid()
-        val valid = driver.getBy(TestId, "no-aria-invalid")
-        assertTrue(valid.isValid)
-        expect(valid).toBeValid()
+        expect(driver.getBy(TestId, "aria-invalid")).not.toBeValid()
+        expect(driver.getBy(TestId, "no-aria-invalid")).toBeValid()
     }
 }

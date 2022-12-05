@@ -8,7 +8,6 @@ import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.queries.queryBy
 import seleniumtestinglib.render
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class InTheDocumentTest(private val driver: RemoteWebDriver) {
@@ -19,10 +18,7 @@ class InTheDocumentTest(private val driver: RemoteWebDriver) {
             """<span data-testid="html-element"><span>Html Element</span></span>"""
         )
 
-        val inTheDoc = driver.getBy(TestId, "html-element")
-        assertTrue(inTheDoc.isInTheDocument)
-        expect(inTheDoc).toBeInTheDocument()
-        val notThere = driver.queryBy(TestId, "not-there")
-        expect(notThere).not.toBeInTheDocument()
+        expect(driver.getBy(TestId, "html-element")).toBeInTheDocument()
+        expect(driver.queryBy(TestId, "not-there")).not.toBeInTheDocument()
     }
 }

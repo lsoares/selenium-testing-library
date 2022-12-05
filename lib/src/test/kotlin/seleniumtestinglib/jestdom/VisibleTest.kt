@@ -7,8 +7,6 @@ import seleniumtestinglib.queries.ByType.Text
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class VisibleTest(private val driver: RemoteWebDriver) {
@@ -25,11 +23,7 @@ class VisibleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val invisible = driver.getBy(Text, "Zero Opacity Example")
-        assertFalse(invisible.isVisible)
-        expect(invisible).not.toBeVisible()
-        val visible = driver.getBy(Text, "Visible Details Example")
-        assertTrue(visible.isVisible)
-        expect(visible).toBeVisible()
+        expect(driver.getBy(Text, "Zero Opacity Example")).not.toBeVisible()
+        expect(driver.getBy(Text, "Visible Details Example")).toBeVisible()
     }
 }

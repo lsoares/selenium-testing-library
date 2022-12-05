@@ -7,8 +7,6 @@ import seleniumtestinglib.queries.ByType.Role
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class EnabledTest(private val driver: RemoteWebDriver) {
@@ -17,34 +15,27 @@ class EnabledTest(private val driver: RemoteWebDriver) {
     fun disabled() {
         driver.render("<div><input type='text' disabled /></div>")
 
-        val input = driver.getBy(Role, "textbox")
-        assertTrue(input.isDisabled)
-        expect(input).toBeDisabled()
+        expect(driver.getBy(Role, "textbox")).toBeDisabled()
     }
 
     @Test
     fun `not disabled`() {
         driver.render("<a href=\"...\" disabled>link</a>")
 
-        val input = driver.getBy(Role, "link")
-        assertFalse(input.isDisabled)
-        expect(input).not.toBeDisabled()
+        expect(driver.getBy(Role, "link")).not.toBeDisabled()
     }
 
     @Test
     fun enabled() {
         driver.render("<div><input type='text' /></div>")
 
-        val input = driver.getBy(Role, "textbox")
-        assertTrue(input.isEnabled)
-        expect(input).toBeEnabled()
+        expect(driver.getBy(Role, "textbox")).toBeEnabled()
     }
 
     @Test
     fun `not enabled`() {
         driver.render("<div><input type='text' disabled /></div>")
 
-        val input = driver.getBy(Role, "textbox")
-        expect(input).not.toBeEnabled()
+        expect(driver.getBy(Role, "textbox")).not.toBeEnabled()
     }
 }
