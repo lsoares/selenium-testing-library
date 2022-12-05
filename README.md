@@ -12,7 +12,13 @@ I'm a fan of the Testing Library because it encourages "testing as a user":
 ℹ️ _To set it up, pick the [library's latest version at **Maven
 Central** <img src="https://search.maven.org/favicon.ico" width="16" height="16" />](https://search.maven.org/artifact/com.luissoares/selenium-testing-library)
 .
-Then, copy the declaration for your build tool._
+Then, copy the declaration for your build tool. E.g.:_
+
+```kotlin
+dependencies {
+    implementation("com.luissoares:selenium-testing-library:3.2")
+}
+```
 
 ---
 
