@@ -12,20 +12,6 @@ import kotlin.test.Test
 class EnabledTest(private val driver: RemoteWebDriver) {
 
     @Test
-    fun disabled() {
-        driver.render("<div><input type='text' disabled /></div>")
-
-        expect(driver.getBy(Role, "textbox")).toBeDisabled()
-    }
-
-    @Test
-    fun `not disabled`() {
-        driver.render("<a href=\"...\" disabled>link</a>")
-
-        expect(driver.getBy(Role, "link")).not.toBeDisabled()
-    }
-
-    @Test
     fun enabled() {
         driver.render("<div><input type='text' /></div>")
 

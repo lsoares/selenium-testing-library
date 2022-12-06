@@ -2,126 +2,150 @@ package seleniumtestinglib.jestdom
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.remote.RemoteWebDriver
+import org.openqa.selenium.remote.RemoteWebElement
 
 /**
  * https://testing-library.com/docs/ecosystem-jest-dom/
  */
 fun expect(element: WebElement?) = JestDomMatcher(element)
 
+// TODO: test nulls
 class JestDomMatcher(
-    private val webElement: WebElement?,
+    private val element: WebElement?,
     private val requireTrue: Boolean = true,
 ) {
 
-    val not get() = JestDomMatcher(webElement, requireTrue.not())
+    val not get() = JestDomMatcher(element, requireTrue.not())
 
     private fun assertTrue(condition: Boolean) {
         require(condition xor requireTrue.not())
     }
 
     fun toBeDisabled() {
-        assertTrue(webElement?.isEnabled == false)
+        assertTrue(element?.isEnabled == false)
     }
 
     fun toBeEnabled() {
-        assertTrue(webElement?.isEnabled == true)
+        assertTrue(element?.isEnabled == true)
     }
 
     fun toBeEmptyDomElement() {
-        assertTrue(webElement?.text?.isEmpty() == true)
+        val innerHtml = element?.getAttribute("innerHTML")?.replace("<!--.*?-->".toRegex(), "")
+        assertTrue(innerHtml?.isEmpty() == true)
     }
 
     fun toBeInvalid() {
-        assertTrue(
-            webElement?.getAttribute("aria-invalid") in setOf("", "true")
-        )
+        JestDomMatcher(element, requireTrue.not())
     }
 
     fun toBeInTheDocument() {
-        requireNotNull(webElement)
+        assertTrue(element != null)
     }
 
     fun toBeRequired() {
         assertTrue(
-            webElement?.getAttribute("required") in setOf("", "true") ||
-                webElement?.getAttribute("aria-required") in setOf("", "true")
+            ((element?.tagName == "input") and (element?.getAttribute("type") == "file") or (element?.ariaRole?.lowercase() in setOf(
+                "textbox",
+                "checkbox",
+                "radio",
+                "email",
+                "spinbutton",
+                "combobox",
+                "listbox",
+                "date",
+            ))) and (element?.getAttribute("required") in setOf(
+                "",
+                "true"
+            )) or (element?.getAttribute("aria-required") in setOf("", "true"))
         )
     }
 
+    private val driver get() = ((element as? RemoteWebElement)?.wrappedDriver) as? RemoteWebDriver
+
     fun toBeValid() {
-        val ariaInvalid = webElement?.getAttribute("aria-invalid")
-        assertTrue(ariaInvalid == null || ariaInvalid == "false")
+        assertTrue(
+            when (element?.tagName) {
+                "form" -> driver?.executeScript("return arguments[0].checkValidity()", element) as Boolean
+                else   -> driver?.executeScript("return arguments[0].getAttribute('aria-invalid')", element) in
+                    setOf(null, "false")
+            }
+        )
     }
 
     fun toBeVisible() {
-        assertTrue(webElement?.isDisplayed == true)
+        assertTrue(element?.isDisplayed == true)
     }
 
     fun toContainElement(ancestor: WebElement?) {
-        assertTrue(webElement?.findElements(By.xpath(".//*"))?.contains(ancestor) == true)
+        assertTrue(element?.findElements(By.xpath(".//*"))?.contains(ancestor) == true)
     }
 
     fun toContainHtml(htmlText: String) {
-        assertTrue(webElement?.getAttribute("innerHTML")?.contains(htmlText) == true)
+        val normalizedHtmlText = driver?.executeScript(
+            """
+            const parser = new DOMParser()
+            const htmlDoc = parser.parseFromString(arguments[0], "text/html")
+            return htmlDoc.querySelector("body").innerHTML
+        """, htmlText
+        ) as String
+        assertTrue(element?.getAttribute("innerHTML")?.contains(normalizedHtmlText) == true)
     }
 
     fun toHaveAccessibleDescription(description: String? = null) {
-        val accessibleDescription = webElement?.getAttribute("aria-describedby") ?: webElement?.getAttribute("title")
-        if (description == null)
-            assertTrue(accessibleDescription != null)
-        else
-            assertTrue(description == accessibleDescription)
+        val accessibleDescription = element?.getAttribute("aria-describedby") ?: element?.getAttribute("title")
+        if (description == null) assertTrue(accessibleDescription?.isNotBlank() == true)
+        else assertTrue(description == accessibleDescription)
     }
 
     fun toHaveAccessibleName() {
-        assertTrue(webElement?.accessibleName?.isNotBlank() == true)
+        assertTrue(element?.accessibleName?.isNotBlank() == true)
     }
 
     fun toHaveAttribute(attribute: String, value: String) {
-        assertTrue(value == webElement?.getAttribute(attribute))
+        assertTrue(value == element?.getAttribute(attribute))
     }
 
     fun toHaveClass(className: String) {
-        assertTrue(webElement?.getAttribute("class")?.contains(className) == null)
+        assertTrue(element?.getAttribute("class")?.contains(className) == null)
     }
 
     fun toHaveFocus() {
     }
 
     fun toHaveFormValues(values: Map<String, String>) {
-        assertTrue(values.all { webElement?.getAttribute(it.key) == it.value })
+        assertTrue(values.all { element?.getAttribute(it.key) == it.value })
     }
 
     fun toHaveStyle(styles: Map<String, String>) {
-        assertTrue(styles.all { webElement?.getCssValue(it.key) == it.value })
+        assertTrue(styles.all { element?.getCssValue(it.key) == it.value })
     }
 
     fun toHaveTextContent(text: String, normalizeWhitespace: Boolean = false) {
         assertTrue(
-            text == if (normalizeWhitespace) webElement?.text?.replace(
-                "\\s+".toRegex(),
-                " "
-            ) else webElement?.text
+            text == if (normalizeWhitespace) element?.text?.replace(
+                "\\s+".toRegex(), " "
+            ) else element?.text
         )
     }
 
     fun toHaveValue(value: String) {
-        assertTrue(value == webElement?.getAttribute("value"))
+        assertTrue(value == element?.getAttribute("value"))
     }
 
     fun toHaveDisplayValue(value: String) {
-        assertTrue(value == webElement?.getAttribute("value"))
+        assertTrue(value == element?.getAttribute("value"))
     }
 
     fun toBeChecked() {
-        assertTrue(webElement?.getAttribute("checked") == "true")
+        assertTrue(element?.getAttribute("checked") == "true")
     }
 
     fun toBePartiallyChecked() {
-        assertTrue("true" == webElement?.getAttribute("indeterminate"))
+        assertTrue("true" == element?.getAttribute("indeterminate"))
     }
 
     fun toHaveErrorMessage(message: String) {
-        assertTrue(message == webElement?.getAttribute("aria-errormessage"))
+        assertTrue(message == element?.getAttribute("aria-errormessage"))
     }
 }

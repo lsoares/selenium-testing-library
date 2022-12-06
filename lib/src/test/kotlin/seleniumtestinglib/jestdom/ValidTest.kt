@@ -1,26 +1,46 @@
 package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
+import org.openqa.selenium.By.id
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.ByType.TestId
-import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.queries.ByType.*
 import seleniumtestinglib.render
-import kotlin.test.Test
 
 @ExtendWith(DriverLifeCycle::class)
 class ValidTest(private val driver: RemoteWebDriver) {
 
-    @Test
-    fun invalid() {
-        driver.render(
-            """
-            <input data-testid="no-aria-invalid" />
-            <input data-testid="aria-invalid" aria-invalid /> 
-        """
-        )
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            """<input id="x" />""",
+            """<input id="x" aria-invalid="false" />""",
+            """<form id="x">
+                  <input />
+                </form>"""
+        ]
+    )
+    fun valid(html: String) {
+        driver.render(html)
 
-        expect(driver.getBy(TestId, "aria-invalid")).not.toBeValid()
-        expect(driver.getBy(TestId, "no-aria-invalid")).toBeValid()
+        expect(driver.findElement(id("x"))).toBeValid()
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            """<input id="x" aria-invalid />""",
+            """<input id="x" aria-invalid="true" />""",
+            """<form id="x">
+                  <input required />
+                </form>"""
+        ]
+    )
+    fun `not valid`(html: String) {
+        driver.render(html)
+
+        expect(driver.findElement(id("x"))).not.toBeValid()
     }
 }

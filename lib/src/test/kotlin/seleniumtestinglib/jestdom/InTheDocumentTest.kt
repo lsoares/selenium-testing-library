@@ -5,6 +5,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.queries.ByType.TestId
 import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.queries.queryBy
 import seleniumtestinglib.render
 import kotlin.test.Test
 
@@ -18,6 +19,6 @@ class InTheDocumentTest(private val driver: RemoteWebDriver) {
         )
 
         expect(driver.getBy(TestId, "html-element")).toBeInTheDocument()
-//        expect(driver.queryBy(TestId, "not-there")).not.toBeInTheDocument()
+        expect(driver.queryBy(TestId, "not-there")).not.toBeInTheDocument()
     }
 }

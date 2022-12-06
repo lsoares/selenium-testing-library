@@ -1,28 +1,49 @@
 package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.render
-import kotlin.test.Test
 
 @ExtendWith(DriverLifeCycle::class)
 class RequiredTest(private val driver: RemoteWebDriver) {
 
-    @Test
-    fun required() {
-        driver.render(
-            """
-            <input required />
-            <input aria-required />
-            <input aria-required="true" />
-            <input />
-        """
-        )
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            """<input required />""",
+            """<input type="password" required>""",
+            """<input type="file" required>""",
+            """<input type="date" required>""",
+            """<input aria-required="true" />""",
+            """<input required aria-required="false" />""",
+            """<select required></select>""",
+            """<select multiple required></select>""",
+            """<textarea required></textarea>""",
+            """<div role="tree" aria-required="true"></div>""",
+        ]
+    )
+    fun required(html: String) {
+        driver.render(html)
 
-        expect(driver.findElements(By.tagName("input"))[0]).toBeRequired()
-        expect(driver.findElements(By.tagName("input"))[1]).toBeRequired()
-        expect(driver.findElements(By.tagName("input"))[2]).toBeRequired()
+        expect(driver.findElement(By.cssSelector("input,select,textarea,div"))).toBeRequired()
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            """<input aria-required="false" />""",
+            """<input />""",
+            """<input type="image" required />""",
+            """<div role="tree" required></div>""",
+        ]
+    )
+    fun `not required`(html: String) {
+        driver.render(html)
+
+        expect(driver.findElement(By.cssSelector("input,div"))).not.toBeRequired()
     }
 }
