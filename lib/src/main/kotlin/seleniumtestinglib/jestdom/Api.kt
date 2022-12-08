@@ -86,8 +86,17 @@ data class JestDomMatcher(
         }
     }
 
-    fun toHaveClass(className: String) {
-        validate(element?.getAttribute("class")?.contains(className) == null)
+    fun toHaveClass(vararg classNames: String, exact: Boolean = false) {
+        val expectedClasses = classNames.map { it.split(Regex("\\s+")) }.flatten().toSet()
+        val elementClasses = element?.classList ?: emptySet()
+        if (expectedClasses.isEmpty()) {
+            validate(elementClasses.isNotEmpty())
+            return
+        }
+        when (exact) {
+            false -> validate(elementClasses.containsAll(expectedClasses))
+            true  -> validate(expectedClasses, elementClasses)
+        }
     }
 
     fun toHaveFocus() {

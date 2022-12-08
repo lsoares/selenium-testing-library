@@ -59,4 +59,8 @@ val WebElement.accessibleDescription: String
             ?: getAttribute("aria-description")
             ?: getAttribute("title")
 
+val WebElement.classList: Set<String>
+    get() = getAttribute("class").takeUnless(String::isNullOrBlank)
+        ?.split(Regex("\\s+"))?.toSet() ?: emptySet()
+
 internal val WebElement.wrappedDriver get() = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver

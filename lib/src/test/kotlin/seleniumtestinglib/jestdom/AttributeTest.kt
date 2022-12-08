@@ -9,7 +9,7 @@ import seleniumtestinglib.render
 import kotlin.test.Test
 
 @ExtendWith(DriverLifeCycle::class)
-class HaveAttributeTest(private val driver: RemoteWebDriver) {
+class AttributeTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `has attribute`() {
