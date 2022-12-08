@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.*
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.accessibleDescription
 import seleniumtestinglib.queries.ByType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
@@ -19,8 +20,7 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
         strings = [
             """<span data-testid="x" aria-description="accessible description"></span>""",
             """<img src="logo.jpg" data-testid="x" alt="Company logo" aria-describedby="t1" />
-                <span id="t1" role="presentation">accessible description</span>
-            """,
+                <span id="t1" role="presentation">accessible description</span>""",
             """<a data-testid="x" href="/" aria-label="Home page" 
                   title="accessible description">Start</a>""",
         ]
@@ -30,20 +30,15 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
 
         expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription()
         expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription("accessible description")
+        assertEquals("accessible description", driver.getBy(TestId, "x").accessibleDescription)
     }
 
     @ParameterizedTest
     @ValueSource(
         strings = [
             """<a data-testid="x" href="/" aria-label="Home page">Start</a>""",
-            """
-                <img src="logo.jpg"
-                  data-testid="x"
-                  alt="Company logo"
-                  aria-describedby="t1"
-                />
-                <span id="t1" role="presentation">The logo of Our Company</span>
-            """,
+            """<img src="logo.jpg" data-testid="x" alt="Company logo"aria-describedby="t1" />
+                <span id="t1" role="presentation">The logo of Our Company</span>""",
         ]
     )
     fun `wrong accessible description`(html: String) {
@@ -58,4 +53,6 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
 
         expect(driver.findElement(By.tagName("img"))).not.toHaveAccessibleDescription()
     }
+
+    // TODO: receive regex
 }

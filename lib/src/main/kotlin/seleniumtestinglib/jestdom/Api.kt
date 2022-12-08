@@ -2,9 +2,7 @@ package seleniumtestinglib.jestdom
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
-import seleniumtestinglib.accessibleDescription
-import seleniumtestinglib.innerHtml
-import seleniumtestinglib.wrappedDriver
+import seleniumtestinglib.*
 
 /**
  * https://testing-library.com/docs/ecosystem-jest-dom/
@@ -12,7 +10,7 @@ import seleniumtestinglib.wrappedDriver
 fun expect(element: WebElement?) = JestDomMatcher(element)
 
 // TODO: test nulls
-class JestDomMatcher(
+data class JestDomMatcher(
     private val element: WebElement?,
     private val requireTrue: Boolean = true,
 ) {
@@ -33,7 +31,7 @@ class JestDomMatcher(
     }
 
     fun toBeInvalid() {
-        JestDomMatcher(element, requireTrue.not())
+        copy(requireTrue = requireTrue.not()).toBeValid()
     }
 
     fun toBeInTheDocument() {
@@ -41,34 +39,11 @@ class JestDomMatcher(
     }
 
     fun toBeRequired() {
-        validate(
-            ((element?.tagName == "input") and (element?.getAttribute("type") == "file") or (element?.ariaRole?.lowercase() in setOf(
-                "textbox",
-                "checkbox",
-                "radio",
-                "email",
-                "spinbutton",
-                "combobox",
-                "listbox",
-                "date",
-            ))) and (element?.getAttribute("required") in setOf(
-                "",
-                "true"
-            )) or (element?.getAttribute("aria-required") in setOf("", "true"))
-        )
+        validate(element?.isRequired == true)
     }
 
     fun toBeValid() {
-        validate(
-            when (element?.tagName) {
-                "form" -> element.wrappedDriver.executeScript("return arguments[0].checkValidity()", element) as Boolean
-                else   -> element?.wrappedDriver?.executeScript(
-                    "return arguments[0].getAttribute('aria-invalid')",
-                    element
-                ) in
-                    setOf(null, "false")
-            }
-        )
+        validate(element?.isValid == true)
     }
 
     fun toBeVisible() {
@@ -90,15 +65,18 @@ class JestDomMatcher(
         validate(element?.innerHtml?.contains(normalizedHtmlText.orEmpty()) == true)
     }
 
-    fun toHaveAccessibleDescription(description: String? = null) {
-        when (description) {
+    fun toHaveAccessibleDescription(expectedAccessibleDescription: String? = null) {
+        when (expectedAccessibleDescription) {
             null -> validate(element?.accessibleDescription?.isNotBlank() == true)
-            else -> validate(description, element?.accessibleDescription)
+            else -> validate(expectedAccessibleDescription, element?.accessibleDescription)
         }
     }
 
-    fun toHaveAccessibleName() {
-        validate(element?.accessibleName?.isNotBlank() == true)
+    fun toHaveAccessibleName(expectedAccessibleName: String? = null) {
+        when (expectedAccessibleName) {
+            null -> validate(element?.accessibleName?.isNotBlank() == true)
+            else -> validate(expectedAccessibleName, element?.accessibleName)
+        }
     }
 
     fun toHaveAttribute(attribute: String, value: String) {

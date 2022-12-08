@@ -14,6 +14,31 @@ val WebElement.isChecked: Boolean
 val WebElement.isFocused: Boolean
     get() = equals(wrappedDriver.switchTo().activeElement())
 
+val WebElement.isRequired
+    get() = ((tagName == "input") and (getAttribute("type") == "file") or (ariaRole?.lowercase() in setOf(
+        "textbox",
+        "checkbox",
+        "radio",
+        "email",
+        "spinbutton",
+        "combobox",
+        "listbox",
+        "date",
+    ))) and (getAttribute("required") in setOf(
+        "",
+        "true"
+    )) or (getAttribute("aria-required") in setOf("", "true"))
+
+val WebElement.isValid
+    get() = when (tagName) {
+        "form" -> wrappedDriver.executeScript("return arguments[0].checkValidity()", this) as Boolean
+        else   -> wrappedDriver.executeScript(
+            "return arguments[0].getAttribute('aria-invalid')",
+            this
+        ) in
+            setOf(null, "false")
+    }
+
 @Suppress("UNCHECKED_CAST")
 val WebElement.files: List<Map<String, Any>>
     get() = wrappedDriver.executeScript(
