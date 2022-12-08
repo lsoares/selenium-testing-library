@@ -100,6 +100,7 @@ data class JestDomMatcher(
     }
 
     fun toHaveFocus() {
+        validate(element?.isFocused == true)
     }
 
     fun toHaveFormValues(values: Map<String, String>) {
