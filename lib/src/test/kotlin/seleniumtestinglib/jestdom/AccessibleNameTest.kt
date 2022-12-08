@@ -1,6 +1,5 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -9,6 +8,7 @@ import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.queries.ByType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @ExtendWith(DriverLifeCycle::class)

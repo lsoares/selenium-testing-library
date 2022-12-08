@@ -79,8 +79,11 @@ data class JestDomMatcher(
         }
     }
 
-    fun toHaveAttribute(attribute: String, value: String) {
-        validate(value == element?.getAttribute(attribute))
+    fun toHaveAttribute(attribute: String, value: String? = null) {
+        when (value) {
+            null -> validate(element?.getAttribute(attribute)?.isNotBlank() == true)
+            else -> validate(value, element?.getAttribute(attribute))
+        }
     }
 
     fun toHaveClass(className: String) {

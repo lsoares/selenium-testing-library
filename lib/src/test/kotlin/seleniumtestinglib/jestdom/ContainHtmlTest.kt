@@ -13,11 +13,7 @@ class ContainHtmlTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `contain html`() {
-        driver.render(
-            """
-            <span data-testid="parent"><span data-testid="child"></span></span>
-        """
-        )
+        driver.render("""<span data-testid="parent"><span data-testid="child"></span></span>""")
 
         expect(driver.queryBy(TestId, "parent")).toContainHtml("""<span data-testid="child"></span>""")
         expect(driver.queryBy(TestId, "parent")).toContainHtml("<span data-testid='child' />")

@@ -13,11 +13,7 @@ class ContainElementTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `contain element`() {
-        driver.render(
-            """
-            <span data-testid="ancestor"><span data-testid="descendant"></span></span>
-        """
-        )
+        driver.render("""<span data-testid="ancestor"><span data-testid="descendant"></span></span>""")
 
         val ancestor = driver.queryBy(TestId, "ancestor")
         val descendant = driver.queryBy(TestId, "descendant")
