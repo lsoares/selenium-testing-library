@@ -14,6 +14,23 @@ import kotlin.test.assertEquals
 class FormValuesTest(private val driver: RemoteWebDriver) {
 
     @Test
+    fun `expect form values`() {
+        driver.render(
+            """
+               <form data-testid="login-form">
+                  <input type="text" name="username" value="jane.doe" />
+                  <input type="password" name="password" value="12345678" />
+                  <input type="checkbox" name="rememberMe" checked />
+                  <button type="submit">Sign in</button>
+             </form>
+        """
+        )
+
+        val form = driver.findElement(ByTestId(("login-form")))
+        expect(form).toHaveFormValues("username" to "jane.doe", "rememberMe" to true)
+    }
+
+    @Test
     fun `form values`() {
         driver.render(
             """
@@ -63,22 +80,5 @@ class FormValuesTest(private val driver: RemoteWebDriver) {
             ),
             driver.findElement(By.id(("x"))).formValues
         )
-    }
-
-    @Test
-    fun `expect form values`() {
-        driver.render(
-            """
-               <form data-testid="login-form">
-                  <input type="text" name="username" value="jane.doe" />
-                  <input type="password" name="password" value="12345678" />
-                  <input type="checkbox" name="rememberMe" checked />
-                  <button type="submit">Sign in</button>
-             </form>
-        """
-        )
-
-        val form = driver.findElement(ByTestId(("login-form")))
-        expect(form).toHaveFormValues("username" to "jane.doe", "rememberMe" to true)
     }
 }
