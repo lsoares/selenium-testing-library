@@ -68,21 +68,21 @@ data class JestDomMatcher(
     fun toHaveAccessibleDescription(expectedAccessibleDescription: String? = null) {
         when (expectedAccessibleDescription) {
             null -> validate(element?.accessibleDescription?.isNotBlank() == true)
-            else -> validate(expectedAccessibleDescription, element?.accessibleDescription)
+            else -> compare(expectedAccessibleDescription, element?.accessibleDescription)
         }
     }
 
     fun toHaveAccessibleName(expectedAccessibleName: String? = null) {
         when (expectedAccessibleName) {
             null -> validate(element?.accessibleName?.isNotBlank() == true)
-            else -> validate(expectedAccessibleName, element?.accessibleName)
+            else -> compare(expectedAccessibleName, element?.accessibleName)
         }
     }
 
     fun toHaveAttribute(attribute: String, value: String? = null) {
         when (value) {
             null -> validate(element?.getAttribute(attribute)?.isNotBlank() == true)
-            else -> validate(value, element?.getAttribute(attribute))
+            else -> compare(value, element?.getAttribute(attribute))
         }
     }
 
@@ -94,8 +94,8 @@ data class JestDomMatcher(
             return
         }
         when (exact) {
-            false -> validate(elementClasses.containsAll(expectedClasses))
-            true  -> validate(expectedClasses, elementClasses)
+            false -> validate(elementClasses.containsAll(expectedClasses), elementClasses)
+            true  -> compare(expectedClasses, elementClasses)
         }
     }
 
@@ -103,8 +103,12 @@ data class JestDomMatcher(
         validate(element?.isFocused == true)
     }
 
-    fun toHaveFormValues(values: Map<String, String>) {
-        validate(values.all { element?.getAttribute(it.key) == it.value })
+    fun toHaveFormValues(vararg values: Pair<String, Any?>) {
+        val formValues = element?.formValues ?: emptyMap()
+        validate(
+            values.toMap().all { formValues[it.key] == it.value },
+            "expected values: ", values.toMap(), "form values: ", formValues
+        )
     }
 
     fun toHaveStyle(styles: Map<String, String>) {
@@ -139,11 +143,13 @@ data class JestDomMatcher(
         validate(message == element?.getAttribute("aria-errormessage"))
     }
 
-    private fun validate(condition: Boolean) {
-        check(condition xor requireTrue.not()) { "condition: $condition, requireTrue: $requireTrue" }
+    private fun validate(condition: Boolean, vararg debug: Any?) {
+        check(condition xor requireTrue.not()) {
+            "condition: $condition, requireTrue: $requireTrue, debug: ${debug.toList()}"
+        }
     }
 
-    private fun validate(valueA: Any?, valueB: Any?) {
+    private fun compare(valueA: Any?, valueB: Any?) {
         check((valueA == valueB) xor requireTrue.not()) { "condition: $valueA, $valueB, requireTrue: $requireTrue" }
     }
 }

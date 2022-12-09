@@ -37,11 +37,11 @@ class ClipboardTest(private val driver: RemoteWebDriver) {
                 mapOf("target" to driver.findElement(ByRole("textbox")), "offset" to 0, "keys" to "[MouseLeft>]"),
                 mapOf("offset" to 5)
             )
-        assertFalse(driver.findElement(By.id("a")).value?.isEmpty() ?: true)
+        assertFalse(driver.findElement(By.id("a")).value?.toString()?.isEmpty() ?: true)
 
         driver.user.cut()
 
-        assertTrue(driver.findElement(By.id("a")).value?.isEmpty() ?: false)
+        assertTrue(driver.findElement(By.id("a")).value?.toString()?.isEmpty() ?: false)
     }
 
     @Disabled
