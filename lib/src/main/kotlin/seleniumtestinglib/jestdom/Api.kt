@@ -115,12 +115,13 @@ data class JestDomMatcher(
         validate(styles.all { element?.getCssValue(it.key) == it.value })
     }
 
-    fun toHaveTextContent(text: String, normalizeWhitespace: Boolean = false) {
-        validate(
-            text == if (normalizeWhitespace) element?.text?.replace(
-                "\\s+".toRegex(), " "
-            ) else element?.text
-        )
+    // TODO normalizeWhitespace
+    fun toHaveTextContent(text: String) {
+        validate(element?.text?.contains(text) == true, element?.text)
+    }
+
+    fun toHaveTextContent(text: Regex) {
+        validate(element?.text?.let { text.find(it) } != null, element?.text)
     }
 
     fun toHaveValue(value: String) {

@@ -19,16 +19,12 @@ val WebElement.formValues: Map<String, Any?>
             val name = it.getAttribute("name")
             when (it.tagName) {
                 "input"    -> when (it.getAttribute("type")) {
-                    "number"   -> {
-                        values[name] = it.value?.toIntOrNull()
-                    }
+                    "number"   -> values[name] = it.value?.toIntOrNull()
 
-                    "checkbox" -> {
-                        if (findElements(cssSelector("[name=$name]")).size > 1) {
-                            values.putIfAbsent(name, mutableListOf<String?>())
-                            if (it.isChecked) (values[name] as MutableList<String?>).add(it.value)
-                        } else values[name] = it.isChecked
-                    }
+                    "checkbox" -> if (findElements(cssSelector("[name=$name]")).size > 1) {
+                        values.putIfAbsent(name, mutableListOf<String?>())
+                        if (it.isChecked) (values[name] as MutableList<String?>).add(it.value)
+                    } else values[name] = it.isChecked
 
                     "radio"    -> if (it.isSelected) values[name] = it.value
                     else       -> values[name] = it.value
