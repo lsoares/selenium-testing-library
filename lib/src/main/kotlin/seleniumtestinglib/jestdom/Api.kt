@@ -94,7 +94,7 @@ data class JestDomMatcher(
             return
         }
         when (exact) {
-            false -> validate(elementClasses.containsAll(expectedClasses), elementClasses)
+            false -> validate(elementClasses.containsAll(expectedClasses), mapOf("elementClasses" to elementClasses))
             true  -> compare(expectedClasses, elementClasses)
         }
     }
@@ -107,7 +107,7 @@ data class JestDomMatcher(
         val formValues = element?.formValues ?: emptyMap()
         validate(
             values.toMap().all { formValues[it.key] == it.value },
-            "expected values: ", values.toMap(), "form values: ", formValues
+            mapOf("expected values" to values.toMap(), "form values" to formValues)
         )
     }
 
@@ -115,17 +115,19 @@ data class JestDomMatcher(
         validate(styles.all { element?.getCssValue(it.key) == it.value })
     }
 
-    // TODO normalizeWhitespace
+    // TODO receive normalizeWhitespace option
     fun toHaveTextContent(text: String) {
-        validate(element?.text?.contains(text) == true, element?.text)
+        validate(element?.text?.contains(text) == true, mapOf("text" to element?.text))
     }
 
     fun toHaveTextContent(text: Regex) {
-        validate(element?.text?.let { text.find(it) } != null, element?.text)
+        validate(element?.text?.let { text.find(it) } != null, mapOf("text" to element?.text))
     }
 
-    fun toHaveValue(value: String) {
-        validate(value == element?.getAttribute("value"))
+    fun toHaveValue(vararg value: String) {
+    }
+
+    fun toHaveValue(value: Int) {
     }
 
     fun toHaveDisplayValue(value: String) {
@@ -140,11 +142,18 @@ data class JestDomMatcher(
         validate("true" == element?.getAttribute("indeterminate"))
     }
 
-    fun toHaveErrorMessage(message: String) {
-        validate(message == element?.getAttribute("aria-errormessage"))
+    fun toHaveErrorMessage(text: String) {
+        compare(text, element?.errorMessage)
     }
 
-    private fun validate(condition: Boolean, vararg debug: Any?) {
+    fun toHaveErrorMessage(text: Regex) {
+        validate(
+            text.find(element?.errorMessage.orEmpty()) != null,
+            mapOf("error message" to element?.errorMessage)
+        )
+    }
+
+    private fun validate(condition: Boolean, debug: Map<String, Any?> = emptyMap()) {
         check(condition xor requireTrue.not()) {
             "condition: $condition, requireTrue: $requireTrue, debug: ${debug.toList()}"
         }

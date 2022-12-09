@@ -30,19 +30,21 @@ val WebElement.formValues: Map<String, Any?>
                     else       -> values[name] = it.value
                 }
 
-                "select"   -> when (it.getAttribute("multiple")) {
-                    null -> values[name] = it.value
-                    else -> {
-                        values.putIfAbsent(name, mutableListOf<String?>())
-                        val select = Select(it)
-                        (values[name] as MutableList<String?>).addAll(select.allSelectedOptions.map { it.value })
-                    }
+                "select"   -> values[name] = when {
+                    Select(it).isMultiple -> Select(it).values
+                    else                  -> it.value
                 }
 
                 "textarea" -> values[name] = it.value
             }
         }
         return values
+    }
+
+val Select.values: List<String>
+    get() {
+        require(isMultiple)
+        return allSelectedOptions.map { it.value.orEmpty() }
     }
 
 val WebElement.isChecked: Boolean
@@ -81,10 +83,13 @@ val WebElement.isValid
 
 @Suppress("UNCHECKED_CAST")
 val WebElement.files: List<Map<String, Any>>
-    get() = wrappedDriver.executeScript(
-        "return arguments[0].files",
-        this
-    ) as? List<Map<String, Any>> ?: emptyList()
+    get() {
+        require(tagName == "input" && getAttribute("type") == "file")
+        return wrappedDriver.executeScript(
+            "return arguments[0].files",
+            this
+        ) as? List<Map<String, Any>> ?: emptyList()
+    }
 
 val WebElement.innerHtml: String
     get() = getAttribute("innerHTML")
@@ -93,7 +98,7 @@ val WebElement.innerHtml: String
  * https://w3c.github.io/accname
  */
 val WebElement.accessibleDescription: String
-    get(): String =
+    get() =
         getAttribute("aria-describedby")
             ?.let { wrappedDriver.findElement(id(it)) }?.text
             ?: getAttribute("aria-description")
@@ -102,5 +107,11 @@ val WebElement.accessibleDescription: String
 val WebElement.classList: Set<String>
     get() = getAttribute("class").takeUnless(String::isNullOrBlank)
         ?.split(Regex("\\s+"))?.toSet() ?: emptySet()
+
+val WebElement.errorMessage: String?
+    get() {
+        if (isValid) return null
+        return wrappedDriver.findElement(id(getAttribute("aria-errormessage"))).text
+    }
 
 internal val WebElement.wrappedDriver get() = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver
