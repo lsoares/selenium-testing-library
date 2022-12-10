@@ -49,8 +49,11 @@ val Select.values: List<String>
 
 val WebElement.isChecked: Boolean
     get() {
-        require(ariaRole == "checkbox") { "this is the role $ariaRole but should be a checkbox" }
-        return isSelected
+        if (tagName == "input" && getAttribute("type") in setOf("radio", "checkbox"))
+            return isSelected
+        if (ariaRole in setOf("checkbox", "radio", "switch"))
+            return getAttribute("aria-checked").toBoolean()
+        throw IllegalArgumentException("invalid aria role: $ariaRole")
     }
 
 val WebElement.isFocused: Boolean
@@ -114,7 +117,7 @@ val WebElement.accessibleDescription: String
             ?: getAttribute("title")
 
 val WebElement.classList: Set<String>
-    get() = getAttribute("class").orEmpty().split(Regex("\\s+")).toSet()
+    get() = getAttribute("class").takeIf(String::isNotBlank)?.split(Regex("\\s+"))?.toSet() ?: emptySet()
 
 val WebElement.errorMessage: String?
     get() {

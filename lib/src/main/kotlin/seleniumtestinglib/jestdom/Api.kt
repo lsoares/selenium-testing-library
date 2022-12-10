@@ -151,7 +151,7 @@ data class JestDomMatcher(
     }
 
     fun toBeChecked() {
-        validate(element?.getAttribute("checked") == "true")
+        validate(element?.isChecked == true)
     }
 
     fun toBePartiallyChecked() {
