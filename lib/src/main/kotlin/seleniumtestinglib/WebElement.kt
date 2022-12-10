@@ -7,8 +7,22 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.remote.RemoteWebElement
 import org.openqa.selenium.support.ui.Select
 
-val WebElement.value: String?
-    get() = getAttribute("value")
+val WebElement.value: Any?
+    get() = when (tagName) {
+        "input"    -> when (getAttribute("type")) {
+            "number"            -> getAttribute("value")?.toIntOrNull()
+            "checkbox", "radio" -> throw IllegalArgumentException("use toBeChecked or toHaveFormValues for checkbox and radio inputs")
+            else                -> getAttribute("value")
+        }
+
+        "select"   -> when {
+            Select(this).isMultiple -> Select(this).values
+            else                    -> getAttribute("value")
+        }
+
+        "textarea" -> getAttribute("value")
+        else       -> throw IllegalArgumentException("$tagName does not hold values")
+    }
 
 val WebElement.formValues: Map<String, Any?>
     get() {
@@ -17,25 +31,19 @@ val WebElement.formValues: Map<String, Any?>
         val values = mutableMapOf<String, Any?>()
         formInputs.forEach {
             val name = it.getAttribute("name")
+            val value = it.getAttribute("value")
             when (it.tagName) {
-                "input"    -> when (it.getAttribute("type")) {
-                    "number"   -> values[name] = it.value?.toIntOrNull()
-
+                "input" -> when (it.getAttribute("type")) {
                     "checkbox" -> if (findElements(cssSelector("[name=$name]")).size > 1) {
                         values.putIfAbsent(name, mutableListOf<String?>())
-                        if (it.isChecked) (values[name] as MutableList<String?>).add(it.value)
+                        if (it.isChecked) (values[name] as MutableList<String?>).add(value)
                     } else values[name] = it.isChecked
 
-                    "radio"    -> if (it.isSelected) values[name] = it.value
+                    "radio"    -> if (it.isSelected) values[name] = value
                     else       -> values[name] = it.value
                 }
 
-                "select"   -> values[name] = when {
-                    Select(it).isMultiple -> Select(it).values
-                    else                  -> it.value
-                }
-
-                "textarea" -> values[name] = it.value
+                else    -> values[name] = it.value
             }
         }
         return values
@@ -44,7 +52,7 @@ val WebElement.formValues: Map<String, Any?>
 val Select.values: List<String>
     get() {
         require(isMultiple)
-        return allSelectedOptions.map { it.value.orEmpty() }
+        return allSelectedOptions.map { it.getAttribute("value") }
     }
 
 val WebElement.isChecked: Boolean

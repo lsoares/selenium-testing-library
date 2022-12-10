@@ -65,25 +65,28 @@ data class JestDomMatcher(
         validate(element?.innerHtml?.contains(normalizedHtmlText.orEmpty()) == true)
     }
 
-    fun toHaveAccessibleDescription(expectedAccessibleDescription: String? = null) {
-        when (expectedAccessibleDescription) {
-            null -> validate(element?.accessibleDescription?.isNotBlank() == true)
-            else -> compare(expectedAccessibleDescription, element?.accessibleDescription)
-        }
+    fun toHaveAccessibleDescription() {
+        validate(element?.accessibleDescription?.isNotBlank() == true)
     }
 
-    fun toHaveAccessibleName(expectedAccessibleName: String? = null) {
-        when (expectedAccessibleName) {
-            null -> validate(element?.accessibleName?.isNotBlank() == true)
-            else -> compare(expectedAccessibleName, element?.accessibleName)
-        }
+    fun toHaveAccessibleDescription(expectedAccessibleDescription: String) {
+        compare(expectedAccessibleDescription, element?.accessibleDescription)
     }
 
-    fun toHaveAttribute(attribute: String, value: String? = null) {
-        when (value) {
-            null -> validate(element?.getAttribute(attribute)?.isNotBlank() == true)
-            else -> compare(value, element?.getAttribute(attribute))
-        }
+    fun toHaveAccessibleName() {
+        validate(element?.accessibleName?.isNotBlank() == true)
+    }
+
+    fun toHaveAccessibleName(expectedAccessibleName: String) {
+        compare(expectedAccessibleName, element?.accessibleName)
+    }
+
+    fun toHaveAttribute(attribute: String) {
+        validate(element?.getAttribute(attribute)?.isNotBlank() == true)
+    }
+
+    fun toHaveAttribute(attribute: String, value: String) {
+        compare(value, element?.getAttribute(attribute))
     }
 
     fun toHaveClass(vararg classNames: String, exact: Boolean = false) {
@@ -140,14 +143,23 @@ data class JestDomMatcher(
         validate(element?.text?.let { text.find(it) } != null, mapOf("text" to element?.text))
     }
 
-    fun toHaveValue(vararg value: String) {
+    fun toHaveValue() {
+        compare(element?.value, null)
+    }
+
+    fun toHaveValue(value: String) {
+        compare(element?.value, value)
     }
 
     fun toHaveValue(value: Int) {
+        compare(element?.value, value)
+    }
+
+    fun toHaveValue(value: List<String>) {
+        compare(element?.value, value)
     }
 
     fun toHaveDisplayValue(value: String) {
-        validate(value == element?.getAttribute("value"))
     }
 
     fun toBeChecked() {
