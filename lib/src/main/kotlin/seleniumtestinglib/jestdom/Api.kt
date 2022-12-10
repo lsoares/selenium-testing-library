@@ -111,11 +111,27 @@ data class JestDomMatcher(
         )
     }
 
-    fun toHaveStyle(styles: Map<String, String>) {
-        validate(styles.all { element?.getCssValue(it.key) == it.value })
+    fun toHaveStyle(css: String) {
+        val expectedCss = css.split(";")
+            .filter(String::isNotBlank)
+            .associate {
+                it.split(":").let { it.first().trim().normalizeCssProp() to it.last().trim() }
+            }
+        val existingCss = expectedCss.keys
+            .map { it.normalizeCssProp() }
+            .associateWith { element?.getCssValue(it) }
+        compare(expectedCss, existingCss)
     }
 
-    // TODO receive normalizeWhitespace option
+    fun toHaveStyle(css: Map<String, String>) {
+        val expectedCss = css.mapKeys { it.key.normalizeCssProp() }
+        val existingCss = expectedCss.keys
+            .associateWith { element?.getCssValue(it) }
+        compare(expectedCss, existingCss)
+    }
+
+    private fun String.normalizeCssProp() = "(?<=[a-zA-Z])[A-Z]".toRegex().replace(this) { "-${it.value}" }.lowercase()
+
     fun toHaveTextContent(text: String) {
         validate(element?.text?.contains(text) == true, mapOf("text" to element?.text))
     }
@@ -160,6 +176,6 @@ data class JestDomMatcher(
     }
 
     private fun compare(valueA: Any?, valueB: Any?) {
-        check((valueA == valueB) xor requireTrue.not()) { "condition: $valueA, $valueB, requireTrue: $requireTrue" }
+        check((valueA == valueB) xor requireTrue.not()) { "value A: $valueA\nvalue B: $valueB\nmust be equal? $requireTrue" }
     }
 }
