@@ -73,12 +73,20 @@ data class JestDomMatcher(
         compare(expectedAccessibleDescription, element?.accessibleDescription)
     }
 
+    fun toHaveAccessibleDescription(expectedAccessibleDescription: Regex) {
+        validate(expectedAccessibleDescription.find(element?.accessibleDescription.orEmpty()) != null)
+    }
+
     fun toHaveAccessibleName() {
         validate(element?.accessibleName?.isNotBlank() == true)
     }
 
     fun toHaveAccessibleName(expectedAccessibleName: String) {
         compare(expectedAccessibleName, element?.accessibleName)
+    }
+
+    fun toHaveAccessibleName(expectedAccessibleName: Regex) {
+        validate(expectedAccessibleName.find(element?.accessibleDescription.orEmpty()) != null)
     }
 
     fun toHaveAttribute(attribute: String) {

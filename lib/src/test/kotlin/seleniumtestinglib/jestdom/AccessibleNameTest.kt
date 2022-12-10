@@ -55,5 +55,14 @@ class AccessibleNameTest(private val driver: RemoteWebDriver) {
         expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName("abc")
     }
 
-    // TODO: receive regex
+    @Test
+    fun regex() {
+        driver.render(
+            """<span data-testid="x" aria-description="Accessible description"></span>"""
+
+        )
+
+        expect(driver.getBy(TestId, "x")).toHaveAccessibleName(Regex("accessible", RegexOption.IGNORE_CASE))
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName(Regex("nope", RegexOption.IGNORE_CASE))
+    }
 }

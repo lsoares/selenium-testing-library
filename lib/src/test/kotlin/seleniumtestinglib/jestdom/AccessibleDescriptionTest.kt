@@ -33,6 +33,17 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
         assertEquals("accessible description", driver.getBy(TestId, "x").accessibleDescription)
     }
 
+    @Test
+    fun regex() {
+        driver.render(
+            """<span data-testid="x" aria-description="Accessible description"></span>"""
+
+        )
+
+        expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription(Regex("accessible", RegexOption.IGNORE_CASE))
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription(Regex("nope", RegexOption.IGNORE_CASE))
+    }
+
     @ParameterizedTest
     @ValueSource(
         strings = [
@@ -53,6 +64,4 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
 
         expect(driver.findElement(By.tagName("img"))).not.toHaveAccessibleDescription()
     }
-
-    // TODO: receive regex
 }
