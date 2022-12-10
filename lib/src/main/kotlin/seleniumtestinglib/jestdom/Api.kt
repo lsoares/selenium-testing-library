@@ -155,7 +155,7 @@ data class JestDomMatcher(
     }
 
     fun toBePartiallyChecked() {
-        validate("true" == element?.getAttribute("indeterminate"))
+        validate(element?.isPartiallyChecked == true)
     }
 
     fun toHaveErrorMessage(text: String) {
@@ -165,7 +165,7 @@ data class JestDomMatcher(
     fun toHaveErrorMessage(text: Regex) {
         validate(
             text.find(element?.errorMessage.orEmpty()) != null,
-            mapOf("error message" to element?.errorMessage)
+            mapOf("text" to text, "error message" to element?.errorMessage)
         )
     }
 

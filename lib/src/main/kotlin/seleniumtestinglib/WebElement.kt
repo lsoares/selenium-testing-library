@@ -77,14 +77,23 @@ val WebElement.isValid
         else   -> wrappedDriver.executeScript(
             "return arguments[0].getAttribute('aria-invalid')",
             this
-        ) in
-            setOf(null, "false")
+        ) in setOf(null, "false")
+    }
+
+val WebElement.isPartiallyChecked: Boolean
+    get() {
+        require(ariaRole == "checkbox")
+        return wrappedDriver.executeScript(
+            """return arguments[0].indeterminate 
+            || arguments[0].ariaChecked == 'mixed'""", this
+        ) as Boolean
     }
 
 @Suppress("UNCHECKED_CAST")
 val WebElement.files: List<Map<String, Any>>
     get() {
-        require(tagName == "input" && getAttribute("type") == "file")
+        require(tagName == "input")
+        require(getAttribute("type") == "file")
         return wrappedDriver.executeScript(
             "return arguments[0].files",
             this
@@ -105,8 +114,7 @@ val WebElement.accessibleDescription: String
             ?: getAttribute("title")
 
 val WebElement.classList: Set<String>
-    get() = getAttribute("class").takeUnless(String::isNullOrBlank)
-        ?.split(Regex("\\s+"))?.toSet() ?: emptySet()
+    get() = getAttribute("class").orEmpty().split(Regex("\\s+")).toSet()
 
 val WebElement.errorMessage: String?
     get() {
