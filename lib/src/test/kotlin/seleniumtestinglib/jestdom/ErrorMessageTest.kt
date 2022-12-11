@@ -14,7 +14,7 @@ import kotlin.text.RegexOption.IGNORE_CASE
 class ErrorMessageTest(private val driver: RemoteWebDriver) {
 
     @Test
-    fun `in the document`() {
+    fun `error message`() {
         driver.render(
             """
                 <label for="startTime"> Please enter a start time for the meeting: </label>
@@ -37,5 +37,11 @@ class ErrorMessageTest(private val driver: RemoteWebDriver) {
         )
         expect(timeInput).toHaveErrorMessage(Regex("invalid time", IGNORE_CASE))
         expect(timeInput).not.toHaveErrorMessage("Pikachu!")
+        expect(timeInput).toHaveErrorMessage {
+            it.orEmpty().contains("time must be between")
+        }
+        expect(timeInput).not.toHaveErrorMessage {
+            it.orEmpty().contains("time must not be between")
+        }
     }
 }

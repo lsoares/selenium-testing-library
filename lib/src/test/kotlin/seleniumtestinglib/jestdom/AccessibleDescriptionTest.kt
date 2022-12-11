@@ -11,6 +11,7 @@ import seleniumtestinglib.queries.ByType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.*
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
@@ -28,9 +29,10 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
     fun `accessible description`(html: String) {
         driver.render(html)
 
+        assertEquals("accessible description", driver.getBy(TestId, "x").accessibleDescription)
         expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription()
         expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription("accessible description")
-        assertEquals("accessible description", driver.getBy(TestId, "x").accessibleDescription)
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription("not this one")
     }
 
     @Test
@@ -40,22 +42,20 @@ class AccessibleDescriptionTest(private val driver: RemoteWebDriver) {
 
         )
 
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription(Regex("accessible", RegexOption.IGNORE_CASE))
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription(Regex("nope", RegexOption.IGNORE_CASE))
+        expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription(Regex("accessible", IGNORE_CASE))
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription(Regex("nope", IGNORE_CASE))
     }
 
-    @ParameterizedTest
-    @ValueSource(
-        strings = [
-            """<a data-testid="x" href="/" aria-label="Home page">Start</a>""",
-            """<img src="logo.jpg" data-testid="x" alt="Company logo"aria-describedby="t1" />
-                <span id="t1" role="presentation">The logo of Our Company</span>""",
-        ]
-    )
-    fun `wrong accessible description`(html: String) {
-        driver.render(html)
+    @Test
+    fun function() {
+        driver.render("""<span data-testid="x" aria-description="Accessible description"></span>""")
 
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription("not this one")
+        expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription {
+            it.startsWith("access", ignoreCase = true)
+        }
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription {
+            it.startsWith("access", ignoreCase = false)
+        }
     }
 
     @Test

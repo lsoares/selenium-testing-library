@@ -88,6 +88,11 @@ data class JestDomMatcher(
         validate(expectedAccessibleDescription.find(element.accessibleDescription) != null)
     }
 
+    fun toHaveAccessibleDescription(expectedAccessibleDescription: (String) -> Boolean) {
+        requireNotNull(element)
+        validate(expectedAccessibleDescription(element.accessibleDescription))
+    }
+
     fun toHaveAccessibleName() {
         requireNotNull(element)
         validate(element.accessibleName.isNotBlank())
@@ -103,6 +108,11 @@ data class JestDomMatcher(
         validate(expectedAccessibleName.find(element.accessibleDescription) != null)
     }
 
+    fun toHaveAccessibleName(expectedAccessibleName: (String) -> Boolean) {
+        requireNotNull(element)
+        validate(expectedAccessibleName(element.accessibleName))
+    }
+
     fun toHaveAttribute(attribute: String) {
         requireNotNull(element)
         validate(element.getAttribute(attribute)?.isNotBlank() == true)
@@ -111,6 +121,11 @@ data class JestDomMatcher(
     fun toHaveAttribute(attribute: String, value: String) {
         requireNotNull(element)
         compare(value, element.getAttribute(attribute))
+    }
+
+    fun toHaveAttribute(attribute: String, value: (String) -> Boolean) {
+        requireNotNull(element)
+        validate(value(element.getAttribute(attribute)))
     }
 
     fun toHaveClass(vararg classNames: String, exact: Boolean = false) {
@@ -231,6 +246,11 @@ data class JestDomMatcher(
             text.find(element.errorMessage.orEmpty()) != null,
             mapOf("text" to text, "error message" to element.errorMessage)
         )
+    }
+
+    fun toHaveErrorMessage(text: (String?) -> Boolean) {
+        requireNotNull(element)
+        validate(text(element.errorMessage))
     }
 
     private fun validate(condition: Boolean, debug: Map<String, Any?> = emptyMap()) {

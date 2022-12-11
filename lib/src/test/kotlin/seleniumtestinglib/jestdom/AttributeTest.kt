@@ -19,6 +19,12 @@ class AttributeTest(private val driver: RemoteWebDriver) {
 
         expect(button).toHaveAttribute("disabled")
         expect(button).toHaveAttribute("type", "submit")
+        expect(button).toHaveAttribute("type") {
+            it.first() == 's'
+        }
+        expect(button).not.toHaveAttribute("type") {
+            it.last() == 's'
+        }
         expect(button).not.toHaveAttribute("type", "button")
         expect(button).not.toHaveAttribute("at1")
     }

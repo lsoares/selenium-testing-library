@@ -18,13 +18,10 @@ class CheckedTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            // checkbox
             """<input type="checkbox" checked data-testid="x" />""",
             """<div role="checkbox" aria-checked="true" data-testid="x" />""",
-            // radio
             """<input type="radio" checked value="foo" data-testid="x" />""",
             """<div role="radio" aria-checked="true" data-testid="x" />""",
-            // switch
             """<div role="switch" aria-checked="true" data-testid="x" />""",
         ]
     )
@@ -39,13 +36,10 @@ class CheckedTest(private val driver: RemoteWebDriver) {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            // checkbox
             """<input type="checkbox" data-testid="x" />""",
             """<div role="checkbox" aria-checked="false" data-testid="x" />""",
-            // radio
             """<input type="radio" value="foo" data-testid="x" />""",
             """<div role="radio" aria-checked="false" data-testid="x" />""",
-            // switch
             """<div role="switch" aria-checked="false" data-testid="x" />""",
         ]
     )

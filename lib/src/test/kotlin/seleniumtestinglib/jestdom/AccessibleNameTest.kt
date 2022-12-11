@@ -28,9 +28,10 @@ class AccessibleNameTest(private val driver: RemoteWebDriver) {
     fun `accessible name`(html: String) {
         driver.render(html)
 
+        assertEquals("accessible name", driver.getBy(TestId, "x").accessibleName)
         expect(driver.getBy(TestId, "x")).toHaveAccessibleName()
         expect(driver.getBy(TestId, "x")).toHaveAccessibleName("accessible name")
-        assertEquals("accessible name", driver.getBy(TestId, "x").accessibleName)
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName("abc")
     }
 
     @ParameterizedTest
@@ -44,15 +45,8 @@ class AccessibleNameTest(private val driver: RemoteWebDriver) {
     fun `not accessible name`(html: String) {
         driver.render(html)
 
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName()
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName("abc")
         assertEquals("", driver.getBy(TestId, "x").accessibleName)
-    }
-
-    @Test
-    fun `wrong accessible name`() {
-        driver.render("""<img data-testid="x" src="" alt="accessible name" />""")
-
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName()
         expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName("abc")
     }
 
@@ -65,5 +59,17 @@ class AccessibleNameTest(private val driver: RemoteWebDriver) {
 
         expect(driver.getBy(TestId, "x")).toHaveAccessibleName(Regex("accessible", IGNORE_CASE))
         expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName(Regex("nope", IGNORE_CASE))
+    }
+
+    @Test
+    fun function() {
+        driver.render("""<img data-testid="x" src="" alt="accessible name" />""")
+
+        expect(driver.getBy(TestId, "x")).toHaveAccessibleName {
+            it.endsWith("name")
+        }
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName {
+            it.endsWith("NAME")
+        }
     }
 }
