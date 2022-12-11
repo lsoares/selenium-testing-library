@@ -2,7 +2,8 @@ package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.By
+import org.openqa.selenium.By.id
+import org.openqa.selenium.By.tagName
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.interactions.*
@@ -32,29 +33,27 @@ class ClipboardTest(private val driver: RemoteWebDriver) {
     fun cut() {
         driver
             .render("""<input id="a" />""")
-            .type(driver.findElement(By.id("a")), "text")
+            .type(driver.findElement(id("a")), "text")
             .pointer(
                 mapOf("target" to driver.findElement(ByRole("textbox")), "offset" to 0, "keys" to "[MouseLeft>]"),
                 mapOf("offset" to 5)
             )
-        assertFalse(driver.findElement(By.id("a")).value?.toString()?.isEmpty() ?: true)
+        assertFalse(driver.findElement(id("a")).value?.toString()?.isEmpty() ?: true)
 
         driver.user.cut()
 
-        assertTrue(driver.findElement(By.id("a")).value?.toString()?.isEmpty() ?: false)
+        assertTrue(driver.findElement(id("a")).value?.toString()?.isEmpty() ?: false)
     }
 
     @Disabled
     @Test
     fun `copy paste`() {
         driver.render(
-            """
-            <h1>heading: title</h1>
-            <input />
-        """
+            """<h1>heading: title</h1>
+                     <input />"""
         )
         driver.user("writeToClipboard" to true).pointer(
-            mapOf("target" to driver.findElement(By.tagName("h1")), "offset" to 7, "keys" to "[MouseLeft>]"),
+            mapOf("target" to driver.findElement(tagName("h1")), "offset" to 7, "keys" to "[MouseLeft>]"),
             mapOf("offset" to 14)
         )
         driver.user.copy()

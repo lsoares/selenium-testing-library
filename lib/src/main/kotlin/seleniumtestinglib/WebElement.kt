@@ -8,20 +8,26 @@ import org.openqa.selenium.remote.RemoteWebElement
 import org.openqa.selenium.support.ui.Select
 
 val WebElement.value: Any?
-    get() = when (tagName) {
-        "input"    -> when (getAttribute("type")) {
-            "number"            -> getAttribute("value")?.toIntOrNull()
-            "checkbox", "radio" -> throw IllegalArgumentException("use toBeChecked or toHaveFormValues for checkbox and radio inputs")
-            else                -> getAttribute("value")
+    get() {
+        if (tagName == "input" && getAttribute("type") == "number")
+            return getAttribute("value")?.toIntOrNull()
+        if (tagName == "select" && Select(this).isMultiple) {
+            return Select(this).allSelectedOptions.map { it.getAttribute("value") }
         }
+        return getAttribute("value")
+    }
 
-        "select"   -> when {
-            Select(this).isMultiple -> Select(this).values
-            else                    -> getAttribute("value")
+val WebElement.displayValue: Any?
+    get() {
+        if (tagName == "select") {
+            return Select(this).let {
+                when {
+                    it.isMultiple -> it.allSelectedOptions.map(WebElement::getText)
+                    else          -> it.firstSelectedOption.text
+                }
+            }
         }
-
-        "textarea" -> getAttribute("value")
-        else       -> throw IllegalArgumentException("$tagName does not hold values")
+        return getAttribute("value")
     }
 
 val WebElement.formValues: Map<String, Any?>
@@ -36,6 +42,7 @@ val WebElement.formValues: Map<String, Any?>
                 "input" -> when (it.getAttribute("type")) {
                     "checkbox" -> if (findElements(cssSelector("[name=$name]")).size > 1) {
                         values.putIfAbsent(name, mutableListOf<String?>())
+                        @Suppress("UNCHECKED_CAST")
                         if (it.isChecked) (values[name] as MutableList<String?>).add(value)
                     } else values[name] = it.isChecked
 
@@ -47,12 +54,6 @@ val WebElement.formValues: Map<String, Any?>
             }
         }
         return values
-    }
-
-val Select.values: List<String>
-    get() {
-        require(isMultiple)
-        return allSelectedOptions.map { it.getAttribute("value") }
     }
 
 val WebElement.isChecked: Boolean
@@ -100,14 +101,15 @@ val WebElement.isPartiallyChecked: Boolean
         ) as Boolean
     }
 
-@Suppress("UNCHECKED_CAST")
 val WebElement.files: List<Map<String, Any>>
     get() {
         require(tagName == "input")
         require(getAttribute("type") == "file")
+        @Suppress("UNCHECKED_CAST")
         return wrappedDriver.executeScript(
             "return arguments[0].files",
             this
+
         ) as? List<Map<String, Any>> ?: emptyList()
     }
 

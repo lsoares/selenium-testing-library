@@ -168,6 +168,18 @@ data class JestDomMatcher(
     }
 
     fun toHaveDisplayValue(value: String) {
+        compare(value, element?.displayValue)
+    }
+
+    fun toHaveDisplayValue(value: Regex) {
+        validate(element?.displayValue?.let {
+            if (it is List<*>) it.filter { value.find(it.toString()) != null }.takeIf(List<Any?>::isNotEmpty)
+            else value.find(it.toString())
+        } != null, mapOf("text" to element?.text))
+    }
+
+    fun toHaveDisplayValue(value: List<String>) {
+        compare(value, element?.displayValue)
     }
 
     fun toBeChecked() {
@@ -191,7 +203,7 @@ data class JestDomMatcher(
 
     private fun validate(condition: Boolean, debug: Map<String, Any?> = emptyMap()) {
         check(condition xor requireTrue.not()) {
-            "condition: $condition, requireTrue: $requireTrue, debug: ${debug.toList()}"
+            "condition: $condition, requireTrue: $requireTrue\ndebug: ${debug.toList()}"
         }
     }
 
