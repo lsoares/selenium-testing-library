@@ -1,6 +1,5 @@
 package seleniumtestinglib
 
-import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.id
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -18,42 +17,36 @@ val WebElement.value: Any?
     }
 
 val WebElement.displayValue: Any?
-    get() {
-        if (tagName == "select") {
-            return Select(this).let {
-                when {
-                    it.isMultiple -> it.allSelectedOptions.map(WebElement::getText)
-                    else          -> it.firstSelectedOption.text
-                }
+    get() = if (tagName == "select")
+        Select(this).let {
+            when {
+                it.isMultiple -> it.allSelectedOptions.map(WebElement::getText)
+                else          -> it.firstSelectedOption.text
             }
-        }
-        return getAttribute("value")
-    }
+        } else getAttribute("value")
 
 val WebElement.formValues: Map<String, Any?>
     get() {
-        require(tagName == "form") { "this should be a form but it's a $tagName" }
-        val formInputs = findElements(cssSelector("input[name], select[name], textarea[name]"))
-        val values = mutableMapOf<String, Any?>()
-        formInputs.forEach {
-            val name = it.getAttribute("name")
-            val value = it.getAttribute("value")
-            when (it.tagName) {
-                "input" -> when (it.getAttribute("type")) {
-                    "checkbox" -> if (findElements(cssSelector("[name=$name]")).size > 1) {
-                        values.putIfAbsent(name, mutableListOf<String?>())
-                        @Suppress("UNCHECKED_CAST")
-                        if (it.isChecked) (values[name] as MutableList<String?>).add(value)
-                    } else values[name] = it.isChecked
+        require(tagName == "form" || tagName == "fieldset") { "this should be a form or a fieldset but it's a $tagName" }
+        @Suppress("UNCHECKED_CAST")
+        return (wrappedDriver.executeScript("return arguments[0].elements", this) as List<WebElement>)
+            .groupBy { it.getAttribute("name") }
+            .filterKeys(String::isNotBlank)
+            .mapValues { (_, elements) ->
+                when (elements.first().tagName) {
+                    "input" -> when (elements.first().getAttribute("type")) {
+                        "checkbox" -> when {
+                            elements.size > 1 -> elements.filter { it.isChecked }.map { it.getAttribute("value") }
+                            else              -> elements.first().isChecked
+                        }
 
-                    "radio"    -> if (it.isSelected) values[name] = value
-                    else       -> values[name] = it.value
+                        "radio"    -> elements.firstOrNull { it.isChecked }?.value
+                        else       -> elements.first().value
+                    }
+
+                    else    -> elements.first().value
                 }
-
-                else    -> values[name] = it.value
             }
-        }
-        return values
     }
 
 val WebElement.isChecked: Boolean
@@ -96,8 +89,7 @@ val WebElement.isPartiallyChecked: Boolean
     get() {
         require(ariaRole == "checkbox")
         return wrappedDriver.executeScript(
-            """return arguments[0].indeterminate 
-            || arguments[0].ariaChecked == 'mixed'""", this
+            "return arguments[0].indeterminate || arguments[0].ariaChecked == 'mixed'", this
         ) as Boolean
     }
 

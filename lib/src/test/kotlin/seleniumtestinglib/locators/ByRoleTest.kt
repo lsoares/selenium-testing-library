@@ -68,9 +68,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `role with regex in name parameter`() {
-        driver.render(
-            """<h1>something as a user something</h1>"""
-        )
+        driver.render("""<h1>something as a user something</h1>""")
 
         val result = driver.findElements(ByRole("heading".asJsString(), name = "/as a user/i".asJsRegex()))
 

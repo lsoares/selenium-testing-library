@@ -25,9 +25,9 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.selectOptions(select, "1", "3")
 
-        assertTrue(driver.findElement(ByRole("option", name = "A")).isSelected)
-        assertFalse(driver.findElement(ByRole("option", name = "B")).isSelected)
-        assertTrue(driver.findElement(ByRole("option", name = "C")).isSelected)
+        assertTrue(select.findElement(ByRole("option", name = "A")).isSelected)
+        assertFalse(select.findElement(ByRole("option", name = "B")).isSelected)
+        assertTrue(select.findElement(ByRole("option", name = "C")).isSelected)
     }
 
     @Test
@@ -43,12 +43,12 @@ class SelectOptionsTest(private val driver: RemoteWebDriver) {
 
         driver.user.selectOptions(
             select,
-            driver.findElement(ByRole("option", name = "A")),
-            driver.findElement(ByRole("option", name = "C")),
+            select.findElement(ByRole("option", name = "A")),
+            select.findElement(ByRole("option", name = "C")),
         )
 
-        assertTrue(driver.findElement(ByRole("option", name = "A")).isSelected)
-        assertFalse(driver.findElement(ByRole("option", name = "B")).isSelected)
-        assertTrue(driver.findElement(ByRole("option", name = "C")).isSelected)
+        assertTrue(select.findElement(ByRole("option", name = "A")).isSelected)
+        assertFalse(select.findElement(ByRole("option", name = "B")).isSelected)
+        assertTrue(select.findElement(ByRole("option", name = "C")).isSelected)
     }
 }
