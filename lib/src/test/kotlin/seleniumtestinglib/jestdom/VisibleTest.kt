@@ -5,9 +5,12 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.isVisible
 import seleniumtestinglib.queries.ByType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class VisibleTest(private val driver: RemoteWebDriver) {
@@ -24,8 +27,10 @@ class VisibleTest(private val driver: RemoteWebDriver) {
     )
     fun visible(html: String) {
         driver.render(html)
+        val element = driver.getBy(TestId, "x")
 
-        expect(driver.getBy(TestId, "x")).toBeVisible()
+        assertTrue(element.isVisible)
+        expect(element).toBeVisible()
     }
 
     @ParameterizedTest
@@ -48,7 +53,9 @@ class VisibleTest(private val driver: RemoteWebDriver) {
     )
     fun `not visible`(html: String) {
         driver.render(html)
+        val element = driver.getBy(TestId, "x")
 
-        expect(driver.getBy(TestId, "x")).not.toBeVisible()
+        assertFalse(element.isVisible)
+        expect(element).not.toBeVisible()
     }
 }

@@ -18,7 +18,7 @@ data class JestDomMatcher(
     val not get() = JestDomMatcher(element, requireTrue.not())
 
     fun toBeDisabled() {
-        validate(element?.isEnabled == false)
+        validate(element?.isDisabled == true)
     }
 
     fun toBeEnabled() {
@@ -31,7 +31,7 @@ data class JestDomMatcher(
     }
 
     fun toBeInvalid() {
-        copy(requireTrue = requireTrue.not()).toBeValid()
+        validate(element?.isInvalid == true)
     }
 
     fun toBeInTheDocument() {
@@ -47,7 +47,7 @@ data class JestDomMatcher(
     }
 
     fun toBeVisible() {
-        validate(element?.isDisplayed == true)
+        validate(element?.isVisible == true)
     }
 
     fun toContainElement(ancestor: WebElement?) {
@@ -99,7 +99,7 @@ data class JestDomMatcher(
 
     fun toHaveClass(vararg classNames: String, exact: Boolean = false) {
         val expectedClasses = classNames.map { it.split(Regex("\\s+")) }.flatten().toSet()
-        val elementClasses = element?.classList ?: emptySet()
+        val elementClasses = element?.classes ?: emptySet()
         if (expectedClasses.isEmpty()) {
             validate(elementClasses.isNotEmpty())
             return
@@ -129,7 +129,6 @@ data class JestDomMatcher(
                 it.split(":").let { it.first().trim().normalizeCssProp() to it.last().trim() }
             }
         val existingCss = expectedCss.keys
-            .map { it.normalizeCssProp() }
             .associateWith { element?.getCssValue(it) }
         compare(expectedCss, existingCss)
     }

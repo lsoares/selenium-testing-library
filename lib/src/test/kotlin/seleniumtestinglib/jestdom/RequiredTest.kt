@@ -6,7 +6,10 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.isRequired
 import seleniumtestinglib.render
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class RequiredTest(private val driver: RemoteWebDriver) {
@@ -29,7 +32,9 @@ class RequiredTest(private val driver: RemoteWebDriver) {
     fun required(html: String) {
         driver.render(html)
 
-        expect(driver.findElement(By.cssSelector("input,select,textarea,div"))).toBeRequired()
+        val element = driver.findElement(By.cssSelector("input,select,textarea,div"))
+        assertTrue(element.isRequired)
+        expect(element).toBeRequired()
     }
 
     @ParameterizedTest
@@ -44,6 +49,8 @@ class RequiredTest(private val driver: RemoteWebDriver) {
     fun `not required`(html: String) {
         driver.render(html)
 
-        expect(driver.findElement(By.cssSelector("input,div"))).not.toBeRequired()
+        val element = driver.findElement(By.cssSelector("input,div"))
+        assertFalse(element.isRequired)
+        expect(element).not.toBeRequired()
     }
 }

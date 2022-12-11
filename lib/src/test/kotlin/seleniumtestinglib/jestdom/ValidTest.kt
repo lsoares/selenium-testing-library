@@ -6,8 +6,11 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.By.id
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.isValid
 import seleniumtestinglib.queries.ByType.*
 import seleniumtestinglib.render
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @ExtendWith(DriverLifeCycle::class)
 class ValidTest(private val driver: RemoteWebDriver) {
@@ -24,8 +27,10 @@ class ValidTest(private val driver: RemoteWebDriver) {
     )
     fun valid(html: String) {
         driver.render(html)
+        val element = driver.findElement(id("x"))
 
-        expect(driver.findElement(id("x"))).toBeValid()
+        assertTrue(element.isValid)
+        expect(element).toBeValid()
     }
 
     @ParameterizedTest
@@ -40,7 +45,9 @@ class ValidTest(private val driver: RemoteWebDriver) {
     )
     fun `not valid`(html: String) {
         driver.render(html)
+        val element = driver.findElement(id("x"))
 
-        expect(driver.findElement(id("x"))).not.toBeValid()
+        assertFalse(element.isValid)
+        expect(element).not.toBeValid()
     }
 }

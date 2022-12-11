@@ -58,6 +58,9 @@ val WebElement.isChecked: Boolean
         throw IllegalArgumentException("invalid aria role: $ariaRole")
     }
 
+val WebElement.isDisabled: Boolean
+    get() = isEnabled.not()
+
 val WebElement.isFocused: Boolean
     get() = equals(wrappedDriver.switchTo().activeElement())
 
@@ -84,6 +87,12 @@ val WebElement.isValid
             this
         ) in setOf(null, "false")
     }
+
+val WebElement.isInvalid
+    get() = isValid.not()
+
+val WebElement.isVisible
+    get() = isDisplayed
 
 val WebElement.isPartiallyChecked: Boolean
     get() {
@@ -118,7 +127,7 @@ val WebElement.accessibleDescription: String
             ?: getAttribute("aria-description")
             ?: getAttribute("title")
 
-val WebElement.classList: Set<String>
+val WebElement.classes: Set<String>
     get() = getAttribute("class").takeIf(String::isNotBlank)?.split(Regex("\\s+"))?.toSet() ?: emptySet()
 
 val WebElement.errorMessage: String?

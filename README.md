@@ -65,6 +65,27 @@ driver.user.selectOptions(driver.findElement(ByRole("listbox")), "C")
 
 ℹ️ _user-event's JavaScript only loads if it's used._
 
+## jest-dom
+
+[jest-dom](https://testing-library.com/docs/ecosystem-jest-dom) matchers are available with a similar API, although it
+makes more sense to use the corresponding utilities and assert with JUnit (or an assertion library):
+
+```kotlin
+// API similar to the original version:
+expect(button.toHaveAccessibleDescription("Register"))
+expect(checkboxMarketing).toBeChecked()
+assertEquals(setOf("btn", "btn-danger", "extra"), deleteButton.classes)
+expect(element).not.toBePartiallyChecked()
+
+// utilities that can be used on their own:
+val formValues = registrationForm.formValues
+val userAgrees = checkboxMarketing.isChecked
+val name = element.accessibleName
+val displayedValue = element.displayValue
+```
+
+ℹ️ _This functionality was ported (made solely with Selenium rather than using jest-dom's JavaScript)._
+
 ---
 
 ℹ️ _[Read more](https://medium.com/codex/the-testing-library-meets-selenium-5f74cc712114)._

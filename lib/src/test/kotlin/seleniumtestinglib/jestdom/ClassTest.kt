@@ -3,7 +3,7 @@ package seleniumtestinglib.jestdom
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.classList
+import seleniumtestinglib.classes
 import seleniumtestinglib.queries.ByType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
@@ -22,7 +22,7 @@ class ClassTest(private val driver: RemoteWebDriver) {
         )
 
         val deleteButton = driver.getBy(TestId, "delete-button")
-        assertEquals(setOf("btn", "btn-danger", "extra"), deleteButton.classList)
+        assertEquals(setOf("btn", "btn-danger", "extra"), deleteButton.classes)
         expect(deleteButton).toHaveClass()
         expect(deleteButton).toHaveClass("extra")
         expect(deleteButton).toHaveClass("btn-danger btn")
@@ -37,7 +37,7 @@ class ClassTest(private val driver: RemoteWebDriver) {
         driver.render("""<button data-testid="no-classes">No Classes</button>""")
 
         val noClasses = driver.getBy(TestId, "no-classes")
-        assertEquals(emptySet(), noClasses.classList)
+        assertEquals(emptySet(), noClasses.classes)
         expect(noClasses).not.toHaveClass()
     }
 }

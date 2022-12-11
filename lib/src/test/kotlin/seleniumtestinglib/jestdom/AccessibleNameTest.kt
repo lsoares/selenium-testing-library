@@ -10,6 +10,7 @@ import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class AccessibleNameTest(private val driver: RemoteWebDriver) {
@@ -62,7 +63,7 @@ class AccessibleNameTest(private val driver: RemoteWebDriver) {
 
         )
 
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleName(Regex("accessible", RegexOption.IGNORE_CASE))
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName(Regex("nope", RegexOption.IGNORE_CASE))
+        expect(driver.getBy(TestId, "x")).toHaveAccessibleName(Regex("accessible", IGNORE_CASE))
+        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName(Regex("nope", IGNORE_CASE))
     }
 }
