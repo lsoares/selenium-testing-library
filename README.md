@@ -50,7 +50,6 @@ val result4 = driver.getAllBy(Role, "listbox")
 
 ```
 
-ℹ️ _All the Testing Library core functionality is available._
 
 ## User Interactions
 
