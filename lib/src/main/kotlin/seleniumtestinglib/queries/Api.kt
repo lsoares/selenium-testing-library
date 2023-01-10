@@ -20,16 +20,16 @@ internal fun RemoteWebDriver.executeTLQuery(
         ?.joinToString(", ", prefix = "{ ", postfix = " }") {
             "${it.key}: ${it.value?.escaped}"
         }
-    return executeTLScript(
-        "return"
-            + " await".takeIf { queryType == QueryType.Find }.orEmpty()
-            + " screen."
-            + queryType.name.lowercase()
-            + "All".takeIf { all }.orEmpty()
-            + "By"
-            + by.name
-            + """(${textMatch.escaped}${escapedOptions?.let { ", $it" } ?: ""})"""
-    )
+    return listOfNotNull(
+        "return",
+        " await".takeIf { queryType == QueryType.Find },
+        " screen.",
+        queryType.name.lowercase(),
+        "All".takeIf { all },
+        "By",
+        by.name,
+        """(${textMatch.escaped}${escapedOptions?.let { ", $it" } ?: ""})"""
+    ).joinToString("").let(::executeTLScript)
 }
 
 enum class ByType {
@@ -40,7 +40,7 @@ internal enum class QueryType {
     Find, Query, Get
 }
 
-sealed class JsType constructor(open val value: String) {
+sealed class JsType constructor(internal open val value: String) {
     class JsString(override val value: String) : JsType(value)
     class JsFunction(override val value: String) : JsType(value)
     class JsRegex(override val value: String) : JsType(value)
@@ -54,11 +54,9 @@ sealed class JsType constructor(open val value: String) {
 
 private fun RemoteWebDriver.executeTLScript(script: String): Any? {
     ensureScript("testing-library.js", "screen?.getAllByAltText")
-    return runCatching {
-        executeScript(script)
-    }.onFailure {
-        System.err.println("JavaScript error running Testing Library script:\n$script")
-    }.getOrThrow()
+    return runCatching { executeScript(script) }
+        .onFailure { System.err.println("JavaScript error running Testing Library script:\n$script") }
+        .getOrThrow()
 }
 
 private val Any?.escaped: Any?
