@@ -53,7 +53,7 @@ sealed class JsType constructor(internal open val value: String) {
 }
 
 private fun RemoteWebDriver.executeTLScript(script: String): Any? {
-    ensureScript("testing-library.js", "screen?.getAllByAltText")
+    ensureScript("testing-library.js", "screen?.queryAllByTestId")
     return runCatching { executeScript(script) }
         .onFailure { System.err.println("JavaScript error running Testing Library script:\n$script") }
         .getOrThrow()
