@@ -11,9 +11,9 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@testing-library/dom": "^8.19.0",
-    "@testing-library/user-event": "^14.4.3",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "@testing-library/dom": "9.2.0",
+    "@testing-library/user-event": "14.4.3",
+    "webpack": "5.81.0",
+    "webpack-cli": "5.0.2"
   }
 }
