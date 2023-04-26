@@ -14,7 +14,7 @@ import seleniumtestinglib.queries.executeTLQuery
  * https://testing-library.com/docs/queries/byrole
  */
 data class ByRole(
-    private val role: JsType,
+    private val role: String,
     private val exact: Boolean? = null,
     private val hidden: Boolean? = null,
     private val name: JsType? = null,
@@ -29,41 +29,11 @@ data class ByRole(
     private val level: Int? = null,
 ) : By() {
 
-    constructor(
-        role: String,
-        exact: Boolean? = null,
-        hidden: Boolean? = null,
-        name: String? = null,
-        description: String? = null,
-        normalizer: String? = null,
-        selected: Boolean? = null,
-        checked: Boolean? = null,
-        pressed: Boolean? = null,
-        current: Boolean? = null,
-        expanded: Boolean? = null,
-        queryFallbacks: Boolean? = null,
-        level: Int? = null,
-    ) : this(
-        role = role.asJsString(),
-        exact = exact,
-        hidden = hidden,
-        name = name?.asJsString(),
-        description = description?.asJsString(),
-        normalizer = normalizer,
-        selected = selected,
-        checked = checked,
-        pressed = pressed,
-        current = current,
-        expanded = expanded,
-        queryFallbacks = queryFallbacks,
-        level = level,
-    )
-
     @Suppress("UNCHECKED_CAST")
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.Role,
-            textMatch = role,
+            textMatch = role.asJsString(),
             options = mapOf(
                 "exact" to exact,
                 "name" to name,

@@ -44,7 +44,7 @@ driver.findElements(ByTitle("title 1"))
 val result1 = driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
 val result2 = driver.getBy(DisplayValue, "incredibles")
 val result3 = driver.queryAllBy(LabelText, "label x")
-val result4 = driver.getAllBy(Role, "listbox")
+val result4 = driver.getAllBy(Role, "listbox".asJsString())
 
 ```
 
@@ -57,7 +57,7 @@ The Testing Library's [user-event](https://testing-library.com/docs/user-event/i
 driver.user.click(active)
 driver.user.dblClick(panel)
 driver.user.type(input, "foobar")
-driver.user.selectOptions(driver.findElement(ByRole("listbox")), "C")
+driver.user.selectOptions(driver.findElement(ByRole("listbox", name = "C".asJsString())))
 ```
 
 ℹ️ _user-event's JavaScript only loads if it's used._

@@ -52,25 +52,10 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
-    fun regex() {
-        driver.render(
-            """
-            <div role="tablist">
-                <button role="tab" aria-selected="true">Native</button>
-            </div>
-        """
-        )
-
-        val result = driver.findElement(ByRole("/TABL/i".asJsRegex()))
-
-        assertEquals("div", result.tagName)
-    }
-
-    @Test
     fun `role with regex in name parameter`() {
         driver.render("""<h1>something as a user something</h1>""")
 
-        val result = driver.findElements(ByRole("heading".asJsString(), name = "/as a user/i".asJsRegex()))
+        val result = driver.findElements(ByRole("heading", name = "/as a user/i".asJsRegex()))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -108,7 +93,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElements(ByRole("textbox", name = "Email address"))
+        val result = driver.findElements(ByRole("textbox", name = "Email address".asJsString()))
 
         assertEquals("input", result.single().tagName)
     }
@@ -151,7 +136,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         )
 
         val result =
-            driver.findElements(ByRole("alertdialog", description = "Your session is about to expire!"))
+            driver.findElements(ByRole("alertdialog", description = "Your session is about to expire!".asJsString()))
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
@@ -173,7 +158,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         val result = driver.findElements(
             ByRole(
-                role = "alertdialog".asJsString(),
+                role = "alertdialog",
                 description = "/your session/i".asJsRegex(),
             )
         )
@@ -198,7 +183,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         val result = driver.findElements(
             ByRole(
-                role = "alertdialog".asJsString(),
+                role = "alertdialog",
                 description = "content => content.endsWith('!')".asJsFunction(),
             )
         )
