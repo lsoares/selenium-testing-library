@@ -29,7 +29,8 @@ internal fun RemoteWebDriver.executeTLQuery(
         "By",
         by.name,
         """(${textMatch.escaped}${escapedOptions?.let { ", $it" } ?: ""})"""
-    ).joinToString("").let(::executeTLScript)
+    ).joinToString("")
+        .let(::executeTLScript)
 }
 
 enum class ByType {
@@ -40,7 +41,7 @@ internal enum class QueryType {
     Find, Query, Get
 }
 
-sealed class JsType constructor(internal open val value: String) {
+sealed class JsType(internal open val value: String) {
     class JsString(override val value: String) : JsType(value)
     class JsFunction(override val value: String) : JsType(value)
     class JsRegex(override val value: String) : JsType(value)

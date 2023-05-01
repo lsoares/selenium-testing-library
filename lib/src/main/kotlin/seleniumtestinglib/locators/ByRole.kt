@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.queries.ByType
 import seleniumtestinglib.queries.JsType
-import seleniumtestinglib.queries.JsType.Companion.asJsFunction
 import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.queries.executeTLQuery
 
@@ -15,7 +14,6 @@ import seleniumtestinglib.queries.executeTLQuery
  */
 data class ByRole(
     private val role: String,
-    private val exact: Boolean? = null,
     private val hidden: Boolean? = null,
     private val name: JsType? = null,
     private val description: JsType? = null,
@@ -35,18 +33,19 @@ data class ByRole(
             by = ByType.Role,
             textMatch = role.asJsString(),
             options = mapOf(
-                "exact" to exact,
-                "name" to name,
                 "hidden" to hidden,
+                "name" to name,
                 "description" to description,
-                "normalizer" to normalizer?.asJsFunction(),
                 "selected" to selected,
+                // TODO: busy
                 "checked" to checked,
                 "pressed" to pressed,
+                // TODO: suggest
                 "current" to current,
                 "expanded" to expanded,
                 "queryFallbacks" to queryFallbacks,
                 "level" to level,
+                // TODO: value
             ),
         ) as List<WebElement>
 }

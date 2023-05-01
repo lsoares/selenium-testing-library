@@ -28,4 +28,21 @@ class ByTestIdTest(private val driver: RemoteWebDriver) {
 
         assertEquals("div", result.tagName)
     }
+
+
+    @Test
+    fun `not exact`() {
+        driver.render(
+            """
+            <div>
+                <span data-testid='foobar'>I accept</span>
+                <p>I accept</p>
+            </div>
+        """
+        )
+
+        val result = driver.findElement(ByTestId("foo", exact = false))
+
+        assertEquals("span", result.tagName)
+    }
 }

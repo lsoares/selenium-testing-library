@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.8.21"
     `java-library`
+    id("com.github.ben-manes.versions") version "0.46.0"
     signing
     `maven-publish`
 }
@@ -13,7 +14,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.seleniumhq.selenium:selenium-java:4.9.0")
     testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testImplementation("io.github.bonigarcia:webdrivermanager:5.3.2")
 }
 
@@ -31,7 +32,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.luissoares"
             artifactId = "selenium-testing-library"
-            version = "3.5"
+            version = "3.6"
             from(components["kotlin"])
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
@@ -77,6 +78,11 @@ publishing {
 
 signing {
     sign(publishing.publications["maven"])
+}
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+    sourceCompatibility = "11"
+    targetCompatibility = "11"
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

@@ -37,21 +37,6 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     )
 
     @Test
-    fun `not exact`() {
-        driver.render(
-            """
-            <div role="tablist">
-                <button role="tab" aria-selected="true">Native</button>
-            </div>
-        """
-        )
-
-        val result = driver.findElement(ByRole("tabli", exact = false))
-
-        assertEquals("div", result.tagName)
-    }
-
-    @Test
     fun `role with regex in name parameter`() {
         driver.render("""<h1>something as a user something</h1>""")
 

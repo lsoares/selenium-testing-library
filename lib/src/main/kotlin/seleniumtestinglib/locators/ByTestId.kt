@@ -15,15 +15,18 @@ import seleniumtestinglib.queries.executeTLQuery
  */
 data class ByTestId(
     private val text: JsType,
+    private val exact: Boolean? = null,
     private val normalizer: String? = null,
 ) : By() {
 
     constructor(
         text: String,
+        exact: Boolean? = null,
         normalizer: String? = null,
     ) : this(
         text = text.asJsString(),
         normalizer = normalizer,
+        exact = exact,
     )
 
     @Suppress("UNCHECKED_CAST")
@@ -33,6 +36,7 @@ data class ByTestId(
             textMatch = text,
             options = mapOf(
                 "normalizer" to normalizer?.asJsFunction(),
+                "exact" to exact,
             ),
         ) as List<WebElement>
 }
