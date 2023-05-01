@@ -2,6 +2,7 @@ package seleniumtestinglib.locators
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -18,6 +19,15 @@ import kotlin.test.assertEquals
 @ExtendWith(DriverLifeCycle::class)
 class ByRoleTest(private val driver: RemoteWebDriver) {
 
+    private fun examples() = setOf(
+        of("textbox", """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),
+        of("textbox", """<textarea id="txtboxMultiline" required></textarea>"""),
+        of("button", """"<div id="saveChanges" tabindex="0" role="button" aria-pressed="false">Save</div>"""),
+        of("button", """<button type="button" id="saveChanges">Save</button>"""),
+        of("form", """<div role="form"></div>"""),
+        of("form", """<form aria-label="xyz">test</form>"""),
+    )
+
     @ParameterizedTest
     @MethodSource("examples")
     fun `by role`(role: String, content: String) {
@@ -28,14 +38,6 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals(role, result.ariaRole)
     }
 
-    private fun examples() = setOf(
-        of("textbox", """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),
-        of("textbox", """<textarea id="txtboxMultiline" required></textarea>"""),
-        of("button", """"<div id="saveChanges" tabindex="0" role="button" aria-pressed="false">Save</div>"""),
-        of("button", """<button type="button" id="saveChanges">Save</button>"""),
-        of("form", """<div role="form"></div>"""),
-        of("form", """<form aria-label="xyz">test</form>"""),
-    )
 
     @Test
     fun `role with regex in name parameter`() {
@@ -84,6 +86,11 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals("input", result.single().tagName)
     }
 
+    private fun `hidden values`() = setOf(
+        of(false, listOf("Close dialog")),
+        of(true, listOf("Open dialog", "Close dialog")),
+    )
+
     @ParameterizedTest
     @MethodSource("hidden values")
     fun hidden(hidden: Boolean, expectedButtonsFound: List<String>) {
@@ -100,11 +107,6 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         assertEquals(expectedButtonsFound, result.map { it.text })
     }
-
-    private fun `hidden values`() = setOf(
-        of(false, listOf("Close dialog")),
-        of(true, listOf("Open dialog", "Close dialog")),
-    )
 
     @Test
     fun description() {
@@ -177,6 +179,11 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
 
+    private fun `heading level values`() = setOf(
+        of(2, listOf("h2", "div")),
+        of(null, listOf("h1", "h2", "h3", "div"))
+    )
+
     @ParameterizedTest
     @MethodSource("heading level values")
     fun `heading level`(level: Int?, expectedResults: List<String>) {
@@ -191,11 +198,6 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         assertEquals(expected = expectedResults, result.map { it.tagName })
     }
-
-    private fun `heading level values`() = setOf(
-        of(2, listOf("h2", "div")),
-        of(null, listOf("h1", "h2", "h3", "div"))
-    )
 
     @Test
     fun checked() {
@@ -251,6 +253,12 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals("expanded", result.single().text)
     }
 
+    private fun `test cases query fallbacks`() = setOf(
+        of(false, 0),
+        of(null, 0),
+        of(true, 1),
+    )
+
     @ParameterizedTest
     @MethodSource("test cases query fallbacks")
     fun `query fallbacks`(queryFallbacks: Boolean?, expectedCount: Int) {
@@ -262,12 +270,6 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         assertEquals(expectedCount, result.size)
     }
-
-    private fun `test cases query fallbacks`() = setOf(
-        of(false, 0),
-        of(null, 0),
-        of(true, 1),
-    )
 
     @Test
     fun busy() {
@@ -285,8 +287,14 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals("Login failed", result.single().text)
     }
 
-    @Test
-    fun value() {
+    private fun `testing value filter`() = setOf(
+        of(Value(now = 5), listOf("Volume")),
+        of(Value(min = 0), listOf("Volume", "Pitch")),
+    )
+
+    @ParameterizedTest
+    @MethodSource("testing value filter")
+    fun value(value: Value, expectedSpinButtons: List<String>) {
         driver.render(
             """
              <section>
@@ -312,12 +320,8 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result1 = driver.findElements(ByRole("spinbutton", value = Value(now = 5)))
+        val result = driver.findElements(ByRole("spinbutton", value = value))
 
-        assertEquals("Volume", result1.single().text)
-
-        val result2 = driver.findElements(ByRole("spinbutton", value = Value(min = 0)))
-
-        assertEquals(listOf("Volume", "Pitch"), result2.map { it.text })
+        assertEquals(expectedSpinButtons, result.map { it.text })
     }
 }
