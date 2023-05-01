@@ -16,10 +16,8 @@ internal fun RemoteWebDriver.executeTLQuery(
     val escapedOptions = options
         .filterValues { it != null }
         .takeIf(Map<String, Any?>::isNotEmpty)
-        ?.entries
-        ?.joinToString(", ", prefix = "{ ", postfix = " }") {
-            "${it.key}: ${it.value?.escaped}"
-        }
+        ?.escaped
+
     return listOfNotNull(
         "return",
         " await".takeIf { queryType == QueryType.Find },
@@ -41,7 +39,7 @@ internal enum class QueryType {
     Find, Query, Get
 }
 
-sealed class JsType(internal open val value: String) {
+sealed class JsType(internal open val value: Any) {
     class JsString(override val value: String) : JsType(value)
     class JsFunction(override val value: String) : JsType(value)
     class JsRegex(override val value: String) : JsType(value)
@@ -63,7 +61,11 @@ private fun RemoteWebDriver.executeTLScript(script: String): Any? {
 private val Any?.escaped: Any?
     get() = when (this) {
         is JsType.JsString -> value.escaped
-        is JsType          -> value
-        is String          -> "'${replace("'", "\\'")}'"
-        else               -> this
+        is JsType.JsRegex -> value
+        is JsType.JsFunction -> value
+        is String -> "'${replace("'", "\\'")}'"
+        is Map<*, *> -> entries.joinToString(", ", prefix = "{ ", postfix = " }") {
+            "${it.key}: ${it.value?.escaped}"
+        }
+        else -> this
     }

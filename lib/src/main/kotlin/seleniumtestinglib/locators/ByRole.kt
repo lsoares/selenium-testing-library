@@ -27,6 +27,7 @@ data class ByRole(
     private val expanded: Boolean? = null,
     private val queryFallbacks: Boolean? = null,
     private val level: Int? = null,
+    private val value: Value? = null,
 ) : By() {
 
     @Suppress("UNCHECKED_CAST")
@@ -47,7 +48,14 @@ data class ByRole(
                 "expanded" to expanded,
                 "queryFallbacks" to queryFallbacks,
                 "level" to level,
-                // TODO: value
+                "value" to value?.toMap(),
             ),
         ) as List<WebElement>
+
+    data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: JsType? = null) {
+        @Suppress("UNCHECKED_CAST")
+        fun toMap(): Map<String, Any> =
+            mapOf("min" to min, "max" to max, "now" to now, "text" to text)
+                .filterValues { it != null } as Map<String, Any>
+    }
 }

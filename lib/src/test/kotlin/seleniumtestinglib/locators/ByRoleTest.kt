@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.locators.ByRole.Value
 import seleniumtestinglib.queries.JsType.*
 import seleniumtestinglib.queries.JsType.Companion.asJsFunction
 import seleniumtestinglib.queries.JsType.Companion.asJsRegex
@@ -282,5 +283,41 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         val result = driver.findElements(ByRole("alert", busy = false))
 
         assertEquals("Login failed", result.single().text)
+    }
+
+    @Test
+    fun value() {
+        driver.render(
+            """
+             <section>
+                <div
+                  role="spinbutton"
+                  aria-valuenow="5"
+                  aria-valuemin="0"
+                  aria-valuemax="10"
+                  aria-valuetext="medium"
+                >
+                  Volume
+                </div>
+                <div
+                  role="spinbutton"
+                  aria-valuenow="3"
+                  aria-valuemin="0"
+                  aria-valuemax="10"
+                  aria-valuetext="medium"
+                >
+                  Pitch
+                </div>
+              </section>
+        """
+        )
+
+        val result1 = driver.findElements(ByRole("spinbutton", value = Value(now = 5)))
+
+        assertEquals("Volume", result1.single().text)
+
+        val result2 = driver.findElements(ByRole("spinbutton", value = Value(min = 0)))
+
+        assertEquals(listOf("Volume", "Pitch"), result2.map { it.text })
     }
 }
