@@ -19,6 +19,7 @@ data class ByRole(
     private val description: JsType? = null,
     private val normalizer: String? = null,
     private val selected: Boolean? = null,
+    private val busy: Boolean? = null,
     private val checked: Boolean? = null,
     private val pressed: Boolean? = null,
     private val current: Boolean? = null,
@@ -37,7 +38,7 @@ data class ByRole(
                 "name" to name,
                 "description" to description,
                 "selected" to selected,
-                // TODO: busy
+                "busy" to busy,
                 "checked" to checked,
                 "pressed" to pressed,
                 // TODO: suggest

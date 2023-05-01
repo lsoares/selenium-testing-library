@@ -267,4 +267,20 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         of(null, 0),
         of(true, 1),
     )
+
+    @Test
+    fun busy() {
+        driver.render(
+            """
+             <section>
+                <div role="alert" aria-busy="false">Login failed</div>
+                <div role="alert" aria-busy="true">Error: Loading message...</div>
+              </section>
+            """
+        )
+
+        val result = driver.findElements(ByRole("alert", busy = false))
+
+        assertEquals("Login failed", result.single().text)
+    }
 }
