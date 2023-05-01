@@ -22,6 +22,7 @@ data class ByRole(
     private val busy: Boolean? = null,
     private val checked: Boolean? = null,
     private val pressed: Boolean? = null,
+    private val suggest: Boolean? = null,
     private val current: Boolean? = null,
     private val expanded: Boolean? = null,
     private val queryFallbacks: Boolean? = null,
@@ -41,7 +42,7 @@ data class ByRole(
                 "busy" to busy,
                 "checked" to checked,
                 "pressed" to pressed,
-                // TODO: suggest
+                "suggest" to suggest,
                 "current" to current,
                 "expanded" to expanded,
                 "queryFallbacks" to queryFallbacks,
