@@ -29,7 +29,6 @@ data class ByPlaceholderText(
         normalizer = normalizer,
     )
 
-    @Suppress("UNCHECKED_CAST")
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.PlaceholderText,
@@ -38,5 +37,5 @@ data class ByPlaceholderText(
                 "exact" to exact,
                 "normalizer" to normalizer?.asJsFunction(),
             ),
-        ) as List<WebElement>
+        )
 }

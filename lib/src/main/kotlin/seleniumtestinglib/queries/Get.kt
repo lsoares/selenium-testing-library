@@ -8,13 +8,13 @@ fun RemoteWebDriver.getBy(
     by: ByType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
-) = executeTLQuery(
+) = executeTLQuery<WebElement>(
     queryType = QueryType.Get,
     all = false,
     by = by,
     textMatch = textMatch,
     options = options,
-) as WebElement
+)
 
 fun RemoteWebDriver.getBy(
     by: ByType,
@@ -22,18 +22,17 @@ fun RemoteWebDriver.getBy(
     options: Map<String, Any?> = emptyMap(),
 ) = getBy(by, text.asJsString(), options)
 
-@Suppress("UNCHECKED_CAST")
 fun RemoteWebDriver.getAllBy(
     by: ByType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
-) = executeTLQuery(
+) = executeTLQuery<List<WebElement>>(
     queryType = QueryType.Get,
     all = true,
     by = by,
     textMatch = textMatch,
     options = options,
-) as List<WebElement>
+)
 
 fun RemoteWebDriver.getAllBy(
     by: ByType,

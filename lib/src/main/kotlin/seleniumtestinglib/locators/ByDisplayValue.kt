@@ -29,7 +29,6 @@ data class ByDisplayValue(
         normalizer = normalizer,
     )
 
-    @Suppress("UNCHECKED_CAST")
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.DisplayValue,
@@ -38,5 +37,5 @@ data class ByDisplayValue(
                 "exact" to exact,
                 "normalizer" to normalizer?.asJsFunction(),
             ),
-        ) as List<WebElement>
+        )
 }

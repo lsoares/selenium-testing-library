@@ -32,7 +32,6 @@ data class ByLabelText(
         normalizer = normalizer,
     )
 
-    @Suppress("UNCHECKED_CAST")
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.LabelText,
@@ -42,5 +41,5 @@ data class ByLabelText(
                 "exact" to exact,
                 "normalizer" to normalizer?.asJsFunction(),
             )
-        ) as List<WebElement>
+        )
 }

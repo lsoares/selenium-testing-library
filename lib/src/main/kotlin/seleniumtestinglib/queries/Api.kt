@@ -6,13 +6,13 @@ import seleniumtestinglib.ensureScript
 /**
  * https://testing-library.com/docs/dom-testing-library/intro
  */
-internal fun RemoteWebDriver.executeTLQuery(
+internal inline fun <reified T> RemoteWebDriver.executeTLQuery(
     queryType: QueryType = QueryType.Query,
     all: Boolean = true,
     by: ByType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
-): Any? {
+): T {
     val escapedOptions = options
         .filterValues { it != null }
         .takeIf(Map<String, Any?>::isNotEmpty)
@@ -28,7 +28,7 @@ internal fun RemoteWebDriver.executeTLQuery(
         by.name,
         """(${textMatch.escaped}${escapedOptions?.let { ", $it" } ?: ""})"""
     ).joinToString("")
-        .let(::executeTLScript)
+        .let(::executeTLScript) as T
 }
 
 enum class ByType {

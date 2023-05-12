@@ -30,7 +30,6 @@ data class ByRole(
     private val value: Value? = null,
 ) : By() {
 
-    @Suppress("UNCHECKED_CAST")
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.Role,
@@ -50,12 +49,16 @@ data class ByRole(
                 "level" to level,
                 "value" to value?.toMap(),
             ),
-        ) as List<WebElement>
+        )
 
     data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: JsType? = null) {
-        @Suppress("UNCHECKED_CAST")
-        fun toMap(): Map<String, Any> =
-            mapOf("min" to min, "max" to max, "now" to now, "text" to text)
-                .filterValues { it != null } as Map<String, Any>
+        fun toMap(): Map<String, Any> {
+            val map = mutableMapOf<String, Any>()
+            min?.let { map["min"] = it }
+            max?.let { map["max"] = it }
+            now?.let { map["now"] = it }
+            text?.let { map["text"] = it }
+            return map
+        }
     }
 }

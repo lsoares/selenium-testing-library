@@ -35,7 +35,6 @@ data class ByText(
         normalizer = normalizer,
     )
 
-    @Suppress("UNCHECKED_CAST")
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.Text,
@@ -46,5 +45,5 @@ data class ByText(
                 "ignore" to ignore,
                 "normalizer" to normalizer?.asJsFunction(),
             ),
-        ) as List<WebElement>
+        )
 }
