@@ -14,9 +14,9 @@ import seleniumtestinglib.queries.executeTLQuery
  */
 data class ByRole(
     private val role: String,
-    private val hidden: Boolean? = null,
     private val name: JsType? = null,
     private val description: JsType? = null,
+    private val hidden: Boolean? = null,
     private val normalizer: String? = null,
     private val selected: Boolean? = null,
     private val busy: Boolean? = null,
@@ -29,6 +29,45 @@ data class ByRole(
     private val level: Int? = null,
     private val value: Value? = null,
 ) : By() {
+
+    constructor(
+        role: String,
+        name: String? = null,
+        description: String? = null,
+    ) : this(
+        role = role,
+        name = name?.asJsString(),
+        description = description?.asJsString(),
+    )
+
+    fun with(
+        hidden: Boolean? = null,
+        normalizer: String? = null,
+        selected: Boolean? = null,
+        busy: Boolean? = null,
+        checked: Boolean? = null,
+        pressed: Boolean? = null,
+        suggest: Boolean? = null,
+        current: Boolean? = null,
+        expanded: Boolean? = null,
+        queryFallbacks: Boolean? = null,
+        level: Int? = null,
+        value: Value? = null,
+    ) = copy(
+        hidden = hidden,
+        normalizer = normalizer,
+        selected = selected,
+        busy = busy,
+        checked = checked,
+        pressed = pressed,
+        suggest = suggest,
+        current = current,
+        expanded = expanded,
+        queryFallbacks = queryFallbacks,
+        level = level,
+        value = value,
+    )
+
 
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
@@ -51,14 +90,8 @@ data class ByRole(
             ),
         )
 
-    data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: JsType? = null) {
-        fun toMap(): Map<String, Any> {
-            val map = mutableMapOf<String, Any>()
-            min?.let { map["min"] = it }
-            max?.let { map["max"] = it }
-            now?.let { map["now"] = it }
-            text?.let { map["text"] = it }
-            return map
-        }
-    }
+    data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: JsType? = null)
+
+    private fun Value.toMap() =
+        mapOf("min" to min, "max" to max, "now" to now, "text" to text).filterValues { it != null }
 }
