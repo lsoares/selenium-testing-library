@@ -5,7 +5,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role
-import seleniumtestinglib.locators.Role.LISTBOX
+import seleniumtestinglib.locators.Role.ListBox
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -23,11 +23,11 @@ class DeselectOptionsTest(private val driver: RemoteWebDriver) {
                       <option value="3" selected>C</option>
                     </select>"""
         )
-        assertTrue(driver.findElement(ByRole(Role.OPTION, name = "C")).isSelected)
+        assertTrue(driver.findElement(ByRole(Role.Option, name = "C")).isSelected)
 
-        driver.user.deselectOptions(driver.findElement(ByRole(LISTBOX)), "3")
+        driver.user.deselectOptions(driver.findElement(ByRole(ListBox)), "3")
 
-        assertFalse(driver.findElement(ByRole(Role.OPTION, name = "C")).isSelected)
+        assertFalse(driver.findElement(ByRole(Role.Option, name = "C")).isSelected)
     }
 
     @Test
@@ -39,13 +39,13 @@ class DeselectOptionsTest(private val driver: RemoteWebDriver) {
                       <option value="3" selected>C</option>
                     </select>"""
         )
-        val select = driver.findElement(ByRole(LISTBOX))
+        val select = driver.findElement(ByRole(ListBox))
 
         driver.user.deselectOptions(
             select,
-            driver.findElement(ByRole(Role.OPTION, name = "C")),
+            driver.findElement(ByRole(Role.Option, name = "C")),
         )
 
-        assertFalse(driver.findElement(ByRole(Role.OPTION, name = "C")).isSelected)
+        assertFalse(driver.findElement(ByRole(Role.Option, name = "C")).isSelected)
     }
 }

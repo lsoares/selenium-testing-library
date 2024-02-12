@@ -6,7 +6,7 @@ import org.openqa.selenium.By.tagName
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.TEXTBOX
+import seleniumtestinglib.locators.Role.TextBox
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -27,7 +27,7 @@ class UnhoverTest(private val driver: RemoteWebDriver) {
             </script>
         """
         )
-        val input = driver.findElement(ByRole(TEXTBOX))
+        val input = driver.findElement(ByRole(TextBox))
         driver.user.hover(input)
 
         driver.user.unhover(input)
@@ -48,7 +48,7 @@ class UnhoverTest(private val driver: RemoteWebDriver) {
             </script>
         """
         )
-        val input = driver.findElement(ByRole(TEXTBOX))
+        val input = driver.findElement(ByRole(TextBox))
         driver.user.hover(input)
 
         driver.user.pointer(mapOf("target" to driver.findElement(tagName("body"))))

@@ -34,7 +34,7 @@ driver.findElements(ByDisplayValue("/john/i".asJsRegex()))
 val active = driver.findElements(ByLabelText("active"))
 val input = driver.findElements(ByPlaceholderText("first name", exact = false))
 val firstName = input.text
-driver.findElements(ByRole(HEADING, name = "/as a user/i".asJsRegex()))
+driver.findElements(ByRole(Heading, name = "/as a user/i".asJsRegex()))
 val panel = driver.findElements(ByTestId("test-id"))
 panel.click()
 driver.findElements(ByText("present", exact = false, selector = "span"))
@@ -57,7 +57,7 @@ The Testing Library's [user-event](https://testing-library.com/docs/user-event/i
 driver.user.click(active)
 driver.user.dblClick(panel)
 driver.user.type(input, "foobar")
-driver.user.selectOptions(driver.findElement(ByRole(LISTBOX, name = "C")))
+driver.user.selectOptions(driver.findElement(ByRole(ListBox, name = "C")))
 ```
 
 ℹ️ _user-event's JavaScript only loads if it's used._

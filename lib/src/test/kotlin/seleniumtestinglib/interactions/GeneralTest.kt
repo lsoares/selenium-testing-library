@@ -8,7 +8,7 @@ import org.openqa.selenium.OutputType
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.CHECKBOX
+import seleniumtestinglib.locators.Role.CheckBox
 import seleniumtestinglib.render
 import java.awt.Desktop
 import java.io.File
@@ -32,7 +32,7 @@ class GeneralTest(private val driver: RemoteWebDriver) {
                       </div> """
             )
             .tab()
-            .click(driver.findElement(ByRole(CHECKBOX)))
+            .click(driver.findElement(ByRole(CheckBox)))
             .tab()
             .keyboard("name")
             .tab()

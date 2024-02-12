@@ -5,7 +5,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.TEXTBOX
+import seleniumtestinglib.locators.Role.TextBox
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.Test
@@ -17,7 +17,7 @@ class TypeTest(private val driver: RemoteWebDriver) {
     @Test
     fun type() {
         driver.render("<textarea></textarea>")
-        val textArea = driver.findElement(ByRole(TEXTBOX))
+        val textArea = driver.findElement(ByRole(TextBox))
 
         driver.user.type(textArea, "Hello,{enter}World!")
 
@@ -39,7 +39,7 @@ class TypeTest(private val driver: RemoteWebDriver) {
         )
 
         driver.user.type(
-            element = driver.findElement(ByRole(TEXTBOX)),
+            element = driver.findElement(ByRole(TextBox)),
             text = "foo",
             skipAutoClose = true,
             skipClick = true,

@@ -5,7 +5,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.isChecked
 import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.CHECKBOX
+import seleniumtestinglib.locators.Role.CheckBox
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -16,7 +16,7 @@ class DoubleClickTest(private val driver: RemoteWebDriver) {
     @Test
     fun `double click`() {
         driver.render("<input type='checkbox' />")
-        val checkbox = driver.findElement(ByRole(CHECKBOX))
+        val checkbox = driver.findElement(ByRole(CheckBox))
 
         driver.user.dblClick(checkbox)
 
@@ -26,7 +26,7 @@ class DoubleClickTest(private val driver: RemoteWebDriver) {
     @Test
     fun `equivalent to double click`() {
         driver.render("<input type='checkbox' />")
-        val checkbox = driver.findElement(ByRole(CHECKBOX))
+        val checkbox = driver.findElement(ByRole(CheckBox))
 
         driver.user.pointer(
             mapOf("target" to checkbox),

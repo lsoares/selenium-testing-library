@@ -5,7 +5,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.isFocused
 import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.RADIO
+import seleniumtestinglib.locators.Role.Radio
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -28,7 +28,7 @@ class TabTest(private val driver: RemoteWebDriver) {
 
         driver.user.tab()
 
-        assertTrue(driver.findElement(ByRole(RADIO)).isFocused)
+        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
     }
 
     @Test
@@ -48,7 +48,7 @@ class TabTest(private val driver: RemoteWebDriver) {
 
         driver.user.tab(shift = true)
 
-        assertTrue(driver.findElement(ByRole(RADIO)).isFocused)
+        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
     }
 
     @Test
@@ -66,7 +66,7 @@ class TabTest(private val driver: RemoteWebDriver) {
             .tab()
             .keyboard("{Tab}")
 
-        assertTrue(driver.findElement(ByRole(RADIO)).isFocused)
+        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
     }
 
     @Test
@@ -84,7 +84,7 @@ class TabTest(private val driver: RemoteWebDriver) {
 
         driver.user.keyboard("[/ShiftLeft][/ShiftRight]{Tab}")
 
-        assertTrue(driver.findElement(ByRole(RADIO)).isFocused)
+        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
     }
 
     @Test
@@ -104,6 +104,6 @@ class TabTest(private val driver: RemoteWebDriver) {
 
         driver.user.keyboard("{Shift>}{Tab}{/Shift}")
 
-        assertTrue(driver.findElement(ByRole(RADIO)).isFocused)
+        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
     }
 }
