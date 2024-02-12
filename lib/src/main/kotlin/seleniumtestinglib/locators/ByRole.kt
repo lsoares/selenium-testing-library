@@ -62,7 +62,6 @@ data class ByRole(
         value = value,
     )
 
-
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.Role,
@@ -91,6 +90,9 @@ data class ByRole(
 }
 
 
+/*
+    https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles
+ */
 enum class Role {
     ALERT,
     ALERTDIALOG,
