@@ -4,6 +4,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.locators.ByRole
+import seleniumtestinglib.locators.Role.ARTICLE
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -20,12 +21,12 @@ class TargetLocatorTest(private val driver: RemoteWebDriver) {
            <iframe id="2" src="${"<article></article>".asDataUrl()}"></iframe> 
         """
         )
-        assertNull(driver.findElements(ByRole("article")).firstOrNull())
+        assertNull(driver.findElements(ByRole(ARTICLE)).firstOrNull())
 
         driver.switchTo().frame(By.cssSelector("article"))
 
-        assertNotNull(driver.findElements(ByRole("article")).firstOrNull())
+        assertNotNull(driver.findElements(ByRole(ARTICLE)).firstOrNull())
         driver.switchTo().defaultContent()
-        assertNull(driver.findElements(ByRole("article")).firstOrNull())
+        assertNull(driver.findElements(ByRole(ARTICLE)).firstOrNull())
     }
 }

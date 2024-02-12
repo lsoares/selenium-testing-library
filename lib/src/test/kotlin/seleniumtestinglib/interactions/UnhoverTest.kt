@@ -1,10 +1,12 @@
 package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.By
+import org.openqa.selenium.By.id
+import org.openqa.selenium.By.tagName
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.locators.ByRole
+import seleniumtestinglib.locators.Role.TEXTBOX
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -25,12 +27,12 @@ class UnhoverTest(private val driver: RemoteWebDriver) {
             </script>
         """
         )
-        val input = driver.findElement(ByRole("textbox"))
+        val input = driver.findElement(ByRole(TEXTBOX))
         driver.user.hover(input)
 
         driver.user.unhover(input)
 
-        assertEquals("unhovered!", driver.findElement(By.id("result")).text)
+        assertEquals("unhovered!", driver.findElement(id("result")).text)
     }
 
     @Test
@@ -46,11 +48,11 @@ class UnhoverTest(private val driver: RemoteWebDriver) {
             </script>
         """
         )
-        val input = driver.findElement(ByRole("textbox"))
+        val input = driver.findElement(ByRole(TEXTBOX))
         driver.user.hover(input)
 
-        driver.user.pointer(mapOf("target" to driver.findElement(By.tagName("body"))))
+        driver.user.pointer(mapOf("target" to driver.findElement(tagName("body"))))
 
-        assertEquals("unhovered!", driver.findElement(By.id("result")).text)
+        assertEquals("unhovered!", driver.findElement(id("result")).text)
     }
 }

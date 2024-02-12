@@ -5,6 +5,8 @@ import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.locators.ByRole
+import seleniumtestinglib.locators.Role.BANNER
+import seleniumtestinglib.locators.Role.CONTENTINFO
 import seleniumtestinglib.render
 import seleniumtestinglib.selection
 import kotlin.test.Test
@@ -98,8 +100,8 @@ class PointerTest(private val driver: RemoteWebDriver) {
         )
 
         driver.user.pointer(
-            mapOf("keys" to "[TouchA>]", "target" to driver.findElement(ByRole("banner"))),
-            mapOf("pointerName" to "TouchA", "target" to driver.findElement(ByRole("contentinfo"))),
+            mapOf("keys" to "[TouchA>]", "target" to driver.findElement(ByRole(BANNER))),
+            mapOf("pointerName" to "TouchA", "target" to driver.findElement(ByRole(CONTENTINFO))),
             mapOf("keys" to "[/TouchA]"),
         )
 

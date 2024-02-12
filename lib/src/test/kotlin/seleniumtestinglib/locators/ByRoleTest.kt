@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.locators.Role.*
 import seleniumtestinglib.locators.ByRole.Value
 import seleniumtestinglib.queries.JsType.Companion.asJsFunction
 import seleniumtestinglib.queries.JsType.Companion.asJsRegex
@@ -19,18 +20,18 @@ import kotlin.test.assertNotNull
 class ByRoleTest(private val driver: RemoteWebDriver) {
 
     private fun examples() = setOf(
-        of("textbox", """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),
-        of("textbox", """<textarea id="txtboxMultiline" required></textarea>"""),
-        of("button", """"<div id="saveChanges" tabindex="0" role="button" aria-pressed="false">Save</div>"""),
-        of("button", """<button type="button" id="saveChanges">Save</button>"""),
-        of("form", """<div role="form"></div>"""),
-        of("img", """<img></img>"""),
-        of("form", """<form aria-label="xyz">test</form>"""),
+        of(TEXTBOX, """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),
+        of(TEXTBOX, """<textarea id="txtboxMultiline" required></textarea>"""),
+        of(BUTTON, """"<div id="saveChanges" tabindex="0" role="button" aria-pressed="false">Save</div>"""),
+        of(BUTTON, """<button type="button" id="saveChanges">Save</button>"""),
+        of(FORM, """<div role="form"></div>"""),
+        of(IMG, """<img></img>"""),
+        of(FORM, """<form aria-label="xyz">test</form>"""),
     )
 
     @ParameterizedTest
     @MethodSource("examples")
-    fun `by role`(role: String, content: String) {
+    fun `by role`(role: Role, content: String) {
         driver.render(content)
 
         val result = driver.findElement(ByRole(role))
@@ -44,7 +45,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     fun `role with regex in name parameter`() {
         driver.render("""<h1>something as a user something</h1>""")
 
-        val result = driver.findElements(ByRole("heading", name = "/as a user/i".asJsRegex()))
+        val result = driver.findElements(ByRole(HEADING, name = "/as a user/i".asJsRegex()))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -61,7 +62,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElements(ByRole("tab", selected = true))
+        val result = driver.findElements(ByRole(TAB, selected = true))
 
         assertEquals("Native", result.single().text)
     }
@@ -82,7 +83,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElements(ByRole("textbox", name = "Email address"))
+        val result = driver.findElements(ByRole(TEXTBOX, name = "Email address"))
 
         assertEquals("input", result.single().tagName)
     }
@@ -104,7 +105,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
               </div>"""
         )
 
-        val result = driver.findElements(ByRole("button", hidden = hidden))
+        val result = driver.findElements(ByRole(BUTTON, hidden = hidden))
 
         assertEquals(expectedButtonsFound, result.map { it.text })
     }
@@ -125,7 +126,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         )
 
         val result =
-            driver.findElements(ByRole("alertdialog", description = "Your session is about to expire!"))
+            driver.findElements(ByRole(ALERTDIALOG, description = "Your session is about to expire!"))
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
@@ -146,10 +147,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         )
 
         val result = driver.findElements(
-            ByRole(
-                role = "alertdialog",
-                description = "/your session/i".asJsRegex(),
-            )
+            ByRole(ALERTDIALOG, description = "/your session/i".asJsRegex())
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -171,10 +169,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         )
 
         val result = driver.findElements(
-            ByRole(
-                role = "alertdialog",
-                description = "content => content.endsWith('!')".asJsFunction(),
-            )
+            ByRole(ALERTDIALOG, description = "content => content.endsWith('!')".asJsFunction())
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -195,7 +190,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                 <div role="heading" aria-level="2">Second Heading Level Two</div>"""
         )
 
-        val result = driver.findElements(ByRole("heading", level = level))
+        val result = driver.findElements(ByRole(HEADING, level = level))
 
         assertEquals(expected = expectedResults, result.map(WebElement::getTagName))
     }
@@ -208,7 +203,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                     <button role="checkbox" aria-checked="false">Whipped cream</button>"""
         )
 
-        val result = driver.findElements(ByRole("checkbox", checked = true))
+        val result = driver.findElements(ByRole(CHECKBOX, checked = true))
 
         assertEquals("Sugar", result.single().text)
     }
@@ -220,7 +215,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                      <button aria-pressed="false">👎</button>"""
         )
 
-        val result = driver.findElements(ByRole("button", pressed = true))
+        val result = driver.findElements(ByRole(BUTTON, pressed = true))
 
         assertEquals("👍", result.single().text)
     }
@@ -234,7 +229,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                       </nav>"""
         )
 
-        val result = driver.findElements(ByRole("link", current = true))
+        val result = driver.findElements(ByRole(LINK, current = true))
 
         assertEquals("👍", result.single().text)
     }
@@ -249,7 +244,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElements(ByRole("link", expanded = false))
+        val result = driver.findElements(ByRole(LINK, expanded = false))
 
         assertEquals("expanded", result.single().text)
     }
@@ -267,7 +262,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
             """ <div role="switch checkbox" /> """
         )
 
-        val result = driver.findElements(ByRole("checkbox", queryFallbacks = queryFallbacks))
+        val result = driver.findElements(ByRole(CHECKBOX, queryFallbacks = queryFallbacks))
 
         assertEquals(expectedCount, result.size)
     }
@@ -283,7 +278,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
             """
         )
 
-        val result = driver.findElements(ByRole("alert", busy = false))
+        val result = driver.findElements(ByRole(ALERT, busy = false))
 
         assertEquals("Login failed", result.single().text)
     }
@@ -323,7 +318,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         """
         )
 
-        val result = driver.findElements(ByRole("spinbutton", value = value))
+        val result = driver.findElements(ByRole(SPINBUTTON, value = value))
 
         assertEquals(expectedSpinButtons, result.map(WebElement::getText))
     }

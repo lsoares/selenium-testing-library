@@ -15,7 +15,7 @@ Central** <img src="https://search.maven.org/favicon.ico" width="16" height="16"
 Then, copy the declaration for your build tool. E.g.:_
 
 ```kotlin
-implementation("com.luissoares:selenium-testing-library:3.6.2")
+implementation("com.luissoares:selenium-testing-library:3.7")
 ```
 
 ---
@@ -34,7 +34,7 @@ driver.findElements(ByDisplayValue("/john/i".asJsRegex()))
 val active = driver.findElements(ByLabelText("active"))
 val input = driver.findElements(ByPlaceholderText("first name", exact = false))
 val firstName = input.text
-driver.findElements(ByRole("heading", name = "/as a user/i".asJsRegex()))
+driver.findElements(ByRole(HEADING, name = "/as a user/i".asJsRegex()))
 val panel = driver.findElements(ByTestId("test-id"))
 panel.click()
 driver.findElements(ByText("present", exact = false, selector = "span"))
@@ -44,7 +44,7 @@ driver.findElements(ByTitle("title 1"))
 val result1 = driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
 val result2 = driver.getBy(DisplayValue, "incredibles")
 val result3 = driver.queryAllBy(LabelText, "label x")
-val result4 = driver.getAllBy(Role, "listbox".asJsString())
+val result4 = driver.getAllBy(Role, "listbox")
 
 ```
 
@@ -57,7 +57,7 @@ The Testing Library's [user-event](https://testing-library.com/docs/user-event/i
 driver.user.click(active)
 driver.user.dblClick(panel)
 driver.user.type(input, "foobar")
-driver.user.selectOptions(driver.findElement(ByRole("listbox", name = "C".asJsString())))
+driver.user.selectOptions(driver.findElement(ByRole(LISTBOX, name = "C")))
 ```
 
 ℹ️ _user-event's JavaScript only loads if it's used._

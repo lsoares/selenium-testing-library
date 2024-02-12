@@ -6,8 +6,8 @@ import org.openqa.selenium.By.id
 import org.openqa.selenium.By.tagName
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.interactions.*
 import seleniumtestinglib.locators.ByRole
+import seleniumtestinglib.locators.Role.TEXTBOX
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.Test
@@ -26,7 +26,7 @@ class ClipboardTest(private val driver: RemoteWebDriver) {
 
         driver.user.paste("pasted value")
 
-        assertEquals("pasted value", driver.findElement(ByRole("textbox")).value)
+        assertEquals("pasted value", driver.findElement(ByRole(TEXTBOX)).value)
     }
 
     @Test
@@ -35,7 +35,7 @@ class ClipboardTest(private val driver: RemoteWebDriver) {
             .render("""<input id="a" />""")
             .type(driver.findElement(id("a")), "text")
             .pointer(
-                mapOf("target" to driver.findElement(ByRole("textbox")), "offset" to 0, "keys" to "[MouseLeft>]"),
+                mapOf("target" to driver.findElement(ByRole(TEXTBOX)), "offset" to 0, "keys" to "[MouseLeft>]"),
                 mapOf("offset" to 5)
             )
         assertFalse(driver.findElement(id("a")).value?.toString()?.isEmpty() ?: true)
@@ -57,10 +57,10 @@ class ClipboardTest(private val driver: RemoteWebDriver) {
             mapOf("offset" to 14)
         )
         driver.user.copy()
-        driver.user.click(driver.findElement(ByRole("textbox")))
+        driver.user.click(driver.findElement(ByRole(TEXTBOX)))
 
         driver.user.paste("sdsd")
 
-        println(driver.findElement(ByRole("textbox")).value)
+        println(driver.findElement(ByRole(TEXTBOX)).value)
     }
 }

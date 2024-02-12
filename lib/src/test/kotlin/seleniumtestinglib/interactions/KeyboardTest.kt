@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.locators.ByRole
+import seleniumtestinglib.locators.Role.TEXTBOX
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.assertEquals
@@ -22,7 +23,7 @@ class KeyboardTest(private val driver: RemoteWebDriver) {
 
         driver.user.keyboard(keyboardInput)
 
-        assertEquals(writtenText, driver.findElement(ByRole("textbox")).value)
+        assertEquals(writtenText, driver.findElement(ByRole(TEXTBOX)).value)
     }
 
     private fun `test cases`() = setOf(
