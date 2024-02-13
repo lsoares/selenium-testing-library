@@ -12,6 +12,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 class DriverLifeCycle : AfterAllCallback, ParameterResolver {
 
     private val driver = chromedriver()
+        .avoidBrowserDetection()
         .capabilities(ChromeOptions().addArguments("--headless"))
         .create()
 
