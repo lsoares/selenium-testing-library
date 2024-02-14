@@ -50,7 +50,7 @@ publishing {
                     developer {
                         id.set("lsoares")
                         name.set("Luís Soares")
-                        url.set("http://luissoares.com")
+                        url.set("http://lsoares.medium.com")
                     }
                 }
                 scm {
