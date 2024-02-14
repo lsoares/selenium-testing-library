@@ -31,12 +31,13 @@ java {
 
 val projectVersion = "3.7.1"
 version = projectVersion
-group = "com.luissoares"
+val groupId = "com.luissoares"
+group = groupId
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "com.luissoares"
+            groupId = groupId
             artifactId = "selenium-testing-library"
             version = projectVersion
             from(components["kotlin"])
