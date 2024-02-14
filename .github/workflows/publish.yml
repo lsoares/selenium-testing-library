@@ -19,4 +19,4 @@ jobs:
       - name: Test
         run: ./gradlew test
       - name: Publish artifacts
-        run: ./gradlew publish
+        run:  ./gradlew publish jreleaserFullRelease

@@ -1,9 +1,11 @@
+import org.jreleaser.model.Active
+
 plugins {
     kotlin("jvm") version "1.9.22"
     `java-library`
-    id("com.github.ben-manes.versions") version "0.49.0"
-    signing
     `maven-publish`
+    application
+    id("org.jreleaser") version "1.10.0"
 }
 
 repositories {
@@ -27,12 +29,16 @@ java {
     withJavadocJar()
 }
 
+val projectVersion = "3.7.1"
+version = projectVersion
+group = "com.luissoares"
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "com.luissoares"
             artifactId = "selenium-testing-library"
-            version = "3.7.1"
+            version = projectVersion
             from(components["kotlin"])
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
@@ -66,19 +72,32 @@ publishing {
     }
     repositories {
         maven {
-            name = "OSSRH"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = System.getenv("OSSRH_USERNAME")
-                password = System.getenv("OSSRH_PASSWORD")
+            url = uri(layout.buildDirectory.dir("repos/snapshots"))
+        }
+    }
+}
+
+jreleaser {
+    gitRootSearch = true
+    signing {
+        active.set(Active.ALWAYS)
+        armored.set(true)
+    }
+    deploy {
+        maven {
+            nexus2 {
+                create("mavenCentral") {
+                    active.set(Active.ALWAYS)
+                    url.set("https://s01.oss.sonatype.org/service/local")
+                    closeRepository.set(true)
+                    releaseRepository.set(true)
+                    stagingRepository("build/repos/snapshots")
+                }
             }
         }
     }
 }
 
-signing {
-    sign(publishing.publications["maven"])
-}
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
     sourceCompatibility = "11"
