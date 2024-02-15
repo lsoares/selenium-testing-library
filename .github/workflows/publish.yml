@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup JDK
@@ -16,14 +16,14 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Install required dependencies
+      - name: Setup
         run: |
           sudo apt-get update && sudo apt-get install -y gnupg2 expect
 
       - name: Test
         run: ./gradlew test
 
-      - name: Publish artifacts
+      - name: Publish
         env:
           JRELEASER_NEXUS2_USERNAME: ${{ secrets.JRELEASER_NEXUS2_USERNAME }}
           JRELEASER_NEXUS2_PASSWORD: ${{ secrets.JRELEASER_NEXUS2_PASSWORD }}
@@ -31,4 +31,5 @@ jobs:
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.JRELEASER_GPG_SECRET_KEY }}
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.JRELEASER_GPG_PUBLIC_KEY }}
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run:  ./gradlew publish jreleaserFullRelease
+        run: |
+          ./gradlew publish jreleaserFullRelease --stacktrace

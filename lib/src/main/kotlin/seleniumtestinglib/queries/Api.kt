@@ -41,28 +41,23 @@ internal enum class QueryType {
 
 sealed class JsType(internal open val value: Any) {
     class JsString(override val value: String) : JsType(value)
-    class JsFunction(override val value: String) : JsType(value)
-    class JsRegex(override val value: String) : JsType(value)
+    class JsExpression(override val value: String) : JsType(value)
 
     companion object {
-        fun String.asJsFunction() = JsFunction(this)
-        fun String.asJsRegex() = JsRegex(this)
+        fun String.asJsExpression() = JsExpression(this)
         fun String.asJsString() = JsString(this)
     }
 }
 
 private fun RemoteWebDriver.executeTLScript(script: String): Any? {
     ensureScript("testing-library.js", "screen?.queryAllByTestId")
-    return runCatching { executeScript(script) }
-        .onFailure { System.err.println("JavaScript error running Testing Library script:\n$script") }
-        .getOrThrow()
+    return executeScript(script)
 }
 
 private val Any?.escaped: Any?
     get() = when (this) {
         is JsType.JsString -> value.escaped
-        is JsType.JsRegex -> value
-        is JsType.JsFunction -> value
+        is JsType.JsExpression -> value
         is String -> "'${replace("'", "\\'")}'"
         is Map<*, *> -> entries.joinToString(", ", prefix = "{ ", postfix = " }") {
             "${it.key}: ${it.value?.escaped}"

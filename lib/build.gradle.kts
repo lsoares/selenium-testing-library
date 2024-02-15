@@ -29,7 +29,7 @@ java {
     withJavadocJar()
 }
 
-val projectVersion = "3.7.1"
+val projectVersion = "3.7.2"
 version = projectVersion
 val groupId = "com.luissoares"
 group = groupId

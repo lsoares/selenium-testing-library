@@ -5,7 +5,7 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.files
 import seleniumtestinglib.locators.ByLabelText
-import seleniumtestinglib.queries.JsType.Companion.asJsRegex
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,7 +23,7 @@ class UploadTest(private val driver: RemoteWebDriver) {
             </div> 
         """
         )
-        val input = driver.findElement(ByLabelText("/upload file/i".asJsRegex()))
+        val input = driver.findElement(ByLabelText("/upload file/i".asJsExpression()))
 
         driver.user.upload(
             input,

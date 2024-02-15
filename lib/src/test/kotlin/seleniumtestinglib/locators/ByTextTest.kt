@@ -7,8 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.JsType.Companion.asJsFunction
-import seleniumtestinglib.queries.JsType.Companion.asJsRegex
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -87,7 +86,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render("<p>I accept</p>")
 
-        val result = driver.findElement(ByText("/ACCEPT/i".asJsRegex()))
+        val result = driver.findElement(ByText("/ACCEPT/i".asJsExpression()))
 
         assertEquals("p", result.tagName)
     }
@@ -97,7 +96,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
         driver.render("<p>Hello World</p>")
 
         val result = driver.findElement(
-            ByText("(content, element) => content.startsWith('Hello') && element.tagName == 'P'".asJsFunction())
+            ByText("(content, element) => content.startsWith('Hello') && element.tagName == 'P'".asJsExpression())
         )
 
         assertEquals("p", result.tagName)
@@ -114,7 +113,7 @@ class ByTextTest(private val driver: RemoteWebDriver) {
 
     @ParameterizedTest
     @MethodSource("ignore values")
-    fun `disable ignore`(ignore: String, expectedFound: Int) {
+    fun ignore(ignore: String, expectedFound: Int) {
         driver.render(
             """
             <p>I accept</p>
@@ -134,6 +133,22 @@ class ByTextTest(private val driver: RemoteWebDriver) {
         Arguments.of("style,script", 1),
         Arguments.of("style,script,p", 0),
     )
+
+    @Test
+    fun `disable ignore`() {
+        driver.render(
+            """
+            <p>I accept</p>
+            <script>I accept</script>
+            <style>I accept</style>
+            """
+        )
+
+        val result = driver.findElements(ByText("I accept").disableIgnore())
+
+        assertEquals(3, result.size)
+    }
+
 
     @Test
     fun normalizer() {

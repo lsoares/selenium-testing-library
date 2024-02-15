@@ -5,7 +5,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.support.ui.Select
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.JsType.Companion.asJsRegex
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -38,7 +38,7 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
         driver.render("<input placeholder='username' />")
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
 
-        val result = driver.findElement(ByDisplayValue("/selen/i".asJsRegex()))
+        val result = driver.findElement(ByDisplayValue("/selen/i".asJsExpression()))
 
         assertEquals("input", result.tagName)
     }

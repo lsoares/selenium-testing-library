@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.queries.ByType
 import seleniumtestinglib.queries.JsType
-import seleniumtestinglib.queries.JsType.Companion.asJsFunction
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.queries.executeTLQuery
 
@@ -34,7 +34,7 @@ data class ByTestId(
             by = ByType.TestId,
             textMatch = text,
             options = mapOf(
-                "normalizer" to normalizer?.asJsFunction(),
+                "normalizer" to normalizer?.asJsExpression(),
                 "exact" to exact,
             ),
         )

@@ -3,7 +3,7 @@ package seleniumtestinglib.locators
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.JsType.Companion.asJsRegex
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -47,7 +47,7 @@ class ByTitleTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render("<div title='foobar'>Hello World!</div>")
 
-        val result = driver.findElement(ByTitle("/FOO/i".asJsRegex()))
+        val result = driver.findElement(ByTitle("/FOO/i".asJsExpression()))
 
         assertEquals("Hello World!", result.text)
     }

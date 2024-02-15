@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.queries.ByType
 import seleniumtestinglib.queries.JsType
-import seleniumtestinglib.queries.JsType.Companion.asJsFunction
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.queries.executeTLQuery
 
@@ -20,6 +20,8 @@ data class ByText(
     private val ignore: String? = null,
     private val normalizer: String? = null,
 ) : By() {
+
+    fun disableIgnore() = copy(ignore = "")
 
     constructor(
         text: String,
@@ -43,7 +45,7 @@ data class ByText(
                 "exact" to exact,
                 "selector" to selector,
                 "ignore" to ignore,
-                "normalizer" to normalizer?.asJsFunction(),
+                "normalizer" to normalizer?.asJsExpression(),
             ),
         )
 }

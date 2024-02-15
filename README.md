@@ -1,6 +1,6 @@
 # Selenium Testing Library
 
-**_[Testing Library](http://testing-library.com/) selectors available as Selenium locators for Kotlin/Java._**
+**_[Testing Library](http://testing-library.com) selectors available as Selenium locators for Kotlin/Java._**
 
 Why? When I use Selenium, I don't want to depend on ids, classes, and similar.
 I'm a fan of the Testing Library because it encourages "testing as a user":
@@ -15,7 +15,7 @@ Central** <img src="https://search.maven.org/favicon.ico" width="16" height="16"
 Then, copy the declaration for your build tool. E.g.:_
 
 ```kotlin
-implementation("com.luissoares:selenium-testing-library:3.7.1")
+implementation("com.luissoares:selenium-testing-library:3.7.2")
 ```
 
 ---
@@ -30,11 +30,11 @@ The [core API](https://testing-library.com/docs) contains the selectors which ar
 
 ```kotlin
 driver.findElements(ByAltText("first name"))
-driver.findElements(ByDisplayValue("/john/i".asJsRegex()))
+driver.findElements(ByDisplayValue("/john/i".asJsExpression()))
 val active = driver.findElements(ByLabelText("active"))
 val input = driver.findElements(ByPlaceholderText("first name", exact = false))
 val firstName = input.text
-driver.findElements(ByRole(Heading, name = "/as a user/i".asJsRegex()))
+driver.findElements(ByRole(Heading, name = "/as a user/i".asJsExpression()))
 val panel = driver.findElements(ByTestId("test-id"))
 panel.click()
 driver.findElements(ByText("present", exact = false, selector = "span"))

@@ -3,14 +3,14 @@ package seleniumtestinglib.locators
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
+import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.locators.Role.*
 import seleniumtestinglib.locators.ByRole.Value
-import seleniumtestinglib.queries.JsType.Companion.asJsFunction
-import seleniumtestinglib.queries.JsType.Companion.asJsRegex
+import seleniumtestinglib.locators.Role.*
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -45,7 +45,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
     fun `role with regex in name parameter`() {
         driver.render("""<h1>something as a user something</h1>""")
 
-        val result = driver.findElements(ByRole(Heading, name = "/as a user/i".asJsRegex()))
+        val result = driver.findElements(ByRole(Heading, name = "/as a user/i".asJsExpression()))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -147,7 +147,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         )
 
         val result = driver.findElements(
-            ByRole(AlertDialog, description = "/your session/i".asJsRegex())
+            ByRole(AlertDialog, description = "/your session/i".asJsExpression())
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -169,7 +169,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         )
 
         val result = driver.findElements(
-            ByRole(AlertDialog, description = "content => content.endsWith('!')".asJsFunction())
+            ByRole(AlertDialog, description = "content => content.endsWith('!')".asJsExpression())
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -229,9 +229,38 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
                       </nav>"""
         )
 
-        val result = driver.findElements(ByRole(Link, current = true))
+        val result = driver.findElement(ByRole(Link, current = true))
 
-        assertEquals("👍", result.single().text)
+        assertEquals("👍", result.text)
+    }
+
+    @Test
+    fun `current false`() {
+        driver.render(
+            """<nav>
+                        <a href="current/page" aria-current="true">👍</a>
+                        <a href="another/page">👎</a>
+                      </nav>"""
+        )
+
+        val result = driver.findElement(ByRole(Link, current = false))
+
+        assertEquals("👎", result.text)
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = Current::class)
+    fun `current with predefined value`(value: Current) {
+        driver.render(
+            """<nav>
+                        <a href="current/page" aria-current="${value.name.lowercase()}">👍</a>
+                        <a href="another/page">👎</a>
+                      </nav>"""
+        )
+
+        val result = driver.findElement(ByRole(Link).withCurrent(value))
+
+        assertEquals("👍", result.text)
     }
 
     @Test
@@ -249,23 +278,31 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals("expanded", result.single().text)
     }
 
-    private fun `test cases query fallbacks`() = setOf(
-        of(false, 0),
-        of(null, 0),
-        of(true, 1),
-    )
+    @Test
+    fun `enable query fallbacks`() {
+        driver.render(""" <div role="switch checkbox" /> """)
+
+        val result = driver.findElements(ByRole(CheckBox).enableQueryFallbacks())
+
+        assertEquals(1, result.size)
+    }
+
 
     @ParameterizedTest
     @MethodSource("test cases query fallbacks")
     fun `query fallbacks`(queryFallbacks: Boolean?, expectedCount: Int) {
-        driver.render(
-            """ <div role="switch checkbox" /> """
-        )
+        driver.render(""" <div role="switch checkbox" /> """)
 
         val result = driver.findElements(ByRole(CheckBox, queryFallbacks = queryFallbacks))
 
         assertEquals(expectedCount, result.size)
     }
+
+    private fun `test cases query fallbacks`() = setOf(
+        of(false, 0),
+        of(null, 0),
+        of(true, 1),
+    )
 
     @Test
     fun busy() {
@@ -287,7 +324,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         of(Value(now = 5), listOf("Volume")),
         of(Value(min = 0), listOf("Volume", "Pitch")),
         of(Value(max = 10), listOf("Volume", "Pitch")),
-        of(Value(text = "/med/".asJsRegex()), listOf("Volume", "Pitch")),
+        of(Value(text = "/med/".asJsExpression()), listOf("Volume", "Pitch")),
     )
 
     @ParameterizedTest

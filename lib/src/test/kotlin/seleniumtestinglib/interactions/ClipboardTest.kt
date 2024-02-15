@@ -61,6 +61,6 @@ class ClipboardTest(private val driver: RemoteWebDriver) {
 
         driver.user.paste("sdsd")
 
-        println(driver.findElement(ByRole(TextBox)).value)
+//        println(driver.findElement(ByRole(TextBox)).value)
     }
 }

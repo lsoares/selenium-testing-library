@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.queries.ByType
 import seleniumtestinglib.queries.JsType
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.queries.executeTLQuery
 
@@ -23,12 +24,15 @@ data class ByRole(
     private val checked: Boolean? = null,
     private val pressed: Boolean? = null,
     private val suggest: Boolean? = null,
-    private val current: Boolean? = null,
+    private val current: JsType? = null,
     private val expanded: Boolean? = null,
-    private val queryFallbacks: Boolean? = null,
     private val level: Int? = null,
     private val value: Value? = null,
+    private val queryFallbacks: Boolean? = null,
 ) : By() {
+
+    fun enableQueryFallbacks() = copy(queryFallbacks = true)
+    fun withCurrent(current: Current) = copy(current = current.name.lowercase().asJsString())
 
     constructor(
         role: Role,
@@ -56,7 +60,7 @@ data class ByRole(
         checked = checked,
         pressed = pressed,
         suggest = suggest,
-        current = current,
+        current = current?.toString()?.asJsExpression(),
         expanded = expanded,
         level = level,
         value = value,
@@ -89,9 +93,16 @@ data class ByRole(
         mapOf("min" to min, "max" to max, "now" to now, "text" to text).filterValues { it != null }
 }
 
+/*
+ * https://www.w3.org/TR/wai-aria-1.2/#aria-current
+ */
+@Suppress("UNUSED")
+enum class Current {
+    Page, Step, Location, Date, Time
+}
 
 /*
-    https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles
+ * https://www.w3.org/TR/wai-aria-1.2/#role_definitions
  */
 @Suppress("UNUSED")
 enum class Role {
