@@ -1,6 +1,7 @@
 on:
   push:
-    branches: [ main ]
+    tags:
+      - *
 
 jobs:
   build:
@@ -8,15 +9,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '21'
+
       - name: Install required dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y gnupg2 expect
+
       - name: Test
         run: ./gradlew test
+
       - name: Publish artifacts
         run:  ./gradlew publish jreleaserFullRelease
+        env:
+          JRELEASER_NEXUS2_USERNAME: ${{ secrets.JRELEASER_NEXUS2_USERNAME }}
+          JRELEASER_NEXUS2_PASSWORD: ${{ secrets.JRELEASER_NEXUS2_PASSWORD }}
+          JRELEASER_GPG_PASSPHRASE: ${{ secrets.JRELEASER_GPG_PASSPHRASE }}
+          JRELEASER_GPG_SECRET_KEY: ${{ secrets.JRELEASER_GPG_SECRET_KEY }}
+          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.JRELEASER_GPG_PUBLIC_KEY }}
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
