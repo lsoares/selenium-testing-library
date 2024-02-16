@@ -24,15 +24,16 @@ data class ByRole(
     private val checked: Boolean? = null,
     private val pressed: Boolean? = null,
     private val suggest: Boolean? = null,
-    private val current: JsType? = null,
+    private val current: Current? = null,
     private val expanded: Boolean? = null,
     private val level: Int? = null,
     private val value: Value? = null,
     private val queryFallbacks: Boolean? = null,
 ) : By() {
 
+    private var _current: Any? = current?.name?.lowercase()?.asJsString()
+
     fun enableQueryFallbacks() = copy(queryFallbacks = true)
-    fun withCurrent(current: Current) = copy(current = current.name.lowercase().asJsString())
 
     constructor(
         role: Role,
@@ -60,11 +61,12 @@ data class ByRole(
         checked = checked,
         pressed = pressed,
         suggest = suggest,
-        current = current?.toString()?.asJsExpression(),
         expanded = expanded,
         level = level,
         value = value,
-    )
+    ) {
+        _current = current
+    }
 
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
@@ -79,7 +81,7 @@ data class ByRole(
                 "checked" to checked,
                 "pressed" to pressed,
                 "suggest" to suggest,
-                "current" to current,
+                "current" to _current,
                 "expanded" to expanded,
                 "queryFallbacks" to queryFallbacks,
                 "level" to level,
