@@ -15,7 +15,7 @@ Central** <img src="https://search.maven.org/favicon.ico" width="16" height="16"
 Then, copy the declaration for your build tool. E.g.:_
 
 ```kotlin
-implementation("com.luissoares:selenium-testing-library:3.7.2")
+implementation("com.luissoares:selenium-testing-library:3.7.4")
 ```
 
 ---

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.remote.RemoteWebElement
 import org.openqa.selenium.support.ui.Select
+import seleniumtestinglib.queries.executeTLQuery
 
 val WebElement.value: Any?
     get() {
@@ -21,7 +22,7 @@ val WebElement.displayValue: Any?
         Select(this).let {
             when {
                 it.isMultiple -> it.allSelectedOptions.map(WebElement::getText)
-                else          -> it.firstSelectedOption.text
+                else -> it.firstSelectedOption.text
             }
         } else getAttribute("value")
 
@@ -37,14 +38,14 @@ val WebElement.formValues: Map<String, Any?>
                     "input" -> when (elements.first().getAttribute("type")) {
                         "checkbox" -> when {
                             elements.size > 1 -> elements.filter { it.isChecked }.map { it.getAttribute("value") }
-                            else              -> elements.first().isChecked
+                            else -> elements.first().isChecked
                         }
 
-                        "radio"    -> elements.firstOrNull { it.isChecked }?.value
-                        else       -> elements.first().value
+                        "radio" -> elements.firstOrNull { it.isChecked }?.value
+                        else -> elements.first().value
                     }
 
-                    else    -> elements.first().value
+                    else -> elements.first().value
                 }
             }
     }
@@ -82,7 +83,7 @@ val WebElement.isRequired
 val WebElement.isValid
     get() = when (tagName) {
         "form" -> wrappedDriver.executeScript("return arguments[0].checkValidity()", this) as Boolean
-        else   -> wrappedDriver.executeScript(
+        else -> wrappedDriver.executeScript(
             "return arguments[0].getAttribute('aria-invalid')",
             this
         ) in setOf(null, "false")
@@ -137,3 +138,22 @@ val WebElement.errorMessage: String?
     }
 
 internal val WebElement.wrappedDriver get() = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver
+
+
+fun WebElement.fireEvent(eventName: Event, eventProperties: Map<String, Map<String, Any?>> = emptyMap()): Any? {
+    wrappedDriver.ensureScript("testing-library.js", "fireEvent.change")
+    return wrappedDriver.executeScript("fireEvent.$eventName(arguments[0], arguments[1])", this, eventProperties)
+}
+
+@Suppress("unused")
+enum class Event {
+    copy, cut, paste, compositionEnd, compositionStart, compositionUpdate, keyDown, keyPress, keyUp, focus, blur,
+    focusIn, focusOut, change, input, invalid, submit, reset, click, contextMenu, dblClick, drag, dragEnd, dragEnter,
+    dragExit, dragLeave, dragOver, dragStart, drop, mouseDown, mouseEnter, mouseLeave, mouseMove, mouseOut, mouseOver,
+    mouseUp, select, touchCancel, touchEnd, touchMove, touchStart, resize, scroll, wheel, abort, canPlay,
+    canPlayThrough, durationChange, emptied, encrypted, ended, loadedData, loadedMetadata, loadStart, pause, play,
+    playing, progress, rateChange, seeked, seeking, stalled, suspend, timeUpdate, volumeChange, waiting, load, error,
+    animationStart, animationEnd, animationIteration, transitionCancel, transitionEnd, transitionRun, transitionStart,
+    pointerOver, pointerEnter, pointerDown, pointerMove, pointerUp, pointerCancel, pointerOut, pointerLeave,
+    gotPointerCapture, lostPointerCapture, popState, offline, online, doubleClick
+}

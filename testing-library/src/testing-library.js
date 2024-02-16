@@ -1,3 +1,4 @@
-import {screen} from '@testing-library/dom'
+import {screen, fireEvent} from '@testing-library/dom'
 
 window.screen = screen
+window.fireEvent = fireEvent
