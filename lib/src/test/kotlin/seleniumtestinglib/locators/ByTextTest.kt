@@ -83,6 +83,23 @@ class ByTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun `not exact 2 with selector`() {
+        driver.render(
+            """
+            <div>
+                <span>I accept</span>
+                <p>I accept</p>
+            </div>
+            <p>I accept</p>
+        """
+        )
+
+        val result = driver.findElement(ByText("accept", selector = "div p").inexact())
+
+        assertEquals("p", result.tagName)
+    }
+
+    @Test
     fun regex() {
         driver.render("<p>I accept</p>")
 

@@ -13,7 +13,7 @@ import seleniumtestinglib.queries.executeTLQuery
 /**
  * https://testing-library.com/docs/queries/bytitle
  */
-class ByTitle(
+data class ByTitle(
     private val title: JsType,
     private val exact: Boolean? = null,
     private val normalizer: String? = null,
@@ -28,6 +28,8 @@ class ByTitle(
         exact = exact,
         normalizer = normalizer,
     )
+
+    fun inexact() = copy(exact = false)
 
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(

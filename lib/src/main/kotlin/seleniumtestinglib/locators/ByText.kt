@@ -22,6 +22,7 @@ data class ByText(
 ) : By() {
 
     fun disableIgnore() = copy(ignore = "")
+    fun inexact() = copy(exact = false)
 
     constructor(
         text: String,

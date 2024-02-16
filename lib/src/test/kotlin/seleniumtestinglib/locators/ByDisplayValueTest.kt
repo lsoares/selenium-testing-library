@@ -34,6 +34,16 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun `not exact 2`() {
+        driver.render("<input placeholder='username' />")
+        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
+
+        val result = driver.findElement(ByDisplayValue("SELEN").inexact())
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
     fun regex() {
         driver.render("<input placeholder='username' />")
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")

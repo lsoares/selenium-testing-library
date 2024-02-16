@@ -35,6 +35,15 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun `not exact 2`() {
+        driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+
+        val result = driver.findElement(ByAltText("incredibles 2").inexact())
+
+        assertEquals("img", result.tagName)
+    }
+
+    @Test
     fun regex() {
         driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 

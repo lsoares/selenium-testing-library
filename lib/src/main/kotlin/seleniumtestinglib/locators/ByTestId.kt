@@ -29,6 +29,8 @@ data class ByTestId(
         exact = exact,
     )
 
+    fun inexact() = copy(exact = false)
+
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.TestId,

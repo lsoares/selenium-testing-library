@@ -42,6 +42,14 @@ class ByTitleTest(private val driver: RemoteWebDriver) {
 
         assertEquals("Hello World!", result.text)
     }
+    @Test
+    fun `not exact 2`() {
+        driver.render("<div title='foobar'>Hello World!</div>")
+
+        val result = driver.findElement(ByTitle("FOO").inexact())
+
+        assertEquals("Hello World!", result.text)
+    }
 
     @Test
     fun regex() {

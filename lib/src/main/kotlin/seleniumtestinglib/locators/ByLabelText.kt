@@ -31,6 +31,7 @@ data class ByLabelText(
         selector = selector,
         normalizer = normalizer,
     )
+    fun inexact() = copy(exact = false)
 
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(

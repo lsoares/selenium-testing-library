@@ -29,7 +29,7 @@ java {
     withJavadocJar()
 }
 
-val projectVersion = "3.7.4"
+val projectVersion = "3.7.3"
 version = projectVersion
 val groupId = "com.luissoares"
 group = groupId
@@ -99,12 +99,11 @@ jreleaser {
     }
 }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-    sourceCompatibility = "11"
-    targetCompatibility = "11"
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+kotlin {
+    jvmToolchain(11)
 }

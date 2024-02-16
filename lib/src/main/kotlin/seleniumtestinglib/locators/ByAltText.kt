@@ -29,6 +29,8 @@ data class ByAltText(
         normalizer = normalizer,
     )
 
+    fun inexact() = copy(exact = false)
+
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
             by = ByType.AltText,

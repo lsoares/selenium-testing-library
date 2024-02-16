@@ -24,12 +24,22 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
         assertEquals("input", result.tagName)
     }
 
+
     @ParameterizedTest
     @ValueSource(strings = ["Username", "USERNAME", "user"])
     fun `not exact`(text: String) {
         driver.render("<input placeholder='Username' />")
 
         val result = driver.findElement(ByPlaceholderText(text, exact = false))
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
+    fun `not exact 2`() {
+        driver.render("<input placeholder='Username' />")
+
+        val result = driver.findElement(ByPlaceholderText("user").inexact())
 
         assertEquals("input", result.tagName)
     }

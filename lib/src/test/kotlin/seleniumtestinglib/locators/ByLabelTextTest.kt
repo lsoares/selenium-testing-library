@@ -79,6 +79,20 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
     }
 
     @Test
+    fun `not exact 2 with selector`() {
+        driver.render(
+            """
+            <input aria-label='Username' />
+            <span><div class="x"><input aria-label='Username' /></div></span>
+            """
+        )
+
+        val result = driver.findElement(ByLabelText("user", selector = "span .x input").inexact())
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
     fun regex() {
         driver.render("<input aria-label='Username' />")
 
