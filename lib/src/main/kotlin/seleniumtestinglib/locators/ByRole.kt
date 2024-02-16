@@ -74,6 +74,7 @@ data class ByRole(
             textMatch = role.name.lowercase().asJsString(),
             options = mapOf(
                 "hidden" to hidden,
+                "normalizer" to normalizer?.asJsExpression(),
                 "name" to name,
                 "description" to description,
                 "selected" to selected,
