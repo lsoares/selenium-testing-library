@@ -60,7 +60,7 @@ driver.user.type(input, "foobar")
 driver.user.selectOptions(driver.findElement(ByRole(ListBox, name = "C")))
 ```
 
-fireEvent is also available:
+[fireEvent]([url](https://testing-library.com/docs/dom-testing-library/api-events/)) is also available:
 ```kotlin
 input.fireEvent(change, mapOf("target" to mapOf("value" to "2020-05-24")))
 ```
