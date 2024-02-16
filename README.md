@@ -2,17 +2,17 @@
 
 **_[Testing Library](http://testing-library.com) selectors available as Selenium locators for Kotlin/Java._**
 
-Why? When I use Selenium, I don't want to depend on ids, classes, and similar.
+Why? When I use Selenium, I want to be independent of ids, classes, and similar.
 I'm a fan of the Testing Library because it encourages "testing as a user":
 
 > The more your tests resemble the way your software is used,
 > the more confidence they can give you.
 
 
-ℹ️ _To set it up, pick the [library's latest version at **Maven
+Pick the [library's latest version at **Maven
 Central** <img src="https://search.maven.org/favicon.ico" width="16" height="16" />](https://search.maven.org/artifact/com.luissoares/selenium-testing-library)
 .
-Then, copy the declaration for your build tool. E.g.:_
+Then, copy the declaration for your build tool. E.g.:
 
 ```kotlin
 implementation("com.luissoares:selenium-testing-library:3.7.4")
@@ -60,7 +60,10 @@ driver.user.type(input, "foobar")
 driver.user.selectOptions(driver.findElement(ByRole(ListBox, name = "C")))
 ```
 
-ℹ️ _user-event's JavaScript only loads if it's used._
+fireEvent is also available:
+```kotlin
+input.fireEvent(change, mapOf("target" to mapOf("value" to "2020-05-24")))
+```
 
 ## jest-dom
 
@@ -81,7 +84,6 @@ val name = element.accessibleName
 val displayedValue = element.displayValue
 ```
 
-ℹ️ _This functionality was ported (made solely with Selenium rather than using jest-dom's JavaScript)._
 
 ---
 
