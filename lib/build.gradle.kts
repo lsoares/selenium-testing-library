@@ -1,4 +1,4 @@
-import org.jreleaser.model.Active
+import org.jreleaser.model.Active.ALWAYS
 
 plugins {
     kotlin("jvm") version "1.9.22"
@@ -29,22 +29,20 @@ java {
     withJavadocJar()
 }
 
-val projectVersion = "3.7.3"
-version = projectVersion
-val groupId = "com.luissoares"
-group = groupId
+version = "3.7.3"
+group = "com.luissoares"
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = groupId
-            artifactId = "selenium-testing-library"
-            version = projectVersion
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
             from(components["kotlin"])
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
             pom {
-                name.set(project.name)
+                name.set("Selenium Testing Library")
                 description.set("Selenium locators that resemble the Testing Library (testing-library.com).")
                 url.set("https://github.com/lsoares/selenium-testing-library")
                 licenses {
@@ -81,14 +79,14 @@ publishing {
 jreleaser {
     gitRootSearch = true
     signing {
-        active.set(Active.ALWAYS)
+        active.set(ALWAYS)
         armored.set(true)
     }
     deploy {
         maven {
             nexus2 {
                 create("mavenCentral") {
-                    active.set(Active.ALWAYS)
+                    active.set(ALWAYS)
                     url.set("https://s01.oss.sonatype.org/service/local")
                     closeRepository.set(true)
                     releaseRepository.set(true)
