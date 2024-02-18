@@ -142,18 +142,19 @@ internal val WebElement.wrappedDriver get() = (this as RemoteWebElement).wrapped
 
 fun WebElement.fireEvent(eventName: Event, eventProperties: Map<String, Map<String, Any?>> = emptyMap()): Any? {
     wrappedDriver.ensureScript("testing-library.js", "fireEvent.change")
-    return wrappedDriver.executeScript("fireEvent.$eventName(arguments[0], arguments[1])", this, eventProperties)
+    val event = eventName.name.replaceFirstChar(Char::lowercase)
+    return wrappedDriver.executeScript("fireEvent.$event(arguments[0], arguments[1])", this, eventProperties)
 }
 
 @Suppress("unused")
 enum class Event {
-    copy, cut, paste, compositionEnd, compositionStart, compositionUpdate, keyDown, keyPress, keyUp, focus, blur,
-    focusIn, focusOut, change, input, invalid, submit, reset, click, contextMenu, dblClick, drag, dragEnd, dragEnter,
-    dragExit, dragLeave, dragOver, dragStart, drop, mouseDown, mouseEnter, mouseLeave, mouseMove, mouseOut, mouseOver,
-    mouseUp, select, touchCancel, touchEnd, touchMove, touchStart, resize, scroll, wheel, abort, canPlay,
-    canPlayThrough, durationChange, emptied, encrypted, ended, loadedData, loadedMetadata, loadStart, pause, play,
-    playing, progress, rateChange, seeked, seeking, stalled, suspend, timeUpdate, volumeChange, waiting, load, error,
-    animationStart, animationEnd, animationIteration, transitionCancel, transitionEnd, transitionRun, transitionStart,
-    pointerOver, pointerEnter, pointerDown, pointerMove, pointerUp, pointerCancel, pointerOut, pointerLeave,
-    gotPointerCapture, lostPointerCapture, popState, offline, online, doubleClick
+    Copy, Cut, Paste, CompositionEnd, CompositionStart, CompositionUpdate, KeyDown, KeyPress, KeyUp, Focus, Blur,
+    FocusIn, FocusOut, Change, Input, Invalid, Submit, Reset, Click, ContextMenu, DblClick, Drag, DragEnd, DragEnter,
+    DragExit, DragLeave, DragOver, DragStart, Drop, MouseDown, MouseEnter, MouseLeave, MouseMove, MouseOut, MouseOver,
+    MouseUp, Select, TouchCancel, TouchEnd, TouchMove, TouchStart, Resize, Scroll, Wheel, Abort, CanPlay,
+    CanPlayThrough, DurationChange, Emptied, Encrypted, Ended, LoadedData, LoadedMetadata, LoadStart, Pause, Play,
+    Playing, Progress, RateChange, Seeked, Seeking, Stalled, Suspend, TimeUpdate, VolumeChange, Waiting, Load, Error,
+    AnimationStart, AnimationEnd, AnimationIteration, TransitionCancel, TransitionEnd, TransitionRun, TransitionStart,
+    PointerOver, PointerEnter, PointerDown, PointerMove, PointerUp, PointerCancel, PointerOut, PointerLeave,
+    GotPointerCapture, LostPointerCapture, PopState, Offline, Online, DoubleClick
 }

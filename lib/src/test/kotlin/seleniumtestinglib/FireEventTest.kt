@@ -2,7 +2,7 @@ package seleniumtestinglib
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.Event.change
+import seleniumtestinglib.Event.Change
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role.TextBox
 import kotlin.test.Test
@@ -16,7 +16,7 @@ class FireEventTest(private val driver: RemoteWebDriver) {
         driver.render("""<input />""")
         val input = driver.findElement(ByRole(TextBox))
 
-        input.fireEvent(change, mapOf("target" to mapOf("value" to "2020-05-24")))
+        input.fireEvent(Change, mapOf("target" to mapOf("value" to "2020-05-24")))
 
         assertEquals("2020-05-24", input.value)
     }

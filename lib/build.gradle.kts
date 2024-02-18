@@ -36,7 +36,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = project.group.toString()
-            artifactId = project.name
+            artifactId = "selenium-testing-library"
             version = project.version.toString()
             from(components["kotlin"])
             artifact(tasks["sourcesJar"])
