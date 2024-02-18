@@ -13,7 +13,7 @@ class FireEventTest(private val driver: RemoteWebDriver) {
 
     @Test
     fun `fire event`() {
-        driver.render("""<input />""")
+        driver.render("<input />")
         val input = driver.findElement(ByRole(TextBox))
 
         input.fireEvent(Change, mapOf("target" to mapOf("value" to "2020-05-24")))
