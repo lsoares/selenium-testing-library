@@ -2,9 +2,12 @@ package seleniumtestinglib.queries
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.JavascriptException
+import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.locators.ByText
 import seleniumtestinglib.queries.ByType.AltText
+import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,18 +25,36 @@ class NotFoundTest(private val driver: RemoteWebDriver) {
             driver.getBy(AltText, "will not work")
         }
 
-        assertTrue(result.exceptionOrNull() is JavascriptException)
+        val ex = result.exceptionOrNull() as JavascriptException
+        assertTrue(ex.message?.contains("Unable to find an element with the alt text: will not work")!!, ex.message)
+    }
+
+
+    @Test
+    fun `get but none found - findElements`() {
+        driver.render("<input alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+
+        val result = runCatching {
+            driver.findElement(ByText("as df".asJsString()))
+        }
+
+        val ex = result.exceptionOrNull() as NoSuchElementException
+        assertTrue(
+            ex.message!!.contains("Cannot locate an element using ByText(text=as df, selector=null, exact=null, ignore=null, normalizer=null)"),
+            ex.message
+        )
     }
 
     @Test
     fun `get all but none found`() {
         driver.render("<input alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
-        val result = kotlin.runCatching {
+        val result = runCatching {
             driver.getAllBy(AltText, "will not work")
         }
 
-        assertTrue(result.exceptionOrNull() is JavascriptException)
+        val ex = result.exceptionOrNull() as JavascriptException
+        assertTrue(ex.message!!.contains("Unable to find an element with the alt text: will not work"), ex.message)
     }
 
     @Test

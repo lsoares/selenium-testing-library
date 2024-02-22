@@ -39,9 +39,11 @@ internal enum class QueryType {
     Find, Query, Get
 }
 
-sealed class JsType(internal open val value: Any) {
+sealed class JsType(internal open val value: String) {
     class JsString(override val value: String) : JsType(value)
     class JsExpression(override val value: String) : JsType(value)
+
+    override fun toString() = value
 
     companion object {
         fun String.asJsExpression() = JsExpression(this)

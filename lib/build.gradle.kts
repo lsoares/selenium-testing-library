@@ -14,10 +14,10 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.seleniumhq.selenium:selenium-java:4.17.0")
+    implementation("org.seleniumhq.selenium:selenium-java:4.18.1")
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
-    testImplementation("io.github.bonigarcia:webdrivermanager:5.6.3")
+    testImplementation("io.github.bonigarcia:webdrivermanager:5.6.4")
 }
 
 tasks.test {
