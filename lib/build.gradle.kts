@@ -17,7 +17,6 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:4.18.1")
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
-    testImplementation("io.github.bonigarcia:webdrivermanager:5.6.4")
 }
 
 tasks.test {
@@ -29,7 +28,7 @@ java {
     withJavadocJar()
 }
 
-version = "3.7.5"
+version = "3.7.6"
 group = "com.luissoares"
 
 publishing {
@@ -43,7 +42,7 @@ publishing {
             artifact(tasks["javadocJar"])
             pom {
                 name.set("Selenium Testing Library")
-                description.set("Selenium locators that resemble the Testing Library (testing-library.com).")
+                description.set("Selenium locators that resemble the Testing Library (testing-library.com)")
                 url.set("https://github.com/lsoares/selenium-testing-library")
                 licenses {
                     license {
