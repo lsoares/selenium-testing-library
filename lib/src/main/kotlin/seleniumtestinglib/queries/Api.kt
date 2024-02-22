@@ -2,6 +2,8 @@ package seleniumtestinglib.queries
 
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.ensureScript
+import seleniumtestinglib.queries.JsType.Companion.asJsExpression
+import kotlin.text.RegexOption.*
 
 /**
  * https://testing-library.com/docs/dom-testing-library/intro
@@ -51,6 +53,17 @@ sealed class JsType(internal open val value: String) {
     }
 }
 
+internal fun Regex.asJsExpression(): JsType.JsExpression {
+    val jsFlags = buildString {
+        if (IGNORE_CASE in options) append('i')
+        if (MULTILINE in options) append('m')
+        if (DOT_MATCHES_ALL in options) append('s')
+        if (COMMENTS in options) append('x')
+        if (CANON_EQ in options) append('u')
+    }
+    return "/${this.pattern}/$jsFlags".asJsExpression()
+}
+
 private fun RemoteWebDriver.executeTLScript(script: String): Any? {
     ensureScript("testing-library.js", "screen?.queryAllByTestId")
     return executeScript(script)
@@ -64,5 +77,6 @@ private val Any?.escaped: Any?
         is Map<*, *> -> entries.joinToString(", ", prefix = "{ ", postfix = " }") {
             "${it.key}: ${it.value?.escaped}"
         }
+
         else -> this
     }

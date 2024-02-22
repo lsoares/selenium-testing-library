@@ -7,6 +7,7 @@ import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class ByTitleTest(private val driver: RemoteWebDriver) {
@@ -56,6 +57,15 @@ class ByTitleTest(private val driver: RemoteWebDriver) {
         driver.render("<div title='foobar'>Hello World!</div>")
 
         val result = driver.findElement(ByTitle("/FOO/i".asJsExpression()))
+
+        assertEquals("Hello World!", result.text)
+    }
+
+    @Test
+    fun `regex - alternative`() {
+        driver.render("<div title='foobar'>Hello World!</div>")
+
+        val result = driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))
 
         assertEquals("Hello World!", result.text)
     }

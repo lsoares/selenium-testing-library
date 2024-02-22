@@ -9,6 +9,7 @@ import seleniumtestinglib.queries.JsType
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.queries.executeTLQuery
+import seleniumtestinglib.queries.asJsExpression
 
 /**
  * https://testing-library.com/docs/queries/byalttext
@@ -25,6 +26,16 @@ data class ByAltText(
         normalizer: String? = null,
     ) : this(
         text = text.asJsString(),
+        exact = exact,
+        normalizer = normalizer,
+    )
+
+    constructor(
+        text: Regex,
+        exact: Boolean? = null,
+        normalizer: String? = null,
+    ) : this(
+        text = text.asJsExpression(),
         exact = exact,
         normalizer = normalizer,
     )

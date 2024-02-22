@@ -8,6 +8,7 @@ import seleniumtestinglib.queries.ByType
 import seleniumtestinglib.queries.JsType
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
+import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
@@ -25,6 +26,16 @@ data class ByDisplayValue(
         normalizer: String? = null,
     ) : this(
         value = value.asJsString(),
+        exact = exact,
+        normalizer = normalizer,
+    )
+
+    constructor(
+        value: Regex,
+        exact: Boolean? = null,
+        normalizer: String? = null,
+    ) : this(
+        value = value.asJsExpression(),
         exact = exact,
         normalizer = normalizer,
     )

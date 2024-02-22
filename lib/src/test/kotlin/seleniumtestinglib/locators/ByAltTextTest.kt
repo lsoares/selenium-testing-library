@@ -6,11 +6,11 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class ByAltTextTest(private val driver: RemoteWebDriver) {
@@ -47,7 +47,16 @@ class ByAltTextTest(private val driver: RemoteWebDriver) {
     fun regex() {
         driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
-        val result = driver.findElement(ByAltText("/incred/i".asJsExpression()))
+        val result = driver.findElement(ByAltText(Regex("incred", IGNORE_CASE)))
+
+        assertEquals("img", result.tagName)
+    }
+
+    @Test
+    fun `regex alternative`() {
+        driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+
+        val result = driver.findElement(ByAltText(Regex("incred", IGNORE_CASE)))
 
         assertEquals("img", result.tagName)
     }

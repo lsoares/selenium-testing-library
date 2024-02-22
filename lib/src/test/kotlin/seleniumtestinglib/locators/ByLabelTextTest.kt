@@ -7,6 +7,7 @@ import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class ByLabelTextTest(private val driver: RemoteWebDriver) {
@@ -97,6 +98,15 @@ class ByLabelTextTest(private val driver: RemoteWebDriver) {
         driver.render("<input aria-label='Username' />")
 
         val result = driver.findElement(ByLabelText("/user/i".asJsExpression()))
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
+    fun `regex alternative`() {
+        driver.render("<input aria-label='Username' />")
+
+        val result = driver.findElement(ByLabelText(Regex("user", IGNORE_CASE)))
 
         assertEquals("input", result.tagName)
     }

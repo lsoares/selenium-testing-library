@@ -8,6 +8,7 @@ import seleniumtestinglib.queries.ByType
 import seleniumtestinglib.queries.JsType
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
+import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
@@ -31,6 +32,19 @@ data class ByLabelText(
         selector = selector,
         normalizer = normalizer,
     )
+
+    constructor(
+        text: Regex,
+        exact: Boolean? = null,
+        selector: String? = null,
+        normalizer: String? = null,
+    ) : this(
+        text = text.asJsExpression(),
+        exact = exact,
+        selector = selector,
+        normalizer = normalizer,
+    )
+
     fun inexact() = copy(exact = false)
 
     override fun findElements(context: SearchContext): List<WebElement> =

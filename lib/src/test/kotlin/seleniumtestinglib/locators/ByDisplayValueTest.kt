@@ -9,6 +9,7 @@ import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class ByDisplayValueTest(private val driver: RemoteWebDriver) {
@@ -49,6 +50,16 @@ class ByDisplayValueTest(private val driver: RemoteWebDriver) {
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
 
         val result = driver.findElement(ByDisplayValue("/selen/i".asJsExpression()))
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
+    fun `regex alternative`() {
+        driver.render("<input placeholder='username' />")
+        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
+
+        val result = driver.findElement(ByDisplayValue(Regex("selen", IGNORE_CASE)))
 
         assertEquals("input", result.tagName)
     }

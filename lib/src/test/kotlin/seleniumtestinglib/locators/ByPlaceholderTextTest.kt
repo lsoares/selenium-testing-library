@@ -11,6 +11,7 @@ import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
@@ -49,6 +50,15 @@ class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
         driver.render("<input placeholder='Username' />")
 
         val result = driver.findElement(ByPlaceholderText("/user/i".asJsExpression()))
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
+    fun `regex alternative`() {
+        driver.render("<input placeholder='Username' />")
+
+        val result = driver.findElement(ByPlaceholderText(Regex("user", IGNORE_CASE)))
 
         assertEquals("input", result.tagName)
     }

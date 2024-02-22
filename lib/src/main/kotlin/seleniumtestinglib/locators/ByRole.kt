@@ -8,6 +8,7 @@ import seleniumtestinglib.queries.ByType
 import seleniumtestinglib.queries.JsType
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
+import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
@@ -34,6 +35,8 @@ data class ByRole(
     private var _current: Any? = current?.name?.lowercase()?.asJsString()
 
     fun enableQueryFallbacks() = copy(queryFallbacks = true)
+    fun withName(name: Regex) = copy(name = name.asJsExpression())
+    fun witDescription(description: Regex) = copy(description = description.asJsExpression())
 
     constructor(
         role: Role,

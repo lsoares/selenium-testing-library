@@ -15,6 +15,7 @@ import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class ByRoleTest(private val driver: RemoteWebDriver) {
@@ -46,6 +47,15 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         driver.render("""<h1>something as a user something</h1>""")
 
         val result = driver.findElements(ByRole(Heading, name = "/as a user/i".asJsExpression()))
+
+        assertEquals("something as a user something", result.single().accessibleName)
+    }
+
+    @Test
+    fun `role with regex in name parameter - alternative`() {
+        driver.render("""<h1>something as a user something</h1>""")
+
+        val result = driver.findElements(ByRole(Heading).withName(Regex("as a user", IGNORE_CASE)))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -131,6 +141,7 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
 
+
     @Test
     fun `description with regex`() {
         driver.render(
@@ -148,6 +159,29 @@ class ByRoleTest(private val driver: RemoteWebDriver) {
 
         val result = driver.findElements(
             ByRole(AlertDialog, description = "/your session/i".asJsExpression())
+        )
+
+        assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
+    }
+
+
+    @Test
+    fun `description with regex - alternative`() {
+        driver.render(
+            """<ul>
+                      <li role="alertdialog" aria-describedby="notification-id-1">
+                        <div><button>Close</button></div>
+                        <div id="notification-id-1">You have unread emails</div>
+                      </li>
+                      <li role="alertdialog" aria-describedby="notification-id-2">
+                        <div><button>Close</button></div>
+                        <div id="notification-id-2">Your session is about to expire!</div>
+                      </li>
+                    </ul>"""
+        )
+
+        val result = driver.findElements(
+            ByRole(AlertDialog).witDescription(Regex("your session", IGNORE_CASE))
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))

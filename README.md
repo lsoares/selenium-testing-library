@@ -30,7 +30,7 @@ The [core API](https://testing-library.com/docs) contains the selectors which ar
 
 ```kotlin
 driver.findElements(ByAltText("first name"))
-driver.findElements(ByDisplayValue("/john/i".asJsExpression()))
+val result = driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))
 val active = driver.findElements(ByLabelText("active"))
 val input = driver.findElements(ByPlaceholderText("first name", exact = false))
 val firstName = input.text

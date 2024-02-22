@@ -12,6 +12,7 @@ import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.text.RegexOption.IGNORE_CASE
 
 @ExtendWith(DriverLifeCycle::class)
 class ByTextTest(private val driver: RemoteWebDriver) {
@@ -104,6 +105,15 @@ class ByTextTest(private val driver: RemoteWebDriver) {
         driver.render("<p>I accept</p>")
 
         val result = driver.findElement(ByText("/ACCEPT/i".asJsExpression()))
+
+        assertEquals("p", result.tagName)
+    }
+
+    @Test
+    fun `regex - alternative`() {
+        driver.render("<p>I accept</p>")
+
+        val result = driver.findElement(ByText(Regex("ACCEPT", IGNORE_CASE)))
 
         assertEquals("p", result.tagName)
     }
