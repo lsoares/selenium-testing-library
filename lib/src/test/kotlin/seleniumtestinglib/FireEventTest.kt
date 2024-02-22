@@ -1,15 +1,12 @@
 package seleniumtestinglib
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.Event.Change
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role.TextBox
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@ExtendWith(DriverLifeCycle::class)
-class FireEventTest(private val driver: RemoteWebDriver) {
+class FireEventTest {
 
     @Test
     fun `fire event`() {

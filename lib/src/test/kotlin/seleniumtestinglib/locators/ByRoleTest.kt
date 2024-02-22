@@ -1,13 +1,11 @@
 package seleniumtestinglib.locators
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.locators.ByRole.Value
 import seleniumtestinglib.locators.Role.*
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
@@ -17,8 +15,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.text.RegexOption.IGNORE_CASE
 
-@ExtendWith(DriverLifeCycle::class)
-class ByRoleTest(private val driver: RemoteWebDriver) {
+class ByRoleTest {
 
     private fun examples() = setOf(
         of(TextBox, """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),

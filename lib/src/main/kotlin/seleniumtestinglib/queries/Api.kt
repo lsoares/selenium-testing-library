@@ -1,6 +1,6 @@
 package seleniumtestinglib.queries
 
-import org.openqa.selenium.remote.RemoteWebDriver
+import org.openqa.selenium.JavascriptExecutor
 import seleniumtestinglib.ensureScript
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import kotlin.text.RegexOption.*
@@ -8,10 +8,10 @@ import kotlin.text.RegexOption.*
 /**
  * https://testing-library.com/docs/dom-testing-library/intro
  */
-internal inline fun <reified T> RemoteWebDriver.executeTLQuery(
+internal inline fun <reified T> JavascriptExecutor.executeTLQuery(
     queryType: QueryType = QueryType.Query,
     all: Boolean = true,
-    by: ByType,
+    by: LocatorType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ): T {
@@ -33,7 +33,7 @@ internal inline fun <reified T> RemoteWebDriver.executeTLQuery(
         .let(::executeTLScript) as T
 }
 
-enum class ByType {
+enum class LocatorType {
     AltText, DisplayValue, LabelText, PlaceholderText, Role, TestId, Text, Title
 }
 
@@ -64,7 +64,7 @@ internal fun Regex.asJsExpression(): JsType.JsExpression {
     return "/${this.pattern}/$jsFlags".asJsExpression()
 }
 
-private fun RemoteWebDriver.executeTLScript(script: String): Any? {
+private fun JavascriptExecutor.executeTLScript(script: String): Any? {
     ensureScript("testing-library.js", "screen?.queryAllByTestId")
     return executeScript(script)
 }

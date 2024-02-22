@@ -1,15 +1,12 @@
 package seleniumtestinglib.queries
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.ByType.AltText
+import seleniumtestinglib.driver
+import seleniumtestinglib.queries.LocatorType.AltText
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@ExtendWith(DriverLifeCycle::class)
-class ByAltTextTest(private val driver: RemoteWebDriver) {
+class ByAltTextTest {
 
     @Test
     fun `get by alt text`() {

@@ -1,8 +1,6 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.errorMessage
 import seleniumtestinglib.locators.ByLabelText
 import seleniumtestinglib.render
@@ -10,8 +8,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.text.RegexOption.IGNORE_CASE
 
-@ExtendWith(DriverLifeCycle::class)
-class ErrorMessageTest(private val driver: RemoteWebDriver) {
+class ErrorMessageTest {
 
     @Test
     fun `error message`() {

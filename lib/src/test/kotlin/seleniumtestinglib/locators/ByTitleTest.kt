@@ -1,16 +1,13 @@
 package seleniumtestinglib.locators
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.text.RegexOption.IGNORE_CASE
 
-@ExtendWith(DriverLifeCycle::class)
-class ByTitleTest(private val driver: RemoteWebDriver) {
+class ByTitleTest {
 
     @Test
     fun `by title`() {

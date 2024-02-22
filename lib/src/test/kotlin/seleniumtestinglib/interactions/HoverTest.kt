@@ -1,17 +1,14 @@
 package seleniumtestinglib.interactions
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role.TextBox
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@ExtendWith(DriverLifeCycle::class)
-class HoverTest(private val driver: RemoteWebDriver) {
+class HoverTest {
 
     @Test
     fun hover() {

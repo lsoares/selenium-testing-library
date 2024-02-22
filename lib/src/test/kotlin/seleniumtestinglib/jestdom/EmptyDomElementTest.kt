@@ -1,15 +1,12 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.By
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.render
 
-@ExtendWith(DriverLifeCycle::class)
-class EmptyDomElementTest(private val driver: RemoteWebDriver) {
+class EmptyDomElementTest {
 
     @ParameterizedTest
     @ValueSource(

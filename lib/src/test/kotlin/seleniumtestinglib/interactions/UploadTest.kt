@@ -1,8 +1,6 @@
 package seleniumtestinglib.interactions
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.files
 import seleniumtestinglib.locators.ByLabelText
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
@@ -10,8 +8,7 @@ import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@ExtendWith(DriverLifeCycle::class)
-class UploadTest(private val driver: RemoteWebDriver) {
+class UploadTest {
 
     @Test
     fun upload() {

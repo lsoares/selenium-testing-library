@@ -1,9 +1,9 @@
 package seleniumtestinglib
 
-import org.openqa.selenium.remote.RemoteWebDriver
+import org.openqa.selenium.JavascriptExecutor
 import java.lang.Thread.sleep
 
-internal fun RemoteWebDriver.ensureScript(fileName: String, isPresentFunction: String, retries: Int = 0) {
+internal fun JavascriptExecutor.ensureScript(fileName: String, isPresentFunction: String, retries: Int = 0) {
     require(retries < 5) { "can't ensure script $fileName after $retries retries" }
     if (!isLoaded(isPresentFunction))
         executeScript(loadScript(fileName))
@@ -14,7 +14,7 @@ internal fun RemoteWebDriver.ensureScript(fileName: String, isPresentFunction: S
     }
 }
 
-private fun RemoteWebDriver.isLoaded(isPresentFunction: String) =
+private fun JavascriptExecutor.isLoaded(isPresentFunction: String) =
     executeScript("return typeof $isPresentFunction == 'function'") as Boolean
 
 private val resources = mutableMapOf<String, String>()
@@ -23,5 +23,5 @@ private fun loadScript(fileName: String) =
         {}.javaClass.getResource("/$fileName")?.readText() ?: error("$fileName not found")
     }
 
-val RemoteWebDriver.selection: String
+val JavascriptExecutor.selection: String
     get() = executeScript("return window.getSelection().toString()") as String

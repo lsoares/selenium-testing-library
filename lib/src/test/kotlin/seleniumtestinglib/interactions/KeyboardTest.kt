@@ -1,19 +1,16 @@
 package seleniumtestinglib.interactions
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role.TextBox
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.assertEquals
 
-@ExtendWith(DriverLifeCycle::class)
-class KeyboardTest(private val driver: RemoteWebDriver) {
+class KeyboardTest {
 
     @ParameterizedTest
     @MethodSource("test cases")

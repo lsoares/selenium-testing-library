@@ -1,15 +1,12 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.ByType.TestId
+import seleniumtestinglib.driver
+import seleniumtestinglib.queries.LocatorType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.Test
 
-@ExtendWith(DriverLifeCycle::class)
-class StyleTest(private val driver: RemoteWebDriver) {
+class StyleTest {
 
     @Test
     fun `with classes`() {

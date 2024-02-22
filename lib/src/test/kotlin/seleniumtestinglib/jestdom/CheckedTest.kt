@@ -1,19 +1,16 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.isChecked
-import seleniumtestinglib.queries.ByType.TestId
+import seleniumtestinglib.queries.LocatorType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@ExtendWith(DriverLifeCycle::class)
-class CheckedTest(private val driver: RemoteWebDriver) {
+class CheckedTest {
 
     @ParameterizedTest
     @ValueSource(

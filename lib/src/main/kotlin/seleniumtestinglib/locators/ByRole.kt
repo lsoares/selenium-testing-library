@@ -1,13 +1,13 @@
 package seleniumtestinglib.locators
 
 import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.queries.ByType
 import seleniumtestinglib.queries.JsType
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
+import seleniumtestinglib.queries.LocatorType
 import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
 
@@ -72,8 +72,8 @@ data class ByRole(
     }
 
     override fun findElements(context: SearchContext): List<WebElement> =
-        (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
-            by = ByType.Role,
+        (getWebDriver(context) as JavascriptExecutor).executeTLQuery(
+            by = LocatorType.Role,
             textMatch = role.name.lowercase().asJsString(),
             options = mapOf(
                 "hidden" to hidden,

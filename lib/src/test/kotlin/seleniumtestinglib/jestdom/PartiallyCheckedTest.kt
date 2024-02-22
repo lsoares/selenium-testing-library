@@ -1,24 +1,23 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.isPartiallyChecked
-import seleniumtestinglib.queries.ByType
-import seleniumtestinglib.queries.ByType.TestId
+import seleniumtestinglib.queries.LocatorType
+import seleniumtestinglib.queries.LocatorType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-@ExtendWith(DriverLifeCycle::class)
-class PartiallyCheckedTest(private val driver: RemoteWebDriver) {
+class PartiallyCheckedTest {
 
     @Test
     fun `partially checked by aria`() {
         driver.render("""<input type="checkbox" aria-checked="mixed" />""")
-        val checkbox = driver.getBy(ByType.Role, "checkbox")
+        val checkbox = driver.getBy(LocatorType.Role, "checkbox")
 
         assertTrue(checkbox.isPartiallyChecked)
         expect(checkbox).toBePartiallyChecked()
@@ -27,7 +26,7 @@ class PartiallyCheckedTest(private val driver: RemoteWebDriver) {
     @Test
     fun `partially checked by attr`() {
         driver.render("""<input type="checkbox" />""")
-        val checkbox = driver.getBy(ByType.Role, "checkbox")
+        val checkbox = driver.getBy(LocatorType.Role, "checkbox")
 
         assertFalse(checkbox.isPartiallyChecked)
         expect(checkbox).not.toBePartiallyChecked()

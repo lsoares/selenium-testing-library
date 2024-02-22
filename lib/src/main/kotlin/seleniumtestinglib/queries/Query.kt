@@ -1,11 +1,11 @@
 package seleniumtestinglib.queries
 
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.queries.JsType.Companion.asJsString
 
-fun RemoteWebDriver.queryBy(
-    by: ByType,
+fun JavascriptExecutor.queryBy(
+    by: LocatorType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery<WebElement?>(
@@ -16,14 +16,14 @@ fun RemoteWebDriver.queryBy(
     options = options,
 )
 
-fun RemoteWebDriver.queryBy(
-    by: ByType,
+fun JavascriptExecutor.queryBy(
+    by: LocatorType,
     text: String,
     options: Map<String, Any?> = emptyMap(),
 ) = queryBy(by, text.asJsString(), options)
 
-fun RemoteWebDriver.queryAllBy(
-    by: ByType,
+fun JavascriptExecutor.queryAllBy(
+    by: LocatorType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery<List<WebElement>>(
@@ -34,8 +34,8 @@ fun RemoteWebDriver.queryAllBy(
     options = options,
 )
 
-fun RemoteWebDriver.queryAllBy(
-    by: ByType,
+fun JavascriptExecutor.queryAllBy(
+    by: LocatorType,
     text: String,
     options: Map<String, Any?> = emptyMap(),
 ) = queryAllBy(by, text.asJsString(), options)

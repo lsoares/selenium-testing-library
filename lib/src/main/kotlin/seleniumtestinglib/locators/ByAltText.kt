@@ -1,15 +1,15 @@
 package seleniumtestinglib.locators
 
 import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.queries.ByType
+import seleniumtestinglib.queries.LocatorType
 import seleniumtestinglib.queries.JsType
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.queries.JsType.Companion.asJsString
-import seleniumtestinglib.queries.executeTLQuery
 import seleniumtestinglib.queries.asJsExpression
+import seleniumtestinglib.queries.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/byalttext
@@ -43,8 +43,8 @@ data class ByAltText(
     fun inexact() = copy(exact = false)
 
     override fun findElements(context: SearchContext): List<WebElement> =
-        (getWebDriver(context) as RemoteWebDriver).executeTLQuery(
-            by = ByType.AltText,
+        (getWebDriver(context) as JavascriptExecutor).executeTLQuery(
+            by = LocatorType.AltText,
             textMatch = text,
             options = mapOf(
                 "exact" to exact,

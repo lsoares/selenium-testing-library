@@ -1,16 +1,13 @@
 package seleniumtestinglib
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
-import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role.Article
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-@ExtendWith(DriverLifeCycle::class)
-class TargetLocatorTest(private val driver: RemoteWebDriver) {
+class TargetLocatorTest {
 
     @Test
     fun `test change to iframe by a selector inside the iframe`() {

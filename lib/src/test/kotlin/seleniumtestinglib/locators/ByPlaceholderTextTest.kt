@@ -1,11 +1,9 @@
 package seleniumtestinglib.locators
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
@@ -13,8 +11,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.text.RegexOption.IGNORE_CASE
 
-@ExtendWith(DriverLifeCycle::class)
-class ByPlaceholderTextTest(private val driver: RemoteWebDriver) {
+class ByPlaceholderTextTest {
 
     @Test
     fun exact() {

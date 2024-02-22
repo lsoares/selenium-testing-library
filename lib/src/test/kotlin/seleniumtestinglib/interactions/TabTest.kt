@@ -1,8 +1,6 @@
 package seleniumtestinglib.interactions
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.isFocused
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role.Radio
@@ -10,8 +8,7 @@ import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-@ExtendWith(DriverLifeCycle::class)
-class TabTest(private val driver: RemoteWebDriver) {
+class TabTest {
 
     @Test
     fun tab() {

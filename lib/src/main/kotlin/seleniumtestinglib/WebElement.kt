@@ -131,13 +131,12 @@ val WebElement.classes: Set<String>
     get() = getAttribute("class").takeIf(String::isNotBlank)?.split(Regex("\\s+"))?.toSet() ?: emptySet()
 
 val WebElement.errorMessage: String?
-    get() {
-        if (isValid) return null
-        return wrappedDriver.findElement(id(getAttribute("aria-errormessage"))).text
+    get() = when {
+        isValid -> null
+        else -> wrappedDriver.findElement(id(getAttribute("aria-errormessage"))).text
     }
 
 internal val WebElement.wrappedDriver get() = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver
-
 
 fun WebElement.fireEvent(eventName: Event, eventProperties: Map<String, Map<String, Any?>> = emptyMap()): Any? {
     wrappedDriver.ensureScript("testing-library.js", "fireEvent.change")

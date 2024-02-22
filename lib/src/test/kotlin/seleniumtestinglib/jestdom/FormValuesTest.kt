@@ -1,17 +1,14 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.formValues
 import seleniumtestinglib.locators.ByTestId
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@ExtendWith(DriverLifeCycle::class)
-class FormValuesTest(private val driver: RemoteWebDriver) {
+class FormValuesTest {
 
     @Test
     fun `expect form values`() {

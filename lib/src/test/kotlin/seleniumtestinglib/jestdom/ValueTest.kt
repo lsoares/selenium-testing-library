@@ -1,17 +1,14 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.ByType.*
+import seleniumtestinglib.driver
+import seleniumtestinglib.queries.LocatorType.TestId
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@ExtendWith(DriverLifeCycle::class)
-class ValueTest(private val driver: RemoteWebDriver) {
+class ValueTest {
 
     @Test
     fun valid() {

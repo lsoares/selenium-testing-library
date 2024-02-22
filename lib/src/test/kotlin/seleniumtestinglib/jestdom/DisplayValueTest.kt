@@ -1,22 +1,19 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.displayValue
-import seleniumtestinglib.queries.ByType.LabelText
-import seleniumtestinglib.queries.ByType.Role
+import seleniumtestinglib.driver
+import seleniumtestinglib.queries.LocatorType.LabelText
+import seleniumtestinglib.queries.LocatorType.Role
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import java.util.stream.Stream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@ExtendWith(DriverLifeCycle::class)
-class DisplayValueTest(private val driver: RemoteWebDriver) {
+class DisplayValueTest {
 
     @ParameterizedTest
     @MethodSource("tests")

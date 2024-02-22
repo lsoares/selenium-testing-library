@@ -1,15 +1,12 @@
 package seleniumtestinglib.jestdom
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
-import seleniumtestinglib.queries.ByType.Role
+import seleniumtestinglib.driver
+import seleniumtestinglib.queries.LocatorType.Role
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.Test
 
-@ExtendWith(DriverLifeCycle::class)
-class EnabledTest(private val driver: RemoteWebDriver) {
+class EnabledTest {
 
     @Test
     fun enabled() {

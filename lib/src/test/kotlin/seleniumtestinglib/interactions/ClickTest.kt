@@ -1,16 +1,13 @@
 package seleniumtestinglib.interactions
 
-import org.junit.jupiter.api.extension.ExtendWith
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.isChecked
 import seleniumtestinglib.locators.ByLabelText
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-@ExtendWith(DriverLifeCycle::class)
-class ClickTest(private val driver: RemoteWebDriver) {
+class ClickTest {
 
     @Test
     fun click() {

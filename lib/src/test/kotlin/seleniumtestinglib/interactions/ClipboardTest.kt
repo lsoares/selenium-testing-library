@@ -1,11 +1,9 @@
 package seleniumtestinglib.interactions
 
 import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By.id
 import org.openqa.selenium.By.tagName
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role.TextBox
 import seleniumtestinglib.render
@@ -15,8 +13,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@ExtendWith(DriverLifeCycle::class)
-class ClipboardTest(private val driver: RemoteWebDriver) {
+class ClipboardTest {
 
     @Test
     fun paste() {

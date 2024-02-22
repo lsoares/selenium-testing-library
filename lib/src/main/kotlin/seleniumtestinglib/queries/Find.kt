@@ -1,10 +1,11 @@
 package seleniumtestinglib.queries
 
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.remote.RemoteWebDriver
 
-fun RemoteWebDriver.findBy(
-    by: ByType,
+@Suppress("unused")
+fun JavascriptExecutor.findBy(
+    by: LocatorType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery<WebElement>(
@@ -15,8 +16,9 @@ fun RemoteWebDriver.findBy(
     options = options,
 )
 
-fun RemoteWebDriver.findAllBy(
-    by: ByType,
+@Suppress("unused")
+fun JavascriptExecutor.findAllBy(
+    by: LocatorType,
     textMatch: JsType,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery<List<WebElement>>(

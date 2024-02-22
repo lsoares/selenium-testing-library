@@ -2,11 +2,9 @@ package seleniumtestinglib.interactions
 
 import com.google.common.io.Files
 import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.extension.ExtendWith
 import org.openqa.selenium.By
 import org.openqa.selenium.OutputType
-import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.DriverLifeCycle
+import seleniumtestinglib.driver
 import seleniumtestinglib.locators.ByRole
 import seleniumtestinglib.locators.Role.CheckBox
 import seleniumtestinglib.render
@@ -14,8 +12,7 @@ import java.awt.Desktop
 import java.io.File
 import kotlin.test.Test
 
-@ExtendWith(DriverLifeCycle::class)
-class GeneralTest(private val driver: RemoteWebDriver) {
+class GeneralTest {
 
     @Test
     @Disabled
