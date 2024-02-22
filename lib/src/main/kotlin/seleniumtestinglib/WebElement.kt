@@ -5,7 +5,6 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.remote.RemoteWebElement
 import org.openqa.selenium.support.ui.Select
-import seleniumtestinglib.queries.executeTLQuery
 
 val WebElement.value: Any?
     get() {

@@ -7,7 +7,6 @@ import org.openqa.selenium.By.id
 import org.openqa.selenium.remote.RemoteWebDriver
 import seleniumtestinglib.DriverLifeCycle
 import seleniumtestinglib.isValid
-import seleniumtestinglib.queries.ByType.*
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

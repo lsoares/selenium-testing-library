@@ -11,7 +11,6 @@ import seleniumtestinglib.queries.ByType.LabelText
 import seleniumtestinglib.queries.ByType.Role
 import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
-import seleniumtestinglib.value
 import java.util.stream.Stream
 import kotlin.test.Test
 import kotlin.test.assertEquals
