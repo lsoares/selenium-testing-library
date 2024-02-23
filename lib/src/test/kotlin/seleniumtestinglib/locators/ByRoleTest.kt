@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement
 import seleniumtestinglib.driver
 import seleniumtestinglib.locators.ByRole.Value
 import seleniumtestinglib.locators.Role.*
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
+import seleniumtestinglib.queries.JsType.Companion.asJsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -38,18 +38,8 @@ class ByRoleTest {
         // assertEquals(role, result.ariaRole)
     }
 
-
     @Test
     fun `role with regex in name parameter`() {
-        driver.render("""<h1>something as a user something</h1>""")
-
-        val result = driver.findElements(ByRole(Heading, name = "/as a user/i".asJsExpression()))
-
-        assertEquals("something as a user something", result.single().accessibleName)
-    }
-
-    @Test
-    fun `role with regex in name parameter - alternative`() {
         driver.render("""<h1>something as a user something</h1>""")
 
         val result = driver.findElements(ByRole(Heading, name = Regex("as a user", IGNORE_CASE)))
@@ -138,32 +128,8 @@ class ByRoleTest {
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
 
-
     @Test
     fun `description with regex`() {
-        driver.render(
-            """<ul>
-                      <li role="alertdialog" aria-describedby="notification-id-1">
-                        <div><button>Close</button></div>
-                        <div id="notification-id-1">You have unread emails</div>
-                      </li>
-                      <li role="alertdialog" aria-describedby="notification-id-2">
-                        <div><button>Close</button></div>
-                        <div id="notification-id-2">Your session is about to expire!</div>
-                      </li>
-                    </ul>"""
-        )
-
-        val result = driver.findElements(
-            ByRole(AlertDialog, description = "/your session/i".asJsExpression())
-        )
-
-        assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
-    }
-
-
-    @Test
-    fun `description with regex - alternative`() {
         driver.render(
             """<ul>
                       <li role="alertdialog" aria-describedby="notification-id-1">
@@ -200,7 +166,7 @@ class ByRoleTest {
         )
 
         val result = driver.findElements(
-            ByRole(AlertDialog, description = "content => content.endsWith('!')".asJsExpression())
+            ByRole(AlertDialog, description = "content => content.endsWith('!')".asJsFunction())
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -355,7 +321,9 @@ class ByRoleTest {
         of(Value(now = 5), listOf("Volume")),
         of(Value(min = 0), listOf("Volume", "Pitch")),
         of(Value(max = 10), listOf("Volume", "Pitch")),
-        of(Value(text = "/med/".asJsExpression()), listOf("Volume", "Pitch")),
+        of(Value(text = "medium"), listOf("Volume", "Pitch")),
+        of(Value(text = "med".toRegex()), listOf("Volume", "Pitch")),
+        of(Value(text = "t => t.startsWith('med')".asJsFunction()), listOf("Volume", "Pitch")),
     )
 
     @ParameterizedTest

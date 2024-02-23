@@ -1,7 +1,6 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,7 +20,7 @@ class ByTestIdTest {
     fun regex() {
         driver.render(""" <div data-testid="custom-element" /> """)
 
-        val result = driver.findElement(ByTestId("/Custom/i".asJsExpression()))
+        val result = driver.findElement(ByTestId(Regex("custom")))
 
         assertEquals("div", result.tagName)
     }

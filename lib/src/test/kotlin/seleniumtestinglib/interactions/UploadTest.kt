@@ -3,10 +3,10 @@ package seleniumtestinglib.interactions
 import seleniumtestinglib.driver
 import seleniumtestinglib.files
 import seleniumtestinglib.locators.ByLabelText
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.text.RegexOption.IGNORE_CASE
 
 class UploadTest {
 
@@ -20,7 +20,7 @@ class UploadTest {
             </div> 
         """
         )
-        val input = driver.findElement(ByLabelText("/upload file/i".asJsExpression()))
+        val input = driver.findElement(ByLabelText(Regex("upload file", IGNORE_CASE)))
 
         driver.user.upload(
             input,

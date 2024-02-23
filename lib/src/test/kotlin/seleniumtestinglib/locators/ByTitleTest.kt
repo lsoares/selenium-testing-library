@@ -1,7 +1,6 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -40,6 +39,7 @@ class ByTitleTest {
 
         assertEquals("Hello World!", result.text)
     }
+
     @Test
     fun `not exact 2`() {
         driver.render("<div title='foobar'>Hello World!</div>")
@@ -51,15 +51,6 @@ class ByTitleTest {
 
     @Test
     fun regex() {
-        driver.render("<div title='foobar'>Hello World!</div>")
-
-        val result = driver.findElement(ByTitle("/FOO/i".asJsExpression()))
-
-        assertEquals("Hello World!", result.text)
-    }
-
-    @Test
-    fun `regex - alternative`() {
         driver.render("<div title='foobar'>Hello World!</div>")
 
         val result = driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))

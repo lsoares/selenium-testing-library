@@ -75,7 +75,6 @@ data class ByRole(
         _current = current
     }
 
-
     constructor(
         role: Role,
         name: Regex? = null,
@@ -161,7 +160,10 @@ data class ByRole(
             ),
         )
 
-    data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: JsType? = null)
+    data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: JsType? = null) {
+        constructor(text: String? = null) : this(text = text?.asJsString())
+        constructor(text: Regex? = null) : this(text = text?.asJsExpression())
+    }
 
     private fun Value.toMap() =
         mapOf("min" to min, "max" to max, "now" to now, "text" to text).filterValues { it != null }

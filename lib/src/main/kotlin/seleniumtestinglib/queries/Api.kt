@@ -48,8 +48,9 @@ sealed class JsType(internal open val value: String) {
     override fun toString() = value
 
     companion object {
-        fun String.asJsExpression() = JsExpression(this)
-        fun String.asJsString() = JsString(this)
+        fun String.asJsFunction() = asJsExpression()
+        internal fun String.asJsExpression() = JsExpression(this)
+        internal fun String.asJsString() = JsString(this)
     }
 }
 

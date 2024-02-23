@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
+import seleniumtestinglib.queries.JsType.Companion.asJsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -101,15 +101,6 @@ class ByTextTest {
     fun regex() {
         driver.render("<p>I accept</p>")
 
-        val result = driver.findElement(ByText("/ACCEPT/i".asJsExpression()))
-
-        assertEquals("p", result.tagName)
-    }
-
-    @Test
-    fun `regex - alternative`() {
-        driver.render("<p>I accept</p>")
-
         val result = driver.findElement(ByText(Regex("ACCEPT", IGNORE_CASE)))
 
         assertEquals("p", result.tagName)
@@ -120,7 +111,7 @@ class ByTextTest {
         driver.render("<p>Hello World</p>")
 
         val result = driver.findElement(
-            ByText("(content, element) => content.startsWith('Hello') && element.tagName == 'P'".asJsExpression())
+            ByText("(content, element) => content.startsWith('Hello') && element.tagName == 'P'".asJsFunction())
         )
 
         assertEquals("p", result.tagName)

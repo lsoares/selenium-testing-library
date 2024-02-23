@@ -4,7 +4,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -42,17 +41,9 @@ class ByPlaceholderTextTest {
         assertEquals("input", result.tagName)
     }
 
+
     @Test
     fun regex() {
-        driver.render("<input placeholder='Username' />")
-
-        val result = driver.findElement(ByPlaceholderText("/user/i".asJsExpression()))
-
-        assertEquals("input", result.tagName)
-    }
-
-    @Test
-    fun `regex alternative`() {
         driver.render("<input placeholder='Username' />")
 
         val result = driver.findElement(ByPlaceholderText(Regex("user", IGNORE_CASE)))

@@ -1,7 +1,6 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -92,15 +91,6 @@ class ByLabelTextTest {
 
     @Test
     fun regex() {
-        driver.render("<input aria-label='Username' />")
-
-        val result = driver.findElement(ByLabelText("/user/i".asJsExpression()))
-
-        assertEquals("input", result.tagName)
-    }
-
-    @Test
-    fun `regex alternative`() {
         driver.render("<input aria-label='Username' />")
 
         val result = driver.findElement(ByLabelText(Regex("user", IGNORE_CASE)))
