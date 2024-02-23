@@ -37,6 +37,12 @@ data class ByRole(
     fun enableQueryFallbacks() = copy(queryFallbacks = true)
     fun withName(name: Regex) = copy(name = name.asJsExpression())
     fun witDescription(description: Regex) = copy(description = description.asJsExpression())
+    fun withLevel(level: Int) = copy(level = level)
+    fun withCurrent(current: Current) = copy(current = current)
+    fun withCurrent(current: Boolean): ByRole {
+        _current = current
+        return this
+    }
 
     constructor(
         role: Role,
@@ -51,12 +57,74 @@ data class ByRole(
         suggest: Boolean? = null,
         current: Boolean? = null,
         expanded: Boolean? = null,
-        level: Int? = null,
         value: Value? = null,
     ) : this(
         role = role,
         name = name?.asJsString(),
         description = description?.asJsString(),
+        hidden = hidden,
+        normalizer = normalizer,
+        selected = selected,
+        busy = busy,
+        checked = checked,
+        pressed = pressed,
+        suggest = suggest,
+        expanded = expanded,
+        value = value,
+    ) {
+        _current = current
+    }
+
+
+    constructor(
+        role: Role,
+        name: Regex? = null,
+        description: String? = null,
+        hidden: Boolean? = null,
+        normalizer: String? = null,
+        selected: Boolean? = null,
+        busy: Boolean? = null,
+        checked: Boolean? = null,
+        pressed: Boolean? = null,
+        suggest: Boolean? = null,
+        expanded: Boolean? = null,
+        value: Value? = null,
+    ) : this(
+        role = role,
+        name = name?.asJsExpression(),
+        description = description?.asJsExpression(),
+        hidden = hidden,
+        normalizer = normalizer,
+        selected = selected,
+        busy = busy,
+        checked = checked,
+        pressed = pressed,
+        suggest = suggest,
+        expanded = expanded,
+        value = value,
+    ) {
+        _current = current
+    }
+
+    constructor(
+        role: Role,
+        name: Regex? = null,
+        description: Regex? = null,
+        hidden: Boolean? = null,
+        normalizer: String? = null,
+        selected: Boolean? = null,
+        busy: Boolean? = null,
+        checked: Boolean? = null,
+        pressed: Boolean? = null,
+        suggest: Boolean? = null,
+        current: Boolean? = null,
+        expanded: Boolean? = null,
+        level: Int? = null,
+        value: Value? = null,
+    ) : this(
+        role = role,
+        name = name?.asJsExpression(),
+        description = description?.asJsExpression(),
         hidden = hidden,
         normalizer = normalizer,
         selected = selected,

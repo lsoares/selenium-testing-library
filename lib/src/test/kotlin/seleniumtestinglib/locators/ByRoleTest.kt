@@ -52,7 +52,7 @@ class ByRoleTest {
     fun `role with regex in name parameter - alternative`() {
         driver.render("""<h1>something as a user something</h1>""")
 
-        val result = driver.findElements(ByRole(Heading).withName(Regex("as a user", IGNORE_CASE)))
+        val result = driver.findElements(ByRole(Heading, name = Regex("as a user", IGNORE_CASE)))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -178,7 +178,7 @@ class ByRoleTest {
         )
 
         val result = driver.findElements(
-            ByRole(AlertDialog).witDescription(Regex("your session", IGNORE_CASE))
+            ByRole(AlertDialog, description = Regex("your session", IGNORE_CASE))
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
