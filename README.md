@@ -22,7 +22,7 @@ implementation("com.luissoares:selenium-testing-library:3.7.6")
 
 ---
 
-These are just a few examples. There are unit tests
+These are just a few examples. Check [the tests](/lib/src/test/kotlin/seleniumtestinglib)
 that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb)
 all the usages.
 
@@ -32,16 +32,15 @@ The [core API](https://testing-library.com/docs) contains the selectors which ar
 
 ```kotlin
 driver.findElements(ByAltText("first name"))
-val result = driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))
-val active = driver.findElements(ByLabelText("active"))
-val input = driver.findElements(ByPlaceholderText("first name", exact = false))
-val byFunction = driver.findElements(ByRole(Heading, name = "c => c.startsWith('something')".asJsFunction()))
-val firstName = input.text
+driver.findElement(ByDisplayValue("c => c.startsWith('selen')".asJsFunction()))
+driver.findElements(ByLabelText("active"))
+driver.findElements(ByPlaceholderText("first name", exact = false))
+driver.findElements(ByRole(Heading, name = "c => c.startsWith('something')".asJsFunction()))
 driver.findElements(ByRole(Button, name = Regex("confirm", IGNORE_CASE)))
-val panel = driver.findElements(ByTestId("test-id"))
-panel.click()
+driver.findElements(ByTestId("test-id"))
 driver.findElements(ByText("present", exact = false, selector = "span"))
-driver.findElements(ByTitle("title 1"))
+driver.findElement(ByTitle("title 1"))
+driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))
 
 // an alternative API that does not use Selenium locators:
 val result1 = driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
@@ -86,7 +85,6 @@ val userAgrees = checkboxMarketing.isChecked
 val name = element.accessibleName
 val displayedValue = element.displayValue
 ```
-
 
 ---
 
