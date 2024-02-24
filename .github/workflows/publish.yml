@@ -7,21 +7,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Setup
-        run: |
-          sudo apt-get update && sudo apt-get install -y gnupg2 expect
-
       - name: Test
-        run: ./gradlew test
+        uses: owner/test@v1
 
       - name: Publish
         env:
