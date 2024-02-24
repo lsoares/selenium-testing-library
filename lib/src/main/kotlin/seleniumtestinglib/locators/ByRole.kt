@@ -4,11 +4,11 @@ import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
-import seleniumtestinglib.queries.JsType
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
-import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.queries.LocatorType
-import seleniumtestinglib.queries.asJsExpression
+import seleniumtestinglib.queries.TextMatch
+import seleniumtestinglib.queries.TextMatch.Companion.asJsString
+import seleniumtestinglib.queries.TextMatch.JsFunction
+import seleniumtestinglib.queries.asJsRegex
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
@@ -16,10 +16,10 @@ import seleniumtestinglib.queries.executeTLQuery
  */
 data class ByRole(
     private val role: Role,
-    private val name: JsType? = null,
-    private val description: JsType? = null,
+    private val name: TextMatch? = null,
+    private val description: TextMatch? = null,
     private val hidden: Boolean? = null,
-    private val normalizer: String? = null,
+    private val normalizer: JsFunction? = null,
     private val selected: Boolean? = null,
     private val busy: Boolean? = null,
     private val checked: Boolean? = null,
@@ -35,21 +35,16 @@ data class ByRole(
     private var _current: Any? = current?.name?.lowercase()?.asJsString()
 
     fun enableQueryFallbacks() = copy(queryFallbacks = true)
-    fun withName(name: Regex) = copy(name = name.asJsExpression())
-    fun witDescription(description: Regex) = copy(description = description.asJsExpression())
+    fun withName(name: Regex) = copy(name = name.asJsRegex())
+    fun witDescription(description: Regex) = copy(description = description.asJsRegex())
     fun withLevel(level: Int) = copy(level = level)
-    fun withCurrent(current: Current) = copy(current = current)
-    fun withCurrent(current: Boolean): ByRole {
-        _current = current
-        return this
-    }
 
     constructor(
         role: Role,
         name: String? = null,
         description: String? = null,
         hidden: Boolean? = null,
-        normalizer: String? = null,
+        normalizer: JsFunction? = null,
         selected: Boolean? = null,
         busy: Boolean? = null,
         checked: Boolean? = null,
@@ -80,7 +75,7 @@ data class ByRole(
         name: Regex? = null,
         description: String? = null,
         hidden: Boolean? = null,
-        normalizer: String? = null,
+        normalizer: JsFunction? = null,
         selected: Boolean? = null,
         busy: Boolean? = null,
         checked: Boolean? = null,
@@ -90,7 +85,7 @@ data class ByRole(
         value: Value? = null,
     ) : this(
         role = role,
-        name = name?.asJsExpression(),
+        name = name?.asJsRegex(),
         description = description?.asJsString(),
         hidden = hidden,
         normalizer = normalizer,
@@ -110,7 +105,7 @@ data class ByRole(
         name: Regex? = null,
         description: Regex? = null,
         hidden: Boolean? = null,
-        normalizer: String? = null,
+        normalizer: JsFunction? = null,
         selected: Boolean? = null,
         busy: Boolean? = null,
         checked: Boolean? = null,
@@ -122,8 +117,8 @@ data class ByRole(
         value: Value? = null,
     ) : this(
         role = role,
-        name = name?.asJsExpression(),
-        description = description?.asJsExpression(),
+        name = name?.asJsRegex(),
+        description = description?.asJsRegex(),
         hidden = hidden,
         normalizer = normalizer,
         selected = selected,
@@ -144,7 +139,7 @@ data class ByRole(
             textMatch = role.name.lowercase().asJsString(),
             options = mapOf(
                 "hidden" to hidden,
-                "normalizer" to normalizer?.asJsExpression(),
+                "normalizer" to normalizer,
                 "name" to name,
                 "description" to description,
                 "selected" to selected,
@@ -160,9 +155,9 @@ data class ByRole(
             ),
         )
 
-    data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: JsType? = null) {
+    data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: TextMatch? = null) {
         constructor(text: String? = null) : this(text = text?.asJsString())
-        constructor(text: Regex? = null) : this(text = text?.asJsExpression())
+        constructor(text: Regex? = null) : this(text = text?.asJsRegex())
     }
 
     private fun Value.toMap() =

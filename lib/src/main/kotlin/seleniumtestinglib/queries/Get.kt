@@ -2,11 +2,11 @@ package seleniumtestinglib.queries
 
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebElement
-import seleniumtestinglib.queries.JsType.Companion.asJsString
+import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 
 fun JavascriptExecutor.getBy(
     by: LocatorType,
-    textMatch: JsType,
+    textMatch: TextMatch,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery<WebElement>(
     queryType = QueryType.Get,
@@ -24,7 +24,7 @@ fun JavascriptExecutor.getBy(
 
 fun JavascriptExecutor.getAllBy(
     by: LocatorType,
-    textMatch: JsType,
+    textMatch: TextMatch,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery<List<WebElement>>(
     queryType = QueryType.Get,

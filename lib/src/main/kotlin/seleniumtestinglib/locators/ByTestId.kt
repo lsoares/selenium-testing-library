@@ -4,26 +4,26 @@ import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
-import seleniumtestinglib.queries.JsType
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
-import seleniumtestinglib.queries.JsType.Companion.asJsString
 import seleniumtestinglib.queries.LocatorType
-import seleniumtestinglib.queries.asJsExpression
+import seleniumtestinglib.queries.TextMatch
+import seleniumtestinglib.queries.TextMatch.Companion.asJsString
+import seleniumtestinglib.queries.TextMatch.JsFunction
+import seleniumtestinglib.queries.asJsRegex
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/bytestid
  */
 data class ByTestId(
-    private val text: JsType,
+    private val text: TextMatch,
     private val exact: Boolean? = null,
-    private val normalizer: String? = null,
+    private val normalizer: JsFunction? = null,
 ) : By() {
 
     constructor(
         text: String,
         exact: Boolean? = null,
-        normalizer: String? = null,
+        normalizer: JsFunction? = null,
     ) : this(
         text = text.asJsString(),
         normalizer = normalizer,
@@ -33,9 +33,9 @@ data class ByTestId(
     constructor(
         text: Regex,
         exact: Boolean? = null,
-        normalizer: String? = null,
+        normalizer: JsFunction? = null,
     ) : this(
-        text = text.asJsExpression(),
+        text = text.asJsRegex(),
         normalizer = normalizer,
         exact = exact,
     )
@@ -47,7 +47,7 @@ data class ByTestId(
             by = LocatorType.TestId,
             textMatch = text,
             options = mapOf(
-                "normalizer" to normalizer?.asJsExpression(),
+                "normalizer" to normalizer,
                 "exact" to exact,
             ),
         )

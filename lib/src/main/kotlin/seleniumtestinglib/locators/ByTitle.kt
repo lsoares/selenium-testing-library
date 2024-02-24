@@ -5,25 +5,25 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 import seleniumtestinglib.queries.LocatorType
-import seleniumtestinglib.queries.JsType
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
-import seleniumtestinglib.queries.JsType.Companion.asJsString
-import seleniumtestinglib.queries.asJsExpression
+import seleniumtestinglib.queries.TextMatch
+import seleniumtestinglib.queries.TextMatch.Companion.asJsString
+import seleniumtestinglib.queries.TextMatch.JsFunction
+import seleniumtestinglib.queries.asJsRegex
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/bytitle
  */
 data class ByTitle(
-    private val title: JsType,
+    private val title: TextMatch,
     private val exact: Boolean? = null,
-    private val normalizer: String? = null,
+    private val normalizer: JsFunction? = null,
 ) : By() {
 
     constructor(
         title: String,
         exact: Boolean? = null,
-        normalizer: String? = null,
+        normalizer: JsFunction? = null,
     ) : this(
         title = title.asJsString(),
         exact = exact,
@@ -33,9 +33,9 @@ data class ByTitle(
     constructor(
         title: Regex,
         exact: Boolean? = null,
-        normalizer: String? = null,
+        normalizer: JsFunction? = null,
     ) : this(
-        title = title.asJsExpression(),
+        title = title.asJsRegex(),
         exact = exact,
         normalizer = normalizer,
     )
@@ -48,7 +48,7 @@ data class ByTitle(
             textMatch = title,
             options = mapOf(
                 "exact" to exact,
-                "normalizer" to normalizer?.asJsExpression(),
+                "normalizer" to normalizer,
             ),
         )
 }

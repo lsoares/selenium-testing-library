@@ -1,6 +1,7 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
+import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -25,6 +26,14 @@ class ByTestIdTest {
         assertEquals("div", result.tagName)
     }
 
+    @Test
+    fun function() {
+        driver.render(""" <div data-testid="custom-element" /> """)
+
+        val result = driver.findElement(ByTestId("c => c.startsWith('custom')".asJsFunction()))
+
+        assertEquals("div", result.tagName)
+    }
 
     @Test
     fun `not exact`() {

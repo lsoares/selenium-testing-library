@@ -3,6 +3,7 @@ package seleniumtestinglib.locators
 import org.openqa.selenium.By
 import org.openqa.selenium.support.ui.Select
 import seleniumtestinglib.driver
+import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -46,6 +47,16 @@ class ByDisplayValueTest {
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
 
         val result = driver.findElement(ByDisplayValue(Regex("selen", IGNORE_CASE)))
+
+        assertEquals("input", result.tagName)
+    }
+
+    @Test
+    fun function() {
+        driver.render("<input placeholder='username' />")
+        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
+
+        val result = driver.findElement(ByDisplayValue("c => c.startsWith('selen')".asJsFunction()))
 
         assertEquals("input", result.tagName)
     }

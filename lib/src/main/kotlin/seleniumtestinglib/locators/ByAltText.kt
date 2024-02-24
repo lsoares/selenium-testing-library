@@ -5,19 +5,20 @@ import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 import seleniumtestinglib.queries.LocatorType
-import seleniumtestinglib.queries.JsType
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
-import seleniumtestinglib.queries.JsType.Companion.asJsString
-import seleniumtestinglib.queries.asJsExpression
+import seleniumtestinglib.queries.TextMatch
+import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.queries.TextMatch.Companion.asJsString
+import seleniumtestinglib.queries.TextMatch.JsFunction
+import seleniumtestinglib.queries.asJsRegex
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/byalttext
  */
 data class ByAltText(
-    private val text: JsType,
+    private val text: TextMatch,
     private val exact: Boolean? = null,
-    private val normalizer: String? = null,
+    private val normalizer: JsFunction? = null,
 ) : By() {
 
     constructor(
@@ -27,15 +28,15 @@ data class ByAltText(
     ) : this(
         text = text.asJsString(),
         exact = exact,
-        normalizer = normalizer,
+        normalizer = normalizer?.asJsFunction(),
     )
 
     constructor(
-        text: Regex,
+        regex: Regex,
         exact: Boolean? = null,
-        normalizer: String? = null,
+        normalizer: JsFunction? = null,
     ) : this(
-        text = text.asJsExpression(),
+        text = regex.asJsRegex(),
         exact = exact,
         normalizer = normalizer,
     )
@@ -48,7 +49,7 @@ data class ByAltText(
             textMatch = text,
             options = mapOf(
                 "exact" to exact,
-                "normalizer" to normalizer?.asJsExpression(),
+                "normalizer" to normalizer,
             ),
         )
 }

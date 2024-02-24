@@ -4,6 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
+import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -50,12 +51,14 @@ class ByAltTextTest {
     }
 
     @Test
-    fun `regex alternative`() {
-        driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
+    fun function() {
+        driver.render("<div alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
-        val result = driver.findElement(ByAltText(Regex("incred", IGNORE_CASE)))
+        val result = runCatching {
+            driver.findElement(ByAltText(JsFunction("c => c.startsWith('inc')")))
+        }
 
-        assertEquals("img", result.tagName)
+        assertTrue(result.exceptionOrNull() is NoSuchElementException)
     }
 
     @Test
@@ -68,4 +71,5 @@ class ByAltTextTest {
 
         assertTrue(result.exceptionOrNull() is NoSuchElementException)
     }
+
 }

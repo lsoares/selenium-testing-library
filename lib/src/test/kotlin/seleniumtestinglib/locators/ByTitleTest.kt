@@ -1,6 +1,7 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
+import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -54,6 +55,15 @@ class ByTitleTest {
         driver.render("<div title='foobar'>Hello World!</div>")
 
         val result = driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))
+
+        assertEquals("Hello World!", result.text)
+    }
+
+    @Test
+    fun function() {
+        driver.render("<div title='foobar'>Hello World!</div>")
+
+        val result = driver.findElement(ByTitle("c => c.startsWith('foo')".asJsFunction()))
 
         assertEquals("Hello World!", result.text)
     }

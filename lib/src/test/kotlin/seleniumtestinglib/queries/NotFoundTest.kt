@@ -8,7 +8,7 @@ import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
 import seleniumtestinglib.locators.*
-import seleniumtestinglib.queries.JsType.Companion.asJsFunction
+import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.queries.LocatorType.AltText
 import seleniumtestinglib.render
 import kotlin.test.Test

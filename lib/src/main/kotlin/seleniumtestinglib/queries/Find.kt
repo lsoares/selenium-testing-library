@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement
 @Suppress("unused")
 fun JavascriptExecutor.findBy(
     by: LocatorType,
-    textMatch: JsType,
+    textMatch: TextMatch,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery<WebElement>(
     queryType = QueryType.Find,
@@ -19,7 +19,7 @@ fun JavascriptExecutor.findBy(
 @Suppress("unused")
 fun JavascriptExecutor.findAllBy(
     by: LocatorType,
-    textMatch: JsType,
+    textMatch: TextMatch,
     options: Map<String, Any?> = emptyMap(),
 ) = executeTLQuery<List<WebElement>>(
     queryType = QueryType.Find,

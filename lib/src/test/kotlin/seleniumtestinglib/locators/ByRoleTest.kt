@@ -8,7 +8,8 @@ import org.openqa.selenium.WebElement
 import seleniumtestinglib.driver
 import seleniumtestinglib.locators.ByRole.Value
 import seleniumtestinglib.locators.Role.*
-import seleniumtestinglib.queries.JsType.Companion.asJsFunction
+import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -43,6 +44,15 @@ class ByRoleTest {
         driver.render("""<h1>something as a user something</h1>""")
 
         val result = driver.findElements(ByRole(Heading, name = Regex("as a user", IGNORE_CASE)))
+
+        assertEquals("something as a user something", result.single().accessibleName)
+    }
+
+    @Test
+    fun `role with function in name parameter`() {
+        driver.render("""<h1>something as a user something</h1>""")
+
+        val result = driver.findElements(ByRole(Heading, name = "c => c.startsWith('something')".asJsFunction()))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -166,7 +176,7 @@ class ByRoleTest {
         )
 
         val result = driver.findElements(
-            ByRole(AlertDialog, description = "content => content.endsWith('!')".asJsFunction())
+            ByRole(AlertDialog, description = JsFunction("content => content.endsWith('!')"))
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))

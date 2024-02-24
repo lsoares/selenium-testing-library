@@ -2,7 +2,6 @@ package seleniumtestinglib.queries
 
 import org.openqa.selenium.JavascriptExecutor
 import seleniumtestinglib.ensureScript
-import seleniumtestinglib.queries.JsType.Companion.asJsExpression
 import kotlin.text.RegexOption.*
 
 /**
@@ -12,7 +11,7 @@ internal inline fun <reified T> JavascriptExecutor.executeTLQuery(
     queryType: QueryType = QueryType.Query,
     all: Boolean = true,
     by: LocatorType,
-    textMatch: JsType,
+    textMatch: TextMatch,
     options: Map<String, Any?> = emptyMap(),
 ): T {
     val escapedOptions = options
@@ -41,20 +40,21 @@ internal enum class QueryType {
     Find, Query, Get
 }
 
-sealed class JsType(internal open val value: String) {
-    class JsString(override val value: String) : JsType(value)
-    class JsExpression(override val value: String) : JsType(value)
+
+sealed class TextMatch(internal open val value: String) {
+    class JsFunction(override val value: String) : TextMatch(value)
+    internal class JsString(override val value: String) : TextMatch(value)
+    internal class JsRegex(override val value: String) : TextMatch(value)
 
     override fun toString() = value
 
     companion object {
-        fun String.asJsFunction() = asJsExpression()
-        internal fun String.asJsExpression() = JsExpression(this)
+        fun String.asJsFunction() = JsFunction(this)
         internal fun String.asJsString() = JsString(this)
     }
 }
 
-internal fun Regex.asJsExpression(): JsType.JsExpression {
+internal fun Regex.asJsRegex(): TextMatch.JsRegex {
     val jsFlags = buildString {
         if (IGNORE_CASE in options) append('i')
         if (MULTILINE in options) append('m')
@@ -62,7 +62,7 @@ internal fun Regex.asJsExpression(): JsType.JsExpression {
         if (COMMENTS in options) append('x')
         if (CANON_EQ in options) append('u')
     }
-    return "/${this.pattern}/$jsFlags".asJsExpression()
+    return TextMatch.JsRegex("/${this.pattern}/$jsFlags")
 }
 
 private fun JavascriptExecutor.executeTLScript(script: String): Any? {
@@ -72,8 +72,9 @@ private fun JavascriptExecutor.executeTLScript(script: String): Any? {
 
 private val Any?.escaped: Any?
     get() = when (this) {
-        is JsType.JsString -> value.escaped
-        is JsType.JsExpression -> value
+        is TextMatch.JsString -> value.escaped
+        is TextMatch.JsFunction -> value
+        is TextMatch.JsRegex -> value
         is String -> "'${replace("'", "\\'")}'"
         is Map<*, *> -> entries.joinToString(", ", prefix = "{ ", postfix = " }") {
             "${it.key}: ${it.value?.escaped}"

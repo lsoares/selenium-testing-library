@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.JsType.Companion.asJsFunction
+import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -170,7 +170,7 @@ class ByTextTest {
         driver.render("<p>I accept</p>")
 
         val result = driver.findElement(
-            ByText("I accept123", normalizer = "str => str + '123'")
+            ByText("I accept123", normalizer = "str => str + '123'".asJsFunction())
         )
 
         assertEquals("p", result.tagName)
