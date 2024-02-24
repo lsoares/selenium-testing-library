@@ -197,8 +197,9 @@ data class ByRole(
  * https://www.w3.org/TR/wai-aria-1.2/#aria-current
  */
 sealed class Current(open val value: Any) {
-    internal data class CurrentAsType(override val value: CurrentType) : Current(value.name.lowercase().asJsString())
-    internal data class CurrentAsBool(override val value: Boolean) : Current(value)
+    override fun toString() = value.toString()
+    internal class CurrentAsType(value: CurrentType) : Current(value.name.lowercase().asJsString())
+    internal class CurrentAsBool(value: Boolean) : Current(value)
 }
 
 @Suppress("UNUSED")

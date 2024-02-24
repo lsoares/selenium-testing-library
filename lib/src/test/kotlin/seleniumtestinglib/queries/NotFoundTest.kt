@@ -8,7 +8,6 @@ import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
 import seleniumtestinglib.locators.*
-import seleniumtestinglib.locators.Current.CurrentAsType
 import seleniumtestinglib.queries.LocatorType.AltText
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
@@ -43,7 +42,7 @@ class NotFoundTest {
         ),
         of(
             ByRole(Role.SpinButton, current = CurrentType.Page, value = ByRole.Value(min = 1)),
-            "ByRole(role=SpinButton, name=null, description=null, hidden=null, normalizer=null, selected=null, busy=null, checked=null, pressed=null, suggest=null, current=CurrentAsType(value=Page), expanded=null, level=null, value=Value(min=1, max=null, now=null, text=null), queryFallbacks=null)"
+            "ByRole(role=SpinButton, name=null, description=null, hidden=null, normalizer=null, selected=null, busy=null, checked=null, pressed=null, suggest=null, current=page, expanded=null, level=null, value=Value(min=1, max=null, now=null, text=null), queryFallbacks=null)"
         ),
     )
 
