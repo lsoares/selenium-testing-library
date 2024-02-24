@@ -1,5 +1,7 @@
 # Selenium Testing Library
 
+[![.github/workflows/test.yml](https://github.com/lsoares/selenium-testing-library/actions/workflows/test.yml/badge.svg)](https://github.com/lsoares/selenium-testing-library/actions/workflows/test.yml)
+
 **_[Testing Library](http://testing-library.com) selectors available as Selenium locators for Kotlin/Java._**
 
 Why? When I use Selenium, I want to be independent of ids, classes, and similar.

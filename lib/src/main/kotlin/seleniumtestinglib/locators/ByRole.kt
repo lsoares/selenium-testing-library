@@ -91,7 +91,7 @@ data class ByRole(
     ) : this(
         role = role,
         name = name?.asJsExpression(),
-        description = description?.asJsExpression(),
+        description = description?.asJsString(),
         hidden = hidden,
         normalizer = normalizer,
         selected = selected,
