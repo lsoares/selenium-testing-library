@@ -8,7 +8,7 @@ import seleniumtestinglib.queries.LocatorType
 import seleniumtestinglib.queries.TextMatch
 import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 import seleniumtestinglib.queries.TextMatch.JsFunction
-import seleniumtestinglib.queries.asJsRegex
+import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
@@ -39,7 +39,7 @@ data class ByLabelText(
         selector: String? = null,
         normalizer: JsFunction? = null,
     ) : this(
-        text = text.asJsRegex(),
+        text = text.asJsExpression(),
         exact = exact,
         selector = selector,
         normalizer = normalizer,

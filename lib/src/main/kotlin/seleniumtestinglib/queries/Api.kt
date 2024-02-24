@@ -40,11 +40,10 @@ internal enum class QueryType {
     Find, Query, Get
 }
 
-
 sealed class TextMatch(internal open val value: String) {
     class JsFunction(override val value: String) : TextMatch(value)
     internal class JsString(override val value: String) : TextMatch(value)
-    internal class JsRegex(override val value: String) : TextMatch(value)
+    internal class JsExpression(override val value: String) : TextMatch(value)
 
     override fun toString() = value
 
@@ -54,7 +53,7 @@ sealed class TextMatch(internal open val value: String) {
     }
 }
 
-internal fun Regex.asJsRegex(): TextMatch.JsRegex {
+internal fun Regex.asJsExpression(): TextMatch.JsExpression {
     val jsFlags = buildString {
         if (IGNORE_CASE in options) append('i')
         if (MULTILINE in options) append('m')
@@ -62,7 +61,7 @@ internal fun Regex.asJsRegex(): TextMatch.JsRegex {
         if (COMMENTS in options) append('x')
         if (CANON_EQ in options) append('u')
     }
-    return TextMatch.JsRegex("/${this.pattern}/$jsFlags")
+    return TextMatch.JsExpression("/${this.pattern}/$jsFlags")
 }
 
 private fun JavascriptExecutor.executeTLScript(script: String): Any? {
@@ -70,12 +69,14 @@ private fun JavascriptExecutor.executeTLScript(script: String): Any? {
     return executeScript(script)
 }
 
+private val String.quoted get() = "'${replace("'", "\\'")}'"
+
 private val Any?.escaped: Any?
     get() = when (this) {
-        is TextMatch.JsString -> value.escaped
+        is TextMatch.JsString -> value.quoted
         is TextMatch.JsFunction -> value
-        is TextMatch.JsRegex -> value
-        is String -> "'${replace("'", "\\'")}'"
+        is TextMatch.JsExpression -> value
+        is String -> quoted
         is Map<*, *> -> entries.joinToString(", ", prefix = "{ ", postfix = " }") {
             "${it.key}: ${it.value?.escaped}"
         }

@@ -9,7 +9,7 @@ import seleniumtestinglib.queries.TextMatch
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 import seleniumtestinglib.queries.TextMatch.JsFunction
-import seleniumtestinglib.queries.asJsRegex
+import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
@@ -36,7 +36,7 @@ data class ByAltText(
         exact: Boolean? = null,
         normalizer: JsFunction? = null,
     ) : this(
-        text = regex.asJsRegex(),
+        text = regex.asJsExpression(),
         exact = exact,
         normalizer = normalizer,
     )

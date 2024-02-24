@@ -4,16 +4,19 @@ import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
+import seleniumtestinglib.locators.Current.CurrentAsBool
+import seleniumtestinglib.locators.Current.CurrentAsType
 import seleniumtestinglib.queries.LocatorType
 import seleniumtestinglib.queries.TextMatch
 import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 import seleniumtestinglib.queries.TextMatch.JsFunction
-import seleniumtestinglib.queries.asJsRegex
+import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
  * https://testing-library.com/docs/queries/byrole
  */
+@Suppress("unused")
 data class ByRole(
     private val role: Role,
     private val name: TextMatch? = null,
@@ -32,12 +35,12 @@ data class ByRole(
     private val queryFallbacks: Boolean? = null,
 ) : By() {
 
-    private var _current: Any? = current?.name?.lowercase()?.asJsString()
-
     fun enableQueryFallbacks() = copy(queryFallbacks = true)
-    fun withName(name: Regex) = copy(name = name.asJsRegex())
-    fun witDescription(description: Regex) = copy(description = description.asJsRegex())
+    fun withName(name: Regex) = copy(name = name.asJsExpression())
+    fun witDescription(description: Regex) = copy(description = description.asJsExpression())
     fun withLevel(level: Int) = copy(level = level)
+    fun withCurrent(current: Boolean) = copy(current = CurrentAsBool(current))
+    fun withCurrent(current: CurrentType) = copy(current = CurrentAsType(current))
 
     constructor(
         role: Role,
@@ -66,9 +69,8 @@ data class ByRole(
         suggest = suggest,
         expanded = expanded,
         value = value,
-    ) {
-        _current = current
-    }
+        current = current?.let(::CurrentAsBool),
+    )
 
     constructor(
         role: Role,
@@ -85,7 +87,7 @@ data class ByRole(
         value: Value? = null,
     ) : this(
         role = role,
-        name = name?.asJsRegex(),
+        name = name?.asJsExpression(),
         description = description?.asJsString(),
         hidden = hidden,
         normalizer = normalizer,
@@ -96,9 +98,7 @@ data class ByRole(
         suggest = suggest,
         expanded = expanded,
         value = value,
-    ) {
-        _current = current
-    }
+    )
 
     constructor(
         role: Role,
@@ -117,8 +117,8 @@ data class ByRole(
         value: Value? = null,
     ) : this(
         role = role,
-        name = name?.asJsRegex(),
-        description = description?.asJsRegex(),
+        name = name?.asJsExpression(),
+        description = description?.asJsExpression(),
         hidden = hidden,
         normalizer = normalizer,
         selected = selected,
@@ -126,12 +126,41 @@ data class ByRole(
         checked = checked,
         pressed = pressed,
         suggest = suggest,
+        current = current?.let(::CurrentAsBool),
         expanded = expanded,
         level = level,
         value = value,
-    ) {
-        _current = current
-    }
+    )
+
+    constructor(
+        role: Role,
+        name: Regex? = null,
+        description: Regex? = null,
+        hidden: Boolean? = null,
+        normalizer: JsFunction? = null,
+        selected: Boolean? = null,
+        busy: Boolean? = null,
+        checked: Boolean? = null,
+        pressed: Boolean? = null,
+        suggest: Boolean? = null,
+        current: CurrentType? = null,
+        expanded: Boolean? = null,
+        value: Value? = null,
+    ) : this(
+        role = role,
+        name = name?.asJsExpression(),
+        description = description?.asJsExpression(),
+        hidden = hidden,
+        normalizer = normalizer,
+        selected = selected,
+        busy = busy,
+        checked = checked,
+        pressed = pressed,
+        suggest = suggest,
+        current = current?.let(::CurrentAsType),
+        expanded = expanded,
+        value = value,
+    )
 
     override fun findElements(context: SearchContext): List<WebElement> =
         (getWebDriver(context) as JavascriptExecutor).executeTLQuery(
@@ -147,7 +176,7 @@ data class ByRole(
                 "checked" to checked,
                 "pressed" to pressed,
                 "suggest" to suggest,
-                "current" to _current,
+                "current" to current?.value,
                 "expanded" to expanded,
                 "queryFallbacks" to queryFallbacks,
                 "level" to level,
@@ -157,7 +186,7 @@ data class ByRole(
 
     data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: TextMatch? = null) {
         constructor(text: String? = null) : this(text = text?.asJsString())
-        constructor(text: Regex? = null) : this(text = text?.asJsRegex())
+        constructor(text: Regex? = null) : this(text = text?.asJsExpression())
     }
 
     private fun Value.toMap() =
@@ -167,8 +196,13 @@ data class ByRole(
 /*
  * https://www.w3.org/TR/wai-aria-1.2/#aria-current
  */
+sealed class Current(open val value: Any) {
+    internal data class CurrentAsType(override val value: CurrentType) : Current(value.name.lowercase().asJsString())
+    internal data class CurrentAsBool(override val value: Boolean) : Current(value)
+}
+
 @Suppress("UNUSED")
-enum class Current {
+enum class CurrentType {
     Page, Step, Location, Date, Time
 }
 

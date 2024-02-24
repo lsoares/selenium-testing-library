@@ -8,7 +8,7 @@ import seleniumtestinglib.queries.LocatorType
 import seleniumtestinglib.queries.TextMatch
 import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 import seleniumtestinglib.queries.TextMatch.JsFunction
-import seleniumtestinglib.queries.asJsRegex
+import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
 
 /**
@@ -35,7 +35,7 @@ data class ByTitle(
         exact: Boolean? = null,
         normalizer: JsFunction? = null,
     ) : this(
-        title = title.asJsRegex(),
+        title = title.asJsExpression(),
         exact = exact,
         normalizer = normalizer,
     )

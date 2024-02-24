@@ -256,8 +256,8 @@ class ByRoleTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = Current::class)
-    fun `current with predefined value`(value: Current) {
+    @EnumSource(value = CurrentType::class)
+    fun `current with predefined value`(value: CurrentType) {
         driver.render(
             """<nav>
                         <a href="current/page" aria-current="${value.name.lowercase()}">👍</a>

@@ -8,8 +8,9 @@ import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
 import seleniumtestinglib.locators.*
-import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.locators.Current.CurrentAsType
 import seleniumtestinglib.queries.LocatorType.AltText
+import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -41,8 +42,8 @@ class NotFoundTest {
             "ByPlaceholderText(text=el => true, exact=null, normalizer=null)"
         ),
         of(
-            ByRole(Role.SpinButton, current = Current.Page, value = ByRole.Value(min = 1)),
-            "ByRole(role=SpinButton, name=null, description=null, hidden=null, normalizer=null, selected=null, busy=null, checked=null, pressed=null, suggest=null, current=Page, expanded=null, level=null, value=Value(min=1, max=null, now=null, text=null), queryFallbacks=null)"
+            ByRole(Role.SpinButton, current = CurrentType.Page, value = ByRole.Value(min = 1)),
+            "ByRole(role=SpinButton, name=null, description=null, hidden=null, normalizer=null, selected=null, busy=null, checked=null, pressed=null, suggest=null, current=CurrentAsType(value=Page), expanded=null, level=null, value=Value(min=1, max=null, now=null, text=null), queryFallbacks=null)"
         ),
     )
 
