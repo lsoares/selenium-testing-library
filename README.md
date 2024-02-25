@@ -11,10 +11,8 @@ I'm a fan of the Testing Library because it encourages "testing as a user":
 > the more confidence they can give you.
 
 
-Pick the [library's latest version at **Maven
-Central
-** <img src="https://search.maven.org/favicon.ico" width="16" height="16" />](https://search.maven.org/artifact/com.luissoares/selenium-testing-library)
-.
+Pick
+the [library's latest version at Maven Central](https://search.maven.org/artifact/com.luissoares/selenium-testing-library).
 Then, copy the declaration for your build tool. E.g.:
 
 ```kotlin
