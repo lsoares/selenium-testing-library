@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        uses: owner/test@v1
+        uses: ./.github/test
 
       - name: Publish
         env:

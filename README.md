@@ -12,7 +12,8 @@ I'm a fan of the Testing Library because it encourages "testing as a user":
 
 
 Pick the [library's latest version at **Maven
-Central** <img src="https://search.maven.org/favicon.ico" width="16" height="16" />](https://search.maven.org/artifact/com.luissoares/selenium-testing-library)
+Central
+** <img src="https://search.maven.org/favicon.ico" width="16" height="16" />](https://search.maven.org/artifact/com.luissoares/selenium-testing-library)
 .
 Then, copy the declaration for your build tool. E.g.:
 
@@ -43,13 +44,11 @@ driver.findElement(ByTitle("title 1"))
 driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))
 
 // an alternative API that does not use Selenium locators:
-val result1 = driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
-val result2 = driver.getBy(DisplayValue, "incredibles")
-val result3 = driver.queryAllBy(LabelText, "label x")
-val result4 = driver.getAllBy(Role, "listbox")
-
+driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
+driver.getBy(DisplayValue, "incredibles")
+driver.queryAllBy(LabelText, "label x")
+driver.getAllBy(Role, "listbox")
 ```
-
 
 ## User Interactions
 
@@ -63,6 +62,7 @@ driver.user.selectOptions(letterSelector, driver.findElement(ByRole(ListBox, nam
 ```
 
 [fireEvent](https://testing-library.com/docs/dom-testing-library/api-events) is also available:
+
 ```kotlin
 input.fireEvent(Change, mapOf("target" to mapOf("value" to "2020-05-24")))
 ```
