@@ -1,9 +1,16 @@
 #!/bin/sh
 
-version="$1"
-#sed -i "s/version = .*/version = ""$version""/g" lib/build.gradle.kts
-#sed -i "s/com\.luissoares:selenium-testing-library:[0-9]\+\.[0-9]\+\.[0-9]\+/com.luissoares:selenium-testing-library:$version/g" README.md
+set -e
+
+VERSION="$1"
+sed -i '' "s/version = \"\(.*\)\"/version = \"$VERSION\"/" lib/build.gradle.kts
+sed -i '' "s/com.luissoares:selenium-testing-library:[^\"]*/com.luissoares:selenium-testing-library:$VERSION/" README.md
+
+git add lib/build.gradle.kts README.md
+git commit -m "Update version to $VERSION"
+
 git tag -l | xargs git tag -d
-git push --delete origin "v$version"
-git tag "v$version" -m "Tag release"
-git push origin "v$version"
+git push --delete origin "v$VERSION" || true
+git tag "v$VERSION" -m "Tag release for version $VERSION"
+
+git push origin "v$VERSION"
