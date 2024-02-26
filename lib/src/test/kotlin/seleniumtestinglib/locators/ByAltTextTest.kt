@@ -6,10 +6,11 @@ import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
 import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.render
+import java.util.regex.Pattern
+import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import kotlin.text.RegexOption.IGNORE_CASE
 
 class ByAltTextTest {
 
@@ -45,7 +46,7 @@ class ByAltTextTest {
     fun regex() {
         driver.render("<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
-        val result = driver.findElement(ByAltText(Regex("incred", IGNORE_CASE)))
+        val result = driver.findElement(ByAltText(Pattern.compile("incred", CASE_INSENSITIVE)))
 
         assertEquals("img", result.tagName)
     }

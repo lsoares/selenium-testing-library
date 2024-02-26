@@ -12,6 +12,7 @@ import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
+import java.util.regex.Pattern
 
 /**
  * https://testing-library.com/docs/queries/byrole
@@ -36,8 +37,8 @@ data class ByRole(
 ) : By() {
 
     fun enableQueryFallbacks() = copy(queryFallbacks = true)
-    fun withName(name: Regex) = copy(name = name.asJsExpression())
-    fun witDescription(description: Regex) = copy(description = description.asJsExpression())
+    fun withName(name: Pattern) = copy(name = name.asJsExpression())
+    fun witDescription(description: Pattern) = copy(description = description.asJsExpression())
     fun withLevel(level: Int) = copy(level = level)
     fun withCurrent(current: Boolean) = copy(current = CurrentAsBool(current))
     fun withCurrent(current: CurrentType) = copy(current = CurrentAsType(current))
@@ -74,7 +75,7 @@ data class ByRole(
 
     constructor(
         role: Role,
-        name: Regex? = null,
+        name: Pattern? = null,
         description: String? = null,
         hidden: Boolean? = null,
         normalizer: JsFunction? = null,
@@ -102,8 +103,8 @@ data class ByRole(
 
     constructor(
         role: Role,
-        name: Regex? = null,
-        description: Regex? = null,
+        name: Pattern? = null,
+        description: Pattern? = null,
         hidden: Boolean? = null,
         normalizer: JsFunction? = null,
         selected: Boolean? = null,
@@ -134,8 +135,8 @@ data class ByRole(
 
     constructor(
         role: Role,
-        name: Regex? = null,
-        description: Regex? = null,
+        name: Pattern? = null,
+        description: Pattern? = null,
         hidden: Boolean? = null,
         normalizer: JsFunction? = null,
         selected: Boolean? = null,
@@ -186,7 +187,7 @@ data class ByRole(
 
     data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: TextMatch? = null) {
         constructor(text: String? = null) : this(text = text?.asJsString())
-        constructor(text: Regex? = null) : this(text = text?.asJsExpression())
+        constructor(text: Pattern? = null) : this(text = text?.asJsExpression())
     }
 
     private fun Value.toMap() =

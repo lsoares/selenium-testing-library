@@ -11,10 +11,11 @@ import seleniumtestinglib.locators.Role.*
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.render
+import java.util.regex.Pattern
+import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.text.RegexOption.IGNORE_CASE
 
 class ByRoleTest {
 
@@ -43,7 +44,7 @@ class ByRoleTest {
     fun `role with regex in name parameter`() {
         driver.render("""<h1>something as a user something</h1>""")
 
-        val result = driver.findElements(ByRole(Heading, name = Regex("as a user", IGNORE_CASE)))
+        val result = driver.findElements(ByRole(Heading, name = Pattern.compile("as a user", CASE_INSENSITIVE)))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -154,7 +155,7 @@ class ByRoleTest {
         )
 
         val result = driver.findElements(
-            ByRole(AlertDialog, description = Regex("your session", IGNORE_CASE))
+            ByRole(AlertDialog, description = Pattern.compile("your session", CASE_INSENSITIVE))
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -332,7 +333,7 @@ class ByRoleTest {
         of(Value(min = 0), listOf("Volume", "Pitch")),
         of(Value(max = 10), listOf("Volume", "Pitch")),
         of(Value(text = "medium"), listOf("Volume", "Pitch")),
-        of(Value(text = "med".toRegex()), listOf("Volume", "Pitch")),
+        of(Value(text = Pattern.compile("med")), listOf("Volume", "Pitch")),
         of(Value(text = "t => t.startsWith('med')".asJsFunction()), listOf("Volume", "Pitch")),
     )
 

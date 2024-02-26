@@ -10,6 +10,7 @@ import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
+import java.util.regex.Pattern
 
 /**
  * https://testing-library.com/docs/queries/bytestid
@@ -31,7 +32,7 @@ data class ByTestId(
     )
 
     constructor(
-        text: Regex,
+        text: Pattern,
         exact: Boolean? = null,
         normalizer: JsFunction? = null,
     ) : this(

@@ -7,10 +7,11 @@ import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
+import java.util.regex.Pattern
+import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import kotlin.text.RegexOption.IGNORE_CASE
 
 class ByTextTest {
 
@@ -101,7 +102,7 @@ class ByTextTest {
     fun regex() {
         driver.render("<p>I accept</p>")
 
-        val result = driver.findElement(ByText(Regex("ACCEPT", IGNORE_CASE)))
+        val result = driver.findElement(ByText(Pattern.compile("ACCEPT", CASE_INSENSITIVE)))
 
         assertEquals("p", result.tagName)
     }

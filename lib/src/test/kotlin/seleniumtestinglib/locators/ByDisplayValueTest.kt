@@ -5,9 +5,10 @@ import org.openqa.selenium.support.ui.Select
 import seleniumtestinglib.driver
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
+import java.util.regex.Pattern
+import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.text.RegexOption.IGNORE_CASE
 
 class ByDisplayValueTest {
 
@@ -46,7 +47,7 @@ class ByDisplayValueTest {
         driver.render("<input placeholder='username' />")
         driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
 
-        val result = driver.findElement(ByDisplayValue(Regex("selen", IGNORE_CASE)))
+        val result = driver.findElement(ByDisplayValue(Pattern.compile("selen", CASE_INSENSITIVE)))
 
         assertEquals("input", result.tagName)
     }

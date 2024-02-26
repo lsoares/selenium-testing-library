@@ -2,6 +2,8 @@ package seleniumtestinglib.queries
 
 import org.openqa.selenium.JavascriptExecutor
 import seleniumtestinglib.ensureScript
+import java.util.regex.Pattern
+import java.util.regex.Pattern.*
 import kotlin.text.RegexOption.*
 
 /**
@@ -43,7 +45,7 @@ internal enum class QueryType {
 sealed class TextMatch(internal open val value: String) {
     class JsFunction(override val value: String) : TextMatch(value)
     internal class JsString(override val value: String) : TextMatch(value)
-    internal class JsExpression(override val value: String) : TextMatch(value)
+    class JsExpression(override val value: String) : TextMatch(value)
 
     override fun toString() = value
 
@@ -53,15 +55,16 @@ sealed class TextMatch(internal open val value: String) {
     }
 }
 
-internal fun Regex.asJsExpression(): TextMatch.JsExpression {
+internal fun Pattern.asJsExpression(): TextMatch.JsExpression {
+    val flags: Int = flags()
     val jsFlags = buildString {
-        if (IGNORE_CASE in options) append('i')
-        if (MULTILINE in options) append('m')
-        if (DOT_MATCHES_ALL in options) append('s')
-        if (COMMENTS in options) append('x')
-        if (CANON_EQ in options) append('u')
+        if (flags and CASE_INSENSITIVE != 0) append('i')
+        if (flags and MULTILINE != 0) append('m')
+        if (flags and DOTALL != 0) append('s')
+        if (flags and COMMENTS != 0) append('x')
+        if (flags and UNICODE_CASE != 0) append('u')
     }
-    return TextMatch.JsExpression("/${this.pattern}/$jsFlags")
+    return TextMatch.JsExpression(("/" + pattern()).toString() + "/" + jsFlags.toString())
 }
 
 private fun JavascriptExecutor.executeTLScript(script: String): Any? {

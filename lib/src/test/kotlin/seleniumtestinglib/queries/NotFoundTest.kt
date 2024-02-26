@@ -11,6 +11,8 @@ import seleniumtestinglib.locators.*
 import seleniumtestinglib.queries.LocatorType.AltText
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
+import java.util.regex.Pattern
+import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -30,11 +32,10 @@ class NotFoundTest {
         assertTrue(ex.message?.contains("Unable to find an element with the alt text: will not work")!!, ex.message)
     }
 
-
     private fun `findElement error cases`() = setOf(
         of(
-            ByText("a".toRegex()),
-            "ByText(text=/a/, selector=null, exact=null, ignore=null, normalizer=null)"
+            ByText(Pattern.compile("a", CASE_INSENSITIVE)),
+            "ByText(text=/a/i, selector=null, exact=null, ignore=null, normalizer=null)"
         ),
         of(
             ByPlaceholderText("el => true".asJsFunction()),

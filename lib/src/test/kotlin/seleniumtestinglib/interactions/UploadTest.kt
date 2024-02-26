@@ -4,9 +4,10 @@ import seleniumtestinglib.driver
 import seleniumtestinglib.files
 import seleniumtestinglib.locators.ByLabelText
 import seleniumtestinglib.render
+import java.util.regex.Pattern
+import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.text.RegexOption.IGNORE_CASE
 
 class UploadTest {
 
@@ -20,7 +21,7 @@ class UploadTest {
             </div> 
         """
         )
-        val input = driver.findElement(ByLabelText(Regex("upload file", IGNORE_CASE)))
+        val input = driver.findElement(ByLabelText(Pattern.compile("upload file", CASE_INSENSITIVE)))
 
         driver.user.upload(
             input,

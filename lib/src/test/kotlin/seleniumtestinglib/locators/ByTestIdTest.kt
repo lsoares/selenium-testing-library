@@ -3,6 +3,7 @@ package seleniumtestinglib.locators
 import seleniumtestinglib.driver
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
+import java.util.regex.Pattern
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -21,7 +22,7 @@ class ByTestIdTest {
     fun regex() {
         driver.render(""" <div data-testid="custom-element" /> """)
 
-        val result = driver.findElement(ByTestId(Regex("custom")))
+        val result = driver.findElement(ByTestId(Pattern.compile("custom")))
 
         assertEquals("div", result.tagName)
     }

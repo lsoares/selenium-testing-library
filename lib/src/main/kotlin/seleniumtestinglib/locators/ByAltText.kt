@@ -11,6 +11,7 @@ import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
+import java.util.regex.Pattern
 
 /**
  * https://testing-library.com/docs/queries/byalttext
@@ -32,7 +33,7 @@ data class ByAltText(
     )
 
     constructor(
-        regex: Regex,
+        regex: Pattern,
         exact: Boolean? = null,
         normalizer: JsFunction? = null,
     ) : this(

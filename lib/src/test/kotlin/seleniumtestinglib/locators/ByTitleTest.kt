@@ -3,9 +3,10 @@ package seleniumtestinglib.locators
 import seleniumtestinglib.driver
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
+import java.util.regex.Pattern
+import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.text.RegexOption.IGNORE_CASE
 
 class ByTitleTest {
 
@@ -54,7 +55,7 @@ class ByTitleTest {
     fun regex() {
         driver.render("<div title='foobar'>Hello World!</div>")
 
-        val result = driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))
+        val result = driver.findElement(ByTitle(Pattern.compile("FOO", CASE_INSENSITIVE)))
 
         assertEquals("Hello World!", result.text)
     }

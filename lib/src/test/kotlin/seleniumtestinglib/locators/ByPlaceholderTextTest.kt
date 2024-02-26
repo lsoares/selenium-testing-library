@@ -6,10 +6,10 @@ import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
+import java.util.regex.Pattern
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import kotlin.text.RegexOption.IGNORE_CASE
 
 class ByPlaceholderTextTest {
 
@@ -47,7 +47,7 @@ class ByPlaceholderTextTest {
     fun regex() {
         driver.render("<input placeholder='Username' />")
 
-        val result = driver.findElement(ByPlaceholderText(Regex("user", IGNORE_CASE)))
+        val result = driver.findElement(ByPlaceholderText(Pattern.compile("user", Pattern.CASE_INSENSITIVE)))
 
         assertEquals("input", result.tagName)
     }

@@ -10,6 +10,7 @@ import seleniumtestinglib.queries.TextMatch.Companion.asJsString
 import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.queries.asJsExpression
 import seleniumtestinglib.queries.executeTLQuery
+import java.util.regex.Pattern
 
 /**
  * https://testing-library.com/docs/queries/bytext
@@ -40,7 +41,7 @@ data class ByText(
     )
 
     constructor(
-        text: Regex,
+        text: Pattern,
         selector: String? = null,
         exact: Boolean? = null,
         ignore: String? = null,
