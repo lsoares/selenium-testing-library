@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Disabled
 import org.openqa.selenium.By
 import org.openqa.selenium.OutputType
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.CheckBox
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.CheckBox
 import seleniumtestinglib.render
 import java.awt.Desktop
 import java.io.File
@@ -29,7 +29,7 @@ class GeneralTest {
                       </div> """
             )
             .tab()
-            .click(driver.findElement(ByRole(CheckBox)))
+            .click(driver.findElement(role(CheckBox)))
             .tab()
             .keyboard("name")
             .tab()

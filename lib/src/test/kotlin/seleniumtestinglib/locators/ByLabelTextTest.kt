@@ -1,6 +1,7 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
+import seleniumtestinglib.locators.TL.By.labelText
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -19,7 +20,7 @@ class ByLabelTextTest {
             """
         )
 
-        val result = driver.findElement(ByLabelText("Username"))
+        val result = driver.findElement(labelText("Username"))
 
         assertEquals("input", result.tagName)
     }
@@ -33,7 +34,7 @@ class ByLabelTextTest {
             """
         )
 
-        val result = driver.findElement(ByLabelText("Username"))
+        val result = driver.findElement(labelText("Username"))
 
         assertEquals("input", result.tagName)
     }
@@ -49,7 +50,7 @@ class ByLabelTextTest {
             """
         )
 
-        val result = driver.findElement(ByLabelText("Username"))
+        val result = driver.findElement(labelText("Username"))
 
         assertEquals("input", result.tagName)
     }
@@ -58,7 +59,7 @@ class ByLabelTextTest {
     fun `aria label`() {
         driver.render("<input aria-label='Username' />")
 
-        val result = driver.findElement(ByLabelText("Username"))
+        val result = driver.findElement(labelText("Username"))
 
         assertEquals("input", result.tagName)
     }
@@ -72,21 +73,7 @@ class ByLabelTextTest {
             """
         )
 
-        val result = driver.findElement(ByLabelText("user", exact = false, selector = "span .x input"))
-
-        assertEquals("input", result.tagName)
-    }
-
-    @Test
-    fun `not exact 2 with selector`() {
-        driver.render(
-            """
-            <input aria-label='Username' />
-            <span><div class="x"><input aria-label='Username' /></div></span>
-            """
-        )
-
-        val result = driver.findElement(ByLabelText("user", selector = "span .x input").inexact())
+        val result = driver.findElement(labelText("user", exact = false, selector = "span .x input"))
 
         assertEquals("input", result.tagName)
     }
@@ -95,7 +82,7 @@ class ByLabelTextTest {
     fun regex() {
         driver.render("<input aria-label='Username' />")
 
-        val result = driver.findElement(ByLabelText(Pattern.compile("user", CASE_INSENSITIVE)))
+        val result = driver.findElement(labelText(Pattern.compile("user", CASE_INSENSITIVE)))
 
         assertEquals("input", result.tagName)
     }
@@ -104,7 +91,7 @@ class ByLabelTextTest {
     fun function() {
         driver.render("<input aria-label='Username' />")
 
-        val result = driver.findElement(ByLabelText("c => c.startsWith('User')".asJsFunction()))
+        val result = driver.findElement(labelText("c => c.startsWith('User')".asJsFunction()))
 
         assertEquals("input", result.tagName)
     }

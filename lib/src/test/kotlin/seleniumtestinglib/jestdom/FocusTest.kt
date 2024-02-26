@@ -4,7 +4,7 @@ import seleniumtestinglib.driver
 import seleniumtestinglib.interactions.tab
 import seleniumtestinglib.interactions.user
 import seleniumtestinglib.isFocused
-import seleniumtestinglib.locators.ByTestId
+import seleniumtestinglib.locators.TL.By.testId
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -21,7 +21,7 @@ class FocusTest {
             """
         )
         driver.user.tab()
-        val element = driver.findElement(ByTestId("element-to-focus"))
+        val element = driver.findElement(testId("element-to-focus"))
         assertTrue(element.isFocused)
         expect(element).toHaveFocus()
 

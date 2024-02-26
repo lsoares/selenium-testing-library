@@ -1,9 +1,9 @@
 package seleniumtestinglib.interactions
 
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.ListBox
-import seleniumtestinglib.locators.Role.Option
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.ListBox
+import seleniumtestinglib.locators.RoleType.Option
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -20,13 +20,13 @@ class SelectOptionsTest {
                       <option value="3">C</option>
                     </select>"""
         )
-        val select = driver.findElement(ByRole(ListBox))
+        val select = driver.findElement(role(ListBox))
 
         driver.user.selectOptions(select, "1", "3")
 
-        assertTrue(select.findElement(ByRole(Option, name = "A")).isSelected)
-        assertFalse(select.findElement(ByRole(Option, name = "B")).isSelected)
-        assertTrue(select.findElement(ByRole(Option, name = "C")).isSelected)
+        assertTrue(select.findElement(role(Option, name = "A")).isSelected)
+        assertFalse(select.findElement(role(Option, name = "B")).isSelected)
+        assertTrue(select.findElement(role(Option, name = "C")).isSelected)
     }
 
     @Test
@@ -38,16 +38,16 @@ class SelectOptionsTest {
                       <option value="3">C</option>
                     </select>"""
         )
-        val select = driver.findElement(ByRole(ListBox))
+        val select = driver.findElement(role(ListBox))
 
         driver.user.selectOptions(
             select,
-            select.findElement(ByRole(Option, name = "A")),
-            select.findElement(ByRole(Option, name = "C")),
+            select.findElement(role(Option, name = "A")),
+            select.findElement(role(Option, name = "C")),
         )
 
-        assertTrue(select.findElement(ByRole(Option, name = "A")).isSelected)
-        assertFalse(select.findElement(ByRole(Option, name = "B")).isSelected)
-        assertTrue(select.findElement(ByRole(Option, name = "C")).isSelected)
+        assertTrue(select.findElement(role(Option, name = "A")).isSelected)
+        assertFalse(select.findElement(role(Option, name = "B")).isSelected)
+        assertTrue(select.findElement(role(Option, name = "C")).isSelected)
     }
 }

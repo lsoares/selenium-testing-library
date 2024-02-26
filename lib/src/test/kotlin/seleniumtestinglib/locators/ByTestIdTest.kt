@@ -1,6 +1,7 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
+import seleniumtestinglib.locators.TL.By.testId
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -13,7 +14,7 @@ class ByTestIdTest {
     fun `by test id`() {
         driver.render(""" <div data-testid="custom-element" /> """)
 
-        val result = driver.findElement(ByTestId("custom-element"))
+        val result = driver.findElement(testId("custom-element"))
 
         assertEquals("div", result.tagName)
     }
@@ -22,7 +23,7 @@ class ByTestIdTest {
     fun regex() {
         driver.render(""" <div data-testid="custom-element" /> """)
 
-        val result = driver.findElement(ByTestId(Pattern.compile("custom")))
+        val result = driver.findElement(testId(Pattern.compile("custom")))
 
         assertEquals("div", result.tagName)
     }
@@ -31,7 +32,7 @@ class ByTestIdTest {
     fun function() {
         driver.render(""" <div data-testid="custom-element" /> """)
 
-        val result = driver.findElement(ByTestId("c => c.startsWith('custom')".asJsFunction()))
+        val result = driver.findElement(testId("c => c.startsWith('custom')".asJsFunction()))
 
         assertEquals("div", result.tagName)
     }
@@ -47,23 +48,7 @@ class ByTestIdTest {
         """
         )
 
-        val result = driver.findElement(ByTestId("foo", exact = false))
-
-        assertEquals("span", result.tagName)
-    }
-
-    @Test
-    fun `not exact 2`() {
-        driver.render(
-            """
-            <div>
-                <span data-testid='foobar'>I accept</span>
-                <p>I accept</p>
-            </div>
-        """
-        )
-
-        val result = driver.findElement(ByTestId("foo").inexact())
+        val result = driver.findElement(testId("foo", exact = false))
 
         assertEquals("span", result.tagName)
     }

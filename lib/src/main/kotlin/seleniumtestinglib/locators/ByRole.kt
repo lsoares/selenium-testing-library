@@ -1,203 +1,19 @@
 package seleniumtestinglib.locators
 
-import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
-import org.openqa.selenium.SearchContext
-import org.openqa.selenium.WebElement
-import seleniumtestinglib.locators.Current.CurrentAsBool
-import seleniumtestinglib.locators.Current.CurrentAsType
-import seleniumtestinglib.queries.LocatorType
 import seleniumtestinglib.queries.TextMatch
 import seleniumtestinglib.queries.TextMatch.Companion.asJsString
-import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.queries.asJsExpression
-import seleniumtestinglib.queries.executeTLQuery
 import java.util.regex.Pattern
 
-/**
- * https://testing-library.com/docs/queries/byrole
- */
-@Suppress("unused")
-data class ByRole(
-    private val role: Role,
-    private val name: TextMatch? = null,
-    private val description: TextMatch? = null,
-    private val hidden: Boolean? = null,
-    private val normalizer: JsFunction? = null,
-    private val selected: Boolean? = null,
-    private val busy: Boolean? = null,
-    private val checked: Boolean? = null,
-    private val pressed: Boolean? = null,
-    private val suggest: Boolean? = null,
-    private val current: Current? = null,
-    private val expanded: Boolean? = null,
-    private val level: Int? = null,
-    private val value: Value? = null,
-    private val queryFallbacks: Boolean? = null,
-) : By() {
-
-    fun enableQueryFallbacks() = copy(queryFallbacks = true)
-    fun withName(name: Pattern) = copy(name = name.asJsExpression())
-    fun witDescription(description: Pattern) = copy(description = description.asJsExpression())
-    fun withLevel(level: Int) = copy(level = level)
-    fun withCurrent(current: Boolean) = copy(current = CurrentAsBool(current))
-    fun withCurrent(current: CurrentType) = copy(current = CurrentAsType(current))
-
-    constructor(
-        role: Role,
-        name: String? = null,
-        description: String? = null,
-        hidden: Boolean? = null,
-        normalizer: JsFunction? = null,
-        selected: Boolean? = null,
-        busy: Boolean? = null,
-        checked: Boolean? = null,
-        pressed: Boolean? = null,
-        suggest: Boolean? = null,
-        current: Boolean? = null,
-        expanded: Boolean? = null,
-        value: Value? = null,
-    ) : this(
-        role = role,
-        name = name?.asJsString(),
-        description = description?.asJsString(),
-        hidden = hidden,
-        normalizer = normalizer,
-        selected = selected,
-        busy = busy,
-        checked = checked,
-        pressed = pressed,
-        suggest = suggest,
-        expanded = expanded,
-        value = value,
-        current = current?.let(::CurrentAsBool),
-    )
-
-    constructor(
-        role: Role,
-        name: Pattern? = null,
-        description: String? = null,
-        hidden: Boolean? = null,
-        normalizer: JsFunction? = null,
-        selected: Boolean? = null,
-        busy: Boolean? = null,
-        checked: Boolean? = null,
-        pressed: Boolean? = null,
-        suggest: Boolean? = null,
-        expanded: Boolean? = null,
-        value: Value? = null,
-    ) : this(
-        role = role,
-        name = name?.asJsExpression(),
-        description = description?.asJsString(),
-        hidden = hidden,
-        normalizer = normalizer,
-        selected = selected,
-        busy = busy,
-        checked = checked,
-        pressed = pressed,
-        suggest = suggest,
-        expanded = expanded,
-        value = value,
-    )
-
-    constructor(
-        role: Role,
-        name: Pattern? = null,
-        description: Pattern? = null,
-        hidden: Boolean? = null,
-        normalizer: JsFunction? = null,
-        selected: Boolean? = null,
-        busy: Boolean? = null,
-        checked: Boolean? = null,
-        pressed: Boolean? = null,
-        suggest: Boolean? = null,
-        current: Boolean? = null,
-        expanded: Boolean? = null,
-        level: Int? = null,
-        value: Value? = null,
-    ) : this(
-        role = role,
-        name = name?.asJsExpression(),
-        description = description?.asJsExpression(),
-        hidden = hidden,
-        normalizer = normalizer,
-        selected = selected,
-        busy = busy,
-        checked = checked,
-        pressed = pressed,
-        suggest = suggest,
-        current = current?.let(::CurrentAsBool),
-        expanded = expanded,
-        level = level,
-        value = value,
-    )
-
-    constructor(
-        role: Role,
-        name: Pattern? = null,
-        description: Pattern? = null,
-        hidden: Boolean? = null,
-        normalizer: JsFunction? = null,
-        selected: Boolean? = null,
-        busy: Boolean? = null,
-        checked: Boolean? = null,
-        pressed: Boolean? = null,
-        suggest: Boolean? = null,
-        current: CurrentType? = null,
-        expanded: Boolean? = null,
-        value: Value? = null,
-    ) : this(
-        role = role,
-        name = name?.asJsExpression(),
-        description = description?.asJsExpression(),
-        hidden = hidden,
-        normalizer = normalizer,
-        selected = selected,
-        busy = busy,
-        checked = checked,
-        pressed = pressed,
-        suggest = suggest,
-        current = current?.let(::CurrentAsType),
-        expanded = expanded,
-        value = value,
-    )
-
-    override fun findElements(context: SearchContext): List<WebElement> =
-        (getWebDriver(context) as JavascriptExecutor).executeTLQuery(
-            by = LocatorType.Role,
-            textMatch = role.name.lowercase().asJsString(),
-            options = mapOf(
-                "hidden" to hidden,
-                "normalizer" to normalizer,
-                "name" to name,
-                "description" to description,
-                "selected" to selected,
-                "busy" to busy,
-                "checked" to checked,
-                "pressed" to pressed,
-                "suggest" to suggest,
-                "current" to current?.value,
-                "expanded" to expanded,
-                "queryFallbacks" to queryFallbacks,
-                "level" to level,
-                "value" to value?.toMap(),
-            ),
-        )
-
-    data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: TextMatch? = null) {
-        constructor(text: String? = null) : this(text = text?.asJsString())
-        constructor(text: Pattern? = null) : this(text = text?.asJsExpression())
-    }
-
-    private fun Value.toMap() =
-        mapOf("min" to min, "max" to max, "now" to now, "text" to text).filterValues { it != null }
+data class Value(val min: Int? = null, val max: Int? = null, val now: Int? = null, val text: TextMatch? = null) {
+    constructor(text: String? = null) : this(text = text?.asJsString())
+    constructor(text: Pattern? = null) : this(text = text?.asJsExpression())
 }
 
 /*
  * https://www.w3.org/TR/wai-aria-1.2/#aria-current
  */
-sealed class Current(open val value: Any) {
+internal sealed class Current(open val value: Any) {
     override fun toString() = value.toString()
     internal class CurrentAsType(value: CurrentType) : Current(value.name.lowercase().asJsString())
     internal class CurrentAsBool(value: Boolean) : Current(value)
@@ -212,7 +28,7 @@ enum class CurrentType {
  * https://www.w3.org/TR/wai-aria-1.2/#role_definitions
  */
 @Suppress("UNUSED")
-enum class Role {
+enum class RoleType {
     Alert,
     AlertDialog,
     Application,

@@ -3,7 +3,7 @@ package seleniumtestinglib.jestdom
 import org.openqa.selenium.By
 import seleniumtestinglib.driver
 import seleniumtestinglib.formValues
-import seleniumtestinglib.locators.ByTestId
+import seleniumtestinglib.locators.TL.By.testId
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,7 +23,7 @@ class FormValuesTest {
         """
         )
 
-        val form = driver.findElement(ByTestId(("login-form")))
+        val form = driver.findElement(testId(("login-form")))
         expect(form).toHaveFormValues("username" to "jane.doe", "rememberMe" to true)
     }
 

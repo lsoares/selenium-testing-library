@@ -6,8 +6,8 @@ import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.WebElement
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.ByRole.Value
-import seleniumtestinglib.locators.Role.*
+import seleniumtestinglib.locators.RoleType.*
+import seleniumtestinglib.locators.TL.By.role
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.queries.TextMatch.JsFunction
 import seleniumtestinglib.render
@@ -17,7 +17,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class ByRoleTest {
+class ByRoleTestType {
 
     private fun examples() = setOf(
         of(TextBox, """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),
@@ -31,10 +31,10 @@ class ByRoleTest {
 
     @ParameterizedTest
     @MethodSource("examples")
-    fun `by role`(role: Role, content: String) {
+    fun `by role`(role: RoleType, content: String) {
         driver.render(content)
 
-        val result = driver.findElement(ByRole(role))
+        val result = driver.findElement(role(role))
 
         assertNotNull(result)
         // assertEquals(role, result.ariaRole)
@@ -44,7 +44,7 @@ class ByRoleTest {
     fun `role with regex in name parameter`() {
         driver.render("""<h1>something as a user something</h1>""")
 
-        val result = driver.findElements(ByRole(Heading, name = Pattern.compile("as a user", CASE_INSENSITIVE)))
+        val result = driver.findElements(role(Heading, nameAsRegex = Pattern.compile("as a user")))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -53,7 +53,7 @@ class ByRoleTest {
     fun `role with function in name parameter`() {
         driver.render("""<h1>something as a user something</h1>""")
 
-        val result = driver.findElements(ByRole(Heading, name = "c => c.startsWith('something')".asJsFunction()))
+        val result = driver.findElements(role(Heading, nameAsFunction = "c => c.startsWith('something')".asJsFunction()))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -70,7 +70,7 @@ class ByRoleTest {
         """
         )
 
-        val result = driver.findElements(ByRole(Tab, selected = true))
+        val result = driver.findElements(role(Tab, selected = true))
 
         assertEquals("Native", result.single().text)
     }
@@ -91,7 +91,7 @@ class ByRoleTest {
         """
         )
 
-        val result = driver.findElements(ByRole(TextBox, name = "Email address"))
+        val result = driver.findElements(role(TextBox, name = "Email address"))
 
         assertEquals("input", result.single().tagName)
     }
@@ -113,7 +113,7 @@ class ByRoleTest {
               </div>"""
         )
 
-        val result = driver.findElements(ByRole(Button, hidden = hidden))
+        val result = driver.findElements(role(Button, hidden = hidden))
 
         assertEquals(expectedButtonsFound, result.map { it.text })
     }
@@ -134,7 +134,7 @@ class ByRoleTest {
         )
 
         val result =
-            driver.findElements(ByRole(AlertDialog, description = "Your session is about to expire!"))
+            driver.findElements(role(AlertDialog, description = "Your session is about to expire!"))
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
     }
@@ -155,7 +155,7 @@ class ByRoleTest {
         )
 
         val result = driver.findElements(
-            ByRole(AlertDialog, description = Pattern.compile("your session", CASE_INSENSITIVE))
+            role(AlertDialog, descriptionAsRegex = Pattern.compile("your session", CASE_INSENSITIVE))
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -177,7 +177,7 @@ class ByRoleTest {
         )
 
         val result = driver.findElements(
-            ByRole(AlertDialog, description = JsFunction("content => content.endsWith('!')"))
+            role(AlertDialog, descriptionAsFunction = JsFunction("content => content.endsWith('!')"))
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -198,7 +198,7 @@ class ByRoleTest {
                 <div role="heading" aria-level="2">Second Heading Level Two</div>"""
         )
 
-        val result = driver.findElements(ByRole(Heading, level = level))
+        val result = driver.findElements(role(Heading, level = level))
 
         assertEquals(expected = expectedResults, result.map(WebElement::getTagName))
     }
@@ -211,7 +211,7 @@ class ByRoleTest {
                     <button role="checkbox" aria-checked="false">Whipped cream</button>"""
         )
 
-        val result = driver.findElements(ByRole(CheckBox, checked = true))
+        val result = driver.findElements(role(CheckBox, checked = true))
 
         assertEquals("Sugar", result.single().text)
     }
@@ -223,7 +223,7 @@ class ByRoleTest {
                      <button aria-pressed="false">👎</button>"""
         )
 
-        val result = driver.findElements(ByRole(Button, pressed = true))
+        val result = driver.findElements(role(Button, pressed = true))
 
         assertEquals("👍", result.single().text)
     }
@@ -237,7 +237,7 @@ class ByRoleTest {
                       </nav>"""
         )
 
-        val result = driver.findElement(ByRole(Link, current = true))
+        val result = driver.findElement(role(Link, currentAsBoolean = true))
 
         assertEquals("👍", result.text)
     }
@@ -251,7 +251,7 @@ class ByRoleTest {
                       </nav>"""
         )
 
-        val result = driver.findElement(ByRole(Link, current = false))
+        val result = driver.findElement(role(Link, currentAsBoolean = false))
 
         assertEquals("👎", result.text)
     }
@@ -266,7 +266,7 @@ class ByRoleTest {
                       </nav>"""
         )
 
-        val result = driver.findElement(ByRole(Link, current = value))
+        val result = driver.findElement(role(Link, current = value))
 
         assertEquals("👍", result.text)
     }
@@ -281,27 +281,17 @@ class ByRoleTest {
         """
         )
 
-        val result = driver.findElements(ByRole(Link, expanded = false))
+        val result = driver.findElements(role(Link, expanded = false))
 
         assertEquals("expanded", result.single().text)
     }
-
-    @Test
-    fun `enable query fallbacks`() {
-        driver.render(""" <div role="switch checkbox" /> """)
-
-        val result = driver.findElements(ByRole(CheckBox).enableQueryFallbacks())
-
-        assertEquals(1, result.size)
-    }
-
 
     @ParameterizedTest
     @MethodSource("test cases query fallbacks")
     fun `query fallbacks`(queryFallbacks: Boolean?, expectedCount: Int) {
         driver.render(""" <div role="switch checkbox" /> """)
 
-        val result = driver.findElements(ByRole(CheckBox, queryFallbacks = queryFallbacks))
+        val result = driver.findElements(role(CheckBox, queryFallbacks = queryFallbacks))
 
         assertEquals(expectedCount, result.size)
     }
@@ -323,7 +313,7 @@ class ByRoleTest {
             """
         )
 
-        val result = driver.findElements(ByRole(Alert, busy = false))
+        val result = driver.findElements(role(Alert, busy = false))
 
         assertEquals("Login failed", result.single().text)
     }
@@ -365,7 +355,7 @@ class ByRoleTest {
         """
         )
 
-        val result = driver.findElements(ByRole(SpinButton, value = value))
+        val result = driver.findElements(role(SpinButton, value = value))
 
         assertEquals(expectedSpinButtons, result.map(WebElement::getText))
     }

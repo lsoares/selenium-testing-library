@@ -45,7 +45,7 @@ internal enum class QueryType {
 sealed class TextMatch(internal open val value: String) {
     class JsFunction(override val value: String) : TextMatch(value)
     internal class JsString(override val value: String) : TextMatch(value)
-    class JsExpression(override val value: String) : TextMatch(value)
+    internal class JsExpression(override val value: String) : TextMatch(value)
 
     override fun toString() = value
 
@@ -56,7 +56,7 @@ sealed class TextMatch(internal open val value: String) {
 }
 
 internal fun Pattern.asJsExpression(): TextMatch.JsExpression {
-    val flags: Int = flags()
+    val flags = flags()
     val jsFlags = buildString {
         if (flags and CASE_INSENSITIVE != 0) append('i')
         if (flags and RegexOption.MULTILINE.value != 0) append('m')
@@ -64,7 +64,7 @@ internal fun Pattern.asJsExpression(): TextMatch.JsExpression {
         if (flags and RegexOption.COMMENTS.value != 0) append('x')
         if (flags and UNICODE_CASE != 0) append('u')
     }
-    return TextMatch.JsExpression(("/" + pattern()).toString() + "/" + jsFlags.toString())
+    return TextMatch.JsExpression("/${pattern()}/$jsFlags")
 }
 
 private fun JavascriptExecutor.executeTLScript(script: String): Any? {
@@ -80,7 +80,7 @@ private val Any?.escaped: Any?
         is TextMatch.JsFunction -> value
         is TextMatch.JsExpression -> value
         is String -> quoted
-        is Map<*, *> -> entries.joinToString(", ", prefix = "{ ", postfix = " }") {
+        is Map<*, *> -> entries.joinToString(prefix = "{ ", postfix = " }") {
             "${it.key}: ${it.value?.escaped}"
         }
 

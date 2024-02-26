@@ -1,8 +1,8 @@
 package seleniumtestinglib
 
 import org.openqa.selenium.By
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.Article
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.Article
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -18,12 +18,12 @@ class TargetLocatorTest {
            <iframe id="2" src="${"<article></article>".asDataUrl()}"></iframe> 
         """
         )
-        assertNull(driver.findElements(ByRole(Article)).firstOrNull())
+        assertNull(driver.findElements(role(Article)).firstOrNull())
 
         driver.switchTo().frame(By.cssSelector("article"))
 
-        assertNotNull(driver.findElements(ByRole(Article)).firstOrNull())
+        assertNotNull(driver.findElements(role(Article)).firstOrNull())
         driver.switchTo().defaultContent()
-        assertNull(driver.findElements(ByRole(Article)).firstOrNull())
+        assertNull(driver.findElements(role(Article)).firstOrNull())
     }
 }

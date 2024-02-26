@@ -2,7 +2,7 @@ package seleniumtestinglib.interactions
 
 import seleniumtestinglib.driver
 import seleniumtestinglib.files
-import seleniumtestinglib.locators.ByLabelText
+import seleniumtestinglib.locators.TL.By.labelText
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE
@@ -21,7 +21,7 @@ class UploadTest {
             </div> 
         """
         )
-        val input = driver.findElement(ByLabelText(Pattern.compile("upload file", CASE_INSENSITIVE)))
+        val input = driver.findElement(labelText(Pattern.compile("upload file", CASE_INSENSITIVE)))
 
         driver.user.upload(
             input,

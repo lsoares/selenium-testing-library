@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Disabled
 import org.openqa.selenium.By.id
 import org.openqa.selenium.By.tagName
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.TextBox
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.TextBox
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.Test
@@ -23,7 +23,7 @@ class ClipboardTest {
 
         driver.user.paste("pasted value")
 
-        assertEquals("pasted value", driver.findElement(ByRole(TextBox)).value)
+        assertEquals("pasted value", driver.findElement(role(TextBox)).value)
     }
 
     @Test
@@ -32,7 +32,7 @@ class ClipboardTest {
             .render("""<input id="a" />""")
             .type(driver.findElement(id("a")), "text")
             .pointer(
-                mapOf("target" to driver.findElement(ByRole(TextBox)), "offset" to 0, "keys" to "[MouseLeft>]"),
+                mapOf("target" to driver.findElement(role(TextBox)), "offset" to 0, "keys" to "[MouseLeft>]"),
                 mapOf("offset" to 5)
             )
         assertFalse(driver.findElement(id("a")).value?.toString()?.isEmpty() ?: true)
@@ -54,10 +54,10 @@ class ClipboardTest {
             mapOf("offset" to 14)
         )
         driver.user.copy()
-        driver.user.click(driver.findElement(ByRole(TextBox)))
+        driver.user.click(driver.findElement(role(TextBox)))
 
         driver.user.paste("sdsd")
 
-//        println(driver.findElement(ByRole(TextBox)).value)
+//        println(driver.findElement(role(TextBox)).value)
     }
 }

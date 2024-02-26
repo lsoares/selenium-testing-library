@@ -2,7 +2,7 @@ package seleniumtestinglib.jestdom
 
 import seleniumtestinglib.driver
 import seleniumtestinglib.errorMessage
-import seleniumtestinglib.locators.ByLabelText
+import seleniumtestinglib.locators.TL.By.labelText
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -26,7 +26,7 @@ class ErrorMessageTest {
                 </span>
             """
         )
-        val timeInput = driver.findElement(ByLabelText("please enter a start time", exact = false))
+        val timeInput = driver.findElement(labelText("please enter a start time", exact = false))
 
         assertEquals("Invalid time: the time must be between 9:00 AM and 5:00 PM", timeInput.errorMessage)
         expect(timeInput).toHaveErrorMessage(

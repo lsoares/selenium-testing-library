@@ -7,12 +7,17 @@ import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.*
+import seleniumtestinglib.locators.CurrentType.Page
+import seleniumtestinglib.locators.RoleType.SpinButton
+import seleniumtestinglib.locators.TL.By.placeholderText
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.TL.By.text
+import seleniumtestinglib.locators.Value
 import seleniumtestinglib.queries.LocatorType.AltText
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
-import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE
+import java.util.regex.Pattern.compile
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -34,16 +39,16 @@ class NotFoundTest {
 
     private fun `findElement error cases`() = setOf(
         of(
-            ByText(Pattern.compile("a", CASE_INSENSITIVE)),
-            "ByText(text=/a/i, selector=null, exact=null, ignore=null, normalizer=null)"
+            text(compile("a", CASE_INSENSITIVE)),
+            "ByText(/a/i)"
         ),
         of(
-            ByPlaceholderText("el => true".asJsFunction()),
-            "ByPlaceholderText(text=el => true, exact=null, normalizer=null)"
+            placeholderText("el => true".asJsFunction()),
+            "ByPlaceholderText(el => true)"
         ),
         of(
-            ByRole(Role.SpinButton, current = CurrentType.Page, value = ByRole.Value(min = 1)),
-            "ByRole(role=SpinButton, name=null, description=null, hidden=null, normalizer=null, selected=null, busy=null, checked=null, pressed=null, suggest=null, current=page, expanded=null, level=null, value=Value(min=1, max=null, now=null, text=null), queryFallbacks=null)"
+            role(SpinButton, current = Page, value = Value(min = 1)),
+            "ByRole(spinbutton, value: {min=1}, current: page)"
         ),
     )
 

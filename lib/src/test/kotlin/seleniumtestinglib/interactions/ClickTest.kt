@@ -2,7 +2,7 @@ package seleniumtestinglib.interactions
 
 import seleniumtestinglib.driver
 import seleniumtestinglib.isChecked
-import seleniumtestinglib.locators.ByLabelText
+import seleniumtestinglib.locators.TL.By.labelText
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -17,7 +17,7 @@ class ClickTest {
                         <input id="checkbox" type="checkbox" />
                       </div> """
         )
-        val checkbox = driver.findElement(ByLabelText("Check"))
+        val checkbox = driver.findElement(labelText("Check"))
 
         driver.user.click(checkbox)
 
@@ -32,7 +32,7 @@ class ClickTest {
                         <input id="checkbox" type="checkbox" />
                       </div> """
         )
-        val checkbox = driver.findElement(ByLabelText("Check"))
+        val checkbox = driver.findElement(labelText("Check"))
 
         driver.user.pointer(
             mapOf("target" to checkbox),

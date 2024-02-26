@@ -1,8 +1,10 @@
 package seleniumtestinglib.locators
 
-import org.openqa.selenium.By
+import org.openqa.selenium.By.tagName
 import org.openqa.selenium.support.ui.Select
 import seleniumtestinglib.driver
+import seleniumtestinglib.locators.TL.By.displayValue
+import seleniumtestinglib.locators.TL.By.placeholderText
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -15,9 +17,9 @@ class ByDisplayValueTest {
     @Test
     fun input() {
         driver.render("<input placeholder='username' />")
-        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
+        driver.findElement(placeholderText("username")).sendKeys("selenium")
 
-        val result = driver.findElement(ByDisplayValue("selenium"))
+        val result = driver.findElement(displayValue("selenium"))
 
         assertEquals("input", result.tagName)
     }
@@ -25,19 +27,9 @@ class ByDisplayValueTest {
     @Test
     fun `not exact`() {
         driver.render("<input placeholder='username' />")
-        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
+        driver.findElement(placeholderText("username")).sendKeys("selenium")
 
-        val result = driver.findElement(ByDisplayValue("SELEN", exact = false))
-
-        assertEquals("input", result.tagName)
-    }
-
-    @Test
-    fun `not exact 2`() {
-        driver.render("<input placeholder='username' />")
-        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
-
-        val result = driver.findElement(ByDisplayValue("SELEN").inexact())
+        val result = driver.findElement(displayValue("SELEN", exact = false))
 
         assertEquals("input", result.tagName)
     }
@@ -45,9 +37,9 @@ class ByDisplayValueTest {
     @Test
     fun regex() {
         driver.render("<input placeholder='username' />")
-        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
+        driver.findElement(placeholderText("username")).sendKeys("selenium")
 
-        val result = driver.findElement(ByDisplayValue(Pattern.compile("selen", CASE_INSENSITIVE)))
+        val result = driver.findElement(displayValue(Pattern.compile("selenium", CASE_INSENSITIVE)))
 
         assertEquals("input", result.tagName)
     }
@@ -55,9 +47,9 @@ class ByDisplayValueTest {
     @Test
     fun function() {
         driver.render("<input placeholder='username' />")
-        driver.findElement(ByPlaceholderText("username")).sendKeys("selenium")
+        driver.findElement(placeholderText("username")).sendKeys("selenium")
 
-        val result = driver.findElement(ByDisplayValue("c => c.startsWith('selen')".asJsFunction()))
+        val result = driver.findElement(displayValue("c => c.startsWith('selen')".asJsFunction()))
 
         assertEquals("input", result.tagName)
     }
@@ -65,9 +57,9 @@ class ByDisplayValueTest {
     @Test
     fun textarea() {
         driver.render("<textarea id='x'></textarea>")
-        driver.findElement(By.tagName("textarea")).sendKeys("selenium")
+        driver.findElement(tagName("textarea")).sendKeys("selenium")
 
-        val result = driver.findElement(ByDisplayValue("selenium"))
+        val result = driver.findElement(displayValue("selenium"))
 
         assertEquals("textarea", result.tagName)
     }
@@ -84,9 +76,9 @@ class ByDisplayValueTest {
             </select> 
         """
         )
-        driver.findElement(By.tagName("select")).let(::Select).selectByVisibleText("Alaska")
+        driver.findElement(tagName("select")).let(::Select).selectByVisibleText("Alaska")
 
-        val result = driver.findElement(ByDisplayValue("Alaska"))
+        val result = driver.findElement(displayValue("Alaska"))
 
         assertEquals("select", result.tagName)
     }
@@ -103,10 +95,10 @@ class ByDisplayValueTest {
             </select> 
         """
         )
-        driver.findElement(By.tagName("select")).let(::Select).selectByVisibleText("Alabama")
-        driver.findElement(By.tagName("select")).let(::Select).selectByVisibleText("Arizona")
+        driver.findElement(tagName("select")).let(::Select).selectByVisibleText("Alabama")
+        driver.findElement(tagName("select")).let(::Select).selectByVisibleText("Arizona")
 
-        val result = driver.findElement(ByDisplayValue("Arizona"))
+        val result = driver.findElement(displayValue("Arizona"))
 
         assertEquals("select", result.tagName)
     }

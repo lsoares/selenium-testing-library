@@ -4,8 +4,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.TextBox
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.TextBox
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.assertEquals
@@ -20,7 +20,7 @@ class KeyboardTest {
 
         driver.user.keyboard(keyboardInput)
 
-        assertEquals(writtenText, driver.findElement(ByRole(TextBox)).value)
+        assertEquals(writtenText, driver.findElement(role(TextBox)).value)
     }
 
     private fun `test cases`() = setOf(

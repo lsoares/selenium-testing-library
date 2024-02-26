@@ -4,7 +4,8 @@
 
 **_[Testing Library](http://testing-library.com) selectors available as Selenium locators for Kotlin/Java._**
 
-Why? When I use Selenium, I want to be independent of ids, classes, and similar.
+## Why?
+When I use Selenium, I want to be independent of ids, classes, and similar.
 I'm a fan of the Testing Library because it encourages "testing as a user":
 
 > The more your tests resemble the way your software is used,
@@ -20,24 +21,23 @@ implementation("com.luissoares:selenium-testing-library:3.7.8")
 
 ---
 These are just a few examples. Check [the tests](/lib/src/test/kotlin/seleniumtestinglib)
-that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb)
-all the usages.
+that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb) all the usages.
 
 ## Core API
 
 The [core API](https://testing-library.com/docs) contains the selectors which are mapped into Selenium locators:
 
 ```kotlin
-driver.findElements(ByAltText("first name"))
-driver.findElement(ByDisplayValue("c => c.startsWith('selen')".asJsFunction()))
-driver.findElements(ByLabelText("active"))
-driver.findElements(ByPlaceholderText("first name", exact = false))
-driver.findElements(ByRole(Heading, name = "c => c.startsWith('something')".asJsFunction()))
-driver.findElements(ByRole(Button, name = Regex("confirm", IGNORE_CASE)))
-driver.findElements(ByTestId("test-id"))
-driver.findElements(ByText("present", exact = false, selector = "span"))
-driver.findElement(ByTitle("title 1"))
-driver.findElement(ByTitle(Regex("FOO", IGNORE_CASE)))
+driver.findElements(altText("first name"))
+driver.findElement(displayValue("c => c.startsWith('selen')".asJsFunction()))
+driver.findElements(labelText("active"))
+driver.findElements(placeholderText("first name", exact = false))
+driver.findElements(role(Heading, nameAsFunction = "c => c.startsWith('something')".asJsFunction()))
+driver.findElements(role(Button, nameAsRegex = Pattern.compile("confirm")))
+driver.findElements(testId("test-id"))
+driver.findElements(text("present", exact = false, selector = "span"))
+driver.findElement(title("title 1"))
+driver.findElement(title(Pattern.compile("FOO")))
 
 // an alternative API that does not use Selenium locators:
 driver.queryBy(AltText, "alt 1", mapOf("exact" to false))

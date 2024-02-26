@@ -1,6 +1,7 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
+import seleniumtestinglib.locators.TL.By.title
 import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -14,7 +15,7 @@ class ByTitleTest {
     fun `by title`() {
         driver.render("<div title='foobar'>Hello World!</div>")
 
-        val result = driver.findElement(ByTitle("foobar"))
+        val result = driver.findElement(title("foobar"))
 
         assertEquals("Hello World!", result.text)
     }
@@ -28,7 +29,7 @@ class ByTitleTest {
             </svg>"""
         )
 
-        val result = driver.findElement(ByTitle("foobar"))
+        val result = driver.findElement(title("foobar"))
 
         assertEquals("foobar", result.text)
     }
@@ -37,16 +38,7 @@ class ByTitleTest {
     fun `not exact`() {
         driver.render("<div title='foobar'>Hello World!</div>")
 
-        val result = driver.findElement(ByTitle("FOO", exact = false))
-
-        assertEquals("Hello World!", result.text)
-    }
-
-    @Test
-    fun `not exact 2`() {
-        driver.render("<div title='foobar'>Hello World!</div>")
-
-        val result = driver.findElement(ByTitle("FOO").inexact())
+        val result = driver.findElement(title("FOO", exact = false))
 
         assertEquals("Hello World!", result.text)
     }
@@ -55,7 +47,7 @@ class ByTitleTest {
     fun regex() {
         driver.render("<div title='foobar'>Hello World!</div>")
 
-        val result = driver.findElement(ByTitle(Pattern.compile("FOO", CASE_INSENSITIVE)))
+        val result = driver.findElement(title(Pattern.compile("FOO", CASE_INSENSITIVE)))
 
         assertEquals("Hello World!", result.text)
     }
@@ -64,7 +56,7 @@ class ByTitleTest {
     fun function() {
         driver.render("<div title='foobar'>Hello World!</div>")
 
-        val result = driver.findElement(ByTitle("c => c.startsWith('foo')".asJsFunction()))
+        val result = driver.findElement(title("c => c.startsWith('foo')".asJsFunction()))
 
         assertEquals("Hello World!", result.text)
     }

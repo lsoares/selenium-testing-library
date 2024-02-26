@@ -2,8 +2,8 @@ package seleniumtestinglib.interactions
 
 import org.openqa.selenium.By
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.TextBox
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.TextBox
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,7 +23,7 @@ class HoverTest {
             </script>
         """
         )
-        val input = driver.findElement(ByRole(TextBox))
+        val input = driver.findElement(role(TextBox))
 
         driver.user.hover(input)
 
@@ -43,7 +43,7 @@ class HoverTest {
             </script>
         """
         )
-        val input = driver.findElement(ByRole(TextBox))
+        val input = driver.findElement(role(TextBox))
 
         driver.user.pointer(mapOf("target" to input))
 

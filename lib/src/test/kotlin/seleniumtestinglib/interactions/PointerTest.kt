@@ -2,9 +2,9 @@ package seleniumtestinglib.interactions
 
 import org.openqa.selenium.By
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.Banner
-import seleniumtestinglib.locators.Role.ContentInfo
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.Banner
+import seleniumtestinglib.locators.RoleType.ContentInfo
 import seleniumtestinglib.render
 import seleniumtestinglib.selection
 import kotlin.test.Test
@@ -97,8 +97,8 @@ class PointerTest {
         )
 
         driver.user.pointer(
-            mapOf("keys" to "[TouchA>]", "target" to driver.findElement(ByRole(Banner))),
-            mapOf("pointerName" to "TouchA", "target" to driver.findElement(ByRole(ContentInfo))),
+            mapOf("keys" to "[TouchA>]", "target" to driver.findElement(role(Banner))),
+            mapOf("pointerName" to "TouchA", "target" to driver.findElement(role(ContentInfo))),
             mapOf("keys" to "[/TouchA]"),
         )
 

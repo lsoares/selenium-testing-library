@@ -2,8 +2,8 @@ package seleniumtestinglib.interactions
 
 import org.openqa.selenium.By
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.TextBox
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.TextBox
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.Test
@@ -14,7 +14,7 @@ class TypeTest {
     @Test
     fun type() {
         driver.render("<textarea></textarea>")
-        val textArea = driver.findElement(ByRole(TextBox))
+        val textArea = driver.findElement(role(TextBox))
 
         driver.user.type(textArea, "Hello,{enter}World!")
 
@@ -36,7 +36,7 @@ class TypeTest {
         )
 
         driver.user.type(
-            element = driver.findElement(ByRole(TextBox)),
+            element = driver.findElement(role(TextBox)),
             text = "foo",
             skipAutoClose = true,
             skipClick = true,

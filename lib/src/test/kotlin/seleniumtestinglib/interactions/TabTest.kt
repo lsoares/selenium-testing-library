@@ -2,8 +2,8 @@ package seleniumtestinglib.interactions
 
 import seleniumtestinglib.driver
 import seleniumtestinglib.isFocused
-import seleniumtestinglib.locators.ByRole
-import seleniumtestinglib.locators.Role.Radio
+import seleniumtestinglib.locators.TL.By.role
+import seleniumtestinglib.locators.RoleType.Radio
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -25,7 +25,7 @@ class TabTest {
 
         driver.user.tab()
 
-        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
+        assertTrue(driver.findElement(role(Radio)).isFocused)
     }
 
     @Test
@@ -45,7 +45,7 @@ class TabTest {
 
         driver.user.tab(shift = true)
 
-        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
+        assertTrue(driver.findElement(role(Radio)).isFocused)
     }
 
     @Test
@@ -63,7 +63,7 @@ class TabTest {
             .tab()
             .keyboard("{Tab}")
 
-        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
+        assertTrue(driver.findElement(role(Radio)).isFocused)
     }
 
     @Test
@@ -81,7 +81,7 @@ class TabTest {
 
         driver.user.keyboard("[/ShiftLeft][/ShiftRight]{Tab}")
 
-        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
+        assertTrue(driver.findElement(role(Radio)).isFocused)
     }
 
     @Test
@@ -101,6 +101,6 @@ class TabTest {
 
         driver.user.keyboard("{Shift>}{Tab}{/Shift}")
 
-        assertTrue(driver.findElement(ByRole(Radio)).isFocused)
+        assertTrue(driver.findElement(role(Radio)).isFocused)
     }
 }
