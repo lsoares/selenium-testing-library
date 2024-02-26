@@ -59,9 +59,9 @@ internal fun Pattern.asJsExpression(): TextMatch.JsExpression {
     val flags: Int = flags()
     val jsFlags = buildString {
         if (flags and CASE_INSENSITIVE != 0) append('i')
-        if (flags and MULTILINE != 0) append('m')
+        if (flags and RegexOption.MULTILINE.value != 0) append('m')
         if (flags and DOTALL != 0) append('s')
-        if (flags and COMMENTS != 0) append('x')
+        if (flags and RegexOption.COMMENTS.value != 0) append('x')
         if (flags and UNICODE_CASE != 0) append('u')
     }
     return TextMatch.JsExpression(("/" + pattern()).toString() + "/" + jsFlags.toString())
