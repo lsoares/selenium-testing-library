@@ -30,6 +30,7 @@ jobs:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./gradlew clean 
+          ./gradlew test
           ./gradlew publish 
           ./gradlew jreleaserFullRelease
 

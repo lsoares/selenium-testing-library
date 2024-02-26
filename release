@@ -8,8 +8,8 @@ sed -i '' "s/com.luissoares:selenium-testing-library:[^\"]*/com.luissoares:selen
 
 git add lib/build.gradle.kts README.md || true
 git commit -m "Update version to $VERSION" || true
-
 git push
+
 git tag -l | xargs git tag -d
 git push --delete origin "v$VERSION" || true
 git tag "v$VERSION" -m "Tag release for version $VERSION"
