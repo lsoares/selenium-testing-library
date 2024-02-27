@@ -54,7 +54,7 @@ driver.user.selectOptions(letterSelector, driver.findElement(ByRole(ListBox, nam
 [fireEvent](https://testing-library.com/docs/dom-testing-library/api-events) is also available:
 
 ```kotlin
-input.fireEvent(Change, mapOf("target" to mapOf("value" to "2020-05-24")))
+input.fireEvent(Change, mapOf(Target to mapOf("value" to "2020-05-24")))
 ```
 
 ## jest-dom
