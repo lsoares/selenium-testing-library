@@ -2,10 +2,10 @@ package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
+import seleniumtestinglib.expect
 import seleniumtestinglib.isChecked
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -24,7 +24,7 @@ class CheckedTest {
     )
     fun checked(html: String) {
         driver.render(html)
-        val checkbox = driver.getBy(TestId, "x")
+        val checkbox = driver.findElement(testId("x"))
 
         assertTrue(checkbox.isChecked)
         expect(checkbox).toBeChecked()
@@ -42,7 +42,7 @@ class CheckedTest {
     )
     fun `not checked`(html: String) {
         driver.render(html)
-        val checkbox = driver.getBy(TestId, "x")
+        val checkbox = driver.findElement(testId("x"))
 
         assertFalse(checkbox.isChecked)
         expect(checkbox).not.toBeChecked()

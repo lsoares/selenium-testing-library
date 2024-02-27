@@ -4,10 +4,11 @@ import com.google.common.io.Files
 import org.junit.jupiter.api.Disabled
 import org.openqa.selenium.By
 import org.openqa.selenium.OutputType
-import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.CheckBox
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.PointerOption.Keys
+import seleniumtestinglib.PointerOption.Target
+import seleniumtestinglib.RoleType.CheckBox
+import seleniumtestinglib.TL.By.role
 import java.awt.Desktop
 import java.io.File
 import kotlin.test.Test
@@ -36,8 +37,8 @@ class GeneralTest {
             .keyboard("{Enter}")
             .pointer(
                 mapOf(
-                    "keys" to "[MouseLeft]",
-                    "target" to driver.findElement(By.tagName("select")),
+                    Keys to "[MouseLeft]",
+                    Target to driver.findElement(By.tagName("select")),
                 )
             )
         val file = File.createTempFile("test", ".png")

@@ -2,9 +2,9 @@ package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -25,10 +25,10 @@ class AccessibleNameTest {
     fun `accessible name`(html: String) {
         driver.render(html)
 
-        assertEquals("accessible name", driver.getBy(TestId, "x").accessibleName)
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleName()
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleName("accessible name")
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName("abc")
+        assertEquals("accessible name", driver.findElement(testId( "x")).accessibleName)
+        expect(driver.findElement(testId( "x"))).toHaveAccessibleName()
+        expect(driver.findElement(testId( "x"))).toHaveAccessibleName("accessible name")
+        expect(driver.findElement(testId( "x"))).not.toHaveAccessibleName("abc")
     }
 
     @ParameterizedTest
@@ -42,9 +42,9 @@ class AccessibleNameTest {
     fun `not accessible name`(html: String) {
         driver.render(html)
 
-        assertEquals("", driver.getBy(TestId, "x").accessibleName)
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName()
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName("abc")
+        assertEquals("", driver.findElement(testId( "x")).accessibleName)
+        expect(driver.findElement(testId( "x"))).not.toHaveAccessibleName()
+        expect(driver.findElement(testId( "x"))).not.toHaveAccessibleName("abc")
     }
 
     @Test
@@ -54,18 +54,18 @@ class AccessibleNameTest {
 
         )
 
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleName(Regex("accessible", IGNORE_CASE))
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName(Regex("nope", IGNORE_CASE))
+        expect(driver.findElement(testId( "x"))).toHaveAccessibleName(Regex("accessible", IGNORE_CASE))
+        expect(driver.findElement(testId( "x"))).not.toHaveAccessibleName(Regex("nope", IGNORE_CASE))
     }
 
     @Test
     fun function() {
         driver.render("""<img data-testid="x" src="" alt="accessible name" />""")
 
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleName {
+        expect(driver.findElement(testId( "x"))).toHaveAccessibleName {
             it.endsWith("name")
         }
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleName {
+        expect(driver.findElement(testId( "x"))).not.toHaveAccessibleName {
             it.endsWith("NAME")
         }
     }

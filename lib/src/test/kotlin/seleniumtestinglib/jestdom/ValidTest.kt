@@ -4,6 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.By.id
 import seleniumtestinglib.driver
+import seleniumtestinglib.expect
 import seleniumtestinglib.isValid
 import seleniumtestinglib.render
 import kotlin.test.assertFalse

@@ -4,8 +4,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.placeholderText
-import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.TL.By.placeholderText
+import seleniumtestinglib.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE

@@ -5,12 +5,10 @@ import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.WebElement
-import seleniumtestinglib.driver
-import seleniumtestinglib.locators.RoleType.*
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
-import seleniumtestinglib.queries.TextMatch.JsFunction
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.RoleType
+import seleniumtestinglib.RoleType.*
+import seleniumtestinglib.TL.By.role
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test

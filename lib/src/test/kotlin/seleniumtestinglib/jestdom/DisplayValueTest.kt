@@ -3,11 +3,12 @@ package seleniumtestinglib.jestdom
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.MethodSource
+import seleniumtestinglib.RoleType.ListBox
+import seleniumtestinglib.TL.By.labelText
+import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.displayValue
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.LocatorType.LabelText
-import seleniumtestinglib.queries.LocatorType.Role
-import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import java.util.stream.Stream
 import kotlin.test.Test
@@ -20,7 +21,7 @@ class DisplayValueTest {
     fun `display value`(html: String, expectedDisplayValue: String, expectedDisplayValueByRegex: Regex) {
         driver.render(html)
 
-        val element = driver.getBy(LabelText, "example")
+        val element = driver.findElement(labelText("example"))
         assertEquals(expectedDisplayValue, element.displayValue)
         expect(element).toHaveDisplayValue(expectedDisplayValue)
         expect(element).toHaveDisplayValue(expectedDisplayValueByRegex)
@@ -63,7 +64,7 @@ class DisplayValueTest {
                      </select>"""
         )
 
-        val element = driver.getBy(Role, "listbox")
+        val element = driver.findElement(role(ListBox))
         expect(element).toHaveDisplayValue(listOf("Banana", "Avocado"))
     }
 }

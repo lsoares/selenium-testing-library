@@ -4,8 +4,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
+import seleniumtestinglib.TL
+import seleniumtestinglib.asJsFunction
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import kotlin.test.Test

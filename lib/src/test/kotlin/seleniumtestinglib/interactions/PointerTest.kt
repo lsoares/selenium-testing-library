@@ -1,12 +1,12 @@
 package seleniumtestinglib.interactions
 
 import org.openqa.selenium.By
-import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.Banner
-import seleniumtestinglib.locators.RoleType.ContentInfo
-import seleniumtestinglib.render
-import seleniumtestinglib.selection
+import seleniumtestinglib.*
+import seleniumtestinglib.RoleType.Banner
+import seleniumtestinglib.RoleType.ContentInfo
+import seleniumtestinglib.TL.By.role
+import seleniumtestinglib.PointerOption.*
+import seleniumtestinglib.PointerOption.Target
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -70,8 +70,8 @@ class PointerTest {
         driver.render("<div><span>foo</span><span>bar</span></div>")
 
         driver.user.pointer(
-            mapOf("target" to driver.findElement(By.tagName("div")), "offset" to 2, "keys" to "[MouseLeft>]"),
-            mapOf("offset" to 5)
+            mapOf(Target to driver.findElement(By.tagName("div")), Offset to 2, Keys to "[MouseLeft>]"),
+            mapOf(Offset to 5)
         )
 
         assertEquals("oba", driver.selection)
@@ -97,9 +97,9 @@ class PointerTest {
         )
 
         driver.user.pointer(
-            mapOf("keys" to "[TouchA>]", "target" to driver.findElement(role(Banner))),
-            mapOf("pointerName" to "TouchA", "target" to driver.findElement(role(ContentInfo))),
-            mapOf("keys" to "[/TouchA]"),
+            mapOf(Keys to "[TouchA>]", Target to driver.findElement(role(Banner))),
+            mapOf(PointerName to "TouchA", Target to driver.findElement(role(ContentInfo))),
+            mapOf(Keys to "[/TouchA]"),
         )
 
         assertEquals(

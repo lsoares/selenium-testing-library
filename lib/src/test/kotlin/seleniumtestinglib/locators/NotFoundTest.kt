@@ -1,41 +1,27 @@
-package seleniumtestinglib.queries
+package seleniumtestinglib.locators
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptException
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.CurrentType.Page
-import seleniumtestinglib.locators.RoleType.SpinButton
-import seleniumtestinglib.locators.TL.By.placeholderText
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.TL.By.text
-import seleniumtestinglib.locators.Value
-import seleniumtestinglib.queries.LocatorType.AltText
-import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.CurrentType.Page
+import seleniumtestinglib.RoleType.SpinButton
+import seleniumtestinglib.TL.By.altText
+import seleniumtestinglib.TL.By.placeholderText
+import seleniumtestinglib.TL.By.role
+import seleniumtestinglib.TL.By.text
+import seleniumtestinglib.Value
+import seleniumtestinglib.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern.CASE_INSENSITIVE
 import java.util.regex.Pattern.compile
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class NotFoundTest {
-
-    @Test
-    fun `get but none found`() {
-        driver.render("<div></div>")
-
-        val result = kotlin.runCatching {
-            driver.getBy(AltText, "will not work")
-        }
-
-        val ex = result.exceptionOrNull() as JavascriptException
-        assertTrue(ex.message?.contains("Unable to find an element with the alt text: will not work")!!, ex.message)
-    }
 
     private fun `findElement error cases`() = setOf(
         of(
@@ -66,27 +52,6 @@ class NotFoundTest {
     }
 
     @Test
-    fun `get all but none found`() {
-        driver.render("<div></div>")
-
-        val result = runCatching {
-            driver.getAllBy(AltText, "will not work")
-        }
-
-        val ex = result.exceptionOrNull() as JavascriptException
-        assertTrue(ex.message!!.contains("Unable to find an element with the alt text: will not work"), ex.message)
-    }
-
-    @Test
-    fun `query returns none`() {
-        driver.render("<div></div>")
-
-        val result = driver.queryBy(AltText, "will not work")
-
-        assertNull(result?.tagName)
-    }
-
-    @Test
     fun `query all but none found`() {
         driver.render(
             """
@@ -95,7 +60,7 @@ class NotFoundTest {
         """
         )
 
-        val result = driver.queryAllBy(AltText, "incredibles", mapOf("exact" to true))
+        val result = driver.findElements(altText("incredibles", exact = true))
 
         assertEquals(emptyList(), result)
     }

@@ -1,11 +1,7 @@
 package seleniumtestinglib.jestdom
 
-import seleniumtestinglib.driver
-import seleniumtestinglib.interactions.tab
-import seleniumtestinglib.interactions.user
-import seleniumtestinglib.isFocused
-import seleniumtestinglib.locators.TL.By.testId
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.TL.By.testId
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

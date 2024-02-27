@@ -1,9 +1,10 @@
 package seleniumtestinglib.jestdom
 
 import org.openqa.selenium.By
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
+import seleniumtestinglib.expect
 import seleniumtestinglib.formValues
-import seleniumtestinglib.locators.TL.By.testId
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals

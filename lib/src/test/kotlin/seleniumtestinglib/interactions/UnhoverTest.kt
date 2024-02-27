@@ -2,10 +2,10 @@ package seleniumtestinglib.interactions
 
 import org.openqa.selenium.By.id
 import org.openqa.selenium.By.tagName
-import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.TextBox
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.PointerOption.Target
+import seleniumtestinglib.RoleType.TextBox
+import seleniumtestinglib.TL.By.role
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -48,7 +48,7 @@ class UnhoverTest {
         val input = driver.findElement(role(TextBox))
         driver.user.hover(input)
 
-        driver.user.pointer(mapOf("target" to driver.findElement(tagName("body"))))
+        driver.user.pointer(mapOf(Target to driver.findElement(tagName("body"))))
 
         assertEquals("unhovered!", driver.findElement(id("result")).text)
     }

@@ -3,10 +3,10 @@ package seleniumtestinglib.jestdom
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.By
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.accessibleDescription
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -27,10 +27,10 @@ class AccessibleDescriptionTest {
     fun `accessible description`(html: String) {
         driver.render(html)
 
-        assertEquals("accessible description", driver.getBy(TestId, "x").accessibleDescription)
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription()
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription("accessible description")
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription("not this one")
+        assertEquals("accessible description", driver.findElement(testId("x")).accessibleDescription)
+        expect(driver.findElement(testId("x"))).toHaveAccessibleDescription()
+        expect(driver.findElement(testId("x"))).toHaveAccessibleDescription("accessible description")
+        expect(driver.findElement(testId("x"))).not.toHaveAccessibleDescription("not this one")
     }
 
     @Test
@@ -40,18 +40,18 @@ class AccessibleDescriptionTest {
 
         )
 
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription(Regex("accessible", IGNORE_CASE))
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription(Regex("nope", IGNORE_CASE))
+        expect(driver.findElement(testId("x"))).toHaveAccessibleDescription(Regex("accessible", IGNORE_CASE))
+        expect(driver.findElement(testId("x"))).not.toHaveAccessibleDescription(Regex("nope", IGNORE_CASE))
     }
 
     @Test
     fun function() {
         driver.render("""<span data-testid="x" aria-description="Accessible description"></span>""")
 
-        expect(driver.getBy(TestId, "x")).toHaveAccessibleDescription {
+        expect(driver.findElement(testId("x"))).toHaveAccessibleDescription {
             it.startsWith("access", ignoreCase = true)
         }
-        expect(driver.getBy(TestId, "x")).not.toHaveAccessibleDescription {
+        expect(driver.findElement(testId("x"))).not.toHaveAccessibleDescription {
             it.startsWith("access", ignoreCase = false)
         }
     }

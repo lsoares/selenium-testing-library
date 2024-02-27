@@ -3,11 +3,11 @@ package seleniumtestinglib.interactions
 import org.junit.jupiter.api.Disabled
 import org.openqa.selenium.By.id
 import org.openqa.selenium.By.tagName
-import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.TextBox
-import seleniumtestinglib.render
-import seleniumtestinglib.value
+import seleniumtestinglib.*
+import seleniumtestinglib.PointerOption.*
+import seleniumtestinglib.PointerOption.Target
+import seleniumtestinglib.RoleType.TextBox
+import seleniumtestinglib.TL.By.role
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -32,8 +32,8 @@ class ClipboardTest {
             .render("""<input id="a" />""")
             .type(driver.findElement(id("a")), "text")
             .pointer(
-                mapOf("target" to driver.findElement(role(TextBox)), "offset" to 0, "keys" to "[MouseLeft>]"),
-                mapOf("offset" to 5)
+                mapOf(Target to driver.findElement(role(TextBox)), Offset to 0, Keys to "[MouseLeft>]"),
+                mapOf(Offset to 5)
             )
         assertFalse(driver.findElement(id("a")).value?.toString()?.isEmpty() ?: true)
 
@@ -49,9 +49,9 @@ class ClipboardTest {
             """<h1>heading: title</h1>
                      <input />"""
         )
-        driver.user("writeToClipboard" to true).pointer(
-            mapOf("target" to driver.findElement(tagName("h1")), "offset" to 7, "keys" to "[MouseLeft>]"),
-            mapOf("offset" to 14)
+        driver.user(UserOption.WriteToClipboard to true).pointer(
+            mapOf(Target to driver.findElement(tagName("h1")), Offset to 7, Keys to "[MouseLeft>]"),
+            mapOf(Offset to 14)
         )
         driver.user.copy()
         driver.user.click(driver.findElement(role(TextBox)))

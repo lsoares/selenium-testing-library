@@ -1,10 +1,10 @@
 package seleniumtestinglib.interactions
 
 import org.openqa.selenium.By
-import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.TextBox
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.PointerOption.Target
+import seleniumtestinglib.RoleType.TextBox
+import seleniumtestinglib.TL.By.role
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -45,7 +45,7 @@ class HoverTest {
         )
         val input = driver.findElement(role(TextBox))
 
-        driver.user.pointer(mapOf("target" to input))
+        driver.user.pointer(mapOf(Target to input))
 
         assertEquals("hovered!", driver.findElement(By.id("result")).text)
     }

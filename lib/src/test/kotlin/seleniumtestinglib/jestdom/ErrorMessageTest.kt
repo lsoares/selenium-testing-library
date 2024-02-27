@@ -1,8 +1,9 @@
 package seleniumtestinglib.jestdom
 
+import seleniumtestinglib.TL.By.labelText
 import seleniumtestinglib.driver
 import seleniumtestinglib.errorMessage
-import seleniumtestinglib.locators.TL.By.labelText
+import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -2,10 +2,10 @@ package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
+import seleniumtestinglib.expect
 import seleniumtestinglib.isVisible
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -24,7 +24,7 @@ class VisibleTest {
     )
     fun visible(html: String) {
         driver.render(html)
-        val element = driver.getBy(TestId, "x")
+        val element = driver.findElement(testId("x"))
 
         assertTrue(element.isVisible)
         expect(element).toBeVisible()
@@ -50,7 +50,7 @@ class VisibleTest {
     )
     fun `not visible`(html: String) {
         driver.render(html)
-        val element = driver.getBy(TestId, "x")
+        val element = driver.findElement(testId("x"))
 
         assertFalse(element.isVisible)
         expect(element).not.toBeVisible()

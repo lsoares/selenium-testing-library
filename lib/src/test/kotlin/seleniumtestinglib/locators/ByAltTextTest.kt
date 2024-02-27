@@ -3,9 +3,9 @@ package seleniumtestinglib.locators
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
+import seleniumtestinglib.JsFunction
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.altText
-import seleniumtestinglib.queries.TextMatch.JsFunction
+import seleniumtestinglib.TL.By.altText
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import kotlin.test.Test

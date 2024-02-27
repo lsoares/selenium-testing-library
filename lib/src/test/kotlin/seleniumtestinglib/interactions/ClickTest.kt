@@ -1,9 +1,9 @@
 package seleniumtestinglib.interactions
 
-import seleniumtestinglib.driver
-import seleniumtestinglib.isChecked
-import seleniumtestinglib.locators.TL.By.labelText
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.PointerOption.Keys
+import seleniumtestinglib.PointerOption.Target
+import seleniumtestinglib.TL.By.labelText
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -35,8 +35,8 @@ class ClickTest {
         val checkbox = driver.findElement(labelText("Check"))
 
         driver.user.pointer(
-            mapOf("target" to checkbox),
-            mapOf("keys" to "[MouseLeft]", "target" to checkbox),
+            mapOf(Target to checkbox),
+            mapOf(Keys to "[MouseLeft]", Target to checkbox),
         )
 
         assertTrue(checkbox.isChecked)

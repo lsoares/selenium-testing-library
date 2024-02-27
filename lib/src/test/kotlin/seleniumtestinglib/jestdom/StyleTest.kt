@@ -1,8 +1,8 @@
 package seleniumtestinglib.jestdom
 
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
 
@@ -17,7 +17,7 @@ class StyleTest {
                     </button>"""
         )
 
-        val button = driver.getBy(TestId, "delete-button")
+        val button = driver.findElement(testId("delete-button"))
 
         expect(button).toHaveStyle("display: none")
         expect(button).toHaveStyle(mapOf("display" to "none"))

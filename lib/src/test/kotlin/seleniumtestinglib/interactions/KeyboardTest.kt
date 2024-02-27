@@ -3,11 +3,9 @@ package seleniumtestinglib.interactions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.TextBox
-import seleniumtestinglib.render
-import seleniumtestinglib.value
+import seleniumtestinglib.*
+import seleniumtestinglib.TL.By.role
+import seleniumtestinglib.RoleType.TextBox
 import kotlin.test.assertEquals
 
 class KeyboardTest {

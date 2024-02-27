@@ -1,8 +1,8 @@
 package seleniumtestinglib
 
 import org.openqa.selenium.By
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.Article
+import seleniumtestinglib.TL.By.role
+import seleniumtestinglib.RoleType.Article
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull

@@ -1,10 +1,10 @@
 package seleniumtestinglib.interactions
 
-import seleniumtestinglib.driver
-import seleniumtestinglib.isChecked
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.CheckBox
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.PointerOption.Keys
+import seleniumtestinglib.PointerOption.Target
+import seleniumtestinglib.RoleType.CheckBox
+import seleniumtestinglib.TL.By.role
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -26,8 +26,8 @@ class TripleClickTest {
         val checkbox = driver.findElement(role(CheckBox))
 
         driver.user.pointer(
-            mapOf("target" to checkbox),
-            mapOf("keys" to "[MouseLeft]".repeat(3), "target" to checkbox),
+            mapOf(Target to checkbox),
+            mapOf(Keys to "[MouseLeft]".repeat(3), Target to checkbox),
         )
 
         assertTrue(checkbox.isChecked)

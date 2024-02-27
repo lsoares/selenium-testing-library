@@ -1,8 +1,8 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.testId
-import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.TL.By.testId
+import seleniumtestinglib.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import kotlin.test.Test

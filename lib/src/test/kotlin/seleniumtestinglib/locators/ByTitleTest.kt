@@ -1,8 +1,8 @@
 package seleniumtestinglib.locators
 
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.title
-import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.TL.By.title
+import seleniumtestinglib.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE

@@ -1,9 +1,7 @@
 package seleniumtestinglib.interactions
 
-import seleniumtestinglib.driver
-import seleniumtestinglib.files
-import seleniumtestinglib.locators.TL.By.labelText
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.TL.By.labelText
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test

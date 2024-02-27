@@ -2,10 +2,10 @@ package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
+import seleniumtestinglib.expect
 import seleniumtestinglib.isInvalid
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -24,7 +24,7 @@ class InvalidTest {
     )
     fun invalid(html: String) {
         driver.render(html)
-        val element = driver.getBy(TestId, "invalid")
+        val element = driver.findElement(testId("invalid"))
 
         assertTrue(element.isInvalid)
         expect(element).toBeInvalid()
@@ -42,7 +42,7 @@ class InvalidTest {
     )
     fun `not invalid`(html: String) {
         driver.render(html)
-        val element = driver.getBy(TestId, "not-invalid")
+        val element = driver.findElement(testId("not-invalid"))
 
         assertFalse(element.isInvalid)
         expect(element).not.toBeInvalid()

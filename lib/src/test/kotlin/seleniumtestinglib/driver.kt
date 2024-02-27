@@ -3,8 +3,6 @@ package seleniumtestinglib
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.remote.RemoteWebDriver
-import seleniumtestinglib.interactions.User
-import seleniumtestinglib.interactions.user
 
 val driver = ChromeDriver(ChromeOptions().addArguments("--headless"))
 

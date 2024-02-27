@@ -1,10 +1,8 @@
 package seleniumtestinglib.interactions
 
-import seleniumtestinglib.driver
-import seleniumtestinglib.isFocused
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType.Radio
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.TL.By.role
+import seleniumtestinglib.RoleType.Radio
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

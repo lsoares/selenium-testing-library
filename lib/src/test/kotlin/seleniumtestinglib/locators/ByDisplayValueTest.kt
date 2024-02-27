@@ -3,9 +3,9 @@ package seleniumtestinglib.locators
 import org.openqa.selenium.By.tagName
 import org.openqa.selenium.support.ui.Select
 import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.displayValue
-import seleniumtestinglib.locators.TL.By.placeholderText
-import seleniumtestinglib.queries.TextMatch.Companion.asJsFunction
+import seleniumtestinglib.TL.By.displayValue
+import seleniumtestinglib.TL.By.placeholderText
+import seleniumtestinglib.asJsFunction
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE

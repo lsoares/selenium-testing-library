@@ -1,9 +1,9 @@
 package seleniumtestinglib.jestdom
 
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.classes
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -18,7 +18,7 @@ class ClassTest {
                      </button>"""
         )
 
-        val deleteButton = driver.getBy(TestId, "delete-button")
+        val deleteButton = driver.findElement(testId("delete-button"))
         assertEquals(setOf("btn", "btn-danger", "extra"), deleteButton.classes)
         expect(deleteButton).toHaveClass()
         expect(deleteButton).toHaveClass("extra")
@@ -33,7 +33,7 @@ class ClassTest {
     fun `no classes`() {
         driver.render("""<button data-testid="no-classes">No Classes</button>""")
 
-        val noClasses = driver.getBy(TestId, "no-classes")
+        val noClasses = driver.findElement(testId("no-classes"))
         assertEquals(emptySet(), noClasses.classes)
         expect(noClasses).not.toHaveClass()
     }

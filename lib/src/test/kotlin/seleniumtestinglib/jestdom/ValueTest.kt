@@ -1,8 +1,8 @@
 package seleniumtestinglib.jestdom
 
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.Test
@@ -25,10 +25,10 @@ class ValueTest {
         """
         )
 
-        val textInput = driver.getBy(TestId, "input-text")
-        val numberInput = driver.getBy(TestId, "input-number")
-        val emptyInput = driver.getBy(TestId, "input-empty")
-        val selectInput = driver.getBy(TestId, "select-number")
+        val textInput = driver.findElement(testId("input-text"))
+        val numberInput = driver.findElement(testId("input-number"))
+        val emptyInput = driver.findElement(testId("input-empty"))
+        val selectInput = driver.findElement(testId("select-number"))
 
         assertEquals("text", textInput.value)
         expect(textInput).toHaveValue("text")

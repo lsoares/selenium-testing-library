@@ -38,12 +38,6 @@ driver.findElements(testId("test-id"))
 driver.findElements(text("present", exact = false, selector = "span"))
 driver.findElement(title("title 1"))
 driver.findElement(title(Pattern.compile("FOO")))
-
-// an alternative API that does not use Selenium locators:
-driver.queryBy(AltText, "alt 1", mapOf("exact" to false))
-driver.getBy(DisplayValue, "incredibles")
-driver.queryAllBy(LabelText, "label x")
-driver.getAllBy(Role, "listbox")
 ```
 
 ## User Interactions

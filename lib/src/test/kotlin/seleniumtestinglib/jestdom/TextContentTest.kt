@@ -1,8 +1,8 @@
 package seleniumtestinglib.jestdom
 
+import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.queries.LocatorType.TestId
-import seleniumtestinglib.queries.getBy
+import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.text.RegexOption.IGNORE_CASE
@@ -13,7 +13,7 @@ class TextContentTest {
     fun `text content`() {
         driver.render("""<span data-testid="text-content">Text Content</span>""")
 
-        val element = driver.getBy(TestId, "text-content")
+        val element = driver.findElement(testId("text-content"))
 
         expect(element).toHaveTextContent("Content")
         expect(element).toHaveTextContent(Regex("^Text Content$"))

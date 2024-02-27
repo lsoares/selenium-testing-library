@@ -1,10 +1,8 @@
 package seleniumtestinglib.interactions
 
-import seleniumtestinglib.driver
-import seleniumtestinglib.locators.TL.By.role
-import seleniumtestinglib.locators.RoleType
-import seleniumtestinglib.locators.RoleType.ListBox
-import seleniumtestinglib.render
+import seleniumtestinglib.*
+import seleniumtestinglib.TL.By.role
+import seleniumtestinglib.RoleType.ListBox
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

@@ -1,4 +1,4 @@
-package seleniumtestinglib.jestdom
+package seleniumtestinglib
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
