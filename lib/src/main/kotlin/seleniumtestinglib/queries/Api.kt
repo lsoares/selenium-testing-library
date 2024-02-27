@@ -15,24 +15,21 @@ internal inline fun <reified T> JavascriptExecutor.executeTLQuery(
     by: LocatorType,
     textMatch: TextMatch,
     options: Map<String, Any?> = emptyMap(),
-): T {
-    val escapedOptions = options
+) = buildString {
+    append("return")
+    if (queryType == QueryType.Find) append(" await")
+    append(" screen.")
+    append(queryType.name.lowercase())
+    if (all) append("All")
+    append("By")
+    append("${by.name}(${textMatch.escaped}")
+    options
         .filterValues { it != null }
         .takeIf(Map<String, Any?>::isNotEmpty)
         ?.escaped
-
-    return listOfNotNull(
-        "return",
-        " await".takeIf { queryType == QueryType.Find },
-        " screen.",
-        queryType.name.lowercase(),
-        "All".takeIf { all },
-        "By",
-        by.name,
-        """(${textMatch.escaped}${escapedOptions?.let { ", $it" } ?: ""})"""
-    ).joinToString("")
-        .let(::executeTLScript) as T
-}
+        ?.let { append(", $it") }
+    append(")")
+}.let(::executeTLScript) as T
 
 enum class LocatorType {
     AltText, DisplayValue, LabelText, PlaceholderText, Role, TestId, Text, Title
