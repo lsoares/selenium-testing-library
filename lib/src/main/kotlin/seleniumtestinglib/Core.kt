@@ -19,19 +19,18 @@ abstract class TL(
 
     @Suppress("unchecked_cast")
     override fun findElements(context: SearchContext): List<WebElement> {
-        context.jsExecutor.ensureScript("testing-library.js", "screen?.queryAllByTestId")
-        return context.jsExecutor.executeScript(
-            buildString {
-                append("return screen.queryAllBy$by(")
-                append(textMatch.escaped)
-                options
-                    .filterValues { it != null }
-                    .takeIf(Map<String, Any?>::isNotEmpty)
-                    ?.escaped
-                    ?.let { append(", $it") }
-                append(")")
-            }
-        ) as List<WebElement>
+        context.jsExecutor.ensureScript("testing-library.js", "window.screen?.queryAllByTestId")
+        val script = buildString {
+            append("return window.screen.queryAllBy$by(")
+            append(textMatch.escaped)
+            options
+                .filterValues { it != null }
+                .takeIf(Map<String, Any?>::isNotEmpty)
+                ?.escaped
+                ?.let { append(", $it") }
+            append(")")
+        }
+        return context.jsExecutor.executeScript(script) as List<WebElement>
     }
 
     private val SearchContext.jsExecutor get() = (getWebDriver(this) as JavascriptExecutor)

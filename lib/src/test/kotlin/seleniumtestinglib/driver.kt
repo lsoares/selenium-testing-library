@@ -12,4 +12,4 @@ fun RemoteWebDriver.render(body: String): User {
 }
 
 fun String.asDataUrl() =
-    """data:text/html;charset=utf-8,<html><body>${this}</body></html>"""
+    """data:text/html;charset=utf-8,<html><body>$this</body></html>"""
