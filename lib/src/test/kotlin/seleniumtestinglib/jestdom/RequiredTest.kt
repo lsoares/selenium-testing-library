@@ -2,7 +2,7 @@ package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.openqa.selenium.By
+import org.openqa.selenium.By.cssSelector
 import seleniumtestinglib.driver
 import seleniumtestinglib.expect
 import seleniumtestinglib.isRequired
@@ -30,7 +30,7 @@ class RequiredTest {
     fun required(html: String) {
         driver.render(html)
 
-        val element = driver.findElement(By.cssSelector("input,select,textarea,div"))
+        val element = driver.findElement(cssSelector("input,select,textarea,div"))
         assertTrue(element.isRequired)
         expect(element).toBeRequired()
     }
@@ -47,7 +47,7 @@ class RequiredTest {
     fun `not required`(html: String) {
         driver.render(html)
 
-        val element = driver.findElement(By.cssSelector("input,div"))
+        val element = driver.findElement(cssSelector("input,div"))
         assertFalse(element.isRequired)
         expect(element).not.toBeRequired()
     }

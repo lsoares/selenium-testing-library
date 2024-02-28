@@ -22,14 +22,13 @@ abstract class TL(
         context.jsExecutor.ensureScript("testing-library.js", "screen?.queryAllByTestId")
         return context.jsExecutor.executeScript(
             buildString {
-                append("return screen.queryAllBy")
-                append("$by(${textMatch.escaped}")
-                if (options.filterValues { it != null }.isNotEmpty()) append(",")
+                append("return screen.queryAllBy$by(")
+                append(textMatch.escaped)
                 options
                     .filterValues { it != null }
                     .takeIf(Map<String, Any?>::isNotEmpty)
                     ?.escaped
-                    ?.let { append(it) }
+                    ?.let { append(", $it") }
                 append(")")
             }
         ) as List<WebElement>
