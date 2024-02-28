@@ -264,7 +264,7 @@ abstract class TL(
          * https://testing-library.com/docs/queries/byrole
          */
         fun role(
-            role: RoleType,
+            role: Role,
             name: String? = null,
             nameAsRegex: Pattern? = null,
             nameAsFunction: JsFunction? = null,
@@ -378,29 +378,26 @@ private val Any?.escaped: Any?
         else -> this
     }
 
-// TODO: allow to receive all
 class Value(
-    val min: Int? = null,
-    val max: Int? = null,
-    val now: Int? = null,
+    private val min: Int? = null,
+    private val max: Int? = null,
+    private val now: Int? = null,
+    private val text: String? = null,
+    private val textAsRegex: Pattern? = null,
+    private val textAsFunction: JsFunction? = null,
 ) {
 
+    init {
+        require(listOfNotNull(text, textAsRegex, textAsFunction).size <= 1) { "Please provide text just once." }
+    }
+
     internal fun toMap() =
-        mapOf("min" to min, "max" to max, "now" to now, "text" to text).filterValues { it != null }
-
-    private var text: TextMatch? = null
-
-    constructor(text: String) : this() {
-        this.text = text.asJsString()
-    }
-
-    constructor(text: Pattern) : this() {
-        this.text = text.asJsExpression()
-    }
-
-    constructor(text: JsFunction) : this() {
-        this.text = text.asJsExpression()
-    }
+        mapOf(
+            "min" to min,
+            "max" to max,
+            "now" to now,
+            "text" to (text ?: textAsRegex?.asJsExpression() ?: textAsFunction?.asJsExpression())
+        ).filterValues { it != null }
 }
 
 /*
@@ -421,7 +418,7 @@ enum class CurrentType {
  * https://www.w3.org/TR/wai-aria-1.2/#role_definitions
  */
 @Suppress("UNUSED")
-enum class RoleType {
+enum class Role {
     Alert, AlertDialog, Application, Article, Banner, Button, Cell, CheckBox, ColumnHeader, ComboBox, Command, Comment,
     Complementary, Composite, ContentInfo, Definition, Dialog, Directory, Document, Feed, Figure, Form, Generic, Grid,
     GridCell, Group, Heading, Img, Input, Landmark, Link, List, ListBox, ListItem, Log, Main, Mark, Marquee, Math, Menu,

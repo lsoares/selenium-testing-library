@@ -2,7 +2,7 @@ package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import seleniumtestinglib.RoleType.CheckBox
+import seleniumtestinglib.Role.CheckBox
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver

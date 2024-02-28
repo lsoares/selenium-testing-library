@@ -31,6 +31,7 @@ val RemoteWebDriver.user: User
         User(this)
     else user()
 
+@Suppress("unused")
 enum class UserOption {
     AdvanceTimers,
     ApplyAccept,

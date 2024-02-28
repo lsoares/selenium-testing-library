@@ -1,7 +1,7 @@
 package seleniumtestinglib
 
 import seleniumtestinglib.Event.Change
-import seleniumtestinglib.RoleType.TextBox
+import seleniumtestinglib.Role.TextBox
 import seleniumtestinglib.TL.By.role
 import kotlin.test.Test
 import kotlin.test.assertEquals

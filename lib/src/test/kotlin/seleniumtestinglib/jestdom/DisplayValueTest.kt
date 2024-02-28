@@ -3,7 +3,7 @@ package seleniumtestinglib.jestdom
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.MethodSource
-import seleniumtestinglib.RoleType.ListBox
+import seleniumtestinglib.Role.ListBox
 import seleniumtestinglib.TL.By.labelText
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.displayValue

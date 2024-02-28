@@ -2,8 +2,8 @@ package seleniumtestinglib.interactions
 
 import org.openqa.selenium.By
 import seleniumtestinglib.*
-import seleniumtestinglib.RoleType.Banner
-import seleniumtestinglib.RoleType.ContentInfo
+import seleniumtestinglib.Role.Banner
+import seleniumtestinglib.Role.ContentInfo
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.PointerOption.*
 import seleniumtestinglib.PointerOption.Target

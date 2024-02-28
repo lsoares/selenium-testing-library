@@ -2,8 +2,8 @@ package seleniumtestinglib.interactions
 
 import seleniumtestinglib.driver
 import seleniumtestinglib.TL.By.role
-import seleniumtestinglib.RoleType.ListBox
-import seleniumtestinglib.RoleType.Option
+import seleniumtestinglib.Role.ListBox
+import seleniumtestinglib.Role.Option
 import seleniumtestinglib.render
 import seleniumtestinglib.selectOptions
 import seleniumtestinglib.user

@@ -6,7 +6,7 @@ import org.openqa.selenium.By.tagName
 import seleniumtestinglib.*
 import seleniumtestinglib.PointerOption.*
 import seleniumtestinglib.PointerOption.Target
-import seleniumtestinglib.RoleType.TextBox
+import seleniumtestinglib.Role.TextBox
 import seleniumtestinglib.TL.By.role
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -2,7 +2,7 @@ package seleniumtestinglib
 
 import org.openqa.selenium.By
 import seleniumtestinglib.TL.By.role
-import seleniumtestinglib.RoleType.Article
+import seleniumtestinglib.Role.Article
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull

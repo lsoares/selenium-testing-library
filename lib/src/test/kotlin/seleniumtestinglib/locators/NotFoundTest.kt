@@ -7,7 +7,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
 import seleniumtestinglib.CurrentType.Page
-import seleniumtestinglib.RoleType.SpinButton
+import seleniumtestinglib.Role.SpinButton
 import seleniumtestinglib.TL.By.altText
 import seleniumtestinglib.TL.By.placeholderText
 import seleniumtestinglib.TL.By.role

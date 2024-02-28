@@ -3,7 +3,7 @@ package seleniumtestinglib.interactions
 import seleniumtestinglib.*
 import seleniumtestinglib.PointerOption.Keys
 import seleniumtestinglib.PointerOption.Target
-import seleniumtestinglib.RoleType.CheckBox
+import seleniumtestinglib.Role.CheckBox
 import seleniumtestinglib.TL.By.role
 import kotlin.test.Test
 import kotlin.test.assertFalse

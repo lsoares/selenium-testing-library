@@ -29,7 +29,7 @@ class DisabledTest {
     @Test
     fun `links cant be disabled`() {
         driver.render("""<a href="/" disabled>link</a>""")
-        val element = driver.findElement(role(RoleType.Link))
+        val element = driver.findElement(role(Role.Link))
 
         assertFalse(element.isDisabled)
         expect(element).not.toBeDisabled()

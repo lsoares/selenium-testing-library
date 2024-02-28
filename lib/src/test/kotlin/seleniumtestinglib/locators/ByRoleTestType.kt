@@ -6,8 +6,7 @@ import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.WebElement
 import seleniumtestinglib.*
-import seleniumtestinglib.RoleType
-import seleniumtestinglib.RoleType.*
+import seleniumtestinglib.Role.*
 import seleniumtestinglib.TL.By.role
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE
@@ -29,7 +28,7 @@ class ByRoleTestType {
 
     @ParameterizedTest
     @MethodSource("examples")
-    fun `by role`(role: RoleType, content: String) {
+    fun `by role`(role: Role, content: String) {
         driver.render(content)
 
         val result = driver.findElement(role(role))
@@ -51,7 +50,8 @@ class ByRoleTestType {
     fun `role with function in name parameter`() {
         driver.render("""<h1>something as a user something</h1>""")
 
-        val result = driver.findElements(role(Heading, nameAsFunction = "c => c.startsWith('something')".asJsFunction()))
+        val result =
+            driver.findElements(role(Heading, nameAsFunction = "c => c.startsWith('something')".asJsFunction()))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -321,8 +321,8 @@ class ByRoleTestType {
         of(Value(min = 0), listOf("Volume", "Pitch")),
         of(Value(max = 10), listOf("Volume", "Pitch")),
         of(Value(text = "medium"), listOf("Volume", "Pitch")),
-        of(Value(text = Pattern.compile("med")), listOf("Volume", "Pitch")),
-        of(Value(text = "t => t.startsWith('med')".asJsFunction()), listOf("Volume", "Pitch")),
+        of(Value(textAsRegex = Pattern.compile("med")), listOf("Volume", "Pitch")),
+        of(Value(textAsFunction = "t => t.startsWith('med')".asJsFunction()), listOf("Volume", "Pitch")),
     )
 
     @ParameterizedTest

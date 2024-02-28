@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import seleniumtestinglib.*
 import seleniumtestinglib.TL.By.role
-import seleniumtestinglib.RoleType.TextBox
+import seleniumtestinglib.Role.TextBox
 import kotlin.test.assertEquals
 
 class KeyboardTest {

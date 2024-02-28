@@ -2,7 +2,7 @@ package seleniumtestinglib.interactions
 
 import seleniumtestinglib.*
 import seleniumtestinglib.TL.By.role
-import seleniumtestinglib.RoleType.Radio
+import seleniumtestinglib.Role.Radio
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

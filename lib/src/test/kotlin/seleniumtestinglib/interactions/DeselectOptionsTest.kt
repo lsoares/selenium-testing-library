@@ -2,7 +2,7 @@ package seleniumtestinglib.interactions
 
 import seleniumtestinglib.*
 import seleniumtestinglib.TL.By.role
-import seleniumtestinglib.RoleType.ListBox
+import seleniumtestinglib.Role.ListBox
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -18,11 +18,11 @@ class DeselectOptionsTest {
                       <option value="3" selected>C</option>
                     </select>"""
         )
-        assertTrue(driver.findElement(role(RoleType.Option, name = "C")).isSelected)
+        assertTrue(driver.findElement(role(Role.Option, name = "C")).isSelected)
 
         driver.user.deselectOptions(driver.findElement(role(ListBox)), "3")
 
-        assertFalse(driver.findElement(role(RoleType.Option, name = "C")).isSelected)
+        assertFalse(driver.findElement(role(Role.Option, name = "C")).isSelected)
     }
 
     @Test
@@ -38,9 +38,9 @@ class DeselectOptionsTest {
 
         driver.user.deselectOptions(
             select,
-            driver.findElement(role(RoleType.Option, name = "C")),
+            driver.findElement(role(Role.Option, name = "C")),
         )
 
-        assertFalse(driver.findElement(role(RoleType.Option, name = "C")).isSelected)
+        assertFalse(driver.findElement(role(Role.Option, name = "C")).isSelected)
     }
 }

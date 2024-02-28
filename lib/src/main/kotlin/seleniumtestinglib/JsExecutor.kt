@@ -20,9 +20,10 @@ private fun JavascriptExecutor.isLoaded(isPresentFunction: String) =
 
 private val resources = ConcurrentHashMap<String, String>()
 private fun loadScript(fileName: String) =
-    resources.computeIfAbsent(fileName) {
-        {}.javaClass.getResource("/$fileName")?.readText() ?: error("$fileName not found")
-    }
+    resources.computeIfAbsent(fileName) { loadResource(fileName) }
+
+private fun loadResource(fileName: String) =
+    {}.javaClass.getResource("/$fileName")?.readText() ?: error("$fileName not found")
 
 val JavascriptExecutor.selection: String
     get() = executeScript("return window.getSelection().toString()") as String

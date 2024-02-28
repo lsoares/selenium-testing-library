@@ -1,6 +1,6 @@
 package seleniumtestinglib.jestdom
 
-import seleniumtestinglib.RoleType.TextBox
+import seleniumtestinglib.Role.TextBox
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.driver
 import seleniumtestinglib.expect

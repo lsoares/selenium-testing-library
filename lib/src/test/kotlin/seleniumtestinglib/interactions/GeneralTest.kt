@@ -7,7 +7,7 @@ import org.openqa.selenium.OutputType
 import seleniumtestinglib.*
 import seleniumtestinglib.PointerOption.Keys
 import seleniumtestinglib.PointerOption.Target
-import seleniumtestinglib.RoleType.CheckBox
+import seleniumtestinglib.Role.CheckBox
 import seleniumtestinglib.TL.By.role
 import java.awt.Desktop
 import java.io.File

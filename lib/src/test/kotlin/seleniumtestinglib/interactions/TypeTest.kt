@@ -3,7 +3,7 @@ package seleniumtestinglib.interactions
 import org.openqa.selenium.By
 import seleniumtestinglib.*
 import seleniumtestinglib.TL.By.role
-import seleniumtestinglib.RoleType.TextBox
+import seleniumtestinglib.Role.TextBox
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
