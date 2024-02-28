@@ -3,8 +3,8 @@ package seleniumtestinglib
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
-import seleniumtestinglib.Current.CurrentAsBool
-import seleniumtestinglib.Current.CurrentAsType
+import seleniumtestinglib.CurrentValue.AsBool
+import seleniumtestinglib.CurrentValue.AsType
 import seleniumtestinglib.TextMatch.Companion.asJsExpression
 import seleniumtestinglib.TextMatch.Companion.asJsString
 import java.util.regex.Pattern
@@ -17,12 +17,25 @@ abstract class TL(
     private val options: Map<String, Any?> = emptyMap()
 ) : SeleniumBy() {
 
-    override fun findElements(context: SearchContext?): List<WebElement> =
-        (getWebDriver(context) as JavascriptExecutor).executeTLQuery(
-            by = by,
-            textMatch = textMatch,
-            options = options,
-        )
+    @Suppress("unchecked_cast")
+    override fun findElements(context: SearchContext): List<WebElement> {
+        context.jsExecutor.ensureScript("testing-library.js", "screen?.queryAllByTestId")
+        return context.jsExecutor.executeScript(
+            buildString {
+                append("return screen.queryAllBy")
+                append("$by(${textMatch.escaped}")
+                if (options.filterValues { it != null }.isNotEmpty()) append(",")
+                options
+                    .filterValues { it != null }
+                    .takeIf(Map<String, Any?>::isNotEmpty)
+                    ?.escaped
+                    ?.let { append(it) }
+                append(")")
+            }
+        ) as List<WebElement>
+    }
+
+    private val SearchContext.jsExecutor get() = (getWebDriver(this) as JavascriptExecutor)
 
     override fun toString(): String {
         val entries = options.filterValues { it != null }.entries
@@ -278,7 +291,7 @@ abstract class TL(
             checked: Boolean? = null,
             pressed: Boolean? = null,
             suggest: Boolean? = null,
-            current: CurrentType? = null,
+            current: Current? = null,
             currentAsBoolean: Boolean? = null,
             expanded: Boolean? = null,
             level: Int? = null,
@@ -301,7 +314,7 @@ abstract class TL(
                 "suggest" to suggest,
                 "expanded" to expanded,
                 "value" to value?.toMap(),
-                "current" to (current?.let(::CurrentAsType)?.value ?: currentAsBoolean?.let(::CurrentAsBool)),
+                "current" to (current?.let(::AsType)?.value ?: currentAsBoolean?.let(::AsBool)),
                 "level" to level,
                 "queryFallbacks" to queryFallbacks,
             )
@@ -314,26 +327,6 @@ class JsFunction(val value: String)
 fun String.asJsFunction() = JsFunction(this)
 
 private fun JsFunction.asJsExpression() = value.asJsExpression()
-
-
-/**
- * https://testing-library.com/docs/dom-testing-library/intro
- */
-private inline fun <reified T> JavascriptExecutor.executeTLQuery(
-    by: String,
-    textMatch: TextMatch? = null,
-    options: Map<String, Any?> = emptyMap(),
-) = buildString {
-    append("return screen.queryAllBy")
-    append("$by(${textMatch.escaped}")
-    if (textMatch != null && options.filterValues { it != null }.isNotEmpty()) append(",")
-    options
-        .filterValues { it != null }
-        .takeIf(Map<String, Any?>::isNotEmpty)
-        ?.escaped
-        ?.let { append(it) }
-    append(")")
-}.let(::executeTLScript) as T
 
 
 // TODO: do not expose class
@@ -358,11 +351,6 @@ private fun Pattern.asJsExpression(): TextMatch.JsExpression {
         if (flags() and Pattern.UNICODE_CASE != 0) append('u')
     }
     return TextMatch.JsExpression("/${pattern()}/$jsFlags")
-}
-
-private fun JavascriptExecutor.executeTLScript(script: String): Any? {
-    ensureScript("testing-library.js", "screen?.queryAllByTestId")
-    return executeScript(script)
 }
 
 private val String.quoted get() = "'${replace("'", "\\'")}'"
@@ -403,14 +391,14 @@ class Value(
 /*
  * https://www.w3.org/TR/wai-aria-1.2/#aria-current
  */
-internal sealed class Current(open val value: Any) {
+internal sealed class CurrentValue(open val value: Any) {
     override fun toString() = value.toString()
-    internal class CurrentAsType(value: CurrentType) : Current(value.name.lowercase().asJsString())
-    internal class CurrentAsBool(value: Boolean) : Current(value)
+    internal class AsType(value: Current) : CurrentValue(value.name.lowercase().asJsString())
+    internal class AsBool(value: Boolean) : CurrentValue(value)
 }
 
 @Suppress("UNUSED")
-enum class CurrentType {
+enum class Current {
     Page, Step, Location, Date, Time
 }
 

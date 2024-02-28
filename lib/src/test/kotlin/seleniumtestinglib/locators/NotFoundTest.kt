@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.driver
-import seleniumtestinglib.CurrentType.Page
+import seleniumtestinglib.Current.Page
 import seleniumtestinglib.Role.SpinButton
 import seleniumtestinglib.TL.By.altText
 import seleniumtestinglib.TL.By.placeholderText
