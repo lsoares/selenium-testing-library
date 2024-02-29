@@ -29,7 +29,7 @@ java {
     withJavadocJar()
 }
 
-version = "4.0.0-beta"
+version = "4.0.0"
 group = "com.luissoares"
 
 publishing {
