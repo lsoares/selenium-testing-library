@@ -3,10 +3,9 @@ package seleniumtestinglib
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
-import seleniumtestinglib.CurrentValue.AsBool
 import seleniumtestinglib.CurrentValue.AsType
-import seleniumtestinglib.TextMatch.Companion.asJsExpression
-import seleniumtestinglib.TextMatch.Companion.asJsString
+import seleniumtestinglib.TextMatch.JsExpression
+import seleniumtestinglib.TextMatch.JsString
 import java.util.regex.Pattern
 import org.openqa.selenium.By as SeleniumBy
 
@@ -339,30 +338,63 @@ abstract class TL(
             level: Int? = null,
             value: Value? = null,
             queryFallbacks: Boolean? = null,
-        ) = object : TL(
+        ): SeleniumBy {
+            require(listOfNotNull(name, nameAsFunction, nameAsRegex).size <= 1) { "Please provide name just once." }
+            require(listOfNotNull(description, descriptionAsFunction, descriptionAsRegex).size <= 1) {
+                "Please provide description just once."
+            }
+            val roleOps = roleOptions(role)
+            name?.let { roleOps.name(it.asJsString()) }
+            nameAsFunction?.let { roleOps.name(it.asJsExpression()) }
+            nameAsRegex?.let { roleOps.name(it.asJsExpression()) }
+            description?.let { roleOps.description(it.asJsString()) }
+            descriptionAsFunction?.let { roleOps.description(it.asJsExpression()) }
+            descriptionAsRegex?.let { roleOps.description(it.asJsExpression()) }
+            hidden?.let(roleOps::hidden)
+            normalizer?.let { roleOps.normalizer(it.asJsExpression()) }
+            selected?.let(roleOps::selected)
+            busy?.let(roleOps::busy)
+            checked?.let(roleOps::checked)
+            pressed?.let(roleOps::pressed)
+            suggest?.let(roleOps::suggest)
+            expanded?.let(roleOps::expanded)
+            value?.let(roleOps::value)
+            current?.let(roleOps::current)
+            currentAsBoolean?.let(roleOps::current)
+            level?.let(roleOps::level)
+            queryFallbacks?.let(roleOps::queryFallbacks)
+            return role(roleOps)
+        }
+
+        @JvmStatic
+        fun role(options: RoleOptions) = object : TL(
             by = "Role",
-            textMatch = role.name.lowercase().asJsString(),
-            options = mapOf(
-                "name" to (name?.asJsString() ?: nameAsRegex?.asJsExpression()
-                ?: nameAsFunction?.asJsExpression()),
-                "description" to (description?.asJsString() ?: descriptionAsRegex?.asJsExpression()
-                ?: descriptionAsFunction?.asJsExpression()),
-                "hidden" to hidden,
-                "normalizer" to normalizer?.asJsExpression(),
-                "selected" to selected,
-                "busy" to busy,
-                "checked" to checked,
-                "pressed" to pressed,
-                "suggest" to suggest,
-                "expanded" to expanded,
-                "value" to value?.toMap(),
-                "current" to (current?.let(::AsType)?.value ?: currentAsBoolean?.let(::AsBool)),
-                "level" to level,
-                "queryFallbacks" to queryFallbacks,
-            )
+            textMatch = options.role.name.lowercase().asJsString(),
+            options = options
         ) {}
     }
 }
+
+fun roleOptions(role: Role) = RoleOptions(role)
+
+class RoleOptions internal constructor(val role: Role) : MutableMap<String, Any> by mutableMapOf() {
+    fun name(name: TextMatch) = apply { this["name"] = name }
+    fun description(description: TextMatch) = apply { this["description"] = description }
+    fun hidden(hidden: Boolean) = apply { this["hidden"] = hidden }
+    fun normalizer(normalizer: JsExpression) = apply { this["normalizer"] = normalizer }
+    fun selected(selected: Boolean) = apply { this["selected"] = selected }
+    fun busy(busy: Boolean) = apply { this["busy"] = busy }
+    fun checked(checked: Boolean) = apply { this["checked"] = checked }
+    fun pressed(pressed: Boolean) = apply { this["pressed"] = pressed }
+    fun suggest(suggest: Boolean) = apply { this["suggest"] = suggest }
+    fun current(current: Current) = apply { this["current"] = AsType(current).value }
+    fun current(current: Boolean) = apply { this["current"] = current }
+    fun expanded(expanded: Boolean) = apply { this["expanded"] = expanded }
+    fun level(level: Int) = apply { this["level"] = level }
+    fun value(value: Value) = apply { this["value"] = value.toMap() }
+    fun queryFallbacks(queryFallbacks: Boolean) = apply { this["queryFallbacks"] = queryFallbacks }
+}
+
 
 class JsFunction(val value: String)
 
@@ -371,20 +403,17 @@ fun String.asJsFunction() = JsFunction(this)
 private fun JsFunction.asJsExpression() = value.asJsExpression()
 
 
-// TODO: do not expose class
 sealed class TextMatch(open val value: String) {
     class JsString(override val value: String) : TextMatch(value)
     class JsExpression(override val value: String) : TextMatch(value)
 
     override fun toString() = value
-
-    companion object {
-        fun String.asJsExpression() = JsExpression(this)
-        fun String.asJsString() = JsString(this)
-    }
 }
 
-private fun Pattern.asJsExpression(): TextMatch.JsExpression {
+fun String.asJsExpression() = JsExpression(this)
+fun String.asJsString() = JsString(this)
+
+private fun Pattern.asJsExpression(): JsExpression {
     val jsFlags = buildString {
         if (flags() and Pattern.CASE_INSENSITIVE != 0) append('i')
         if (flags() and RegexOption.MULTILINE.value != 0) append('m')
@@ -392,14 +421,14 @@ private fun Pattern.asJsExpression(): TextMatch.JsExpression {
         if (flags() and RegexOption.COMMENTS.value != 0) append('x')
         if (flags() and Pattern.UNICODE_CASE != 0) append('u')
     }
-    return TextMatch.JsExpression("/${pattern()}/$jsFlags")
+    return JsExpression("/${pattern()}/$jsFlags")
 }
 
 private val String.quoted get() = "'${replace("'", "\\'")}'"
 private val Any?.escaped: Any?
     get() = when (this) {
-        is TextMatch.JsString -> value.quoted
-        is TextMatch.JsExpression -> value
+        is JsString -> value.quoted
+        is JsExpression -> value
         is String -> quoted
         is Map<*, *> -> entries.joinToString(prefix = "{ ", postfix = " }") {
             "${it.key}: ${it.value?.escaped}"
