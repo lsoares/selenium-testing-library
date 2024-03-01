@@ -16,7 +16,7 @@ the [library's latest version at Maven Central](https://search.maven.org/artifac
 Then, copy the declaration for your build tool. E.g.:
 
 ```kotlin
-implementation("com.luissoares:selenium-testing-library:4.0.0")
+implementation("com.luissoares:selenium-testing-library:4.0.1")
 ```
 
 ---
