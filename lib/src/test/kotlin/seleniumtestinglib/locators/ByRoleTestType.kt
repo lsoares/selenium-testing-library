@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement
 import seleniumtestinglib.*
 import seleniumtestinglib.Role.*
 import seleniumtestinglib.TL.By.role
+import seleniumtestinglib.TextMatch.JsExpression
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
@@ -51,7 +52,7 @@ class ByRoleTestType {
         driver.render("""<h1>something as a user something</h1>""")
 
         val result =
-            driver.findElements(role(Heading, nameAsFunction = "c => c.startsWith('something')".asJsFunction()))
+            driver.findElements(role(Heading, nameAsFunction = "c => c.startsWith('something')".asJsExpression()))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }
@@ -175,7 +176,7 @@ class ByRoleTestType {
         )
 
         val result = driver.findElements(
-            role(AlertDialog, descriptionAsFunction = JsFunction("content => content.endsWith('!')"))
+            role(AlertDialog, descriptionAsFunction = JsExpression("content => content.endsWith('!')"))
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))
@@ -322,7 +323,7 @@ class ByRoleTestType {
         of(Value(max = 10), listOf("Volume", "Pitch")),
         of(Value(text = "medium"), listOf("Volume", "Pitch")),
         of(Value(textAsRegex = Pattern.compile("med")), listOf("Volume", "Pitch")),
-        of(Value(textAsFunction = "t => t.startsWith('med')".asJsFunction()), listOf("Volume", "Pitch")),
+        of(Value(textAsFunction = "t => t.startsWith('med')".asJsExpression()), listOf("Volume", "Pitch")),
     )
 
     @ParameterizedTest

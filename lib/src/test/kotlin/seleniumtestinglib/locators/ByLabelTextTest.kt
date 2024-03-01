@@ -1,8 +1,8 @@
 package seleniumtestinglib.locators
 
-import seleniumtestinglib.driver
 import seleniumtestinglib.TL.By.labelText
-import seleniumtestinglib.asJsFunction
+import seleniumtestinglib.asJsExpression
+import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE
@@ -91,7 +91,7 @@ class ByLabelTextTest {
     fun function() {
         driver.render("<input aria-label='Username' />")
 
-        val result = driver.findElement(labelText("c => c.startsWith('User')".asJsFunction()))
+        val result = driver.findElement(labelText("c => c.startsWith('User')".asJsExpression()))
 
         assertEquals("input", result.tagName)
     }

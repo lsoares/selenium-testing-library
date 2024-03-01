@@ -3,9 +3,9 @@ package seleniumtestinglib.locators
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
-import seleniumtestinglib.driver
 import seleniumtestinglib.TL.By.placeholderText
-import seleniumtestinglib.asJsFunction
+import seleniumtestinglib.asJsExpression
+import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
 import java.util.regex.Pattern.CASE_INSENSITIVE
@@ -48,7 +48,7 @@ class ByPlaceholderTextTest {
     fun function() {
         driver.render("<input placeholder='Username' />")
 
-        val result = driver.findElement(placeholderText("c => c.startsWith('User')".asJsFunction()))
+        val result = driver.findElement(placeholderText("c => c.startsWith('User')".asJsExpression()))
 
         assertEquals("input", result.tagName)
     }

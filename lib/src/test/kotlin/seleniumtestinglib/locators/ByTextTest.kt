@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.TL
-import seleniumtestinglib.asJsFunction
+import seleniumtestinglib.asJsExpression
 import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -95,7 +95,7 @@ class ByTextTest {
         driver.render("<p>Hello World</p>")
 
         val result = driver.findElement(
-            TL.text("(content, element) => content.startsWith('Hello') && element.tagName == 'P'".asJsFunction())
+            TL.text("(content, element) => content.startsWith('Hello') && element.tagName == 'P'".asJsExpression())
         )
 
         assertEquals("p", result.tagName)
@@ -138,7 +138,7 @@ class ByTextTest {
         driver.render("<p>I accept</p>")
 
         val result = driver.findElement(
-            TL.text("I accept123", normalizer = "str => str + '123'".asJsFunction())
+            TL.text("I accept123", normalizer = "str => str + '123'".asJsExpression())
         )
 
         assertEquals("p", result.tagName)
