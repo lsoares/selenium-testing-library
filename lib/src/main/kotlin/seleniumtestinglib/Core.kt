@@ -45,6 +45,7 @@ abstract class TL(
         /**
          * https://testing-library.com/docs/queries/byalttext
          */
+        @JvmOverloads
         fun altText(text: String, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "AltText",
@@ -52,6 +53,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun altText(text: Pattern, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "AltText",
@@ -59,6 +61,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun altText(text: JsFunction, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "AltText",
@@ -69,6 +72,7 @@ abstract class TL(
         /**
          * https://testing-library.com/docs/queries/bydisplayvalue
          */
+        @JvmOverloads
         fun displayValue(value: String, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "DisplayValue",
@@ -76,6 +80,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun displayValue(value: Pattern, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "DisplayValue",
@@ -83,6 +88,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun displayValue(value: JsFunction, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "DisplayValue",
@@ -93,6 +99,7 @@ abstract class TL(
         /**
          * https://testing-library.com/docs/queries/bylabeltext
          */
+        @JvmOverloads
         fun labelText(
             text: String,
             exact: Boolean? = null,
@@ -109,6 +116,7 @@ abstract class TL(
                 ),
             ) {}
 
+        @JvmOverloads
         fun labelText(
             text: Pattern,
             exact: Boolean? = null,
@@ -125,6 +133,7 @@ abstract class TL(
                 ),
             ) {}
 
+        @JvmOverloads
         fun labelText(
             text: JsFunction,
             exact: Boolean? = null,
@@ -144,6 +153,7 @@ abstract class TL(
         /**
          *  https://testing-library.com/docs/queries/byplaceholdertext
          */
+        @JvmOverloads
         fun placeholderText(text: String, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "PlaceholderText",
@@ -151,6 +161,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun placeholderText(text: Pattern, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "PlaceholderText",
@@ -158,6 +169,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun placeholderText(text: JsFunction, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "PlaceholderText",
@@ -168,6 +180,7 @@ abstract class TL(
         /**
          * https://testing-library.com/docs/queries/bytestid
          */
+        @JvmOverloads
         fun testId(text: String, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "TestId",
@@ -175,6 +188,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun testId(text: Pattern, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "TestId",
@@ -182,6 +196,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun testId(text: JsFunction, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "TestId",
@@ -193,6 +208,7 @@ abstract class TL(
         /**
          * https://testing-library.com/docs/queries/bytext
          */
+        @JvmOverloads
         fun text(
             text: String,
             selector: String? = null,
@@ -211,6 +227,7 @@ abstract class TL(
                 ),
             ) {}
 
+        @JvmOverloads
         fun text(
             text: Pattern,
             selector: String? = null,
@@ -229,6 +246,7 @@ abstract class TL(
                 ),
             ) {}
 
+        @JvmOverloads
         fun text(
             text: JsFunction,
             selector: String? = null,
@@ -250,6 +268,7 @@ abstract class TL(
         /**
          * https://testing-library.com/docs/queries/bytitle
          */
+        @JvmOverloads
         fun title(title: String, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "Title",
@@ -257,6 +276,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun title(title: Pattern, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "Title",
@@ -264,6 +284,7 @@ abstract class TL(
                 options = mapOf("exact" to exact, "normalizer" to normalizer?.asJsExpression()),
             ) {}
 
+        @JvmOverloads
         fun title(title: JsFunction, exact: Boolean? = null, normalizer: JsFunction? = null) =
             object : TL(
                 by = "Title",
@@ -274,6 +295,7 @@ abstract class TL(
         /**
          * https://testing-library.com/docs/queries/byrole
          */
+        @JvmOverloads
         fun role(
             role: Role,
             name: String? = null,
