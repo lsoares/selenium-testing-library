@@ -1,19 +1,19 @@
 # Selenium Testing Library
 
 [![.github/workflows/test.yml](https://github.com/lsoares/selenium-testing-library/actions/workflows/test.yml/badge.svg)](https://github.com/lsoares/selenium-testing-library/actions/workflows/test.yml)
+[![Download](https://img.shields.io/maven-central/v/com.luissoares/selenium-testing-library?logo=apache%20maven)](https://search.maven.org/artifact/com.luissoares/selenium-testing-library)
 
 **_[Testing Library](http://testing-library.com) selectors available as Selenium locators for Kotlin/Java._**
 
 ## Why?
+
 When I use Selenium, I want to be independent of ids, classes, and similar.
 I'm a fan of the Testing Library because it encourages "testing as a user":
 
 > The more your tests resemble the way your software is used,
 > the more confidence they can give you.
 
-Pick
-the [library's latest version at Maven Central](https://search.maven.org/artifact/com.luissoares/selenium-testing-library).
-Then, copy the declaration for your build tool. E.g.:
+Use the [library's latest version](https://search.maven.org/artifact/com.luissoares/selenium-testing-library):
 
 ```kotlin
 implementation("com.luissoares:selenium-testing-library:4.0.1")
