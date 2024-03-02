@@ -18,7 +18,8 @@ implementation("com.luissoares:selenium-testing-library:4.0.1")
 
 ---
 These are just a few examples. Check [the tests](/lib/src/test/kotlin/seleniumtestinglib)
-that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb) all the usages.
+that [illustrate](https://medium.com/codex/towards-self-documenting-code-371364bdccbb) all the usages 
+([there are examples in Java](/lib/src/test/java)).
 
 ## Core API
 
