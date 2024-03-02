@@ -302,6 +302,7 @@ abstract class TL(
         /**
          * https://testing-library.com/docs/queries/byrole
          */
+        @JvmStatic
         fun role(
             role: Role,
             name: String? = null,
@@ -323,7 +324,7 @@ abstract class TL(
             level: Int? = null,
             value: Value? = null,
             queryFallbacks: Boolean? = null,
-        ) = byRole(role).let {
+        ) = role(role).let {
             require(listOfNotNull(name, nameAsFunction, nameAsRegex).size <= 1) { "Please provide name just once." }
             require(listOfNotNull(description, descriptionAsFunction, descriptionAsRegex).size <= 1) {
                 "Please provide description just once."
@@ -350,10 +351,11 @@ abstract class TL(
             queryFallbacks?.let(it::queryFallbacks)
             it
         }
+
+        @JvmStatic
+        fun role(role: Role) = RoleOptions(role)
     }
 }
-
-fun byRole(role: Role) = RoleOptions(role)
 
 class RoleOptions internal constructor(private val role: Role) : MutableMap<String, Any> by mutableMapOf(),
     SeleniumBy() {
@@ -378,6 +380,7 @@ class RoleOptions internal constructor(private val role: Role) : MutableMap<Stri
     fun queryFallbacks(queryFallbacks: Boolean) = apply { this["queryFallbacks"] = queryFallbacks }
     override fun findElements(context: SearchContext) =
         (getWebDriver(context) as JavascriptExecutor).findElements("Role", role.name.lowercase().asJsString(), this)
+
     override fun toString(): String {
         val prefix = if (entries.isEmpty()) "" else ", "
         return "ByRole($role$prefix${entries.joinToString { "${it.key}: ${it.value}" }})"
