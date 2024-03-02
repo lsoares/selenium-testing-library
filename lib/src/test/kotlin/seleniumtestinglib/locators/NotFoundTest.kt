@@ -34,7 +34,7 @@ class NotFoundTest {
         ),
         of(
             role(SpinButton, current = Page, value = Value(min = 1)),
-            "ByRole(spinbutton, value: {min=1}, current: page)"
+            "ByRole(SpinButton, value: {min=1}, current: page)"
         ),
     )
 
