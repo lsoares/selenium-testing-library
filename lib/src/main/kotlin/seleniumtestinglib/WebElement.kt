@@ -139,9 +139,9 @@ val WebElement.errorMessage: String?
 internal val WebElement.wrappedDriver get() = (this as RemoteWebElement).wrappedDriver as RemoteWebDriver
 
 fun WebElement.fireEvent(eventName: Event, eventProperties: Map<String, Map<String, Any?>> = emptyMap()): Any? {
-    wrappedDriver.ensureScript("testing-library.js", "fireEvent.change")
+    wrappedDriver.ensureScript("testing-library.js", "window.__TL__?.fireEvent?.change")
     val event = eventName.name.replaceFirstChar(Char::lowercase)
-    return wrappedDriver.executeScript("fireEvent.$event(arguments[0], arguments[1])", this, eventProperties)
+    return wrappedDriver.executeScript("window.__TL__.fireEvent.$event(arguments[0], arguments[1])", this, eventProperties)
 }
 
 @Suppress("unused")
