@@ -471,9 +471,9 @@ private fun JavascriptExecutor.findElements(
     textMatch: TextMatch,
     options: Map<String, Any>
 ): List<WebElement> {
-    ensureScript("testing-library.js", "window.screen?.queryAllByTestId")
+    ensureScript("testing-library.js", "window.__TL__?.screen?.queryAllByTestId")
     val script = buildString {
-        append("return window.screen.queryAllBy$by(")
+        append("return window.__TL__.screen.queryAllBy$by(")
         append(textMatch.escaped)
         options
             .takeIf(Map<String, Any?>::isNotEmpty)
