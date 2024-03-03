@@ -2,7 +2,7 @@ import {queryAllByRole, queryAllByLabelText, queryAllByPlaceholderText, queryAll
         screen, fireEvent} from '@testing-library/dom'
 
 window.__TL__ = {
-    queryAllByTestId,
+    queryAllByRole,
     queryAllByLabelText,
     queryAllByPlaceholderText,
     queryAllByText,
