@@ -5,11 +5,10 @@ import static seleniumtestinglib.CoreKt.asJsExpression;
 import static seleniumtestinglib.DriverKt.getDriver;
 import static seleniumtestinglib.DriverKt.render;
 import static seleniumtestinglib.Role.Heading;
-import static seleniumtestinglib.TL.By;
-import static seleniumtestinglib.TL.testId;
+import static seleniumtestinglib.TL.*;
 
 
-public class JavaTest {
+public class JavaApiTest {
 
     @Test
     public void byTestId() {
@@ -24,7 +23,7 @@ public class JavaTest {
         render(getDriver(), "<h1>something as a user something</h1>");
 
         var result = getDriver().findElements(
-                By.role(Heading).name(asJsExpression("/something/")).level(1)
+                role(Heading).name(asJsExpression("/something/")).level(1)
         );
 
         assertEquals("something as a user something", result.stream().findFirst().get().getAccessibleName());

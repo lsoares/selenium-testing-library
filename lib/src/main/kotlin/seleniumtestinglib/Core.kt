@@ -359,25 +359,25 @@ abstract class TL(
 
 class RoleOptions internal constructor(private val role: Role) : MutableMap<String, Any> by mutableMapOf(),
     SeleniumBy() {
-    fun name(name: String) = apply { this["name"] = name }
-    fun name(name: Pattern) = apply { this["name"] = name.asJsExpression() }
-    fun name(name: TextMatch) = apply { this["name"] = name }
-    fun description(description: String) = apply { this["description"] = description }
-    fun description(description: Pattern) = apply { this["description"] = description.asJsExpression() }
-    fun description(description: TextMatch) = apply { this["description"] = description }
-    fun hidden(hidden: Boolean) = apply { this["hidden"] = hidden }
-    fun normalizer(normalizer: JsExpression) = apply { this["normalizer"] = normalizer }
-    fun selected(selected: Boolean) = apply { this["selected"] = selected }
-    fun busy(busy: Boolean) = apply { this["busy"] = busy }
-    fun checked(checked: Boolean) = apply { this["checked"] = checked }
-    fun pressed(pressed: Boolean) = apply { this["pressed"] = pressed }
-    fun suggest(suggest: Boolean) = apply { this["suggest"] = suggest }
-    fun current(current: Current) = apply { this["current"] = current.name.lowercase().asJsString() }
-    fun current(current: Boolean) = apply { this["current"] = current }
-    fun expanded(expanded: Boolean) = apply { this["expanded"] = expanded }
-    fun level(level: Int) = apply { this["level"] = level }
-    fun value(value: Value) = apply { this["value"] = value.toMap() }
-    fun queryFallbacks(queryFallbacks: Boolean) = apply { this["queryFallbacks"] = queryFallbacks }
+    fun name(name: String) = apply { set("name", name) }
+    fun name(name: Pattern) = apply { set("name", name.asJsExpression()) }
+    fun name(name: TextMatch) = apply { set("name", name) }
+    fun description(description: String) = apply { set("description", description) }
+    fun description(description: Pattern) = apply { set("description", description.asJsExpression()) }
+    fun description(description: TextMatch) = apply { set("description", description) }
+    fun hidden(hidden: Boolean) = apply { set("hidden", hidden) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
+    fun selected(selected: Boolean) = apply { set("selected", selected) }
+    fun busy(busy: Boolean) = apply { set("busy", busy) }
+    fun checked(checked: Boolean) = apply { set("checked", checked) }
+    fun pressed(pressed: Boolean) = apply { set("pressed", pressed) }
+    fun suggest(suggest: Boolean) = apply { set("suggest", suggest) }
+    fun current(current: Current) = apply { set("current", current.name.lowercase().asJsString()) }
+    fun current(current: Boolean) = apply { set("current", current) }
+    fun expanded(expanded: Boolean) = apply { set("expanded", expanded) }
+    fun level(level: Int) = apply { set("level", level) }
+    fun value(value: Value) = apply { set("value", value.toMap()) }
+    fun queryFallbacks(queryFallbacks: Boolean) = apply { set("queryFallbacks", queryFallbacks) }
     override fun findElements(context: SearchContext) =
         (getWebDriver(context) as JavascriptExecutor).findElements("Role", role.name.lowercase().asJsString(), this)
 
