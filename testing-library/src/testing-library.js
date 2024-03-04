@@ -1,5 +1,5 @@
 import {queryAllByRole, queryAllByLabelText, queryAllByPlaceholderText, queryAllByText, queryAllByDisplayValue, queryAllByAltText, queryAllByTitle, queryAllByTestId, 
-        screen, fireEvent} from '@testing-library/dom'
+        fireEvent} from '@testing-library/dom'
 
 window.__TL__ = {
     queryAllByRole,
@@ -10,7 +10,6 @@ window.__TL__ = {
     queryAllByAltText,
     queryAllByTitle,
     queryAllByTestId,
-    screen,
     fireEvent
 }
 
@@ -24,18 +23,7 @@ if (/Firefox/.test(navigator.userAgent)) {
         queryAllByDisplayValue    : (container, value, options) => queryAllByDisplayValue    (container, wrapTextMatch(value), wrapTextOptions(options)),
         queryAllByAltText         : (container, text,  options) => queryAllByAltText         (container, wrapTextMatch(text), wrapTextOptions(options)),
         queryAllByTitle           : (container, title, options) => queryAllByTitle           (container, wrapTextMatch(title), wrapTextOptions(options)),
-        queryAllByTestId          : (container, text,  options) => queryAllByTestId          (container, wrapTextMatch(text), wrapTextOptions(options)),        
-        screen: {
-            ...window.__TL__.screen,
-            queryAllByRole            : (role,  options) => screen.queryAllByRole            (role, wrapRoleOptions(options)),
-            queryAllByLabelText       : (text,  options) => screen.queryAllByLabelText       (wrapTextMatch(text), wrapTextOptions(options)),
-            queryAllByPlaceholderText : (text,  options) => screen.queryAllByPlaceholderText (wrapTextMatch(text), wrapTextOptions(options)),
-            queryAllByText            : (text,  options) => screen.queryAllByText            (wrapTextMatch(text), wrapTextOptions(options)),
-            queryAllByDisplayValue    : (value, options) => screen.queryAllByDisplayValue    (wrapTextMatch(value), wrapTextOptions(options)),
-            queryAllByAltText         : (text,  options) => screen.queryAllByAltText         (wrapTextMatch(text), wrapTextOptions(options)),
-            queryAllByTitle           : (title, options) => screen.queryAllByTitle           (wrapTextMatch(title), wrapTextOptions(options)),
-            queryAllByTestId          : (text,  options) => screen.queryAllByTestId          (wrapTextMatch(text), wrapTextOptions(options)),
-        }
+        queryAllByTestId          : (container, text,  options) => queryAllByTestId          (container, wrapTextMatch(text), wrapTextOptions(options)),
     }
     function wrapRoleOptions(options) {
         return options && { ...options,
