@@ -360,6 +360,7 @@ class TextOptions internal constructor(text: TextMatch) : TLBy(text) {
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
     fun ignore(ignore: String) = apply { set("ignore", ignore) }
+    fun ignore(ignore: Boolean) = apply { set("ignore", ignore) }
     fun selector(selector: String) = apply { set("selector", selector) }
 }
 

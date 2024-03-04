@@ -28,7 +28,7 @@ class ByTextTest {
     fun `ensure quotes are escaped`() {
         driver.render(""""<article><span>with quotes"'`</span><div></div></article>""")
 
-        val result = driver.findElement(TL.text("""with quotes"'`"""))
+        val result = driver.findElement(TL.By.text("""with quotes"'`"""))
 
         assertEquals("span", result.tagName)
     }
@@ -132,6 +132,21 @@ class ByTextTest {
         of("style,script", 1),
         of("style,script,p", 0),
     )
+
+    @Test
+    fun `ignore with boolean`() {
+        driver.render(
+            """
+            <p>I accept</p>
+            <script>I accept</script>
+            <style>I accept</style>
+            """
+        )
+
+        val result = driver.findElements(TL.text("I accept").ignore(false))
+
+        assertEquals(3, result.size)
+    }
 
     @Test
     fun normalizer() {
