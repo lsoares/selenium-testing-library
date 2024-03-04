@@ -32,7 +32,7 @@ public class JavaApiTest {
 
     @CartesianTest
     public void testByAltText(@Enum Browser browser,
-                                       @Values(strings = {"img", "input", "area"}) String tagName) {
+                              @Values(strings = {"img", "input", "area"}) String tagName) {
         render(browser.getDriver(), String.format("<%s alt='Incredibles 2 Poster' src='/incredibles-2.png' />", tagName));
 
         var result = browser.getDriver().findElement(altText("Incredibles 2 Poster").exact(false));
