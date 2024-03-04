@@ -29,7 +29,7 @@ jobs:
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.JRELEASER_GPG_PUBLIC_KEY }}
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ./gradlew clean 
+          ./gradlew clean
           ./gradlew test
           ./gradlew publish 
           ./gradlew jreleaserFullRelease

@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-        - lib/**
+      - lib/**
 
 jobs:
   build:
@@ -22,5 +22,12 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y gnupg2 expect
 
-      - name: Test
+      - name: Test in Chrome
+        env:
+          BROWSER: chrome
         run: ./gradlew test
+
+      - name: Test in Firefox
+        env:
+          BROWSER: firefox
+        run: ./gradlew test -rerun-tasks

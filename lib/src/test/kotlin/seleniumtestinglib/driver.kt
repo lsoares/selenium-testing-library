@@ -2,10 +2,16 @@ package seleniumtestinglib
 
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.remote.RemoteWebDriver
+import java.lang.System.getenv
 
-val driver by lazy {
-    ChromeDriver(ChromeOptions().addArguments("--headless"))
+val driver: RemoteWebDriver by lazy {
+    when (getenv("BROWSER")) {
+        "firefox" -> FirefoxDriver(FirefoxOptions().addArguments("--headless"))
+        else -> ChromeDriver(ChromeOptions().addArguments("--headless"))
+    }
 }
 
 fun RemoteWebDriver.render(body: String): User {
