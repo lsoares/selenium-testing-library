@@ -18,6 +18,7 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:4.18.1")
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.2")
+    testImplementation("org.junit-pioneer:junit-pioneer:2.2.0")
 }
 
 tasks.test {

@@ -1,6 +1,8 @@
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.junitpioneer.jupiter.cartesian.CartesianTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junitpioneer.jupiter.cartesian.CartesianTest.Enum;
+import static org.junitpioneer.jupiter.cartesian.CartesianTest.Values;
 import static seleniumtestinglib.CoreKt.asJsExpression;
 import static seleniumtestinglib.DriverKt.render;
 import static seleniumtestinglib.Role.Heading;
@@ -9,31 +11,32 @@ import static seleniumtestinglib.TL.*;
 
 public class JavaApiTest {
 
-    @RemoteWebDriverTest
-    public void byTestId(RemoteWebDriver driver) {
-        render(driver, "<div data-testid='custom' />");
+    @BrowserTest
+    public void byTestId(Browser browser) {
+        render(browser.getDriver(), "<div data-testid='custom' />");
 
-        var result = driver.findElement(testId("custom"));
+        var result = browser.getDriver().findElement(testId("custom"));
         assertEquals("div", result.getTagName());
     }
 
-    @RemoteWebDriverTest
-    public void testByRole(RemoteWebDriver driver) {
-        render(driver, "<h1>something as a user something</h1>");
+    @BrowserTest
+    public void testByRole(Browser browser) {
+        render(browser.getDriver(), "<h1>something as a user something</h1>");
 
-        var result = driver.findElements(
+        var result = browser.getDriver().findElements(
                 role(Heading).name(asJsExpression("/something/")).level(1)
         );
 
         assertEquals("something as a user something", result.get(0).getAccessibleName());
     }
 
-    @RemoteWebDriverTest
-    public void testByAltText(RemoteWebDriver driver) {
-        render(driver, "<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />");
+    @CartesianTest
+    public void testByAltTextCartesian(@Enum Browser browser,
+                                       @Values(strings = {"img", "input", "area"}) String tagName) {
+        render(browser.getDriver(), String.format("<%s alt='Incredibles 2 Poster' src='/incredibles-2.png' />", tagName));
 
-        var result = driver.findElements(altText("incredibles").exact(false));
+        var result = browser.getDriver().findElement(altText("Incredibles 2 Poster").exact(false));
 
-        assertEquals("img", result.get(0).getTagName());
+        assertEquals(tagName, result.getTagName());
     }
 }
