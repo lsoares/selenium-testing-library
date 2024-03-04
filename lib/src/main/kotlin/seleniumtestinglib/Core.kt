@@ -289,16 +289,17 @@ abstract class TLBy(private val by: String, private val textMatch: TextMatch) :
     override fun findElements(context: SearchContext): List<WebElement> {
         val jsExecutor = (getWebDriver(context) as JavascriptExecutor)
         jsExecutor.ensureScript("testing-library.js", "window.__TL__?.screen?.queryAllByTestId")
-        val script = buildString {
+        return jsExecutor.executeScript(buildString {
             append("return window.__TL__.screen.queryAllBy$by(")
+            (context as? WebElement)?.let {
+                append("arguments[0], ")
+            }
             append(textMatch.escaped)
-            this@TLBy
-                .takeIf(TLBy::isNotEmpty)
+            takeIf(TLBy::isNotEmpty)
                 ?.escaped
-                ?.let<Any, StringBuilder?> { append(", $it") }
+                ?.let { append(", $it") }
             append(")")
-        }
-        return jsExecutor.executeScript(script) as List<WebElement>
+        }, context as? WebElement) as List<WebElement>
     }
 
     fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
