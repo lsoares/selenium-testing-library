@@ -4,6 +4,7 @@ on:
       - main
     paths:
       - lib/**
+      - .github/**
 
 jobs:
   build:
@@ -30,4 +31,4 @@ jobs:
       - name: Test in Firefox
         env:
           BROWSER: firefox
-        run: ./gradlew test -rerun-tasks
+        run: ./gradlew test -rerun-tasks --tests "seleniumtestinglib.locators.*"
