@@ -9,208 +9,152 @@ import java.util.regex.Pattern
 import org.openqa.selenium.By as SeleniumBy
 
 
-abstract class TL(
-    private val by: String,
-    private val textMatch: TextMatch,
-    private val options: Map<String, Any?> = emptyMap()
-) : SeleniumBy() {
-
-    @Suppress("unchecked_cast")
-    override fun findElements(context: SearchContext) =
-        context.jsExecutor.findElements(by, textMatch, options.filterValues { it != null } as Map<String, Any>)
-
-    private val SearchContext.jsExecutor get() = (getWebDriver(this) as JavascriptExecutor)
-
-    override fun toString(): String {
-        val entries = options.filterValues { it != null }.entries
-        val prefix = if (entries.isEmpty()) "" else ", "
-        return "By$by($textMatch$prefix${entries.joinToString { "${it.key}: ${it.value}" }})"
-    }
+class TL {
 
     companion object By {
         /**
          * https://testing-library.com/docs/queries/byalttext
          */
-        @JvmOverloads
         @JvmStatic
         fun altText(text: String, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "AltText",
-                textMatch = text.asJsString(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            AltTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun altText(text: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "AltText",
-                textMatch = text.asJsExpression(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            AltTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun altText(text: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "AltText",
-                textMatch = text,
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            AltTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
+
+        @JvmStatic
+        fun altText(text: String) = AltTextOptions(text)
 
         /**
          * https://testing-library.com/docs/queries/bydisplayvalue
          */
         @JvmStatic
-        @JvmOverloads
         fun displayValue(value: String, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "DisplayValue",
-                textMatch = value.asJsString(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            DisplayValueOptions(value)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun displayValue(value: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "DisplayValue",
-                textMatch = value.asJsExpression(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            DisplayValueOptions(value)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun displayValue(value: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "DisplayValue",
-                textMatch = value,
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            DisplayValueOptions(value)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
+
+
+        @JvmStatic
+        fun displayValue(value: String) = DisplayValueOptions(value)
 
         /**
          * https://testing-library.com/docs/queries/bylabeltext
          */
         @JvmStatic
-        @JvmOverloads
         fun labelText(
             text: String,
             exact: Boolean? = null,
             selector: String? = null,
             normalizer: JsExpression? = null
         ) =
-            object : TL(
-                by = "LabelText",
-                textMatch = text.asJsString(),
-                options = mapOf(
-                    "exact" to exact,
-                    "normalizer" to normalizer,
-                    "selector" to selector
-                ),
-            ) {}
+            LabelTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { selector?.let { selector(it) } }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun labelText(
             text: Pattern,
             exact: Boolean? = null,
             selector: String? = null,
             normalizer: JsExpression? = null
         ) =
-            object : TL(
-                by = "LabelText",
-                textMatch = text.asJsExpression(),
-                options = mapOf(
-                    "exact" to exact,
-                    "normalizer" to normalizer,
-                    "selector" to selector
-                ),
-            ) {}
+            LabelTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { selector?.let { selector(it) } }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun labelText(
             text: JsExpression,
             exact: Boolean? = null,
             selector: String? = null,
             normalizer: JsExpression? = null
         ) =
-            object : TL(
-                by = "LabelText",
-                textMatch = text,
-                options = mapOf(
-                    "exact" to exact,
-                    "normalizer" to normalizer,
-                    "selector" to selector
-                ),
-            ) {}
+            LabelTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { selector?.let(::selector) }
+                .apply { normalizer?.let(::normalizer) }
+
+        @JvmStatic
+        fun labelText(text: String) = LabelTextOptions(text)
 
         /**
          *  https://testing-library.com/docs/queries/byplaceholdertext
          */
         @JvmStatic
-        @JvmOverloads
         fun placeholderText(text: String, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "PlaceholderText",
-                textMatch = text.asJsString(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            PlaceholderTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun placeholderText(text: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "PlaceholderText",
-                textMatch = text.asJsExpression(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            PlaceholderTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun placeholderText(text: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "PlaceholderText",
-                textMatch = text,
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            PlaceholderTextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
+
+        @JvmStatic
+        fun placeholderText(text: String) = PlaceholderTextOptions(text)
 
         /**
          * https://testing-library.com/docs/queries/bytestid
          */
         @JvmStatic
-        @JvmOverloads
         fun testId(text: String, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "TestId",
-                textMatch = text.asJsString(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            TestIdOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun testId(text: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "TestId",
-                textMatch = text.asJsExpression(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            TestIdOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun testId(text: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "TestId",
-                textMatch = text,
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            TestIdOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
+        @JvmStatic
+        fun testId(text: String) = TestIdOptions(text)
 
         /**
          * https://testing-library.com/docs/queries/bytext
          */
         @JvmStatic
-        @JvmOverloads
         fun text(
             text: String,
             selector: String? = null,
@@ -218,19 +162,13 @@ abstract class TL(
             ignore: String? = null,
             normalizer: JsExpression? = null
         ) =
-            object : TL(
-                by = "Text",
-                textMatch = text.asJsString(),
-                options = mapOf(
-                    "exact" to exact,
-                    "normalizer" to normalizer,
-                    "selector" to selector,
-                    "ignore" to ignore
-                ),
-            ) {}
+            TextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
+                .apply { selector?.let(::selector) }
+                .apply { ignore?.let { ignore(it) } }
 
         @JvmStatic
-        @JvmOverloads
         fun text(
             text: Pattern,
             selector: String? = null,
@@ -238,19 +176,13 @@ abstract class TL(
             ignore: String? = null,
             normalizer: JsExpression? = null
         ) =
-            object : TL(
-                by = "Text",
-                textMatch = text.asJsExpression(),
-                options = mapOf(
-                    "exact" to exact,
-                    "normalizer" to normalizer,
-                    "selector" to selector,
-                    "ignore" to ignore
-                ),
-            ) {}
+            TextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
+                .apply { selector?.let { selector(it) } }
+                .apply { ignore?.let(::ignore) }
 
         @JvmStatic
-        @JvmOverloads
         fun text(
             text: JsExpression,
             selector: String? = null,
@@ -258,46 +190,39 @@ abstract class TL(
             ignore: String? = null,
             normalizer: JsExpression? = null
         ) =
-            object : TL(
-                by = "Text",
-                textMatch = text,
-                options = mapOf(
-                    "exact" to exact,
-                    "normalizer" to normalizer,
-                    "selector" to selector,
-                    "ignore" to ignore
-                ),
-            ) {}
+            TextOptions(text)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
+                .apply { selector?.let { selector(it) } }
+                .apply { ignore?.let { ignore(it) } }
+
+        @JvmStatic
+        fun text(text: String) = TextOptions(text)
 
         /**
          * https://testing-library.com/docs/queries/bytitle
          */
         @JvmStatic
-        @JvmOverloads
         fun title(title: String, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "Title",
-                textMatch = title.asJsString(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            TitleOptions(title)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        @JvmOverloads
         fun title(title: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "Title",
-                textMatch = title.asJsExpression(),
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            TitleOptions(title)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
+
 
         @JvmStatic
-        @JvmOverloads
         fun title(title: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            object : TL(
-                by = "Title",
-                textMatch = title,
-                options = mapOf("exact" to exact, "normalizer" to normalizer),
-            ) {}
+            TitleOptions(title)
+                .apply { exact?.let(::exact) }
+                .apply { normalizer?.let(::normalizer) }
+
+        @JvmStatic
+        fun title(title: String) = TitleOptions(title)
 
         /**
          * https://testing-library.com/docs/queries/byrole
@@ -357,8 +282,78 @@ abstract class TL(
     }
 }
 
-class RoleOptions internal constructor(private val role: Role) : MutableMap<String, Any> by mutableMapOf(),
-    SeleniumBy() {
+abstract class TLBy(private val by: String, private val textMatch: TextMatch) : SeleniumBy(),
+    MutableMap<String, Any> by mutableMapOf() {
+
+    override fun findElements(context: SearchContext) =
+        (getWebDriver(context) as JavascriptExecutor).findElements(by, textMatch, this)
+
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
+
+    override fun toString(): String {
+        val prefix = if (entries.isEmpty()) "" else ", "
+        return "ByRole($textMatch$prefix${entries.joinToString { "${it.key}: ${it.value}" }})"
+    }
+}
+
+class AltTextOptions internal constructor(text: TextMatch) : TLBy("AltText", text) {
+    constructor(value: String) : this(value.asJsString())
+    constructor(value: Pattern) : this(value.asJsExpression())
+
+    fun exact(exact: Boolean) = apply { set("exact", exact) }
+}
+
+
+class DisplayValueOptions internal constructor(value: TextMatch) : TLBy("DisplayValue", value) {
+    constructor(value: String) : this(value.asJsString())
+    constructor(value: Pattern) : this(value.asJsExpression())
+
+    fun exact(exact: Boolean) = apply { set("exact", exact) }
+}
+
+class LabelTextOptions internal constructor(value: TextMatch) : TLBy("LabelText", value) {
+    constructor(value: String) : this(value.asJsString())
+    constructor(value: Pattern) : this(value.asJsExpression())
+
+    fun exact(exact: Boolean) = apply { set("exact", exact) }
+    fun selector(selector: String) = apply { set("selector", selector) }
+}
+
+class PlaceholderTextOptions internal constructor(text: TextMatch) : TLBy("PlaceholderText", text) {
+    constructor(text: String) : this(text.asJsString())
+    constructor(text: Pattern) : this(text.asJsExpression())
+
+    fun exact(exact: Boolean) = apply { set("exact", exact) }
+}
+
+class TestIdOptions internal constructor(text: TextMatch) : TLBy("TestId", text) {
+    constructor(text: String) : this(text.asJsString())
+    constructor(text: Pattern) : this(text.asJsExpression())
+
+    fun exact(exact: Boolean) = apply { set("exact", exact) }
+}
+
+
+class TextOptions internal constructor(text: TextMatch) : TLBy("Text", text) {
+    constructor(text: String) : this(text.asJsString())
+    constructor(text: Pattern) : this(text.asJsExpression())
+
+    fun exact(exact: Boolean) = apply { set("exact", exact) }
+    fun ignore(ignore: String) = apply { set("ignore", ignore) }
+    fun selector(selector: String) = apply { set("selector", selector) }
+}
+
+
+class TitleOptions internal constructor(text: TextMatch) : TLBy("Title", text) {
+    constructor(text: String) : this(text.asJsString())
+    constructor(text: Pattern) : this(text.asJsExpression())
+
+    fun exact(exact: Boolean) = apply { set("exact", exact) }
+}
+
+class RoleOptions internal constructor(role: TextMatch) : TLBy("Role", role) {
+    constructor(role: Role) : this(role.name.lowercase().asJsString())
+
     fun name(name: String) = apply { set("name", name) }
     fun name(name: Pattern) = apply { set("name", name.asJsExpression()) }
     fun name(name: TextMatch) = apply { set("name", name) }
@@ -366,7 +361,6 @@ class RoleOptions internal constructor(private val role: Role) : MutableMap<Stri
     fun description(description: Pattern) = apply { set("description", description.asJsExpression()) }
     fun description(description: TextMatch) = apply { set("description", description) }
     fun hidden(hidden: Boolean) = apply { set("hidden", hidden) }
-    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
     fun selected(selected: Boolean) = apply { set("selected", selected) }
     fun busy(busy: Boolean) = apply { set("busy", busy) }
     fun checked(checked: Boolean) = apply { set("checked", checked) }
@@ -378,13 +372,6 @@ class RoleOptions internal constructor(private val role: Role) : MutableMap<Stri
     fun level(level: Int) = apply { set("level", level) }
     fun value(value: Value) = apply { set("value", value.toMap()) }
     fun queryFallbacks(queryFallbacks: Boolean) = apply { set("queryFallbacks", queryFallbacks) }
-    override fun findElements(context: SearchContext) =
-        (getWebDriver(context) as JavascriptExecutor).findElements("Role", role.name.lowercase().asJsString(), this)
-
-    override fun toString(): String {
-        val prefix = if (entries.isEmpty()) "" else ", "
-        return "ByRole($role$prefix${entries.joinToString { "${it.key}: ${it.value}" }})"
-    }
 }
 
 sealed class TextMatch(open val value: String) {

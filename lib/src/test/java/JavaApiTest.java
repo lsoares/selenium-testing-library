@@ -26,6 +26,16 @@ public class JavaApiTest {
                 role(Heading).name(asJsExpression("/something/")).level(1)
         );
 
-        assertEquals("something as a user something", result.stream().findFirst().get().getAccessibleName());
+        assertEquals("something as a user something", result.get(0).getAccessibleName());
+    }
+
+
+    @Test
+    public void testByAltText() {
+        render(getDriver(), "<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />");
+
+        var result = getDriver().findElements(altText("incredibles").exact(false));
+
+        assertEquals("img", result.get(0).getTagName());
     }
 }
