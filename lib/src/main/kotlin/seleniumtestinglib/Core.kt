@@ -305,7 +305,7 @@ abstract class TLBy(private val by: String, private val textMatch: TextMatch) :
 
     override fun toString(): String {
         val prefix = if (entries.isEmpty()) "" else ", "
-        return "ByRole($textMatch$prefix${entries.joinToString { "${it.key}: ${it.value}" }})"
+        return "By$by($textMatch$prefix${entries.joinToString { "${it.key}: ${it.value}" }})"
     }
 }
 
@@ -388,14 +388,14 @@ class RoleOptions internal constructor(role: TextMatch) : TLBy("Role", role) {
 }
 
 sealed class TextMatch(open val value: String) {
-    class JsString(override val value: String) : TextMatch(value)
+    internal class JsString(override val value: String) : TextMatch(value)
     class JsExpression(override val value: String) : TextMatch(value)
 
     override fun toString() = value
 }
 
 fun String.asJsExpression() = JsExpression(this)
-fun String.asJsString() = JsString(this)
+private fun String.asJsString() = JsString(this)
 
 private fun Pattern.asJsExpression(): JsExpression {
     val jsFlags = buildString {
@@ -429,7 +429,6 @@ class Value(
     private val textAsRegex: Pattern? = null,
     private val textAsFunction: JsExpression? = null,
 ) {
-
     init {
         require(listOfNotNull(text, textAsRegex, textAsFunction).size <= 1) { "Please provide text just once." }
     }
