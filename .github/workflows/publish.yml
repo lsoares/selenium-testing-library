@@ -3,7 +3,7 @@ on:
     tags:
       - v*
     paths:
-      - .github/**
+      - .github/publish.yml
 jobs:
   build:
     runs-on: ubuntu-latest

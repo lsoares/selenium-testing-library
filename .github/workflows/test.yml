@@ -4,7 +4,7 @@ on:
       - main
     paths:
       - lib/**
-      - .github/**
+      - .github/test.yml
 
 jobs:
   build:
