@@ -2,6 +2,7 @@ package seleniumtestinglib
 
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import seleniumtestinglib.TextMatch.JsExpression
 import seleniumtestinglib.TextMatch.JsString
@@ -288,9 +289,12 @@ abstract class TLBy(private val by: String, private val textMatch: TextMatch) :
     @Suppress("unchecked_cast")
     override fun findElements(context: SearchContext): List<WebElement> {
         val jsExecutor = (getWebDriver(context) as JavascriptExecutor)
-        jsExecutor.ensureScript("testing-library.js", "window.__TL__?.screen?.queryAllByTestId")
+        jsExecutor.ensureScript("testing-library.js", "window.__TL__?.queryAllByTestId")
         return jsExecutor.executeScript(buildString {
-            append("return window.__TL__.screen.queryAllBy$by(")
+            append("return window.__TL__.queryAllBy$by(")
+            (context as? WebDriver)?.let {
+                append("document.body, ")
+            }
             (context as? WebElement)?.let {
                 append("arguments[0], ")
             }
