@@ -31,4 +31,4 @@ jobs:
       - name: Test in Firefox
         env:
           BROWSER: firefox
-        run: ./gradlew test -rerun-tasks --tests "seleniumtestinglib.locators.*"
+        run: ./gradlew test -rerun-tasks

@@ -22,6 +22,11 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    filter {
+        if (System.getenv("BROWSER") == "firefox") {
+            excludeTestsMatching("*.interactions.*")
+        }
+    }
 }
 
 java {
