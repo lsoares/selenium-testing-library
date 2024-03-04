@@ -10,7 +10,6 @@ import org.openqa.selenium.By as SeleniumBy
 
 
 class TL {
-
     companion object By {
         /**
          * https://testing-library.com/docs/queries/byalttext
@@ -282,11 +281,25 @@ class TL {
     }
 }
 
-abstract class TLBy(private val by: String, private val textMatch: TextMatch) : SeleniumBy(),
+abstract class TLBy(private val by: String, private val textMatch: TextMatch) :
+    SeleniumBy(),
     MutableMap<String, Any> by mutableMapOf() {
 
-    override fun findElements(context: SearchContext) =
-        (getWebDriver(context) as JavascriptExecutor).findElements(by, textMatch, this)
+    @Suppress("unchecked_cast")
+    override fun findElements(context: SearchContext): List<WebElement> {
+        val jsExecutor = (getWebDriver(context) as JavascriptExecutor)
+        jsExecutor.ensureScript("testing-library.js", "window.__TL__?.screen?.queryAllByTestId")
+        val script = buildString {
+            append("return window.__TL__.screen.queryAllBy$by(")
+            append(textMatch.escaped)
+            this@TLBy
+                .takeIf(TLBy::isNotEmpty)
+                ?.escaped
+                ?.let<Any, StringBuilder?> { append(", $it") }
+            append(")")
+        }
+        return jsExecutor.executeScript(script) as List<WebElement>
+    }
 
     fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 
@@ -450,23 +463,4 @@ enum class Role {
     ProgressBar, Radio, RadioGroup, Range, Region, RoleType, Row, RowGroup, RowHeader, ScrollBar, Search, SearchBox,
     Section, SectionHead, Select, Separator, Slider, SpinButton, Status, Structure, Suggestion, Switch, Tab, Table,
     TabList, TabPanel, Term, TextBox, Timer, Toolbar, Tooltip, Tree, TreeGrid, TreeItem, Widget, Window
-}
-
-@Suppress("unchecked_cast")
-private fun JavascriptExecutor.findElements(
-    by: String,
-    textMatch: TextMatch,
-    options: Map<String, Any>
-): List<WebElement> {
-    ensureScript("testing-library.js", "window.__TL__?.screen?.queryAllByTestId")
-    val script = buildString {
-        append("return window.__TL__.screen.queryAllBy$by(")
-        append(textMatch.escaped)
-        options
-            .takeIf(Map<String, Any?>::isNotEmpty)
-            ?.escaped
-            ?.let { append(", $it") }
-        append(")")
-    }
-    return executeScript(script) as List<WebElement>
 }
