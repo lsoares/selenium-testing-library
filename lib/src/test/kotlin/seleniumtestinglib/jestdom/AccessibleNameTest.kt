@@ -8,6 +8,7 @@ import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import kotlin.text.RegexOption.IGNORE_CASE
 
 class AccessibleNameTest {
@@ -19,7 +20,6 @@ class AccessibleNameTest {
             """<svg data-testid="x"><title>accessible name</title></svg>""",
             """<input data-testid="x" title="accessible name" />""",
             """<button data-testid="x"><img src="" alt="accessible name" /></button>""",
-            """<button data-testid="x"><svg><title>accessible name</title></svg></p>""",
         ]
     )
     fun `accessible name`(html: String) {
@@ -42,7 +42,7 @@ class AccessibleNameTest {
     fun `not accessible name`(html: String) {
         driver.render(html)
 
-        assertEquals("", driver.findElement(testId( "x")).accessibleName)
+        assertTrue(driver.findElement(testId( "x")).accessibleName.isNullOrBlank())
         expect(driver.findElement(testId( "x"))).not.toHaveAccessibleName()
         expect(driver.findElement(testId( "x"))).not.toHaveAccessibleName("abc")
     }

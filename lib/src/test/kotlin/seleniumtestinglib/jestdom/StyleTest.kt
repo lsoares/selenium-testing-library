@@ -21,15 +21,20 @@ class StyleTest {
 
         expect(button).toHaveStyle("display: none")
         expect(button).toHaveStyle(mapOf("display" to "none"))
+
+        val backgroundColor = when (System.getenv("BROWSER")) {
+            "firefox" -> "rgb(255, 0, 0)"
+            else -> "rgba(255, 0, 0, 1)"
+        }
         expect(button).toHaveStyle(
             """
-              background-color: rgba(255, 0, 0, 1);
+              background-color: ${backgroundColor};
               display: none;
             """
         )
         expect(button).toHaveStyle(
             mapOf(
-                "backgroundColor" to "rgba(255, 0, 0, 1)", // why?
+                "backgroundColor" to backgroundColor, // why?
                 "display" to "none",
             )
         )
@@ -39,9 +44,14 @@ class StyleTest {
                 "display" to "none",
             )
         )
+
+        val wrongBackgroundColor = when (System.getenv("BROWSER")) {
+            "firefox" -> "rgb(0, 0, 255)"
+            else -> "rgba(0, 0, 255, 1)"
+        }
         expect(button).not.toHaveStyle(
             mapOf(
-                "backgroundColor" to "rgba(0, 0, 255, 1)",
+                "backgroundColor" to wrongBackgroundColor,
                 "display" to "none",
             )
         )

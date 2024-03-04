@@ -65,7 +65,8 @@ val WebElement.isFocused: Boolean
     get() = equals(wrappedDriver.switchTo().activeElement())
 
 val WebElement.isRequired
-    get() = ((tagName == "input") and (getAttribute("type") == "file") or (ariaRole?.lowercase() in setOf(
+    get() = ((tagName == "input") and (getAttribute("type") in setOf("file", "password", "date"))
+            or (ariaRole?.lowercase() in setOf(
         "textbox",
         "checkbox",
         "radio",
@@ -73,7 +74,6 @@ val WebElement.isRequired
         "spinbutton",
         "combobox",
         "listbox",
-        "date",
     ))) and (getAttribute("required") in setOf(
         "",
         "true"

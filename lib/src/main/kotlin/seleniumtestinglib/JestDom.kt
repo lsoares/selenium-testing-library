@@ -95,7 +95,7 @@ data class JestDomMatcher(
 
     fun toHaveAccessibleName() {
         requireNotNull(element)
-        validate(element.accessibleName.isNotBlank())
+        validate(element.accessibleName.isNullOrBlank().not())
     }
 
     fun toHaveAccessibleName(expectedAccessibleName: String) {

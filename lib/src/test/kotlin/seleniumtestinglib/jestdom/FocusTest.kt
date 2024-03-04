@@ -1,5 +1,6 @@
 package seleniumtestinglib.jestdom
 
+import org.openqa.selenium.Keys
 import seleniumtestinglib.*
 import seleniumtestinglib.TL.By.testId
 import kotlin.test.Test
@@ -16,12 +17,12 @@ class FocusTest {
                 <input type="text" />
             """
         )
-        driver.user.tab()
+        driver.switchTo().activeElement().sendKeys(Keys.TAB)
         val element = driver.findElement(testId("element-to-focus"))
         assertTrue(element.isFocused)
         expect(element).toHaveFocus()
 
-        driver.user.tab()
+        driver.switchTo().activeElement().sendKeys(Keys.TAB)
         assertFalse(element.isFocused)
         expect(element).not.toHaveFocus()
     }
