@@ -9,7 +9,7 @@ import kotlin.test.Test
 class StyleTest {
 
     @Test
-    fun `with classes`() {
+    fun `to have style`() {
         driver.render(
             """<button data-testid="delete-button"
                              style="display: none; background-color: red">
@@ -28,7 +28,7 @@ class StyleTest {
         }
         expect(button).toHaveStyle(
             """
-              background-color: ${backgroundColor};
+              background-color: $backgroundColor;
               display: none;
             """
         )

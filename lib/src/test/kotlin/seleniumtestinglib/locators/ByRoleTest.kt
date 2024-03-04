@@ -10,12 +10,11 @@ import seleniumtestinglib.Role.*
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.TextMatch.JsExpression
 import java.util.regex.Pattern
-import java.util.regex.Pattern.CASE_INSENSITIVE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class ByRoleTestType {
+class ByRoleTest {
 
     private fun examples() = setOf(
         of(TextBox, """<input type="text" placeholder="5-digit zipcode" id="txtbox" />"""),
@@ -154,7 +153,7 @@ class ByRoleTestType {
         )
 
         val result = driver.findElements(
-            role(AlertDialog, descriptionAsRegex = Pattern.compile("your session", CASE_INSENSITIVE))
+            role(AlertDialog).description(Pattern.compile("your session", Pattern.CASE_INSENSITIVE))
         )
 
         assertEquals("Your session is about to expire!", result.single().text.substringAfter("Close\n"))

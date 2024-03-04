@@ -282,9 +282,11 @@ class TL {
     }
 }
 
-abstract class TLBy(private val by: String, private val textMatch: TextMatch) :
+abstract class TLBy(private val textMatch: TextMatch) :
     SeleniumBy(),
     MutableMap<String, Any> by mutableMapOf() {
+
+    private val by = javaClass.simpleName.removeSuffix("Options")
 
     @Suppress("unchecked_cast")
     override fun findElements(context: SearchContext): List<WebElement> {
@@ -314,7 +316,7 @@ abstract class TLBy(private val by: String, private val textMatch: TextMatch) :
     }
 }
 
-class AltTextOptions internal constructor(text: TextMatch) : TLBy("AltText", text) {
+class AltTextOptions internal constructor(text: TextMatch) : TLBy(text) {
     constructor(value: String) : this(value.asJsString())
     constructor(value: Pattern) : this(value.asJsExpression())
 
@@ -322,14 +324,14 @@ class AltTextOptions internal constructor(text: TextMatch) : TLBy("AltText", tex
 }
 
 
-class DisplayValueOptions internal constructor(value: TextMatch) : TLBy("DisplayValue", value) {
+class DisplayValueOptions internal constructor(value: TextMatch) : TLBy(value) {
     constructor(value: String) : this(value.asJsString())
     constructor(value: Pattern) : this(value.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
 }
 
-class LabelTextOptions internal constructor(value: TextMatch) : TLBy("LabelText", value) {
+class LabelTextOptions internal constructor(value: TextMatch) : TLBy(value) {
     constructor(value: String) : this(value.asJsString())
     constructor(value: Pattern) : this(value.asJsExpression())
 
@@ -337,14 +339,14 @@ class LabelTextOptions internal constructor(value: TextMatch) : TLBy("LabelText"
     fun selector(selector: String) = apply { set("selector", selector) }
 }
 
-class PlaceholderTextOptions internal constructor(text: TextMatch) : TLBy("PlaceholderText", text) {
+class PlaceholderTextOptions internal constructor(text: TextMatch) : TLBy(text) {
     constructor(text: String) : this(text.asJsString())
     constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
 }
 
-class TestIdOptions internal constructor(text: TextMatch) : TLBy("TestId", text) {
+class TestIdOptions internal constructor(text: TextMatch) : TLBy(text) {
     constructor(text: String) : this(text.asJsString())
     constructor(text: Pattern) : this(text.asJsExpression())
 
@@ -352,7 +354,7 @@ class TestIdOptions internal constructor(text: TextMatch) : TLBy("TestId", text)
 }
 
 
-class TextOptions internal constructor(text: TextMatch) : TLBy("Text", text) {
+class TextOptions internal constructor(text: TextMatch) : TLBy(text) {
     constructor(text: String) : this(text.asJsString())
     constructor(text: Pattern) : this(text.asJsExpression())
 
@@ -362,22 +364,22 @@ class TextOptions internal constructor(text: TextMatch) : TLBy("Text", text) {
 }
 
 
-class TitleOptions internal constructor(text: TextMatch) : TLBy("Title", text) {
+class TitleOptions internal constructor(text: TextMatch) : TLBy(text) {
     constructor(text: String) : this(text.asJsString())
     constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
 }
 
-class RoleOptions internal constructor(role: TextMatch) : TLBy("Role", role) {
+class RoleOptions internal constructor(role: TextMatch) : TLBy(role) {
     constructor(role: Role) : this(role.name.lowercase().asJsString())
 
     fun name(name: String) = apply { set("name", name) }
     fun name(name: Pattern) = apply { set("name", name.asJsExpression()) }
-    fun name(name: TextMatch) = apply { set("name", name) }
+    fun name(name: JsExpression) = apply { set("name", name) }
     fun description(description: String) = apply { set("description", description) }
     fun description(description: Pattern) = apply { set("description", description.asJsExpression()) }
-    fun description(description: TextMatch) = apply { set("description", description) }
+    fun description(description: JsExpression) = apply { set("description", description) }
     fun hidden(hidden: Boolean) = apply { set("hidden", hidden) }
     fun selected(selected: Boolean) = apply { set("selected", selected) }
     fun busy(busy: Boolean) = apply { set("busy", busy) }

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement
 import seleniumtestinglib.*
 
 /**
- * https://testing-library.com/docs/ecosystem-jest-dom/
+ * https://testing-library.com/docs/ecosystem-jest-dom
  */
 fun expect(element: WebElement?) = JestDomMatcher(element)
 
