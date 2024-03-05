@@ -36,6 +36,12 @@ class TL {
         @JvmStatic
         fun altText(text: String) = AltTextOptions(text)
 
+        @JvmStatic
+        fun altText(text: Pattern) = AltTextOptions(text)
+
+        @JvmStatic
+        fun altText(text: JsExpression) = AltTextOptions(text)
+
         /**
          * https://testing-library.com/docs/queries/bydisplayvalue
          */
@@ -60,6 +66,12 @@ class TL {
 
         @JvmStatic
         fun displayValue(value: String) = DisplayValueOptions(value)
+
+        @JvmStatic
+        fun displayValue(value: Pattern) = DisplayValueOptions(value)
+
+        @JvmStatic
+        fun displayValue(value: JsExpression) = DisplayValueOptions(value)
 
         /**
          * https://testing-library.com/docs/queries/bylabeltext
@@ -103,6 +115,12 @@ class TL {
         @JvmStatic
         fun labelText(text: String) = LabelTextOptions(text)
 
+        @JvmStatic
+        fun labelText(text: Pattern) = LabelTextOptions(text)
+
+        @JvmStatic
+        fun labelText(text: JsExpression) = LabelTextOptions(text)
+
         /**
          *  https://testing-library.com/docs/queries/byplaceholdertext
          */
@@ -127,6 +145,12 @@ class TL {
         @JvmStatic
         fun placeholderText(text: String) = PlaceholderTextOptions(text)
 
+        @JvmStatic
+        fun placeholderText(text: Pattern) = PlaceholderTextOptions(text)
+
+        @JvmStatic
+        fun placeholderText(text: JsExpression) = PlaceholderTextOptions(text)
+
         /**
          * https://testing-library.com/docs/queries/bytestid
          */
@@ -150,6 +174,12 @@ class TL {
 
         @JvmStatic
         fun testId(text: String) = TestIdOptions(text)
+
+        @JvmStatic
+        fun testId(text: Pattern) = TestIdOptions(text)
+
+        @JvmStatic
+        fun testId(text: JsExpression) = TestIdOptions(text)
 
         /**
          * https://testing-library.com/docs/queries/bytext
@@ -199,6 +229,14 @@ class TL {
         @JvmStatic
         fun text(text: String) = TextOptions(text)
 
+
+        @JvmStatic
+        fun text(text: Pattern) = TextOptions(text)
+
+
+        @JvmStatic
+        fun text(text: JsExpression) = TextOptions(text)
+
         /**
          * https://testing-library.com/docs/queries/bytitle
          */
@@ -223,6 +261,12 @@ class TL {
 
         @JvmStatic
         fun title(title: String) = TitleOptions(title)
+
+        @JvmStatic
+        fun title(title: Pattern) = TitleOptions(title)
+
+        @JvmStatic
+        fun title(title: JsExpression) = TitleOptions(title)
 
         /**
          * https://testing-library.com/docs/queries/byrole
