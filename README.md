@@ -13,7 +13,7 @@ I'm a fan of the Testing Library because it encourages "testing as a user":
 Use the [library's latest version](https://search.maven.org/artifact/com.luissoares/selenium-testing-library):
 
 ```kotlin
-implementation("com.luissoares:selenium-testing-library:4.1")
+implementation("com.luissoares:selenium-testing-library:4.1.1")
 ```
 
 ---
