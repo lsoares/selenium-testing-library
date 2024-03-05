@@ -37,6 +37,19 @@ public class JavaApiTest {
 
         var result = getDriver().findElements(altText("incredibles").exact(false));
 
-        assertEquals("img", result.get(0).getTagName());
+        assertEquals("img", result .get(0).getTagName());
     }
+
+
+    @Test
+    public void byText() {
+        render(getDriver(), "<span>I accept</span>" +
+                "<div>I accept</div>" +
+                "<script>I accept</script>");
+
+        var result = getDriver().findElements(text("I accept").exact(true).ignore(false).selector("span"));
+
+        assertEquals("span", result.get(0).getTagName());
+    }
+
 }
