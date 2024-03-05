@@ -22,16 +22,13 @@ class TL {
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun altText(text: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
+        fun altText(text: Pattern, normalizer: JsExpression? = null) =
             AltTextOptions(text)
-                .apply { exact?.let(::exact) }
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun altText(text: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            AltTextOptions(text)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun altText(text: JsExpression, normalizer: JsExpression? = null) =
+            AltTextOptions(text).apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
         fun altText(text: String) = AltTextOptions(text)
@@ -52,16 +49,12 @@ class TL {
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun displayValue(value: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            DisplayValueOptions(value)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun displayValue(value: Pattern, normalizer: JsExpression? = null) =
+            DisplayValueOptions(value).apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun displayValue(value: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            DisplayValueOptions(value)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun displayValue(value: JsExpression, normalizer: JsExpression? = null) =
+            DisplayValueOptions(value).apply { normalizer?.let(::normalizer) }
 
 
         @JvmStatic
@@ -91,24 +84,20 @@ class TL {
         @JvmStatic
         fun labelText(
             text: Pattern,
-            exact: Boolean? = null,
             selector: String? = null,
             normalizer: JsExpression? = null
         ) =
             LabelTextOptions(text)
-                .apply { exact?.let(::exact) }
                 .apply { selector?.let(::selector) }
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
         fun labelText(
             text: JsExpression,
-            exact: Boolean? = null,
             selector: String? = null,
             normalizer: JsExpression? = null
         ) =
             LabelTextOptions(text)
-                .apply { exact?.let(::exact) }
                 .apply { selector?.let(::selector) }
                 .apply { normalizer?.let(::normalizer) }
 
@@ -131,16 +120,12 @@ class TL {
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun placeholderText(text: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            PlaceholderTextOptions(text)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun placeholderText(text: Pattern, normalizer: JsExpression? = null) =
+            PlaceholderTextOptions(text).apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun placeholderText(text: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            PlaceholderTextOptions(text)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun placeholderText(text: JsExpression, normalizer: JsExpression? = null) =
+            PlaceholderTextOptions(text).apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
         fun placeholderText(text: String) = PlaceholderTextOptions(text)
@@ -161,16 +146,12 @@ class TL {
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun testId(text: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            TestIdOptions(text)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun testId(text: Pattern, normalizer: JsExpression? = null) =
+            TestIdOptions(text).apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun testId(text: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            TestIdOptions(text)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun testId(text: JsExpression, normalizer: JsExpression? = null) =
+            TestIdOptions(text).apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
         fun testId(text: String) = TestIdOptions(text)
@@ -202,12 +183,10 @@ class TL {
         fun text(
             text: Pattern,
             selector: String? = null,
-            exact: Boolean? = null,
             ignore: String? = null,
             normalizer: JsExpression? = null
         ) =
             TextOptions(text)
-                .apply { exact?.let(::exact) }
                 .apply { normalizer?.let(::normalizer) }
                 .apply { selector?.let { selector(it) } }
                 .apply { ignore?.let(::ignore) }
@@ -216,12 +195,10 @@ class TL {
         fun text(
             text: JsExpression,
             selector: String? = null,
-            exact: Boolean? = null,
             ignore: String? = null,
             normalizer: JsExpression? = null
         ) =
             TextOptions(text)
-                .apply { exact?.let(::exact) }
                 .apply { normalizer?.let(::normalizer) }
                 .apply { selector?.let { selector(it) } }
                 .apply { ignore?.let { ignore(it) } }
@@ -229,10 +206,8 @@ class TL {
         @JvmStatic
         fun text(text: String) = TextOptions(text)
 
-
         @JvmStatic
         fun text(text: Pattern) = TextOptions(text)
-
 
         @JvmStatic
         fun text(text: JsExpression) = TextOptions(text)
@@ -247,17 +222,13 @@ class TL {
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
-        fun title(title: Pattern, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            TitleOptions(title)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun title(title: Pattern, normalizer: JsExpression? = null) =
+            TitleOptions(title).apply { normalizer?.let(::normalizer) }
 
 
         @JvmStatic
-        fun title(title: JsExpression, exact: Boolean? = null, normalizer: JsExpression? = null) =
-            TitleOptions(title)
-                .apply { exact?.let(::exact) }
-                .apply { normalizer?.let(::normalizer) }
+        fun title(title: JsExpression, normalizer: JsExpression? = null) =
+            TitleOptions(title).apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
         fun title(title: String) = TitleOptions(title)
@@ -293,32 +264,32 @@ class TL {
             level: Int? = null,
             value: Value? = null,
             queryFallbacks: Boolean? = null,
-        ) = role(role).let {
+        ) = role(role).apply {
             require(listOfNotNull(name, nameAsFunction, nameAsRegex).size <= 1) { "Please provide name just once." }
             require(listOfNotNull(description, descriptionAsFunction, descriptionAsRegex).size <= 1) {
                 "Please provide description just once."
             }
-            name?.let(it::name)
-            name?.let(it::name)
-            nameAsFunction?.let(it::name)
-            nameAsRegex?.let(it::name)
-            description?.let(it::description)
-            descriptionAsFunction?.let(it::description)
-            descriptionAsRegex?.let(it::description)
-            hidden?.let(it::hidden)
-            normalizer?.let(it::normalizer)
-            selected?.let(it::selected)
-            busy?.let(it::busy)
-            checked?.let(it::checked)
-            pressed?.let(it::pressed)
-            suggest?.let(it::suggest)
-            expanded?.let(it::expanded)
-            value?.let(it::value)
-            current?.let(it::current)
-            currentAsBoolean?.let(it::current)
-            level?.let(it::level)
-            queryFallbacks?.let(it::queryFallbacks)
-            it
+            require(listOfNotNull(currentAsBoolean, current).size <= 1) { "Please provide current just once." }
+            name?.let(::name)
+            name?.let(::name)
+            nameAsFunction?.let(::name)
+            nameAsRegex?.let(::name)
+            description?.let(::description)
+            descriptionAsFunction?.let(::description)
+            descriptionAsRegex?.let(::description)
+            hidden?.let(::hidden)
+            normalizer?.let(::normalizer)
+            selected?.let(::selected)
+            busy?.let(::busy)
+            checked?.let(::checked)
+            pressed?.let(::pressed)
+            suggest?.let(::suggest)
+            expanded?.let(::expanded)
+            value?.let(::value)
+            current?.let(::current)
+            currentAsBoolean?.let(::current)
+            level?.let(::level)
+            queryFallbacks?.let(::queryFallbacks)
         }
 
         @JvmStatic
@@ -326,11 +297,11 @@ class TL {
     }
 }
 
-abstract class TLBy(private val textMatch: TextMatch) :
-    SeleniumBy(),
-    MutableMap<String, Any> by mutableMapOf() {
+abstract class TLBy(private val textMatch: TextMatch) : SeleniumBy() {
 
     private val by = javaClass.simpleName.removeSuffix("Options")
+    private val options = mutableMapOf<String, Any>()
+    protected fun set(key: String, value: Any) = apply { options[key] = value }
 
     @Suppress("unchecked_cast")
     override fun findElements(context: SearchContext): List<WebElement> {
@@ -345,18 +316,16 @@ abstract class TLBy(private val textMatch: TextMatch) :
                 append("arguments[0], ")
             }
             append(textMatch.escaped)
-            takeIf(TLBy::isNotEmpty)
+            options.takeIf { it.isNotEmpty() }
                 ?.escaped
                 ?.let { append(", $it") }
             append(")")
         }, context as? WebElement) as List<WebElement>
     }
 
-    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
-
     override fun toString(): String {
-        val prefix = if (entries.isEmpty()) "" else ", "
-        return "By$by($textMatch$prefix${entries.joinToString { "${it.key}: ${it.value}" }})"
+        val prefix = if (options.entries.isEmpty()) "" else ", "
+        return "By$by($textMatch$prefix${options.entries.joinToString { "${it.key}: ${it.value}" }})"
     }
 }
 
@@ -365,14 +334,15 @@ class AltTextOptions internal constructor(text: TextMatch) : TLBy(text) {
     internal constructor(value: Pattern) : this(value.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 }
-
 
 class DisplayValueOptions internal constructor(value: TextMatch) : TLBy(value) {
     internal constructor(value: String) : this(value.asJsString())
     internal constructor(value: Pattern) : this(value.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 }
 
 class LabelTextOptions internal constructor(value: TextMatch) : TLBy(value) {
@@ -381,6 +351,7 @@ class LabelTextOptions internal constructor(value: TextMatch) : TLBy(value) {
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
     fun selector(selector: String) = apply { set("selector", selector) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 }
 
 class PlaceholderTextOptions internal constructor(text: TextMatch) : TLBy(text) {
@@ -388,6 +359,7 @@ class PlaceholderTextOptions internal constructor(text: TextMatch) : TLBy(text) 
     internal constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 }
 
 class TestIdOptions internal constructor(text: TextMatch) : TLBy(text) {
@@ -395,8 +367,8 @@ class TestIdOptions internal constructor(text: TextMatch) : TLBy(text) {
     internal constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 }
-
 
 class TextOptions internal constructor(text: TextMatch) : TLBy(text) {
     internal constructor(text: String) : this(text.asJsString())
@@ -406,14 +378,15 @@ class TextOptions internal constructor(text: TextMatch) : TLBy(text) {
     fun ignore(ignore: String) = apply { set("ignore", ignore) }
     fun ignore(ignore: Boolean) = apply { set("ignore", ignore) }
     fun selector(selector: String) = apply { set("selector", selector) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 }
-
 
 class TitleOptions internal constructor(text: TextMatch) : TLBy(text) {
     internal constructor(text: String) : this(text.asJsString())
     internal constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 }
 
 class RoleOptions internal constructor(role: TextMatch) : TLBy(role) {
@@ -437,6 +410,7 @@ class RoleOptions internal constructor(role: TextMatch) : TLBy(role) {
     fun level(level: Int) = apply { set("level", level) }
     fun value(value: Value) = apply { set("value", value.toMap()) }
     fun queryFallbacks(queryFallbacks: Boolean) = apply { set("queryFallbacks", queryFallbacks) }
+    fun normalizer(normalizer: JsExpression) = apply { set("normalizer", normalizer) }
 }
 
 sealed class TextMatch(open val value: String) {
