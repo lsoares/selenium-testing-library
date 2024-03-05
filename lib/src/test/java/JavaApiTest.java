@@ -15,11 +15,12 @@ public class JavaApiTest {
         render(getDriver(), "<div data-testid='custom' />");
 
         var result = getDriver().findElement(testId("custom"));
+
         assertEquals("div", result.getTagName());
     }
 
     @Test
-    public void testByRole() {
+    public void byRole() {
         render(getDriver(), "<h1>something as a user something</h1>");
 
         var result = getDriver().findElements(
@@ -31,7 +32,7 @@ public class JavaApiTest {
 
 
     @Test
-    public void testByAltText() {
+    public void byAltText() {
         render(getDriver(), "<img alt='Incredibles 2 Poster' src='/incredibles-2.png' />");
 
         var result = getDriver().findElements(altText("incredibles").exact(false));

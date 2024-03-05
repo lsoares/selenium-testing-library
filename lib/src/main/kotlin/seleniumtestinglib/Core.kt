@@ -73,7 +73,7 @@ class TL {
         ) =
             LabelTextOptions(text)
                 .apply { exact?.let(::exact) }
-                .apply { selector?.let { selector(it) } }
+                .apply { selector?.let(::selector) }
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
@@ -85,7 +85,7 @@ class TL {
         ) =
             LabelTextOptions(text)
                 .apply { exact?.let(::exact) }
-                .apply { selector?.let { selector(it) } }
+                .apply { selector?.let(::selector) }
                 .apply { normalizer?.let(::normalizer) }
 
         @JvmStatic
@@ -166,7 +166,7 @@ class TL {
                 .apply { exact?.let(::exact) }
                 .apply { normalizer?.let(::normalizer) }
                 .apply { selector?.let(::selector) }
-                .apply { ignore?.let { ignore(it) } }
+                .apply { ignore?.let(::ignore) }
 
         @JvmStatic
         fun text(
@@ -317,46 +317,46 @@ abstract class TLBy(private val textMatch: TextMatch) :
 }
 
 class AltTextOptions internal constructor(text: TextMatch) : TLBy(text) {
-    constructor(value: String) : this(value.asJsString())
-    constructor(value: Pattern) : this(value.asJsExpression())
+    internal constructor(value: String) : this(value.asJsString())
+    internal constructor(value: Pattern) : this(value.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
 }
 
 
 class DisplayValueOptions internal constructor(value: TextMatch) : TLBy(value) {
-    constructor(value: String) : this(value.asJsString())
-    constructor(value: Pattern) : this(value.asJsExpression())
+    internal constructor(value: String) : this(value.asJsString())
+    internal constructor(value: Pattern) : this(value.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
 }
 
 class LabelTextOptions internal constructor(value: TextMatch) : TLBy(value) {
-    constructor(value: String) : this(value.asJsString())
-    constructor(value: Pattern) : this(value.asJsExpression())
+    internal constructor(value: String) : this(value.asJsString())
+    internal constructor(value: Pattern) : this(value.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
     fun selector(selector: String) = apply { set("selector", selector) }
 }
 
 class PlaceholderTextOptions internal constructor(text: TextMatch) : TLBy(text) {
-    constructor(text: String) : this(text.asJsString())
-    constructor(text: Pattern) : this(text.asJsExpression())
+    internal constructor(text: String) : this(text.asJsString())
+    internal constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
 }
 
 class TestIdOptions internal constructor(text: TextMatch) : TLBy(text) {
-    constructor(text: String) : this(text.asJsString())
-    constructor(text: Pattern) : this(text.asJsExpression())
+    internal constructor(text: String) : this(text.asJsString())
+    internal constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
 }
 
 
 class TextOptions internal constructor(text: TextMatch) : TLBy(text) {
-    constructor(text: String) : this(text.asJsString())
-    constructor(text: Pattern) : this(text.asJsExpression())
+    internal constructor(text: String) : this(text.asJsString())
+    internal constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
     fun ignore(ignore: String) = apply { set("ignore", ignore) }
@@ -366,14 +366,14 @@ class TextOptions internal constructor(text: TextMatch) : TLBy(text) {
 
 
 class TitleOptions internal constructor(text: TextMatch) : TLBy(text) {
-    constructor(text: String) : this(text.asJsString())
-    constructor(text: Pattern) : this(text.asJsExpression())
+    internal constructor(text: String) : this(text.asJsString())
+    internal constructor(text: Pattern) : this(text.asJsExpression())
 
     fun exact(exact: Boolean) = apply { set("exact", exact) }
 }
 
 class RoleOptions internal constructor(role: TextMatch) : TLBy(role) {
-    constructor(role: Role) : this(role.name.lowercase().asJsString())
+    internal constructor(role: Role) : this(role.name.lowercase().asJsString())
 
     fun name(name: String) = apply { set("name", name) }
     fun name(name: Pattern) = apply { set("name", name.asJsExpression()) }
