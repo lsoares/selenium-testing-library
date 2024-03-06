@@ -1,7 +1,7 @@
 package seleniumtestinglib.locators
 
+import seleniumtestinglib.JsFunction
 import seleniumtestinglib.TL.By.title
-import seleniumtestinglib.asJsExpression
 import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -56,7 +56,7 @@ class ByTitleTest {
     fun function() {
         driver.render("<div title='foobar'>Hello World!</div>")
 
-        val result = driver.findElement(title("c => c.startsWith('foo')".asJsExpression()))
+        val result = driver.findElement(title(JsFunction("c => c.startsWith('foo')")))
 
         assertEquals("Hello World!", result.text)
     }

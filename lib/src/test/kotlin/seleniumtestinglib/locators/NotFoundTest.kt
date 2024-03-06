@@ -6,13 +6,13 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
 import seleniumtestinglib.Current.Page
+import seleniumtestinglib.JsFunction
 import seleniumtestinglib.Role.SpinButton
 import seleniumtestinglib.TL.By.altText
 import seleniumtestinglib.TL.By.placeholderText
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.TL.By.text
 import seleniumtestinglib.Value
-import seleniumtestinglib.asJsExpression
 import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern.CASE_INSENSITIVE
@@ -29,7 +29,7 @@ class NotFoundTest {
             "ByText(/a/i)"
         ),
         of(
-            placeholderText("el => true".asJsExpression()),
+            placeholderText(JsFunction("el => true")),
             "ByPlaceholderText(el => true)"
         ),
         of(

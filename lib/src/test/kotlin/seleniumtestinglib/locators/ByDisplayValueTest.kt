@@ -2,9 +2,9 @@ package seleniumtestinglib.locators
 
 import org.openqa.selenium.By.tagName
 import org.openqa.selenium.support.ui.Select
+import seleniumtestinglib.JsFunction
 import seleniumtestinglib.TL.By.displayValue
 import seleniumtestinglib.TL.By.placeholderText
-import seleniumtestinglib.asJsExpression
 import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -49,7 +49,7 @@ class ByDisplayValueTest {
         driver.render("<input placeholder='username' />")
         driver.findElement(placeholderText("username")).sendKeys("selenium")
 
-        val result = driver.findElement(displayValue("c => c.startsWith('selen')".asJsExpression()))
+        val result = driver.findElement(displayValue(JsFunction("c => c.startsWith('selen')")))
 
         assertEquals("input", result.tagName)
     }

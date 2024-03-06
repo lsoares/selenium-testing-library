@@ -3,8 +3,8 @@ package seleniumtestinglib.locators
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.NoSuchElementException
+import seleniumtestinglib.JsFunction
 import seleniumtestinglib.TL.By.altText
-import seleniumtestinglib.TextMatch.JsExpression
 import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -47,7 +47,7 @@ class ByAltTextTest {
         driver.render("<div alt='Incredibles 2 Poster' src='/incredibles-2.png' />")
 
         val result = runCatching {
-            driver.findElement(altText(JsExpression("c => c.startsWith('inc')")))
+            driver.findElement(altText(JsFunction("c => c.startsWith('inc')")))
         }
 
         assertTrue(result.exceptionOrNull() is NoSuchElementException)

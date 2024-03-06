@@ -1,7 +1,7 @@
 package seleniumtestinglib.locators
 
+import seleniumtestinglib.JsFunction
 import seleniumtestinglib.TL.By.testId
-import seleniumtestinglib.asJsExpression
 import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -32,7 +32,7 @@ class ByTestIdTest {
     fun function() {
         driver.render(""" <div data-testid="custom-element" /> """)
 
-        val result = driver.findElement(testId("c => c.startsWith('custom')".asJsExpression()))
+        val result = driver.findElement(testId(JsFunction("c => c.startsWith('custom')")))
 
         assertEquals("div", result.tagName)
     }

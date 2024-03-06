@@ -1,10 +1,10 @@
 import org.junit.jupiter.api.Test;
+import seleniumtestinglib.JsFunction;
 
 import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seleniumtestinglib.CoreKt.asJsExpression;
 import static seleniumtestinglib.DriverKt.getDriver;
 import static seleniumtestinglib.DriverKt.render;
 import static seleniumtestinglib.Role.Heading;
@@ -50,7 +50,7 @@ public class JavaApiTest {
     public void byPlaceholderText() {
         render(getDriver(), "<input placeholder='Username' />");
 
-        var result = getDriver().findElement(placeholderText(asJsExpression("c => c.startsWith('User')")));
+        var result = getDriver().findElement(placeholderText(new JsFunction("c => c.startsWith('User')")));
 
         assertEquals("input", result.getTagName());
     }

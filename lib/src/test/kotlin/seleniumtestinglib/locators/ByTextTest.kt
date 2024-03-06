@@ -4,8 +4,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.of
 import org.junit.jupiter.params.provider.MethodSource
 import org.openqa.selenium.NoSuchElementException
-import seleniumtestinglib.TL
-import seleniumtestinglib.asJsExpression
+import seleniumtestinglib.JsFunction
+import seleniumtestinglib.TL.By.text
 import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -19,7 +19,7 @@ class ByTextTest {
     fun `by text`() {
         driver.render("<article><span>I accept</span><div></div></article>")
 
-        val result = driver.findElement(TL.text("I accept"))
+        val result = driver.findElement(text("I accept"))
 
         assertEquals("span", result.tagName)
     }
@@ -28,7 +28,7 @@ class ByTextTest {
     fun `ensure quotes are escaped`() {
         driver.render(""""<article><span>with quotes"'`</span><div></div></article>""")
 
-        val result = driver.findElement(TL.By.text("""with quotes"'`"""))
+        val result = driver.findElement(text("""with quotes"'`"""))
 
         assertEquals("span", result.tagName)
     }
@@ -37,7 +37,7 @@ class ByTextTest {
     fun `with a selector`() {
         driver.render("<article><span>Username</span><div>Username</div></article>")
 
-        val result = driver.findElement(TL.text("Username", selector = "div"))
+        val result = driver.findElement(text("Username", selector = "div"))
 
         assertEquals("div", result.tagName)
     }
@@ -47,7 +47,7 @@ class ByTextTest {
         driver.render("<span></span>")
 
         val result = runCatching {
-            driver.findElement(TL.text("abc"))
+            driver.findElement(text("abc"))
         }
 
         assertTrue(result.exceptionOrNull() is NoSuchElementException)
@@ -58,7 +58,7 @@ class ByTextTest {
         driver.render("<span>Username</span><div>Username</div>")
 
         val result = runCatching {
-            driver.findElement(TL.text("Username", selector = "x"))
+            driver.findElement(text("Username", selector = "x"))
         }
 
         assertTrue(result.exceptionOrNull() is NoSuchElementException)
@@ -76,7 +76,7 @@ class ByTextTest {
         """
         )
 
-        val result = driver.findElement(TL.text("accept", exact = false, selector = "div p"))
+        val result = driver.findElement(text("accept", exact = false, selector = "div p"))
 
         assertEquals("p", result.tagName)
     }
@@ -85,7 +85,7 @@ class ByTextTest {
     fun regex() {
         driver.render("<p>I accept</p>")
 
-        val result = driver.findElement(TL.text(Pattern.compile("ACCEPT", Pattern.CASE_INSENSITIVE)))
+        val result = driver.findElement(text(Pattern.compile("ACCEPT", Pattern.CASE_INSENSITIVE)))
 
         assertEquals("p", result.tagName)
     }
@@ -95,7 +95,7 @@ class ByTextTest {
         driver.render("<p>Hello World</p>")
 
         val result = driver.findElement(
-            TL.text("(content, element) => content.startsWith('Hello') && element.tagName == 'P'".asJsExpression())
+            text(JsFunction("(content, element) => content.startsWith('Hello') && element.tagName == 'P'"))
         )
 
         assertEquals("p", result.tagName)
@@ -105,7 +105,7 @@ class ByTextTest {
     fun `case insensitive`() {
         driver.render("<p>I accept</p>")
 
-        val result = driver.findElement(TL.text("ACCEPT", exact = false))
+        val result = driver.findElement(text("ACCEPT", exact = false))
 
         assertEquals("p", result.tagName)
     }
@@ -121,7 +121,7 @@ class ByTextTest {
             """
         )
 
-        val result = driver.findElements(TL.text("I accept", ignore = ignore))
+        val result = driver.findElements(text("I accept", ignore = ignore))
 
         assertEquals(expectedFound, result.size)
     }
@@ -143,7 +143,7 @@ class ByTextTest {
             """
         )
 
-        val result = driver.findElements(TL.text("I accept").ignore(false))
+        val result = driver.findElements(text("I accept").ignore(false))
 
         assertEquals(3, result.size)
     }
@@ -153,7 +153,7 @@ class ByTextTest {
         driver.render("<p>I accept</p>")
 
         val result = driver.findElement(
-            TL.text("I accept123", normalizer = "str => str + '123'".asJsExpression())
+            text("I accept123", normalizer = JsFunction( "str => str + '123'"))
         )
 
         assertEquals("p", result.tagName)

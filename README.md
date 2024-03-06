@@ -27,10 +27,10 @@ The [core API](https://testing-library.com/docs) contains the selectors which ar
 
 ```kotlin
 driver.findElements(altText("first name"))
-driver.findElement(displayValue("c => c.startsWith('selen')".asJsExpression()))
+driver.findElement(displayValue(JsFunction("c => c.startsWith('selen')")))
 driver.findElements(labelText("active"))
 driver.findElements(placeholderText("first name", exact = false))
-driver.findElements(role(Heading, nameAsFunction = "c => c.startsWith('something')".asJsExpression()))
+driver.findElements(role(Heading, nameAsFunction = JsFunction("c => c.startsWith('something')")))
 driver.findElements(role(Button, nameAsRegex = Pattern.compile("confirm")))
 driver.findElements(testId("test-id"))
 driver.findElements(text("present", exact = false, selector = "span"))

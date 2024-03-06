@@ -1,7 +1,7 @@
 package seleniumtestinglib.locators
 
+import seleniumtestinglib.JsFunction
 import seleniumtestinglib.TL.By.labelText
-import seleniumtestinglib.asJsExpression
 import seleniumtestinglib.driver
 import seleniumtestinglib.render
 import java.util.regex.Pattern
@@ -91,7 +91,7 @@ class ByLabelTextTest {
     fun function() {
         driver.render("<input aria-label='Username' />")
 
-        val result = driver.findElement(labelText("c => c.startsWith('User')".asJsExpression()))
+        val result = driver.findElement(labelText(JsFunction("c => c.startsWith('User')")))
 
         assertEquals("input", result.tagName)
     }
