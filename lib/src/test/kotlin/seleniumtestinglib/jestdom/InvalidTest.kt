@@ -4,7 +4,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
 import seleniumtestinglib.isInvalid
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
@@ -27,7 +26,6 @@ class InvalidTest {
         val element = driver.findElement(testId("invalid"))
 
         assertTrue(element.isInvalid)
-        expect(element).toBeInvalid()
     }
 
     @ParameterizedTest
@@ -45,6 +43,5 @@ class InvalidTest {
         val element = driver.findElement(testId("not-invalid"))
 
         assertFalse(element.isInvalid)
-        expect(element).not.toBeInvalid()
     }
 }

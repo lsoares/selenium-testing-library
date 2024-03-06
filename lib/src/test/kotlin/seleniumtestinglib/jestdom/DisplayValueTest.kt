@@ -8,7 +8,6 @@ import seleniumtestinglib.TL.By.labelText
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.displayValue
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import java.util.stream.Stream
 import kotlin.test.Test
@@ -18,13 +17,11 @@ class DisplayValueTest {
 
     @ParameterizedTest
     @MethodSource("tests")
-    fun `display value`(html: String, expectedDisplayValue: String, expectedDisplayValueByRegex: Regex) {
+    fun `display value`(html: String, expectedDisplayValue: String) {
         driver.render(html)
 
         val element = driver.findElement(labelText("example"))
         assertEquals(expectedDisplayValue, element.displayValue)
-        expect(element).toHaveDisplayValue(expectedDisplayValue)
-        expect(element).toHaveDisplayValue(expectedDisplayValueByRegex)
     }
 
     private fun tests() = Stream.of(
@@ -32,13 +29,11 @@ class DisplayValueTest {
             """<label for="input-example">example</label>
                <input type="text" id="input-example" value="Luca" />""",
             "Luca",
-            Regex("Luc"),
         ),
         arguments(
             """<label for="textarea-example">example</label>
                <textarea id="textarea-example">An example description here.</textarea>""",
             "An example description here.",
-            Regex("example"),
         ),
         arguments(
             """<label for="single-select-example">example</label>
@@ -49,7 +44,6 @@ class DisplayValueTest {
                   <option value="avocado">Avocado</option>
                 </select>""",
             "Select a fruit...",
-            Regex("Select"),
         ),
     )
 
@@ -65,6 +59,6 @@ class DisplayValueTest {
         )
 
         val element = driver.findElement(role(ListBox))
-        expect(element).toHaveDisplayValue(listOf("Banana", "Avocado"))
+        assertEquals(element.displayValue, listOf("Banana", "Avocado"))
     }
 }

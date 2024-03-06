@@ -4,7 +4,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.By.cssSelector
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
 import seleniumtestinglib.isRequired
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
@@ -32,7 +31,6 @@ class RequiredTest {
 
         val element = driver.findElement(cssSelector("input,select,textarea,div"))
         assertTrue(element.isRequired)
-        expect(element).toBeRequired()
     }
 
     @ParameterizedTest
@@ -49,6 +47,5 @@ class RequiredTest {
 
         val element = driver.findElement(cssSelector("input,div"))
         assertFalse(element.isRequired)
-        expect(element).not.toBeRequired()
     }
 }

@@ -2,9 +2,11 @@ package seleniumtestinglib.jestdom
 
 import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
+import seleniumtestinglib.hasStyle
 import seleniumtestinglib.render
 import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class StyleTest {
 
@@ -19,27 +21,29 @@ class StyleTest {
 
         val button = driver.findElement(testId("delete-button"))
 
-        expect(button).toHaveStyle("display: none")
-        expect(button).toHaveStyle(mapOf("display" to "none"))
+        assertTrue(button.hasStyle("display: none"))
+        assertTrue(button.hasStyle("display" to "none"))
 
         val backgroundColor = when (System.getenv("BROWSER")) {
             "firefox" -> "rgb(255, 0, 0)"
             else -> "rgba(255, 0, 0, 1)"
         }
-        expect(button).toHaveStyle(
-            """
+        assertTrue(
+            button.hasStyle(
+                """
               background-color: $backgroundColor;
               display: none;
             """
+            )
         )
-        expect(button).toHaveStyle(
-            mapOf(
+        assertTrue(
+            button.hasStyle(
                 "backgroundColor" to backgroundColor, // why?
                 "display" to "none",
             )
         )
-        expect(button).not.toHaveStyle(
-            mapOf(
+        assertFalse(
+            button.hasStyle(
                 "background-color" to "blue",
                 "display" to "none",
             )
@@ -49,8 +53,8 @@ class StyleTest {
             "firefox" -> "rgb(0, 0, 255)"
             else -> "rgba(0, 0, 255, 1)"
         }
-        expect(button).not.toHaveStyle(
-            mapOf(
+        assertFalse(
+            button.hasStyle(
                 "backgroundColor" to wrongBackgroundColor,
                 "display" to "none",
             )

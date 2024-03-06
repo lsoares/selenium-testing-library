@@ -2,9 +2,12 @@ package seleniumtestinglib.jestdom
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import seleniumtestinglib.*
+import seleniumtestinglib.Role
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.TL.By.testId
+import seleniumtestinglib.driver
+import seleniumtestinglib.isDisabled
+import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -23,7 +26,6 @@ class DisabledTest {
         val element = driver.findElement(testId("test1"))
 
         assertTrue(element.isDisabled)
-        expect(element).toBeDisabled()
     }
 
     @Test
@@ -32,6 +34,5 @@ class DisabledTest {
         val element = driver.findElement(role(Role.Link))
 
         assertFalse(element.isDisabled)
-        expect(element).not.toBeDisabled()
     }
 }

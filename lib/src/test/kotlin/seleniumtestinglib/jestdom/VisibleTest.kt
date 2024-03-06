@@ -4,7 +4,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
 import seleniumtestinglib.isVisible
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
@@ -27,7 +26,6 @@ class VisibleTest {
         val element = driver.findElement(testId("x"))
 
         assertTrue(element.isVisible)
-        expect(element).toBeVisible()
     }
 
     @ParameterizedTest
@@ -53,6 +51,5 @@ class VisibleTest {
         val element = driver.findElement(testId("x"))
 
         assertFalse(element.isVisible)
-        expect(element).not.toBeVisible()
     }
 }

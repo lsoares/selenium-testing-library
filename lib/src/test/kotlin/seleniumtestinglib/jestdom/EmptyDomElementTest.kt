@@ -4,8 +4,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.openqa.selenium.By
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
+import seleniumtestinglib.isEmptyDomElement
 import seleniumtestinglib.render
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class EmptyDomElementTest {
 
@@ -19,7 +21,7 @@ class EmptyDomElementTest {
     fun empty(html: String) {
         driver.render(html)
 
-        expect(driver.findElement(By.tagName("span"))).toBeEmptyDomElement()
+        assertTrue(driver.findElement(By.tagName("span")).isEmptyDomElement)
     }
 
     @ParameterizedTest
@@ -32,6 +34,6 @@ class EmptyDomElementTest {
     fun `not empty`(html: String) {
         driver.render(html)
 
-        expect(driver.findElement(By.tagName("span"))).not.toBeEmptyDomElement()
+        assertFalse(driver.findElement(By.tagName("span")).isEmptyDomElement)
     }
 }

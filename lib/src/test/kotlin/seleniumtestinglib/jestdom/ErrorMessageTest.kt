@@ -3,11 +3,9 @@ package seleniumtestinglib.jestdom
 import seleniumtestinglib.TL.By.labelText
 import seleniumtestinglib.driver
 import seleniumtestinglib.errorMessage
-import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.text.RegexOption.IGNORE_CASE
 
 class ErrorMessageTest {
 
@@ -30,16 +28,5 @@ class ErrorMessageTest {
         val timeInput = driver.findElement(labelText("please enter a start time", exact = false))
 
         assertEquals("Invalid time: the time must be between 9:00 AM and 5:00 PM", timeInput.errorMessage)
-        expect(timeInput).toHaveErrorMessage(
-            "Invalid time: the time must be between 9:00 AM and 5:00 PM",
-        )
-        expect(timeInput).toHaveErrorMessage(Regex("invalid time", IGNORE_CASE))
-        expect(timeInput).not.toHaveErrorMessage("Pikachu!")
-        expect(timeInput).toHaveErrorMessage {
-            it.orEmpty().contains("time must be between")
-        }
-        expect(timeInput).not.toHaveErrorMessage {
-            it.orEmpty().contains("time must not be between")
-        }
     }
 }

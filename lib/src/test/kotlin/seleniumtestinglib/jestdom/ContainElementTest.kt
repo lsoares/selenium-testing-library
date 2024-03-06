@@ -1,10 +1,12 @@
 package seleniumtestinglib.jestdom
 
 import seleniumtestinglib.TL.By.testId
+import seleniumtestinglib.containsElement
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class ContainElementTest {
 
@@ -15,7 +17,7 @@ class ContainElementTest {
         val ancestor = driver.findElement(testId( "ancestor"))
         val descendant = driver.findElement(testId( "descendant"))
 
-        expect(ancestor).toContainElement(descendant)
-        expect(descendant).not.toContainElement(ancestor)
+        assertTrue(ancestor.containsElement(descendant))
+        assertFalse(descendant.containsElement(ancestor))
     }
 }

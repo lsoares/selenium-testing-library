@@ -2,7 +2,6 @@ package seleniumtestinglib.jestdom
 
 import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
 import seleniumtestinglib.render
 import seleniumtestinglib.value
 import kotlin.test.Test
@@ -31,12 +30,10 @@ class ValueTest {
         val selectInput = driver.findElement(testId("select-number"))
 
         assertEquals("text", textInput.value)
-        expect(textInput).toHaveValue("text")
         assertEquals(5, numberInput.value)
-        expect(numberInput).toHaveValue(5)
         assertEquals("", emptyInput.value)
-        expect(emptyInput).not.toHaveValue()
+        assertEquals(emptyInput.value, "")
         assertEquals(listOf("second", "third"), selectInput.value)
-        expect(selectInput).toHaveValue(listOf("second", "third"))
+        assertEquals(selectInput.value, listOf("second", "third"))
     }
 }

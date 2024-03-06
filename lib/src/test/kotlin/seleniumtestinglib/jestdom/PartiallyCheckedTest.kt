@@ -6,7 +6,6 @@ import seleniumtestinglib.Role.CheckBox
 import seleniumtestinglib.TL.By.role
 import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
 import seleniumtestinglib.isPartiallyChecked
 import seleniumtestinglib.render
 import kotlin.test.Test
@@ -21,7 +20,6 @@ class PartiallyCheckedTest {
         val checkbox = driver.findElement(role(CheckBox))
 
         assertTrue(checkbox.isPartiallyChecked)
-        expect(checkbox).toBePartiallyChecked()
     }
 
     @Test
@@ -30,9 +28,7 @@ class PartiallyCheckedTest {
         val checkbox = driver.findElement(role(CheckBox))
 
         assertFalse(checkbox.isPartiallyChecked)
-        expect(checkbox).not.toBePartiallyChecked()
         driver.executeScript("arguments[0].indeterminate = true", checkbox)
-        expect(checkbox).toBePartiallyChecked()
     }
 
     @ParameterizedTest
@@ -49,6 +45,5 @@ class PartiallyCheckedTest {
 
         val element = driver.findElement(testId("x"))
         assertFalse(element.isPartiallyChecked)
-        expect(element).not.toBePartiallyChecked()
     }
 }

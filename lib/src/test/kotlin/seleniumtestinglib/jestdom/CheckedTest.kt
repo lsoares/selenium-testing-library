@@ -4,7 +4,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
 import seleniumtestinglib.isChecked
 import seleniumtestinglib.render
 import kotlin.test.assertFalse
@@ -27,7 +26,6 @@ class CheckedTest {
         val checkbox = driver.findElement(testId("x"))
 
         assertTrue(checkbox.isChecked)
-        expect(checkbox).toBeChecked()
     }
 
     @ParameterizedTest
@@ -45,6 +43,5 @@ class CheckedTest {
         val checkbox = driver.findElement(testId("x"))
 
         assertFalse(checkbox.isChecked)
-        expect(checkbox).not.toBeChecked()
     }
 }

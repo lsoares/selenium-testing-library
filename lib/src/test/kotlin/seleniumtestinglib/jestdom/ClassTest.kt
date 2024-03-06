@@ -3,10 +3,12 @@ package seleniumtestinglib.jestdom
 import seleniumtestinglib.TL.By.testId
 import seleniumtestinglib.classes
 import seleniumtestinglib.driver
-import seleniumtestinglib.expect
+import seleniumtestinglib.hasClass
 import seleniumtestinglib.render
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class ClassTest {
 
@@ -20,13 +22,13 @@ class ClassTest {
 
         val deleteButton = driver.findElement(testId("delete-button"))
         assertEquals(setOf("btn", "btn-danger", "extra"), deleteButton.classes)
-        expect(deleteButton).toHaveClass()
-        expect(deleteButton).toHaveClass("extra")
-        expect(deleteButton).toHaveClass("btn-danger btn")
-        expect(deleteButton).toHaveClass("btn-danger", "btn")
-        expect(deleteButton).not.toHaveClass("btn-link")
-        expect(deleteButton).toHaveClass("btn-danger extra btn", exact = true)
-        expect(deleteButton).not.toHaveClass("btn-danger extra", exact = true)
+        assertTrue(deleteButton.hasClass())
+        assertTrue(deleteButton.hasClass("extra"))
+        assertTrue(deleteButton.hasClass("btn-danger btn"))
+        assertTrue(deleteButton.hasClass("btn-danger", "btn"))
+        assertFalse(deleteButton.hasClass("btn-danger", "btn-link"))
+        assertTrue(deleteButton.hasClass("btn-danger extra btn", exact = true))
+        assertFalse(deleteButton.hasClass("btn-danger", "extra",  exact = true))
     }
 
     @Test
@@ -35,6 +37,6 @@ class ClassTest {
 
         val noClasses = driver.findElement(testId("no-classes"))
         assertEquals(emptySet(), noClasses.classes)
-        expect(noClasses).not.toHaveClass()
+        assertFalse(noClasses.hasClass())
     }
 }
