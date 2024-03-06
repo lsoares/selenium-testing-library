@@ -109,4 +109,9 @@ java {
 
 kotlin {
     jvmToolchain(11)
+    sourceSets.all {
+        languageSettings {
+            languageVersion = "2.0"
+        }
+    }
 }
