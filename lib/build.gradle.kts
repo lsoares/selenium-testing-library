@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion.VERSION_11
 import org.jreleaser.model.Active.ALWAYS
 
 plugins {
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version "1.9.23"
     `java-library`
     `maven-publish`
     application
@@ -109,9 +109,4 @@ java {
 
 kotlin {
     jvmToolchain(11)
-    sourceSets.all {
-        languageSettings {
-            languageVersion = "2.0"
-        }
-    }
 }
