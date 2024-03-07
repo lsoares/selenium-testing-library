@@ -323,7 +323,7 @@ abstract class TLBy internal constructor(private val textMatch: TextMatch) : Sel
     }
 
     override fun toString(): String {
-        val prefix = if (options.entries.isEmpty()) "" else ", "
+        val prefix = if (options.isEmpty()) "" else ", "
         return "$by($textMatch$prefix${options.entries.joinToString { "${it.key}: ${it.value}" }})"
     }
 }

@@ -53,14 +53,12 @@ val WebElement.formValues: Map<String, Any?>
 fun WebElement.hasFormValues(vararg values: Pair<String, Any?>): Boolean =
     values.toMap().all { formValues[it.key] == it.value }
 
-
 private fun WebElement.hasStyle(css: Map<String, String>): Boolean {
     val expectedCss = css.mapKeys { it.key.normalizeCssProp() }
     val existingCss = expectedCss.keys
         .associateWith(::getCssValue)
     return expectedCss == existingCss
 }
-
 
 fun WebElement.hasStyle(css: String): Boolean =
     hasStyle(css.split(";")
@@ -72,7 +70,8 @@ fun WebElement.hasStyle(css: String): Boolean =
 
 fun WebElement.hasStyle(vararg css: Pair<String, String>) = hasStyle(css.toMap())
 
-private fun String.normalizeCssProp() = "(?<=[a-zA-Z])[A-Z]".toRegex().replace(this) { "-${it.value}" }.lowercase()
+private fun String.normalizeCssProp() =
+    "(?<=[a-zA-Z])[A-Z]".toRegex().replace(this) { "-${it.value}" }.lowercase()
 
 val WebElement.isChecked: Boolean
     get() {
@@ -156,16 +155,17 @@ val WebElement.accessibleDescription: String?
 val WebElement.classes: Set<String>
     get() = getAttribute("class").takeIf(String::isNotBlank)?.split(Regex("\\s+"))?.toSet() ?: emptySet()
 
-fun WebElement.hasClass(vararg classNames: String, exact: Boolean = false): Boolean {
-    val expectedClasses = classNames.map { it.split(Regex("\\s+")) }.flatten().toSet()
-    if (expectedClasses.isEmpty()) {
-        return classes.isNotEmpty()
-    }
-    return when (exact) {
-        false -> classes.containsAll(expectedClasses)
-        true -> expectedClasses == classes
-    }
-}
+fun WebElement.hasClass(vararg classNames: String, exact: Boolean = false): Boolean =
+    classNames
+        .flatMap { it.split(Regex("\\s+")) }
+        .toSet()
+        .ifEmpty { return classes.isNotEmpty() }
+        .let { expectedClasses ->
+            when (exact) {
+                false -> classes.containsAll(expectedClasses)
+                true -> expectedClasses == classes
+            }
+        }
 
 val WebElement.errorMessage: String?
     get() = when {
