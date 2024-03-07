@@ -208,15 +208,20 @@ fun User.type(
 /**
  * https://testing-library.com/docs/user-event/utility#upload
  */
-fun User.upload(input: WebElement, file: File): User {
+fun User.upload(input: WebElement, vararg file: File): User {
+    val fileS = file.mapIndexed { idx, el -> el.toJS(1 + idx * 3) }
+        .joinToString(
+            prefix = "[".takeIf { file.size > 1 } ?: "",
+            postfix = "]".takeIf { file.size > 1 } ?: ""
+        )
     driver.executeScript(
-        "await user.upload(arguments[0], new File(arguments[1], arguments[2], arguments[3]))",
+        "await user.upload(arguments[0], $fileS)",
         input,
-        file.bits,
-        file.name,
-        file.options
+        *file.map { listOf(it.bits, it.name, it.options) }.flatten().toTypedArray()
     )
     return this
 }
 
-data class File(val bits: List<String>, val name: String, val options: Map<String, String> = emptyMap())
+data class File(val bits: List<String>, val name: String, val options: Map<String, String> = emptyMap()) {
+    internal fun toJS(i: Int) = "new File(arguments[$i], arguments[${i + 1}], arguments[${i + 2}])"
+}
