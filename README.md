@@ -15,7 +15,7 @@ To get started, use
 the [library's latest version](https://search.maven.org/artifact/com.luissoares/selenium-testing-library):
 
 ```kotlin
-implementation("com.luissoares:selenium-testing-library:4.1.2")
+implementation("com.luissoares:selenium-testing-library:4.1.3")
 ```
 
 Now you can use the library:
