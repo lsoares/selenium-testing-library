@@ -252,7 +252,6 @@ class TL {
             descriptionAsRegex: Pattern? = null,
             descriptionAsFunction: JsFunction? = null,
             hidden: Boolean? = null,
-            normalizer: JsFunction? = null,
             selected: Boolean? = null,
             busy: Boolean? = null,
             checked: Boolean? = null,
@@ -278,7 +277,6 @@ class TL {
             descriptionAsFunction?.let(::description)
             descriptionAsRegex?.let(::description)
             hidden?.let(::hidden)
-            normalizer?.let(::normalizer)
             selected?.let(::selected)
             busy?.let(::busy)
             checked?.let(::checked)
@@ -416,7 +414,6 @@ class ByRole private constructor(role: TextMatch) : TLBy(role) {
     fun level(level: Int) = apply { set("level", level) }
     fun value(value: Value) = apply { set("value", value.toMap()) }
     fun queryFallbacks(queryFallbacks: Boolean) = apply { set("queryFallbacks", queryFallbacks) }
-    fun normalizer(normalizer: JsFunction) = apply { set("normalizer", normalizer.asJsExpression()) }
 }
 
 class JsFunction(val value: String) {
