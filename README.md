@@ -33,7 +33,7 @@ Now you can use the library:
     driver.findElement(title(Pattern.compile("FOO")))
     ```
 
-- [user-event](https://testing-library.com/docs/user-event/intro) represents the User Interactions:
+- [user-event](https://testing-library.com/docs/user-event/intro) triggers events from user interactions:
    ```kotlin
    driver.user.click(active)
    driver.user.dblClick(panel)
@@ -41,12 +41,12 @@ Now you can use the library:
    driver.user.selectOptions(letterSelector, driver.findElement(ByRole(ListBox, name = "C")))
    ```
 
-- [fireEvent](https://testing-library.com/docs/dom-testing-library/api-events) is lower-level way to trigger events:
+- [fireEvent](https://testing-library.com/docs/dom-testing-library/api-events) is a lower-level way to trigger events:
   ```kotlin
   input.fireEvent(Change, mapOf(Target to mapOf("value" to "2020-05-24")))
   ```
 
-- [jest-dom](https://testing-library.com/docs/ecosystem-jest-dom) is available indirectly:
+- [jest-dom](https://testing-library.com/docs/ecosystem-jest-dom) matchers are available indirectly:
   ```kotlin
   val formValues = registrationForm.formValues
   val userAgrees = checkboxMarketing.isChecked
