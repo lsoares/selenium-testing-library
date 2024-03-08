@@ -6,9 +6,8 @@ VERSION="$1"
 sed -i '' "s/version = \"\(.*\)\"/version = \"$VERSION\"/" lib/build.gradle.kts
 sed -i '' "s/com.luissoares:selenium-testing-library:[^\"]*/com.luissoares:selenium-testing-library:$VERSION/" README.md
 git add lib/build.gradle.kts README.md
-git commit -m "update version to $VERSION"
+git commit --amend --no-edit
+git push
 
 git tag "v$VERSION" -m "Tag release for version $VERSION"
 git push origin "v$VERSION"
-
-git push
