@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Generate a Testing Library self-contained script so it can be used in the browser",
   "scripts": {
-    "build": "webpack --mode production",
-    "predeploy": "npm outdated && npm run build",
+    "predeploy": "npm outdated && webpack",
     "deploy": "cp dist/* ../lib/src/main/resources"
   },
   "keywords": [],
