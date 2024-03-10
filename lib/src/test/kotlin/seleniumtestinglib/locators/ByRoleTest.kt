@@ -50,7 +50,7 @@ class ByRoleTest {
         driver.render("""<h1>something as a user something</h1>""")
 
         val result =
-            driver.findElements(role(Heading, nameAsFunction = JsFunction("c => c.startsWith('something')")))
+            driver.findElements(ByRole(Heading).name(JsFunction("c => c.startsWith('something')")))
 
         assertEquals("something as a user something", result.single().accessibleName)
     }

@@ -50,13 +50,13 @@ if (/Firefox/.test(navigator.userAgent)) {
     );
   }
 
-  function wrapTextMatch (maybeRegexOrFunc) {
+  function wrapTextMatch(maybeRegexOrFunc) {
     return Object.prototype.toString.call(maybeRegexOrFunc) === "[object RegExp]"
       ? new RegExp(maybeRegexOrFunc.source, maybeRegexOrFunc.flags)
       : wrapFunction(maybeRegexOrFunc);
   }
 
-  function wrapFunction (maybeFunc) {
+  function wrapFunction(maybeFunc) {
     return Object.prototype.toString.call(maybeFunc) === "[object Function]"
       ? (content, element) => maybeFunc.call(null, content, element)
       : maybeFunc;

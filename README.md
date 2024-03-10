@@ -19,6 +19,7 @@ implementation("com.luissoares:selenium-testing-library:4.1.3")
 ```
 
 Now you can use the library:
+
 - [Core API](https://testing-library.com/docs) contains the selectors which are mapped into Selenium locators:
     ```kotlin
     driver.findElement(altText("first name")) // or findElements
@@ -31,6 +32,10 @@ Now you can use the library:
     driver.findElement(text("present", exact = false, selector = "span"))
     driver.findElement(title("title 1"))
     driver.findElement(title(Pattern.compile("FOO")))
+    // fluent API alternative (useful in Java):
+    driver.findElement(text("I accept").exact(true).ignore(false).selector("span"))
+    driver.findElement(role(Heading).name(Pattern.compile("Something", CASE_INSENSITIVE)).level(1))
+
     ```
 
 - [user-event](https://testing-library.com/docs/user-event/intro) triggers events from user interactions:
@@ -38,7 +43,7 @@ Now you can use the library:
    driver.user.click(active)
    driver.user.dblClick(panel)
    driver.user.type(input, "foobar")
-   driver.user.selectOptions(letterSelector, driver.findElement(ByRole(ListBox, name = "C")))
+   driver.user.selectOptions(letterSelector, driver.findElement(ByRole(ListBox).name("C")))
    ```
 
 - [fireEvent](https://testing-library.com/docs/dom-testing-library/api-events) is a lower-level way to trigger events:
