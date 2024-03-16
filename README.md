@@ -37,7 +37,7 @@ Now you can use the library:
     driver.findElement(role(Heading).name(Pattern.compile("Something", CASE_INSENSITIVE)).level(1))
 
     ```
-   [see all examples](/lib/src/test/kotlin/seleniumtestinglib/locators)
+   <sub>[see all examples](/lib/src/test/kotlin/seleniumtestinglib/locators)</sub>
 
 - [user-event](https://testing-library.com/docs/user-event/intro) triggers events from user interactions:
    ```kotlin
@@ -46,7 +46,7 @@ Now you can use the library:
    driver.user.type(input, "foobar")
    driver.user.selectOptions(letterSelector, driver.findElement(ByRole(ListBox).name("C")))
    ```
-   [see all examples](/lib/src/test/kotlin/seleniumtestinglib/interactions)
+   <sub>[see all examples](/lib/src/test/kotlin/seleniumtestinglib/interactions)</sub>
 
 - [fireEvent](https://testing-library.com/docs/dom-testing-library/api-events) is a lower-level way to trigger events:
   ```kotlin
@@ -60,5 +60,5 @@ Now you can use the library:
   val name = element.accessibleName
   val displayedValue = element.displayValue
   ```
-   [see all examples](/lib/src/test/kotlin/seleniumtestinglib/jestdom)
+   <sub>[see all examples](/lib/src/test/kotlin/seleniumtestinglib/jestdom)</sub>
 
